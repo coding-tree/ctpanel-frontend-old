@@ -20,8 +20,19 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Montserrat", sans-serif;
   }
 
-  div, span, nav{
+  div, span, nav, li, a{
     display: flex;
+  }
+
+  ul{
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+  }
+
+  a{
+    color: #ffffff;
+    text-decoration: none;
   }
 `;
 

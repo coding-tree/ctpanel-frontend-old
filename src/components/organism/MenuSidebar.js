@@ -15,15 +15,40 @@ const TitleWrapper = styled.header`
     font-weight: 700;
     text-align: center;
 `;
-const MenuWrapper = styled.div``;
-const SubmenuWrapper = styled.div``;
-const CopyrightsWrapper = styled.div``;
+const MenuWrapper = styled.div`
+    padding: 20px;
+`;
+const SubmenuWrapper = styled.div`
+    padding: 20px;
+    margin: auto 0 25px 0;
+`;
+
+const CopyrightsWrapper = styled.div`
+    justify-content: center;
+    padding: 0 0 30px 0;
+    color: #ffffff;
+    font-size: 1.2rem;
+`;
 
 const StyledLinksList = styled.ul`
     flex-direction: column;
+    width: 100%;
 `;
-const StyledLinkElement = styled.li``;
-const StyledLink = styled.a``;
+const StyledLinkElement = styled.li`
+    height: 60px;
+    border-radius: 30px 0 0 30px;
+    overflow: hidden;
+`;
+const StyledLink = styled.a`
+width: 100%;
+align-items: center;
+padding: 0 0 0 50px;
+font-weight: 600;
+
+&.active{
+    color: hsl(146, 100%, 29%);
+    background-color: #ffffff;
+}`;
 
 const MenuSidebar = () => {
 
