@@ -6,6 +6,7 @@ const Button = styled.button`
   background-color: ${props => (props.primary ? 'green' : 'yellow')};
   color: ${props => (props.primary ? 'white' : 'black')};
   border-radius: ${props => (props.primary ? '10px' : '0')};
+  margin: 20px;
 `;
 
 export default Button;

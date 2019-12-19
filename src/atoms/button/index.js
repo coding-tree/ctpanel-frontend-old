@@ -1,8 +1,12 @@
 import React from 'react';
-import Style from './style';
+import StyledComponent from './style';
 
 const Button = ({children, primary}) => {
-  return <Style primary={primary}>{children}</Style>;
+  return (
+    <StyledComponent style={{backgroundColor: 'yellow'}} primary={primary}>
+      {children}
+    </StyledComponent>
+  );
 };
 
 export default Button;

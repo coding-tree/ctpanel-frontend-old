@@ -1,10 +1,7 @@
 export const routes = {
-    default: '/',
-    home: '/home',
-    timetable: '/timetable',
-    topicDatabase: '/topicDatabase',
-    history: '/history',
-    materials: '/materials',
-    myProfile: '/myProfile',
-    settings: '/settings'
+  home: '/',
+  timetable: '/harmonogram',
+  topicDatabase: '/baza-tematow',
+  history: '/historia-spotkan',
+  account: '/konto',
 };

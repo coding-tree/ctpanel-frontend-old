@@ -1,8 +1,12 @@
-import { createGlobalStyle } from 'styled-components';
+import {createGlobalStyle} from 'styled-components';
+import variables from 'settings/variables';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const GlobalStyle = createGlobalStyle`
   
   *, *::before, *::after {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -15,9 +19,9 @@ const GlobalStyle = createGlobalStyle`
   body {
     width: 100vw;
     height: 100vh;
-    margin: 0;
     font-size: 1.6rem;
-    font-family: "Montserrat", sans-serif;
+    font-family: ${variables.mainFont};
+    background-color: ${variables.backgroundColor}
   }
 
   div, span, nav, li, a{
@@ -25,13 +29,11 @@ const GlobalStyle = createGlobalStyle`
   }
 
   ul{
-    padding: 0;
-    margin: 0;
     list-style-type: none;
   }
 
   a{
-    color: #ffffff;
+    color: ${variables.colorWhite};
     text-decoration: none;
   }
 `;

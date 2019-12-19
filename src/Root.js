@@ -1,32 +1,36 @@
-import React from 'react';
-import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
+import React, {lazy, Suspense} from 'react';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import {routes} from 'routes';
 import MainTemplate from 'templates/MainTemplate';
 
-import MenuSidebar from 'components/organism/MenuSidebar';
+const MenuSidebar = lazy(() => import('components/organism/MenuSidebar'));
 
-import Home from 'views/HomePage';
-import Timetable from 'views/TimetablePage';
-import TopicDatabase from 'views/TopicDatabasePage';
-import History from 'views/HistoryPage';
-import Materials from 'views/MaterialsPage';
-import MyProfile from 'views/MyProfilePage';
-import Settings from 'views/SettingsPage';
+const Home = lazy(() => import('views/HomePage'));
+const Timetable = lazy(() => import('views/TimetablePage'));
+const TopicDatabase = lazy(() => import('views/TopicDatabasePage'));
+const History = lazy(() => import('views/HistoryPage'));
+const Account = lazy(() => import('views/AccountPage'));
 
 const Root = () => (
   <BrowserRouter>
     <MainTemplate>
-      <MenuSidebar />
-      <Switch>
-        {/* <Route exact path={routes.default} component={Home} />*/}
-        <Route exact path={routes.home} component={Home} />
-        <Route exact path={routes.timetable} component={Timetable} />
-        <Route exact path={routes.topicDatabase} component={TopicDatabase} />
-        <Route exact path={routes.history} component={History} />
-        <Route exact path={routes.materials} component={Materials} />
-        <Route exact path={routes.myProfile} component={MyProfile} />
-        <Route exact path={routes.settings} component={Settings} />
-      </Switch>
+      <Suspense
+        fallback={
+          <div>
+            <h1>Ładowanie...</h1>
+          </div>
+        }
+      >
+        <MenuSidebar />
+        <Switch>
+          <Route exact strict path={routes.home} component={Home} />
+          <Route exact strict path={routes.timetable} component={Timetable} />
+          <Route exact strict path={routes.topicDatabase} component={TopicDatabase} />
+          <Route exact strict path={routes.history} component={History} />
+          <Route exact strict path={routes.account} component={Account} />
+          {/* TODO:: Redirect i NotFound */}
+        </Switch>
+      </Suspense>
     </MainTemplate>
   </BrowserRouter>
 );
