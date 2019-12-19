@@ -41,7 +41,7 @@ const StyledLink = styled.a`
   align-items: center;
   padding: 0 0 0 5rem;
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 1.8rem;
   &.active {
     color: ${variables.colorMain};
     background-color: ${variables.backgroundColor};
