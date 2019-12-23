@@ -28,6 +28,13 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
   }
 
+  #root {
+    position: absolute;
+    left: 340px;
+    width: calc(100% - 340px);
+    flex-direction: column;
+  }
+
   ul{
     list-style-type: none;
   }

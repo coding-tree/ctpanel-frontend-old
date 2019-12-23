@@ -4,9 +4,12 @@ import styled from 'styled-components';
 import variables from 'settings/variables';
 
 const StyledWrapper = styled.nav`
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   flex-direction: column;
   width: 340px;
+  min-width: 340px;
   height: 100vh;
   background-color: ${variables.colorMain};
 `;

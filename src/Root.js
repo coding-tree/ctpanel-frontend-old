@@ -3,7 +3,8 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import {routes} from 'routes';
 import MainTemplate from 'templates/MainTemplate';
 
-const MenuSidebar = lazy(() => import('components/organism/MenuSidebar'));
+const MenuSidebar = lazy(() => import('organism/MenuSidebar'));
+const NextMeet = lazy(() => import('organism/NextMeet'));
 
 const Home = lazy(() => import('views/HomePage'));
 const Timetable = lazy(() => import('views/TimetablePage'));
@@ -22,6 +23,7 @@ const Root = () => (
         }
       >
         <MenuSidebar />
+        <NextMeet />
         <Switch>
           <Route exact strict path={routes.home} component={Home} />
           <Route exact strict path={routes.timetable} component={Timetable} />

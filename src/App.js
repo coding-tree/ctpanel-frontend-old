@@ -1,8 +1,8 @@
 import React, {lazy, Suspense} from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 
-const Home = lazy(() => import('./components/Home'));
-const NotFound = lazy(() => import('./components/NotFound'));
+const Home = lazy(() => import('./organism/Home'));
+const NotFound = lazy(() => import('./organism/NotFound'));
 
 function App() {
   return (
