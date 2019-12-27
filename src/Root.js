@@ -1,27 +1,27 @@
 import React, {lazy, Suspense} from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import {routes} from 'routes';
-import MainTemplate from 'templates/MainTemplate';
 
+const MainTemplate = lazy(() => import('templates/MainTemplate'));
 const MenuSidebar = lazy(() => import('organism/MenuSidebar'));
 const NextMeet = lazy(() => import('organism/NextMeet'));
 
-const Home = lazy(() => import('views/HomePage'));
-const Timetable = lazy(() => import('views/TimetablePage'));
-const TopicDatabase = lazy(() => import('views/TopicDatabasePage'));
-const History = lazy(() => import('views/HistoryPage'));
-const Account = lazy(() => import('views/AccountPage'));
+const Home = lazy(() => import('pages/HomePage'));
+const Timetable = lazy(() => import('pages/TimetablePage'));
+const TopicDatabase = lazy(() => import('pages/TopicDatabasePage'));
+const History = lazy(() => import('pages/HistoryPage'));
+const Account = lazy(() => import('pages/AccountPage'));
 
 const Root = () => (
   <BrowserRouter>
-    <MainTemplate>
-      <Suspense
-        fallback={
-          <div>
-            <h1>Ładowanie...</h1>
-          </div>
-        }
-      >
+    <Suspense
+      fallback={
+        <div>
+          <h1>Ładowanie...</h1>
+        </div>
+      }
+    >
+      <MainTemplate>
         <MenuSidebar />
         <NextMeet />
         <Switch>
@@ -32,8 +32,8 @@ const Root = () => (
           <Route exact strict path={routes.account} component={Account} />
           {/* TODO:: Redirect i NotFound */}
         </Switch>
-      </Suspense>
-    </MainTemplate>
+      </MainTemplate>
+    </Suspense>
   </BrowserRouter>
 );
 

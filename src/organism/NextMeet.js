@@ -3,6 +3,8 @@ import React from 'react';
 import styled from 'styled-components';
 import variables from 'settings/variables';
 
+import DateLabel from 'atoms/dateLabel';
+
 const StyledWrapper = styled.div`
   width: calc(100%);
   height: 113px;
@@ -30,21 +32,16 @@ const StyledMeetTitle = styled.span`
 const NextMeet = () => {
   const fakeData = {
     id: 1,
-    date: new Date(2020, 0, 22, 21, 30),
+    date: 1578864600,
     title: 'Testowanie komponentów przy użyciu JEST',
   };
-
-  const days = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'];
-  const date = fakeData.date;
-  const day = days[fakeData.date.getDay()];
-  const formattedDate = `${day} ${date.toLocaleDateString()}`;
-  const formattedTime = `${date.getHours()}:${date.getMinutes()}`;
 
   return (
     <StyledWrapper>
       <TitleWrapper>Najbliższe spotkanie</TitleWrapper>
       <MeetWrapper>
-        {formattedDate}, {formattedTime} - <StyledMeetTitle> {fakeData.title}</StyledMeetTitle>
+        <DateLabel date={fakeData.date}></DateLabel>
+        <StyledMeetTitle>{fakeData.title}</StyledMeetTitle>
       </MeetWrapper>
     </StyledWrapper>
   );

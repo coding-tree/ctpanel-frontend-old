@@ -1,11 +1,11 @@
 import React from 'react';
-import StyledComponent from './style';
+import StyledButton from './style';
 
 const Button = ({children, primary}) => {
   return (
-    <StyledComponent style={{backgroundColor: 'yellow'}} primary={primary}>
+    <StyledButton style={{backgroundColor: 'yellow'}} primary={primary}>
       {children}
-    </StyledComponent>
+    </StyledButton>
   );
 };
 
