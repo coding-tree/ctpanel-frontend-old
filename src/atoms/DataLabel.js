@@ -1,7 +1,7 @@
 import React from 'react';
 
 const DataLabel = ({date}) => {
-  const timestamp = new Date().setMilliseconds(date);
+  const timestamp = new Date(date * 1000);
   const formattedDate = new Intl.DateTimeFormat('pl-PL', {
     year: 'numeric',
     month: 'numeric',

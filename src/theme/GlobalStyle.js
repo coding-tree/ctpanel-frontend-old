@@ -21,7 +21,8 @@ const GlobalStyle = createGlobalStyle`
     height: 100vh;
     font-size: 1.6rem;
     font-family: ${variables.mainFont};
-    background-color: ${variables.backgroundColor}
+    background-color: ${variables.backgroundColor};
+    color: ${variables.colorFont}
   }
 
   div, span, nav, li, a{
@@ -33,6 +34,7 @@ const GlobalStyle = createGlobalStyle`
     left: 340px;
     width: calc(100% - 340px);
     flex-direction: column;
+    height: 100vh;
   }
 
   ul{
