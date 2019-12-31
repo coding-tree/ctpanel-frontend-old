@@ -1,18 +1,29 @@
 import React, {lazy} from 'react';
-import {StyledWrapper, LinkWrapper} from 'styledComponents/LastMeet';
+import styled from 'styled-components';
 
-const LastMeetLinkTitle = lazy(() => import('atoms/LastMeetLinkTitle'));
-const LastMeetLinkIndex = lazy(() => import('atoms/LastMeetLinkIndex'));
-const LastMeetUsefulLinkItem = lazy(() => import('atoms/LastMeetUsefulLinkItem'));
+const Title = lazy(() => import('atoms/Title'));
+const Anchor = lazy(() => import('atoms/Anchor'));
+
+const StyledWrapper = styled.div`
+  flex-direction: column;
+`;
+const LinkWrapper = styled.div`
+  padding: 0.5rem 0;
+`;
 
 const LastMeetLinks = ({usefulLinks}) => {
   return (
     <StyledWrapper>
-      <LastMeetLinkTitle></LastMeetLinkTitle>
+      <Title padding="0 0 2rem 0">Przydatne linki ze spotkania</Title>
+
       {usefulLinks.map((el, index) => (
-        <LinkWrapper key={el.id}>
-          <LastMeetLinkIndex index={index}></LastMeetLinkIndex>
-          <LastMeetUsefulLinkItem href={el.url}>{el.url}</LastMeetUsefulLinkItem>
+        <LinkWrapper key={index}>
+          <Title padding="0 1rem 0 0" fontSize="1.6rem" link>
+            #{index + 1}
+          </Title>
+          <Anchor as="a" href={el.url} target="_blank">
+            {el.url}
+          </Anchor>
         </LinkWrapper>
       ))}
     </StyledWrapper>

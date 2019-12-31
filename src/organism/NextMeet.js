@@ -1,7 +1,19 @@
 import React from 'react';
+import styled from 'styled-components';
+import variables from 'settings/variables';
 
-import DateLabel from 'atoms/DataLabel';
-import {StyledWrapper, TitleWrapper, MeetWrapper, StyledMeetTitle} from 'styledComponents/NextMeet';
+import Title from 'atoms/Title';
+import NextMeetInfo from 'molecules/NextMeetInfo';
+
+const StyledWrapper = styled.div`
+  width: calc(100%);
+  height: 113px;
+  min-height: 113px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10rem;
+  background-color: ${variables.colorWhite};
+`;
 
 const NextMeet = () => {
   const fakeData = {
@@ -12,12 +24,10 @@ const NextMeet = () => {
 
   return (
     <StyledWrapper>
-      <TitleWrapper>Najbliższe spotkanie</TitleWrapper>
-
-      <MeetWrapper>
-        <DateLabel date={fakeData.date}></DateLabel>
-        <StyledMeetTitle>{fakeData.title}</StyledMeetTitle>
-      </MeetWrapper>
+      <Title important uppercase>
+        Najbliższe spotkanie
+      </Title>
+      <NextMeetInfo date={fakeData.date} title={fakeData.title}></NextMeetInfo>
     </StyledWrapper>
   );
 };

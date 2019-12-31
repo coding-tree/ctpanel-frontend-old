@@ -1,19 +1,35 @@
 import React, {lazy} from 'react';
-import {LastMeetWrapper} from 'styledComponents/LastMeet';
+import styled from 'styled-components';
+import variables from 'settings/variables';
 
+const Text = lazy(() => import('atoms/Text'));
+const DownloadButton = lazy(() => import('molecules/DownloadButton'));
 const LastMeetHeader = lazy(() => import('molecules/LastMeetHeader'));
-const LastMeetDescription = lazy(() => import('atoms/LastMeetDescription'));
 const LastMeetLinks = lazy(() => import('molecules/LastMeetLinks'));
-const MaterialButton = lazy(() => import('atoms/MaterialButton'));
+
+const LastMeetWrapper = styled.div`
+  position: relative;
+  width: 80%;
+  max-width: 1400px;
+  padding: 7rem 5rem;
+  background-color: ${variables.colorWhite};
+  flex-direction: column;
+  border-radius: 1rem;
+`;
 
 const LastMeet = ({lastMeet}) => {
   const {author, title, date, description, usefulLinks, materialLink} = lastMeet;
+
   return (
     <LastMeetWrapper>
       <LastMeetHeader author={author} title={title} date={date}></LastMeetHeader>
-      <LastMeetDescription description={description}></LastMeetDescription>
+      <Text columnView margin="0 0 5rem 0">
+        {description}
+      </Text>
       <LastMeetLinks usefulLinks={usefulLinks}></LastMeetLinks>
-      <MaterialButton url={materialLink}></MaterialButton>
+      <DownloadButton materialLink={materialLink} iconClassName="fas fa-download">
+        Pobierz materiały
+      </DownloadButton>
     </LastMeetWrapper>
   );
 };
