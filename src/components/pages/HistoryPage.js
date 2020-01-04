@@ -1,5 +1,5 @@
 import React from 'react';
-import MainTemplate from 'templates/MainTemplate';
+import MainTemplate from 'components/templates/MainTemplate';
 
 const HistoryPage = () => (
     <MainTemplate>

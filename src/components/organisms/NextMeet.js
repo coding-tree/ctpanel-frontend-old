@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import variables from 'settings/variables';
 
-import DateLabel from 'atoms/dateLabel';
+import DateLabel from 'components/atoms/dateLabel';
 
 const StyledWrapper = styled.div`
   width: calc(100%);
