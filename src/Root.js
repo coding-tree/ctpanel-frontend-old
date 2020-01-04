@@ -1,6 +1,6 @@
-import React, {lazy, Suspense} from 'react';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import {routes} from 'routes';
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { routes } from 'routes';
 
 const MainTemplate = lazy(() => import('templates/MainTemplate'));
 const MenuSidebar = lazy(() => import('organism/MenuSidebar'));
@@ -9,7 +9,7 @@ const NextMeet = lazy(() => import('organism/NextMeet'));
 const Home = lazy(() => import('pages/HomePage'));
 const Timetable = lazy(() => import('pages/TimetablePage'));
 const TopicDatabase = lazy(() => import('pages/TopicDatabasePage'));
-const History = lazy(() => import('pages/HistoryPage'));
+const History = lazy(() => import('components/pages/HistoryPage'));
 const Account = lazy(() => import('pages/AccountPage'));
 
 const Root = () => (
