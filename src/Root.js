@@ -7,9 +7,9 @@ const MenuSidebar = lazy(() => import('components/organisms/MenuSidebar'));
 const NextMeet = lazy(() => import('components/organisms/NextMeet'));
 
 const Home = lazy(() => import('components/pages/HomePage'));
-const Timetable = lazy(() => import('components/pages/TimetablePage'));
+const Timetable = lazy(() => import('components/pages/SchedulesPage'));
 const TopicDatabase = lazy(() => import('components/pages/TopicDatabasePage'));
-const History = lazy(() => import('components/pages/HistoryPage'));
+const History = lazy(() => import('components/pages/MeetingHistoryPage'));
 const Account = lazy(() => import('components/pages/AccountPage'));
 
 const Root = () => (

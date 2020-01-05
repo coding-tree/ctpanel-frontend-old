@@ -1,10 +1,10 @@
 import React from 'react';
-import MainTemplate from 'components/templates/MainTemplate';
+import TableTemplate from 'components/templates/TableTemplate';
 
 const HistoryPage = () => (
-    <MainTemplate>
+    <TableTemplate>
         <h1>HistoryPage</h1>
-    </MainTemplate>
+    </TableTemplate>
 );
 
 export default HistoryPage;
