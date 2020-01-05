@@ -12,7 +12,6 @@ const StyledContainer = styled.div`
   
 `;
 
-
 const TableTemplate = ({ location, children }) => {
     const actuallyLocation = location.pathname;
     const schedules = '/harmonogram';
@@ -21,16 +20,13 @@ const TableTemplate = ({ location, children }) => {
 
     return (
         <StyledWrapper>
-
             <Header>
-                {actuallyLocation === schedules && 1}
-                {actuallyLocation === topicDatabase && 2}
-                {actuallyLocation === meetingHistory && 3}
+                {actuallyLocation === schedules && "HARMONOGRAM"}
+                {actuallyLocation === topicDatabase && "BAZA TEMATÓW"}
+                {actuallyLocation === meetingHistory && "HISTORIA SPOTKAŃ"}
             </Header>
-
-            <Header>Nagłówek</Header>
             <StyledContainer>
-                <TableMenu />
+                <TableMenu actuallyLocation={actuallyLocation} />
                 {children}
             </StyledContainer>
         </StyledWrapper>
