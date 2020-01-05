@@ -3,9 +3,7 @@ import MainTemplate from 'components/templates/MainTemplate';
 
 const HistoryPage = () => (
     <MainTemplate>
-        <div>
-            HistoryPage
-        </div>
+        <h1>HistoryPage</h1>
     </MainTemplate>
 );
 
