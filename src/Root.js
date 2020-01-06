@@ -1,9 +1,8 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { routes } from 'routes';
-import { store } from "store";
 import { Provider } from "react-redux";
-
+import { store } from "store";
 
 const MainTemplate = lazy(() => import('components/templates/MainTemplate'));
 const MenuSidebar = lazy(() => import('components/organisms/MenuSidebar'));
