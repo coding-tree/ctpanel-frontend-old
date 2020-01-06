@@ -1,6 +1,9 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { routes } from 'routes';
+import { store } from "store";
+import { Provider } from "react-redux";
+
 
 const MainTemplate = lazy(() => import('components/templates/MainTemplate'));
 const MenuSidebar = lazy(() => import('components/organisms/MenuSidebar'));
@@ -13,28 +16,30 @@ const History = lazy(() => import('components/pages/MeetingHistoryPage'));
 const Account = lazy(() => import('components/pages/AccountPage'));
 
 const Root = () => (
-  <BrowserRouter>
-    <Suspense
-      fallback={
-        <div>
-          <h1>Ładowanie...</h1>
-        </div>
-      }
-    >
-      <MainTemplate>
-        <MenuSidebar />
-        <NextMeet />
-        <Switch>
-          <Route exact strict path={routes.home} component={Home} />
-          <Route exact strict path={routes.timetable} component={Timetable} />
-          <Route exact strict path={routes.topicDatabase} component={TopicDatabase} />
-          <Route exact strict path={routes.history} component={History} />
-          <Route exact strict path={routes.account} component={Account} />
-          {/* TODO:: Redirect i NotFound */}
-        </Switch>
-      </MainTemplate>
-    </Suspense>
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <Suspense
+        fallback={
+          <div>
+            <h1>Ładowanie...</h1>
+          </div>
+        }
+      >
+        <MainTemplate>
+          <MenuSidebar />
+          <NextMeet />
+          <Switch>
+            <Route exact strict path={routes.home} component={Home} />
+            <Route exact strict path={routes.timetable} component={Timetable} />
+            <Route exact strict path={routes.topicDatabase} component={TopicDatabase} />
+            <Route exact strict path={routes.history} component={History} />
+            <Route exact strict path={routes.account} component={Account} />
+            {/* TODO:: Redirect i NotFound */}
+          </Switch>
+        </MainTemplate>
+      </Suspense>
+    </BrowserRouter>
+  </Provider>
 );
 
 export default Root;
