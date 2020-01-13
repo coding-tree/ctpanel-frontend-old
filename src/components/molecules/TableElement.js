@@ -8,7 +8,7 @@ const StyledWrapper = styled.div`
 const TableElement = () => {
     return (
         <StyledWrapper>
-            Element
+            Element 1
         </StyledWrapper>
     );
 };

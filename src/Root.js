@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { routes } from 'routes';
 import { Provider } from "react-redux";
-import { store } from "store";
+import store from "store";
 
 const MainTemplate = lazy(() => import('components/templates/MainTemplate'));
 const MenuSidebar = lazy(() => import('components/organisms/MenuSidebar'));
@@ -13,6 +13,7 @@ const Timetable = lazy(() => import('components/pages/SchedulesPage'));
 const TopicDatabase = lazy(() => import('components/pages/TopicDatabasePage'));
 const History = lazy(() => import('components/pages/MeetingHistoryPage'));
 const Account = lazy(() => import('components/pages/AccountPage'));
+
 
 const Root = () => (
   <Provider store={store}>
