@@ -11,11 +11,11 @@ const StyledWrapper = styled.div`
   right: 5rem;
 `;
 
-const DownloadButton = ({materialLink, iconClassName, children}) => {
+const DownloadButton = ({resourcesURL, iconClassName, children}) => {
   return (
     <StyledWrapper>
       <Button primary>
-        <Anchor fontSize="2rem" buttonLink as="a" href={materialLink} download target="_blank">
+        <Anchor fontSize="2rem" buttonLink as="a" href={resourcesURL} download target="_blank">
           {children}
           <Icon padding="0 0 0 1rem" className={iconClassName}></Icon>
         </Anchor>

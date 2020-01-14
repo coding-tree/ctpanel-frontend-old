@@ -12,14 +12,14 @@ const HeaderWrapper = styled.div`
   padding-bottom: 7rem;
 `;
 
-const LastMeetHeader = ({author, title, date}) => {
+const LastMeetHeader = ({leader, topic, date}) => {
   return (
     <HeaderWrapper>
       <Title left uppercase>
-        {author}
+        {leader}
       </Title>
       <Title uppercase important fontSize="3.2rem">
-        {title}
+        {topic}
       </Title>
       <StyledDate right fontSize="2rem" format="MM.DoYYYY" date={date}></StyledDate>
     </HeaderWrapper>

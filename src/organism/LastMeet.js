@@ -18,16 +18,17 @@ const LastMeetWrapper = styled.div`
 `;
 
 const LastMeet = ({lastMeet}) => {
-  const {author, title, date, description, usefulLinks, materialLink} = lastMeet;
+  const {leader, topic, date, description, usefulLinks, resourcesURL} = lastMeet;
 
   return (
     <LastMeetWrapper>
-      <LastMeetHeader author={author} title={title} date={date}></LastMeetHeader>
+      <LastMeetHeader leader={leader} topic={topic} date={date}></LastMeetHeader>
       <Text columnView margin="0 0 5rem 0">
         {description}
       </Text>
       <LastMeetLinks usefulLinks={usefulLinks}></LastMeetLinks>
-      <DownloadButton materialLink={materialLink} iconClassName="fas fa-download">
+
+      <DownloadButton resourcesURL={resourcesURL} iconClassName="fas fa-download">
         Pobierz materiały
       </DownloadButton>
     </LastMeetWrapper>
