@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TableTemplate from 'components/templates/TableTemplate';
 import TableList from 'components/organisms/TableList';
 
-//mapStateToProps, z tamtąd pobieram meetingHistory
-// const TimetablePage = ({ meetingHistory }) => (
-//     <MainTemplate tableHeader={<Header />} tableMenu={<TableMenu />}>
-//         <TableList meetingHistory={meetingHistory} />
-//     </MainTemplate>
-// );
+import { fetchMeets as fetchMeetsAction } from 'selectors/FetchMeets';
+import { connect } from 'react-redux';
 
-const TimetablePage = () => (
-    <TableTemplate>
-        <TableList />
-    </TableTemplate>
-);
+const TimetablePage = ({ schedules, fetchMeets }) => {
+    useEffect(() => {
+        fetchMeets()
+    }, []);
 
-export default TimetablePage;
+    return (
+        <TableTemplate>
+            {/* <TableList data={meetings} /> */}
+            {/* {meetings.map(() => <div>hehe</div>)} */}
+        </TableTemplate>
+    );
+};
+
+const mapStateToProps = ({ schedules }) => ({
+    schedules,
+});
+
+const mapDispatchToProps = dispatch => ({
+    fetchMeets: () => dispatch(fetchMeetsAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TimetablePage);

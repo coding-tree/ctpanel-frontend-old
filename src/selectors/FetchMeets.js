@@ -1,17 +1,15 @@
-import { fetchMeetsPending, fetchMeetsSuccess, fetchMeetsError } from 'actions';
+import { fetchSchedulesPending, fetchSchedulesSuccess, fetchSchedulesError } from 'actions';
 
-const fetchMeets = () => dispatch => {
-    return fetch('http://www.mocky.io/v2/5e14ccd42d00002b0016739e')
+export const fetchMeets = () => dispatch => {
+    return fetch('http://www.mocky.io/v2/5e1e09953600002b00c74577')
         .then(res => res.json())
-        .then(res => {
-            if (res.error) {
-                throw (res.error);
-            }
-            dispatch(fetchMeetsSuccess(res))
+        .then(payload => {
+            // if (res.error) {
+            //     throw (res.error);
+            // }
+            dispatch(fetchSchedulesSuccess(payload))
         })
         .catch(error => {
             //dispatch(fetchMeetsError(error));
         })
 }
-
-export default fetchMeets;
