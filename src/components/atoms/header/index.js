@@ -1,5 +1,9 @@
 import React from 'react';
-import StyledHeader from './Style';
+import styled, { css } from 'styled-components';
+
+const StyledHeader = styled.h1`
+    display: flex;
+`;
 
 const Header = ({ children }) => {
     return (

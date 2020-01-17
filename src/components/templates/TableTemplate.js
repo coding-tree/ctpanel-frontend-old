@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import styled from 'styled-components';
-import Header from 'components/atoms/Header/Header';
+import Header from 'components/atoms/Header';
 import TableMenu from 'components/organisms/TableMenu';
 
 const StyledWrapper = styled.div`
@@ -21,9 +21,9 @@ const TableTemplate = ({ location, children }) => {
     return (
         <StyledWrapper>
             <Header>
-                {actuallyLocation === schedules && "HARMONOGRAM"}
+                {/* {actuallyLocation === schedules && "HARMONOGRAM"}
                 {actuallyLocation === topicDatabase && "BAZA TEMATÓW"}
-                {actuallyLocation === meetingHistory && "HISTORIA SPOTKAŃ"}
+                {actuallyLocation === meetingHistory && "HISTORIA SPOTKAŃ"} */}
             </Header>
             <StyledContainer>
                 <TableMenu actuallyLocation={actuallyLocation} />

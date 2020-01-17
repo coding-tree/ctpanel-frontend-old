@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const Header = styled.header`
+const StyledHeader = styled.header`
 
 `;
 
-export default Header;
+export default StyledHeader;
