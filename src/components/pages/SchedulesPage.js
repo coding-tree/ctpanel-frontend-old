@@ -10,7 +10,7 @@ const TimetablePage = ({ schedules, fetchMeets }) => {
         fetchMeets()
     }, []);
 
-    const meetings = [
+    const meetingsList = [
         {
             usefulLinks: [
 
@@ -27,7 +27,7 @@ const TimetablePage = ({ schedules, fetchMeets }) => {
 
     return (
         <TableTemplate>
-            <TableList data={meetings} />
+            <TableList meetingsList={meetingsList} />
         </TableTemplate>
     );
 };

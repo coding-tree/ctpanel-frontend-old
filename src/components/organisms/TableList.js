@@ -7,7 +7,7 @@ const StyledWrapper = styled.div`
 
 `;
 
-const TableList = meetingsList => {
+const TableList = ({ meetingsList }) => {
     return (
         <StyledWrapper>
             {/* <TableListMenu /> */}
