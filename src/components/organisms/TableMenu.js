@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
-  
+  height: 75px;
 `;
 
 const TableMenu = ({ actuallyLocation }) => {
@@ -12,7 +12,7 @@ const TableMenu = ({ actuallyLocation }) => {
 
     return (
         <StyledWrapper>
-            {actuallyLocation === schedules && (
+            {/* {actuallyLocation === schedules && (
                 <>
                     <button>DODAJ +</button>
                     <input type="text" />
@@ -36,7 +36,7 @@ const TableMenu = ({ actuallyLocation }) => {
                     </select>
                     <input type="text" />
                 </>
-            )}
+            )} */}
         </StyledWrapper>
     )
 };

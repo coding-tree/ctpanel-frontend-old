@@ -22,7 +22,7 @@ const TimetablePage = ({ schedules, fetchMeets }) => {
             duration: 324234,
             resourcesURL: "REW",
             __v: 0
-        }
+        },
     ];
 
     return (
