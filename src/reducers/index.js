@@ -1,22 +1,22 @@
 import { GET_SCHEDULES_REQUEST, GET_SCHEDULES_SUCCESS, GET_SCHEDULES_FAILURE } from 'actions';
 
-// const initialState = {
-//   meetingHistory: {
-//     pending: false,
-//     meetings: [],
-//     error: null,
-//   },
-//   schedules: {
-//     pending: false,
-//     meetings: [],
-//     error: null,
-//   },
-//   topicDatabases: {
-//     pending: false,
-//     meetings: [],
-//     error: null,
-//   },
-// };
+const initialState = {
+  meetingHistory: {
+    pending: false,
+    meetings: [],
+    error: null,
+  },
+  schedules: {
+    pending: false,
+    meetings: [],
+    error: null,
+  },
+  topicDatabases: {
+    pending: false,
+    meetings: [],
+    error: null,
+  },
+};
 
 const tableReducer = (state = initialState, action) => {
   switch (action.type) {

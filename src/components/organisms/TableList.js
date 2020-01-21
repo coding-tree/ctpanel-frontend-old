@@ -7,11 +7,11 @@ const StyledWrapper = styled.div`
 
 `;
 
-const TableList = data => {
-    const { pending, meetings, error } = data;
+const TableList = meetingsList => {
     return (
         <StyledWrapper>
-
+            {/* <TableListMenu /> */}
+            {meetingsList.map(meetingData => <TableElement meetingData={meetingData} />)}
         </StyledWrapper>
     );
 };

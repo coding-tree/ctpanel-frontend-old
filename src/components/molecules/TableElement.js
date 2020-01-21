@@ -5,7 +5,7 @@ const StyledWrapper = styled.div`
 
 `;
 
-const TableElement = () => {
+const TableElement = ({ _id, date, topic, leader, duration, usefulLinks, resourcesURL }) => {
     return (
         <StyledWrapper>
             Element 1

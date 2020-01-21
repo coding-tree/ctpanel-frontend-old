@@ -8,8 +8,8 @@ const StyledWrapper = styled.div`
   
 `;
 
-const StyledContainer = styled.div`
-  
+const StyledTableContainer = styled.div`
+  width: 100%;
 `;
 
 const TableTemplate = ({ location, children }) => {
@@ -25,10 +25,10 @@ const TableTemplate = ({ location, children }) => {
                 {actuallyLocation === topicDatabase && "BAZA TEMATÓW"}
                 {actuallyLocation === meetingHistory && "HISTORIA SPOTKAŃ"} */}
             </Header>
-            <StyledContainer>
+            <StyledTableContainer>
                 <TableMenu actuallyLocation={actuallyLocation} />
                 {children}
-            </StyledContainer>
+            </StyledTableContainer>
         </StyledWrapper>
     )
 }
