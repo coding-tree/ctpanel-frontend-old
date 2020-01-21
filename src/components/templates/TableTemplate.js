@@ -5,11 +5,17 @@ import Header from 'components/atoms/Header';
 import TableMenu from 'components/organisms/TableMenu';
 
 const StyledWrapper = styled.div`
-  
+  padding: 75px 100px 0 100px;
 `;
 
-const StyledContainer = styled.div`
-  
+const StyledTableContainer = styled.div`
+    flex-direction: column;
+    width: 100%;
+    height: 500px;
+    padding: 20px;
+    border-radius: 30px;
+    box-shadow: 0px 0px 70px 5px rgba(0,0,0,0.06); 
+    background: #ffffff;
 `;
 
 const TableTemplate = ({ location, children }) => {
@@ -25,10 +31,10 @@ const TableTemplate = ({ location, children }) => {
                 {actuallyLocation === topicDatabase && "BAZA TEMATÓW"}
                 {actuallyLocation === meetingHistory && "HISTORIA SPOTKAŃ"} */}
             </Header>
-            <StyledContainer>
+            <StyledTableContainer>
                 <TableMenu actuallyLocation={actuallyLocation} />
                 {children}
-            </StyledContainer>
+            </StyledTableContainer>
         </StyledWrapper>
     )
 }
