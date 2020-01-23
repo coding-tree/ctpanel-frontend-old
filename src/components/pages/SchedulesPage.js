@@ -9,7 +9,7 @@ const TimetablePage = ({ schedules, fetchMeets }) => {
     useEffect(() => {
         fetchMeets()
     }, []);
-
+    console.log(schedules)
     const meetingsList = [
         {
             usefulLinks: [
@@ -96,8 +96,15 @@ const mapStateToProps = ({ schedules }) => ({
     schedules,
 });
 
+const fetchParameters = {
+    methodType: "GET",
+    requestDataType: "meetings",
+    generalAttribute: "",
+    specyficAttribute: "",
+}
+
 const mapDispatchToProps = dispatch => ({
-    fetchMeets: () => dispatch(fetchMeetsAction()),
+    fetchMeets: () => dispatch(fetchMeetsAction('schedules', fetchParameters)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TimetablePage);

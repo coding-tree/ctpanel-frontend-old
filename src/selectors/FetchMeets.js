@@ -20,22 +20,23 @@ export const fetchMeets = (location, fetchParameters) => dispatch => {
     };
     const url = createURL();
 
-    return () => {
+    const getData = () => {
         try {
             fetch(url, {
                 method: methodType,
             })
                 .then(response => {
-                    if (response.status === 201) {
-                        console.log('success', `E-mail został wysłany poprawnie.`)
+                    if (response.status === 200) {
+                        console.log('success', `Dane zostały pobrane.`)
                         return response.json();
                     }
                     if (response.status >= 100 && response.status <= 199) return console.log('error', `Przekroczono czas połączenia lub serwer odrzucił połączenie.<br />Spróbuj ponownie`);
-                    if (response.status >= 400 && response.status <= 499) return console.log('error', `Błąd aplikacji. Mail nie został wysłany.`);
-                    if (response.status >= 500 && response.status <= 599) return console.log('error', `Błąd serwera. Mail nie został wysłany.`);
+                    if (response.status >= 400 && response.status <= 499) return console.log('error', `Błąd aplikacji. Dane nie zostały pobrane.`);
+                    if (response.status >= 500 && response.status <= 599) return console.log('error', `Błąd serwera. Dane nie zostały pobrane.`);
                     return console.log('error', `Inna odpowiedź z serwera. Skontaktuj się z administratorem.`);
                 })
                 .then(data => {
+                    console.log(data)
                     switch (location) {
                         case meetingHistory: return dispatch(fetchSchedulesSuccess(data));
                         case schedules: return console.log("W trakcie pracy...");
@@ -52,4 +53,6 @@ export const fetchMeets = (location, fetchParameters) => dispatch => {
             console.log(error);
         }
     };
+
+    return getData();
 }
