@@ -20,26 +20,27 @@ const StyledSection = styled.div`
     }
 `;
 
-const TableElement = ({ _id, date, topic, leader, duration, usefulLinks, resourcesURL }) => {
+const TableElement = ({ meetingData }) => {
+    const { usefulLinks, _id, date, topic, leader, duration, resourcesURL } = meetingData;
     return (
-        <StyledWrapper>
+        <StyledWrapper key={_id}>
             <StyledSection>
-                <checkbox></checkbox>
+
             </StyledSection>
             <StyledSection>
                 <span>#129</span>
             </StyledSection>
             <StyledSection>
-                <span>10 Listopad 2019</span>
+                <span>{date}</span>
             </StyledSection>
             <StyledSection>
-                <span>React - Zaawansowane techniki hook's</span>
+                <span>{topic}</span>
             </StyledSection>
             <StyledSection>
-                <span>1h 30m</span>
+                <span>{duration}</span>
             </StyledSection>
             <StyledSection>
-                <span>Damian Ospara</span>
+                <span>{leader}</span>
             </StyledSection>
         </StyledWrapper>
     );

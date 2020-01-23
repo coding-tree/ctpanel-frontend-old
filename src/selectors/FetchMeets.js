@@ -36,10 +36,9 @@ export const fetchMeets = (location, fetchParameters) => dispatch => {
                     return console.log('error', `Inna odpowiedź z serwera. Skontaktuj się z administratorem.`);
                 })
                 .then(data => {
-                    console.log(data)
                     switch (location) {
-                        case meetingHistory: return dispatch(fetchSchedulesSuccess(data));
-                        case schedules: return console.log("W trakcie pracy...");
+                        case meetingHistory: return console.log("W trakcie pracy...");
+                        case schedules: return dispatch(fetchSchedulesSuccess(data));
                         case topicDatabases: return console.log("W trakcie pracy...");
                     }
                 })
