@@ -1,6 +1,7 @@
 import { fetchSchedulesPending, fetchSchedulesSuccess, fetchSchedulesError } from 'actions';
 
-export const fetchMeets = (methodType, requestDataType, generalAttribute, specyficAttribute) => dispatch => {
+export const fetchMeets = (location, fetchParameters) => dispatch => {
+    const { methodType, requestDataType, generalAttribute, specyficAttribute } = fetchParameters
     const meetingHistory = "meetingHistory";
     const schedules = "schedules";
     const topicDatabases = "topicDatabases";
@@ -16,27 +17,39 @@ export const fetchMeets = (methodType, requestDataType, generalAttribute, specyf
         if (specyficAttribute !== "") url += `/${specyficAttribute}`;
 
         return url;
-    }
+    };
     const url = createURL();
 
-    return fetch(url, {
-        method: methodType,
-    })
-        .then(response => {
-            if (!response) return console.log("Błąd");
-            if (response.status >= 500) return console.log("Błąd serwera");
-            if (response.status <= 501) return console.log("Błąd aplikacji");
-            return responsee.json();
-        })
-        .then(data => {
-            switch (meetType) {
-                case meetingHistory: return dispatch(fetchSchedulesSuccess(data));
-                case schedules: return console.log("W trakcie pracy...");
-                case topicDatabases: return console.log("W trakcie pracy...");
-            }
-        })
-        .catch(error => {
-            dispatch(fetchMeetsError(error));
-            console.log("Błąd");
-        });
-};
+    return () => {
+        try {
+            fetch(url, {
+                method: methodType,
+            })
+                .then(response => {
+                    if (response.status === 201) {
+                        console.log('success', `E-mail został wysłany poprawnie.`)
+                        return response.json();
+                    }
+                    if (response.status >= 100 && response.status <= 199) return console.log('error', `Przekroczono czas połączenia lub serwer odrzucił połączenie.<br />Spróbuj ponownie`);
+                    if (response.status >= 400 && response.status <= 499) return console.log('error', `Błąd aplikacji. Mail nie został wysłany.`);
+                    if (response.status >= 500 && response.status <= 599) return console.log('error', `Błąd serwera. Mail nie został wysłany.`);
+                    return console.log('error', `Inna odpowiedź z serwera. Skontaktuj się z administratorem.`);
+                })
+                .then(data => {
+                    switch (location) {
+                        case meetingHistory: return dispatch(fetchSchedulesSuccess(data));
+                        case schedules: return console.log("W trakcie pracy...");
+                        case topicDatabases: return console.log("W trakcie pracy...");
+                    }
+                })
+                .catch(error => {
+                    //dispatch(fetchMeetsError(error));
+                    console.log("Błąd");
+                });
+
+        } catch (error) {
+            console.log('error', `Wystąpił krytyczny błąd podczas wysyłki e-mail'a.<br />Mail nie został wysłany.`);
+            console.log(error);
+        }
+    };
+}
