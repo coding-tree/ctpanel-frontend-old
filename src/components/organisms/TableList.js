@@ -11,7 +11,7 @@ const TableList = ({ meetingsList }) => {
     return (
         <StyledWrapper>
             <TableListMenu />
-            {meetingsList.map(meetingData => <TableElement meetingData={meetingData} />)}
+            {meetingsList !== undefined && meetingsList.map(meetingData => <TableElement meetingData={meetingData} />)}
         </StyledWrapper>
     );
 };
