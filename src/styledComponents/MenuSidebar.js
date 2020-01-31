@@ -10,6 +10,23 @@ export const StyledWrapper = styled.nav`
   min-width: 340px;
   height: 100vh;
   background-color: ${variables.colorMain};
+  overflow-y: auto;
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #f5f5f5;
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    background-color: #f5f5f5;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #555;
+  }
 `;
 
 export const TitleWrapper = styled.header`
@@ -27,10 +44,12 @@ export const TitleWrapper = styled.header`
 export const MenuWrapper = styled.div`
   width: 100%;
   justify-content: flex-end;
+  flex-grow: 1;
 `;
 
 export const StyledLinksList = styled.ul`
   flex-direction: column;
+
   width: 313px;
 `;
 
@@ -59,10 +78,10 @@ export const MenuIcon = styled.i`
 `;
 
 export const CopyrightWrapper = styled.div`
-  position: absolute;
   width: 100%;
   bottom: 5rem;
   justify-content: center;
   color: ${variables.colorWhite};
   font-size: 1.6rem;
+  margin-bottom: 2rem;
 `;
