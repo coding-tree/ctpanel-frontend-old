@@ -50,6 +50,8 @@ export const fetchMeets = (location, fetchParameters) => dispatch => {
               return dispatch(fetchSchedulesSuccess(data));
             case topicDatabases:
               return console.log('W trakcie pracy...');
+            default:
+              return console.log('Default');
           }
         })
         .catch(error => {

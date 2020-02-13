@@ -6,7 +6,7 @@ const Anchor = styled.a`
   font-weight: bold;
   transition: 0.3s;
   cursor: pointer;
-  font-size: ${props => props.fontSize && props.fontSize};
+  font-size: ${({fontSize}) => fontSize}
   &:hover {
     color: ${variables.colorMain};
     transition: 0.3s;

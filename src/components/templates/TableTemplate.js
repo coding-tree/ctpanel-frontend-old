@@ -3,6 +3,7 @@ import {withRouter} from 'react-router';
 import styled from 'styled-components';
 import Header from 'components/atoms/Header';
 import TableMenu from 'components/organisms/TableMenu';
+import variables from 'settings/variables';
 
 const StyledWrapper = styled.div`
   height: 100%;
@@ -19,10 +20,9 @@ const StyledTableContainer = styled.div`
 
 const StyledTable = styled.div`
   flex-direction: column;
-
-  padding: 20px;
+  padding: 2.8rem 2.2rem;
   border-radius: 30px;
-  box-shadow: 0px 0px 70px 5px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0 10px ${variables.boxShadowColor};
   background: #ffffff;
 `;
 

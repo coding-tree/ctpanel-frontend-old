@@ -11,6 +11,8 @@ const Button = styled.button`
   transition: 0.3s;
   width: ${({width}) => width && width};
   height: ${({height}) => height && height};
+  font-family: ${variables.mainFont};
+  text-transform: ${({uppercase}) => uppercase && 'uppercase'};
   &:hover {
     transition: 0.3s;
     color: ${variables.colorMain};
@@ -18,6 +20,9 @@ const Button = styled.button`
   ${({primary}) =>
     primary &&
     css`
+    font-size: 1.6rem;
+    font-weight: bold;
+    
     color: ${variables.colorWhite}
     background-color: ${variables.colorMain};
     &:hover {

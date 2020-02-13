@@ -1,17 +1,24 @@
 import React from 'react';
 
-const DataLabel = ({date}) => {
+const DataLabel = ({date, table}) => {
   const timestamp = new Date().setMilliseconds(date);
-  const formattedDate = new Intl.DateTimeFormat('pl-PL', {
+  const defaultFormat = {
     year: 'numeric',
     month: 'numeric',
     day: 'numeric',
     weekday: 'long',
     hour: 'numeric',
     minute: 'numeric',
-  }).format(timestamp);
+  };
+  const tableFormat = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+  const formattedDate = new Intl.DateTimeFormat('pl-PL', defaultFormat).format(timestamp);
+  const formattedTableDate = new Intl.DateTimeFormat('pl-PL', tableFormat).format(timestamp);
 
-  return <div>{formattedDate} - </div>;
+  return <div> {table ? formattedTableDate : `${formattedDate} - `}</div>;
 };
 
 export default DataLabel;

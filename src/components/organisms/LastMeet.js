@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import React, {lazy} from 'react';
 import styled from 'styled-components';
 import variables from 'settings/variables';
 
@@ -15,10 +15,11 @@ const LastMeetWrapper = styled.div`
   background-color: ${variables.colorWhite};
   flex-direction: column;
   border-radius: 1rem;
+  box-shadow: 0 0 10px ${variables.boxShadowColor};
 `;
 
-const LastMeet = ({ lastMeet }) => {
-  const { leader, topic, date, description, usefulLinks, resourcesURL } = lastMeet;
+const LastMeet = ({lastMeet}) => {
+  const {leader, topic, date, description, usefulLinks, resourcesURL} = lastMeet;
 
   return (
     <LastMeetWrapper>

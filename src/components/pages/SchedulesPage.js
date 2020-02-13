@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 const TimetablePage = ({schedules, fetchMeets}) => {
   useEffect(() => {
     fetchMeets();
-  }, []);
+  }, [fetchMeets]);
 
   return (
     <TableTemplate>
