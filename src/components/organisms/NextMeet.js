@@ -13,12 +13,13 @@ const StyledWrapper = styled.div`
   justify-content: space-between;
   padding: 0 10rem;
   background-color: ${variables.colorWhite};
+  margin-bottom: 100px;
 `;
 
 const NextMeet = () => {
   const fakeData = {
     id: 1,
-    date: 1578864600,
+    date: 1578864600000,
     title: 'Testowanie komponentów przy użyciu JEST',
   };
 

@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import TableTemplate from 'components/templates/TableTemplate';
 import TableList from 'components/organisms/TableList';
-
 import {fetchMeets as fetchMeetsAction} from 'selectors/FetchMeets';
 import {connect} from 'react-redux';
 
 const TimetablePage = ({schedules, fetchMeets}) => {
+  console.log(schedules);
   useEffect(() => {
     fetchMeets();
   }, [fetchMeets]);

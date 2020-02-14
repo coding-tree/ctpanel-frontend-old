@@ -83,5 +83,5 @@ export const CopyrightWrapper = styled.div`
   justify-content: center;
   color: ${variables.colorWhite};
   font-size: 1.6rem;
-  margin-bottom: 2rem;
+  margin-bottom: 5rem;
 `;
