@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import LastMeet from 'components/organisms/LastMeet';
-import { getLastMeet } from 'api';
-
+import {getLastMeet} from 'api';
 import styled from 'styled-components';
 
 const HomeWrapper = styled.div`
@@ -14,9 +13,7 @@ const Home = () => {
   const [lastMeet, setLastMeet] = useState(null);
 
   useEffect(() => {
-    getLastMeet()
-      .then(resp => resp.json())
-      .then(data => setLastMeet(data));
+    getLastMeet().then(data => setLastMeet(data));
   }, []);
 
   return <HomeWrapper>{lastMeet && <LastMeet lastMeet={lastMeet}></LastMeet>}</HomeWrapper>;

@@ -4,4 +4,5 @@ export const routes = {
   topicDatabase: '/baza-tematow',
   history: '/historia-spotkan',
   account: '/konto',
+  login: '/logowanie',
 };

@@ -7,6 +7,7 @@ import store from 'store';
 import MenuSidebar from 'components/organisms/MenuSidebar';
 import NextMeet from 'components/organisms/NextMeet';
 import MainTemplate from 'components/templates/MainTemplate';
+import LoginPage from 'components/pages/LoginPage';
 
 const Home = lazy(() => import('components/pages/HomePage'));
 const Timetable = lazy(() => import('components/pages/SchedulesPage'));
@@ -33,6 +34,7 @@ const Root = () => (
             <Route exact strict path={routes.topicDatabase} component={TopicDatabase} />
             <Route exact strict path={routes.history} component={History} />
             <Route exact strict path={routes.account} component={Account} />
+            <Route exact strict path={routes.login} component={LoginPage} />
           </Switch>
         </Suspense>
       </MainTemplate>
