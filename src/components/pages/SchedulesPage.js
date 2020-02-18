@@ -12,7 +12,7 @@ const TimetablePage = ({schedules, fetchMeets}) => {
 
   return (
     <TableTemplate>
-      <TableList meetingsList={schedules.meetings} />
+      <TableList meetingsList={schedules.meetings.results} />
     </TableTemplate>
   );
 };
