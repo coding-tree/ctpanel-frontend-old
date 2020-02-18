@@ -6,4 +6,6 @@ export default {
   colorFont: 'rgba(0,0,0,.8)',
   colorLink: '#9D9EA3',
   backgroundColor: '#F8F6F7',
+  boxShadowColor: 'rgba(0,0,0,.05)',
+  checkboxColor: '#EFE5E6',
 };

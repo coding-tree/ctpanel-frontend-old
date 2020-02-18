@@ -1,16 +1,8 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-const StyledHeader = styled.h1`
-    display: flex;
+const Header = styled.h1`
+  display: flex;
+  padding-bottom: ${({tableTitle}) => tableTitle && '3rem'};
 `;
-
-const Header = ({ children }) => {
-    return (
-        <StyledHeader>
-            {children}
-        </StyledHeader>
-    );
-};
 
 export default Header;

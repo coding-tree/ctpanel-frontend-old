@@ -3,18 +3,25 @@ import styled from 'styled-components';
 import TableListMenu from 'components/molecules/TableListMenu';
 import TableElement from 'components/molecules/TableElement';
 
-const StyledWrapper = styled.div`
+const StyledTableWrapper = styled.table`
   flex-direction: column;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 1.6rem;
+  font-weight: bold;
 `;
+
+const StyledTableBody = styled.tbody``;
 
 const TableList = ({meetingsList}) => {
   return (
-    <StyledWrapper>
+    <StyledTableWrapper>
       <TableListMenu />
-      {meetingsList &&
-        meetingsList.results !== undefined &&
-        meetingsList.results.map((meetingData, index) => <TableElement key={index} meetingData={meetingData} />)}
-    </StyledWrapper>
+      <StyledTableBody>
+        {meetingsList !== undefined &&
+          meetingsList.map(meetingData => <TableElement key={meetingData.id} meetingData={meetingData} />)}
+      </StyledTableBody>
+    </StyledTableWrapper>
   );
 };
 
