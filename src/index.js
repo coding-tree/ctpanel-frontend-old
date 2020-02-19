@@ -6,10 +6,8 @@ import config from 'config/auth0-config.json';
 import history from 'utils/history';
 
 const onRedirectCallback = appState => {
-  // TODO: Auth0: Application Login URI
-  // We have to check if it's correct because I think it's too complicated and I can't see this in documenation
   history.push(appState && appState.targetUrl ? appState.targetUrl : window.location.pathname);
-  history.go(0);
+  history.go(appState && appState.targetUrl);
 };
 
 ReactDOM.render(
