@@ -6,7 +6,7 @@ const Anchor = styled.a`
   font-weight: bold;
   transition: 0.3s;
   cursor: pointer;
-  font-size: ${({fontSize}) => fontSize}
+  font-size: ${({fontSize}) => fontSize};
   &:hover {
     color: ${variables.colorMain};
     transition: 0.3s;
@@ -18,6 +18,14 @@ const Anchor = styled.a`
       align-items: center;
       padding: 0.9rem 3.3rem;
       color: ${variables.colorWhite};
+    `}
+  ${props =>
+    props.social &&
+    css`
+      color: ${variables.colorMain};
+      &:hover {
+        color: ${variables.colorWhite};
+      }
     `}
 `;
 
