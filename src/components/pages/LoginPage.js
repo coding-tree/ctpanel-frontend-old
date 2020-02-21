@@ -40,6 +40,10 @@ const StyledContainer = styled.div`
 
 const LoginPage = () => {
   const {loginWithRedirect} = useAuth0();
+
+  const login = () => {
+    window.location.href = 'http://localhost:3001/login2';
+  };
   return (
     <LoginTemplate>
       <StyledBackground>
@@ -64,7 +68,7 @@ const LoginPage = () => {
               Zobacz live demo
             </Title>
 
-            <Button primary standard onClick={() => loginWithRedirect()}>
+            <Button primary standard onClick={() => login()}>
               Zaloguj się
             </Button>
           </StyledContainer>
