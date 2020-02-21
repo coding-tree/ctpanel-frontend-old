@@ -1,26 +1,21 @@
 import React from 'react';
 import MainTemplate from 'components/templates/MainTemplate';
-import {useAuth0} from 'react-auth0-spa';
+import {useEffect} from 'react';
 
 const AccountPage = () => {
-  const {user, loading, logout} = useAuth0();
+  useEffect(() => {
+    fetch('/user')
+      .then(resp => resp.json())
+      .then(data => console.log(data));
+  });
+  const logout = () => {
+    window.location.href = 'http://localhost:3001/logout';
+  };
 
   return (
     <MainTemplate>
       <h1>Twoje dane</h1>
-      {loading && <div>Ładowanie...</div>}
-      {!loading && user && (
-        <div style={{flexDirection: 'column'}}>
-          <h1>{user.name}</h1>
-          <h2>{user.nickname}</h2>
-          <h2>{user.username}</h2>
-          <h2>{user.email}</h2>
-          <img style={{width: '100px', height: '100px'}} src={user.picture} alt="" />
-          <div>
-            <button onClick={() => logout()}>Wyloguj się</button>
-          </div>
-        </div>
-      )}
+      <button onClick={() => logout()}>Wyloguj się</button>
     </MainTemplate>
   );
 };

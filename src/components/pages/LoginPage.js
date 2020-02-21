@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import {useAuth0} from 'react-auth0-spa';
 import LoginTemplate from 'components/templates/LoginTemplate';
 import variables from 'settings/variables';
 import Title from 'components/atoms/Title';
@@ -39,10 +38,8 @@ const StyledContainer = styled.div`
 `;
 
 const LoginPage = () => {
-  const {loginWithRedirect} = useAuth0();
-
   const login = () => {
-    window.location.href = 'http://localhost:3001/login2';
+    window.location.href = 'http://localhost:3001/login';
   };
   return (
     <LoginTemplate>

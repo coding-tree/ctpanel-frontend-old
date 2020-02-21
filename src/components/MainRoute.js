@@ -1,11 +1,11 @@
 import React, {lazy, Suspense} from 'react';
 
 import {routes} from 'routes';
-import {Switch} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 
 import MenuSidebar from 'components/organisms/MenuSidebar';
 import NextMeet from 'components/organisms/NextMeet';
-import PrivateRoute from 'components/PrivateRoute';
+// import PrivateRoute from 'components/PrivateRoute';
 import LoadingSpinner from './atoms/LoadingSpinner';
 import MainTemplate from './templates/MainTemplate';
 
@@ -22,11 +22,11 @@ const MainRoute = () => {
       <NextMeet />
       <Suspense fallback={<LoadingSpinner />}>
         <Switch>
-          <PrivateRoute exact path={routes.home} component={Home} />
-          <PrivateRoute exact strict path={routes.timetable} component={Timetable} />
-          <PrivateRoute exact strict path={routes.topicDatabase} component={TopicDatabase} />
-          <PrivateRoute exact strict path={routes.history} component={History} />
-          <PrivateRoute exact strict path={routes.account} component={Account} />
+          <Route exact path={routes.home} component={Home} />
+          <Route exact strict path={routes.timetable} component={Timetable} />
+          <Route exact strict path={routes.topicDatabase} component={TopicDatabase} />
+          <Route exact strict path={routes.history} component={History} />
+          <Route exact strict path={routes.account} component={Account} />
         </Switch>
       </Suspense>
     </MainTemplate>
