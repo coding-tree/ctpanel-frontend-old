@@ -5,7 +5,7 @@ export const fetchMeets = (location, fetchParameters) => dispatch => {
   const meetingHistory = 'meetingHistory';
   const schedules = 'schedules';
   const topicDatabases = 'topicDatabases';
-
+  
   //Wymagane stringi
   const createURL = () => {
     let url;
