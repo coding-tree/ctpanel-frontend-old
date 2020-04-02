@@ -1,5 +1,5 @@
-import React, {Suspense, lazy} from 'react';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import React, {Suspense, lazy, useState, useEffect} from 'react';
+import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 
 import {Provider} from 'react-redux';
 import store from 'store';
@@ -8,7 +8,30 @@ import LoadingSpinner from 'components/atoms/LoadingSpinner';
 const LoginPage = lazy(() => import('components/pages/LoginPage'));
 const MainRoute = lazy(() => import('components/MainRoute'));
 
-const Root = () => {
+const Root = props => {
+  const [user, setUser] = useState(undefined);
+  useEffect(() => {
+    fetch('/user')
+      .then(resp => resp.json())
+      .then(data => setUser(JSON.stringify(data)))
+      .catch(err => {
+        console.log(err);
+      });
+  });
+  if (user) {
+    return (
+      <Provider store={store}>
+        <BrowserRouter>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Switch>
+              <Route strict exact path="/login" component={LoginPage} />
+              <Redirect to="/login" />
+            </Switch>
+          </Suspense>
+        </BrowserRouter>
+      </Provider>
+    );
+  }
   return (
     <Provider store={store}>
       <BrowserRouter>
