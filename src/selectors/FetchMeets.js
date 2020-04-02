@@ -1,5 +1,4 @@
 import {fetchSchedulesSuccess} from 'actions';
-require('dotenv').config({path: '../../.env'});
 
 export const fetchMeets = (location, fetchParameters) => dispatch => {
   const {methodType, requestDataType, generalAttribute, specyficAttribute} = fetchParameters;
@@ -17,11 +16,8 @@ export const fetchMeets = (location, fetchParameters) => dispatch => {
       console.log('Błąd, nie mogą być podane dwa argumenty jednocześnie!');
     if (generalAttribute !== '') url += `/${generalAttribute}`;
     if (specyficAttribute !== '') url += `/${specyficAttribute}`;
-    if(process.env.PRODUCTION !== undefined) {
-      return `/api/${url}`;
-    } else {
-      return url;
-    }
+
+    return url;
   };
   const url = createURL();
 
