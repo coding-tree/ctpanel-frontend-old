@@ -8,16 +8,6 @@ import {withRouter} from 'react-router-dom';
 
 const TimetablePage = ({schedules, fetchMeets, history, location}) => {
   useEffect(() => {
-    fetch('/user')
-      .then(resp => resp.json())
-      .then(data => console.log(data))
-      .catch(err => {
-        history.push('/login');
-        console.log(err);
-      });
-  });
-
-  useEffect(() => {
     fetchMeets();
   }, [fetchMeets]);
 

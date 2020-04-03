@@ -18,7 +18,7 @@ const Root = props => {
         console.log(err);
       });
   });
-  if (user) {
+  if (!user) {
     return (
       <Provider store={store}>
         <BrowserRouter>
@@ -32,18 +32,20 @@ const Root = props => {
       </Provider>
     );
   }
-  return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <Suspense fallback={<LoadingSpinner />}>
-          <Switch>
-            <Route strict exact path="/login" component={LoginPage} />
-            <Route path="/" component={MainRoute} />
-          </Switch>
-        </Suspense>
-      </BrowserRouter>
-    </Provider>
-  );
+  if (user) {
+    return (
+      <Provider store={store}>
+        <BrowserRouter>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Switch>
+              <Route strict exact path="/login" component={MainRoute} />
+              <Route path="/" component={MainRoute} />
+            </Switch>
+          </Suspense>
+        </BrowserRouter>
+      </Provider>
+    );
+  }
 };
 
 export default Root;

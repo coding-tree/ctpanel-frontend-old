@@ -11,15 +11,6 @@ const HomeWrapper = styled.div`
 `;
 
 const Home = ({history, location}) => {
-  useEffect(() => {
-    fetch('/user')
-      .then(resp => resp.json())
-      .then(data => console.log(data))
-      .catch(err => {
-        history.push('/login');
-        console.log(err);
-      });
-  });
   const [lastMeet, setLastMeet] = useState(null);
 
   useEffect(() => {

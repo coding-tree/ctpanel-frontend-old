@@ -10,11 +10,9 @@ const AccountPage = ({history, location}) => {
       .then(resp => resp.json())
       .then(data => setUser(JSON.stringify(data)))
       .catch(err => {
-        history.push('/login');
         console.log(err);
       });
   });
-
   const logout = () => {
     window.location.href = 'http://localhost:3001/logout';
   };

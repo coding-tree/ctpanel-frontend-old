@@ -5,15 +5,6 @@ import {withRouter} from 'react-router-dom';
 //Tutaj będzie pobierany content i przekazywany dalej.
 
 const TopicDatabasePage = ({history, location}) => {
-  useEffect(() => {
-    fetch('/user')
-      .then(resp => resp.json())
-      .then(data => console.log(data))
-      .catch(err => {
-        history.push('/');
-        console.log(err);
-      });
-  });
   return (
     <TableTemplate>
       <ListOfElements />
