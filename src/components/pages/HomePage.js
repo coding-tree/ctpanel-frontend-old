@@ -14,7 +14,7 @@ const Home = ({history, location}) => {
   const [lastMeet, setLastMeet] = useState(null);
 
   useEffect(() => {
-    getLastMeet().then(data => setLastMeet(data));
+    getLastMeet().then((data) => setLastMeet(data));
   }, []);
 
   return <HomeWrapper>{lastMeet && <LastMeet lastMeet={lastMeet}></LastMeet>}</HomeWrapper>;

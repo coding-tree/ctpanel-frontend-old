@@ -15,10 +15,15 @@ const Root = (props) => {
       .then((resp) => resp.json())
       .then((data) => setUser(JSON.stringify(data)))
       .catch((err) => {
+        setUser(false);
         console.log(err);
       });
     console.log(user);
   }, [user]);
+
+  if (user === undefined) {
+    return <div>Loading...</div>;
+  }
 
   if (user) {
     return (
@@ -27,13 +32,13 @@ const Root = (props) => {
           <Suspense fallback={<LoadingSpinner />}>
             <Switch>
               <Route path="/" component={MainRoute} />
-              <Route strict exact path="/login" component={MainRoute} />
             </Switch>
           </Suspense>
         </BrowserRouter>
       </Provider>
     );
   }
+
   if (!user) {
     return (
       <Provider store={store}>
