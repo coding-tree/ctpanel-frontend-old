@@ -21,22 +21,25 @@ const Account = lazy(() => import('components/pages/AccountPage'));
 
 const Root = (props) => {
   const [user, setUser] = useState(undefined);
+  const [isLoggedIn, setIsLoggedIn] = useState(undefined);
   useEffect(() => {
     fetch('/user')
       .then((resp) => resp.json())
-      .then((data) => setUser(JSON.stringify(data)))
+      .then((data) => {
+        setIsLoggedIn(true);
+        setUser(data);
+      })
       .catch((err) => {
-        setUser(false);
+        setIsLoggedIn(false);
         console.log(err);
       });
-    console.log(user);
-  }, [user]);
+  }, [isLoggedIn]);
 
-  if (user === undefined) {
+  if (isLoggedIn === undefined) {
     return <div>Loading...</div>;
   }
 
-  if (user) {
+  if (isLoggedIn) {
     return (
       <Provider store={store}>
         <BrowserRouter>
@@ -59,7 +62,7 @@ const Root = (props) => {
     );
   }
 
-  if (!user) {
+  if (!isLoggedIn) {
     return (
       <Provider store={store}>
         <BrowserRouter>

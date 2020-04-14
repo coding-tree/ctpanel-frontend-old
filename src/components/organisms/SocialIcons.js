@@ -10,6 +10,7 @@ const StyledSocialIcons = styled.div`
   font-size: 3.2rem;
   margin-top: 2rem;
   & > a {
+    font-weight: 400;
     padding: 0 2rem;
   }
 `;
