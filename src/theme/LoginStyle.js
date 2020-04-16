@@ -2,7 +2,7 @@ import {createGlobalStyle} from 'styled-components';
 import variables from 'settings/variables';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-const GlobalStyle = createGlobalStyle`
+const LoginStyle = createGlobalStyle`
   
   *, *::before, *::after {
     margin: 0;
@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
   
   body {
     width: 100vw;
-    min-height: 100vh;
+    height: 100vh;
     font-size: 1.6rem;
     font-family: ${variables.mainFont};
     background-color: ${variables.backgroundColor};
@@ -31,9 +31,9 @@ const GlobalStyle = createGlobalStyle`
 
   #root {
     position: absolute;
-    left: 340px;
     width: calc(100% - 340px);
     flex-direction: column;
+    height: 100vh;
   }
 
   ul{
@@ -46,4 +46,4 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export default GlobalStyle;
+export default LoginStyle;

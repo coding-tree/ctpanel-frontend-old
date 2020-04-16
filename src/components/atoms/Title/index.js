@@ -3,7 +3,7 @@ import variables from 'settings/variables';
 
 const Title = styled.div`
   font-size: ${props => (props.fontSize ? props.fontSize : '2rem')};
-  color: ${props => (props.important ? variables.colorMain : variables.colorFont)};
+  color: ${props => (props.important ? variables.colorMain : variables.colorHeader)};
   text-transform: ${props => (props.uppercase ? 'uppercase' : 'initial')};
   font-weight: bold;
   padding: ${props => (props.padding ? props.padding : 'initial')};

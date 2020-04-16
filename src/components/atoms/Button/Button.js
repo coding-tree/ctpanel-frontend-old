@@ -17,6 +17,12 @@ const Button = styled.button`
     transition: 0.3s;
     color: ${variables.colorMain};
   }
+  ${({standard}) =>
+    standard &&
+    css`
+      width: 144px;
+      height: 42px;
+    `}
   ${({primary}) =>
     primary &&
     css`

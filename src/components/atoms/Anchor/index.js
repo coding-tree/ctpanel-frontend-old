@@ -19,6 +19,14 @@ const Anchor = styled.a`
       padding: 0.9rem 3.3rem;
       color: ${variables.colorWhite};
     `}
+  ${props =>
+    props.social &&
+    css`
+      color: ${variables.colorMain};
+      &:hover {
+        color: ${variables.colorWhite};
+      }
+    `}
 `;
 
 export default Anchor;

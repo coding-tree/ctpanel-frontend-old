@@ -1,10 +1,29 @@
-import React from 'react';
+import React, {useState} from 'react';
 import MainTemplate from 'components/templates/MainTemplate';
+import {useEffect} from 'react';
+import {withRouter} from 'react-router-dom';
 
-const AccountPage = () => (
+const AccountPage = ({history, location}) => {
+  const [user, setUser] = useState(undefined);
+  useEffect(() => {
+    fetch('/user')
+      .then(resp => resp.json())
+      .then(data => setUser(JSON.stringify(data)))
+      .catch(err => {
+        console.log(err);
+      });
+  });
+  const logout = () => {
+    window.location.href = 'http://localhost:3001/logout';
+  };
+
+  return (
     <MainTemplate>
-        <h1>AccountPage</h1>
+      <h1>Twoje dane</h1>
+      <h3>{user}</h3>
+      <button onClick={() => logout()}>Wyloguj się</button>
     </MainTemplate>
-);
+  );
+};
 
-export default AccountPage;
+export default withRouter(AccountPage);

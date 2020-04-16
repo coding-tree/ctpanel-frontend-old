@@ -1,3 +1,4 @@
 export const getLastMeet = () => {
-  return fetch('/meetings/last-one');
+    let url = '/meetings/last-one'
+  return fetch(`${url}`).then(resp => resp.json());
 };

@@ -3,16 +3,16 @@ import TableTemplate from 'components/templates/TableTemplate';
 import TableList from 'components/organisms/TableList';
 import {fetchMeets as fetchMeetsAction} from 'selectors/FetchMeets';
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 
-const TimetablePage = ({schedules, fetchMeets}) => {
-  console.log(schedules);
+const TimetablePage = ({schedules, fetchMeets, history, location}) => {
   useEffect(() => {
     fetchMeets();
   }, [fetchMeets]);
 
   return (
     <TableTemplate>
-      <TableList meetingsList={schedules.meetings} />
+      <TableList meetingsList={schedules.meetings.results} />
     </TableTemplate>
   );
 };
@@ -32,4 +32,4 @@ const mapDispatchToProps = dispatch => ({
   fetchMeets: () => dispatch(fetchMeetsAction('schedules', fetchParameters)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TimetablePage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TimetablePage));

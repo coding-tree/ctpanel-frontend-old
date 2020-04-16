@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import TableTemplate from 'components/templates/TableTemplate';
+import {withRouter} from 'react-router-dom';
 
-const HistoryPage = () => (
+const HistoryPage = ({history, location}) => {
+  return (
     <TableTemplate>
-        <h1>HistoryPage</h1>
+      <h1>HistoryPage</h1>
     </TableTemplate>
-);
+  );
+};
 
-export default HistoryPage;
+export default withRouter(HistoryPage);

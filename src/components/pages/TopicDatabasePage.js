@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
 import TableTemplate from 'components/templates/TableTemplate';
 import ListOfElements from 'components/organisms/TableList';
-//Tutaj będzie pobierany content i przekazywany dalej.
+import {withRouter} from 'react-router-dom';
 
 const TopicDatabasePage = () => {
   useEffect(() => {
     fetch('/topics')
-      .then(resp => resp.json())
-      .then(data => console.log(data));
+      .then((resp) => resp.json())
+      .then((data) => console.log(data));
   }, []);
   return (
     <TableTemplate>
@@ -16,4 +16,4 @@ const TopicDatabasePage = () => {
   );
 };
 
-export default TopicDatabasePage;
+export default withRouter(TopicDatabasePage);
