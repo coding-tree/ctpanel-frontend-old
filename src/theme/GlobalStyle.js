@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
   
   body {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     font-size: 1.6rem;
     font-family: ${variables.mainFont};
     background-color: ${variables.backgroundColor};
@@ -34,7 +34,6 @@ const GlobalStyle = createGlobalStyle`
     left: 340px;
     width: calc(100% - 340px);
     flex-direction: column;
-    height: 100vh;
   }
 
   ul{

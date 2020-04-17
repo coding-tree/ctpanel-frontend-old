@@ -13,6 +13,7 @@ import {
 } from 'styledComponents/MenuSidebar';
 
 const MenuSidebar = () => {
+  const year = new Date().getFullYear();
   return (
     <StyledWrapper>
       <TitleWrapper>Manager Spotkań</TitleWrapper>
@@ -49,7 +50,7 @@ const MenuSidebar = () => {
           </StyledLinkElement>
         </StyledLinksList>
       </MenuWrapper>
-      <CopyrightWrapper>Copyright &#169; Coding Tree | 2019</CopyrightWrapper>
+      <CopyrightWrapper>Copyright &#169; Coding Tree | {year}</CopyrightWrapper>
     </StyledWrapper>
   );
 };

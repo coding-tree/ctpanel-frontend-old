@@ -4,6 +4,35 @@ import Icon from 'components/atoms/Icon';
 import variables from 'settings/variables';
 import Checkbox from 'components/atoms/Checkbox';
 
+const TableListMenu = () => {
+  return (
+    <StyledWrapper>
+      <StyledTableRow>
+        <StyledTableHead>
+          <Checkbox disabled type="checkbox"></Checkbox>
+        </StyledTableHead>
+        <StyledTableHead>
+          ID <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+        <StyledTableHead>
+          Data <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+        <StyledTableHead>
+          Temat spotkania <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+        <StyledTableHead right>
+          Planowany czas trwania <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+        <StyledTableHead right>
+          Prowadzący <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+      </StyledTableRow>
+    </StyledWrapper>
+  );
+};
+
+export default TableListMenu;
+
 const StyledWrapper = styled.thead`
   align-items: center;
   height: 50px;
@@ -28,32 +57,3 @@ const StyledTableHead = styled.th`
   }
   text-align: ${({right}) => right && 'right'};
 `;
-
-const TableListMenu = () => {
-  return (
-    <StyledWrapper>
-      <StyledTableRow>
-        <StyledTableHead>
-          <Checkbox type="checkbox"></Checkbox>
-        </StyledTableHead>
-        <StyledTableHead>
-          ID <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-        <StyledTableHead>
-          Data <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-        <StyledTableHead>
-          Temat spotkania <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-        <StyledTableHead right>
-          Planowany czas trwania <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-        <StyledTableHead right>
-          Prowadzący <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-      </StyledTableRow>
-    </StyledWrapper>
-  );
-};
-
-export default TableListMenu;

@@ -1,10 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import TableTemplate from 'components/templates/TableTemplate';
 import ListOfElements from 'components/organisms/TableList';
 import {withRouter} from 'react-router-dom';
-//Tutaj będzie pobierany content i przekazywany dalej.
 
-const TopicDatabasePage = ({history, location}) => {
+const TopicDatabasePage = () => {
+  useEffect(() => {
+    fetch('/topics')
+      .then((resp) => resp.json())
+      .then((data) => console.log(data));
+  }, []);
   return (
     <TableTemplate>
       <ListOfElements />

@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import React, {lazy} from 'react';
 import styled from 'styled-components';
 
 const Title = lazy(() => import('components/atoms/Title'));
@@ -12,7 +12,7 @@ const LinkWrapper = styled.div`
   padding: 0.5rem 0;
 `;
 
-const LastMeetLinks = ({ usefulLinks }) => {
+const LastMeetLinks = ({usefulLinks}) => {
   return (
     <StyledWrapper>
       <Title padding="0 0 2rem 0">Przydatne linki ze spotkania</Title>
@@ -23,8 +23,8 @@ const LastMeetLinks = ({ usefulLinks }) => {
             <Title padding="0 1rem 0 0" fontSize="1.6rem" link>
               #{index + 1}
             </Title>
-            <Anchor as="a" href={el.url} target="_blank">
-              {el.url}
+            <Anchor as="a" href={el} target="_blank">
+              {el}
             </Anchor>
           </LinkWrapper>
         ))}

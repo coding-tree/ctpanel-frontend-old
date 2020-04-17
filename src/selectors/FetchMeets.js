@@ -19,6 +19,7 @@ export const fetchMeets = (location, fetchParameters) => dispatch => {
 
     return url;
   };
+
   const url = createURL();
 
   const getData = () => {

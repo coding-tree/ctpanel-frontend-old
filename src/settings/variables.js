@@ -9,4 +9,6 @@ export default {
   backgroundColor: '#F8F6F7',
   boxShadowColor: 'rgba(0,0,0,.05)',
   checkboxColor: '#EFE5E6',
+  tableHeaderColor: '#FCFBFC',
+  tableBorderColor: '#F3EEF0',
 };

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
 import Icon from '../Icon';
@@ -11,7 +11,7 @@ const StyledWrapper = styled.div`
   justify-content: center;
   align-items: center;
   transition: 0.1s background;
-  cursor: pointer;
+  cursor: ${({disabled}) => (!disabled ? 'pointer' : 'not-allowed')};
   ${({checked}) =>
     checked &&
     css`
@@ -22,12 +22,11 @@ const StyledWrapper = styled.div`
 `;
 const StyledCheckbox = styled.input``;
 
-const Checkbox = () => {
-  const [isChecked, toggleChecked] = useState(false);
+const Checkbox = ({isSelected, setSelection, disabled}) => {
   return (
-    <StyledWrapper checked={isChecked} onClick={() => toggleChecked(!isChecked)}>
-      <Icon fontSize="1rem" className={isChecked && 'fas fa-check'}></Icon>
-      <StyledCheckbox value={isChecked} type="checkbox" hidden></StyledCheckbox>
+    <StyledWrapper checked={isSelected} disabled={disabled} onClick={() => !disabled && setSelection(!isSelected)}>
+      <Icon fontSize="1rem" className={isSelected && 'fas fa-check'}></Icon>
+      <StyledCheckbox value={isSelected} type="checkbox" hidden></StyledCheckbox>
     </StyledWrapper>
   );
 };
