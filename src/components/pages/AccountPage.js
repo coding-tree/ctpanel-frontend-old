@@ -14,11 +14,11 @@ const AccountPage = ({history, location}) => {
       .catch((err) => {
         console.log(err);
       });
-  }, [user]);
+  }, []);
+  console.table(user);
   const logout = () => {
     window.location.href = 'http://localhost:3001/logout';
   };
-  const {displayName, id, nickname, picture, role} = user;
   return (
     <MainTemplate>
       <div
@@ -31,9 +31,7 @@ const AccountPage = ({history, location}) => {
         }}
       >
         <h1>Twoje dane</h1>
-        <h3>{displayName}</h3>
-        <p>{role}</p>
-        <img style={{width: '150px', height: '150px', borderRadius: '50%'}} src={picture} />
+        {/* <img style={{width: '150px', height: '150px', borderRadius: '50%'}} src={user.picture} /> */}
         <button style={{display: 'block', width: '150px', marginTop: '24px'}} onClick={() => logout()}>
           Wyloguj się
         </button>

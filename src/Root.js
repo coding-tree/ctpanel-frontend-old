@@ -39,6 +39,14 @@ const Root = (props) => {
     return <div>Loading...</div>;
   }
 
+  if (isLoggedIn === undefined) {
+    return (
+      <Switch>
+        <Redirect to="/" />
+      </Switch>
+    );
+  }
+
   if (isLoggedIn) {
     return (
       <Provider store={store}>
