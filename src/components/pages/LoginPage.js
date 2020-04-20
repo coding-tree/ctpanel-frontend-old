@@ -37,7 +37,7 @@ const StyledContainer = styled.div`
   align-items: center;
 `;
 
-const LoginPage = () => {
+const LoginPage = ({originalUrl}) => {
   const login = () => {
     window.location.href = 'http://localhost:3001/login';
   };

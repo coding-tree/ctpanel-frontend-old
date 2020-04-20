@@ -22,6 +22,8 @@ const Account = lazy(() => import('components/pages/AccountPage'));
 const Root = (props) => {
   const [user, setUser] = useState(undefined);
   const [isLoggedIn, setIsLoggedIn] = useState(undefined);
+  const [originalUrl, setOriginalUrl] = useState(undefined);
+
   useEffect(() => {
     fetch('/user')
       .then((resp) => resp.json())
@@ -34,6 +36,17 @@ const Root = (props) => {
         console.log(err);
       });
   }, [isLoggedIn]);
+
+  useEffect(() => {
+    setOriginalUrl(localStorage.getItem('originalUrl'));
+    console.log(originalUrl, isLoggedIn);
+    console.log('jozek');
+
+    if (originalUrl && originalUrl !== '/') {
+      window.location.replace(`http://localhost:3000${originalUrl}`);
+    }
+    localStorage.removeItem('originalUrl');
+  }, [originalUrl]);
 
   if (isLoggedIn === undefined) {
     return <div>Loading...</div>;
@@ -71,6 +84,7 @@ const Root = (props) => {
   }
 
   if (!isLoggedIn) {
+    localStorage.setItem('originalUrl', window.location.pathname);
     return (
       <Provider store={store}>
         <BrowserRouter>
