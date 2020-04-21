@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import TableTemplate from 'components/templates/TableTemplate';
-import ListOfElements from 'components/organisms/TableList';
+import TableList from 'components/organisms/TableList';
 import {withRouter} from 'react-router-dom';
 
 const TopicDatabasePage = () => {
@@ -11,7 +11,7 @@ const TopicDatabasePage = () => {
   }, []);
   return (
     <TableTemplate>
-      <ListOfElements />
+      <TableList meetingsList={[{}]} />
     </TableTemplate>
   );
 };

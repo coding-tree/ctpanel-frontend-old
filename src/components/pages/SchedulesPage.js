@@ -5,7 +5,7 @@ import {fetchMeets as fetchMeetsAction} from 'selectors/FetchMeets';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
-const TimetablePage = ({schedules, fetchMeets, history, location}) => {
+const TimetablePage = ({schedules, fetchMeets}) => {
   useEffect(() => {
     fetchMeets();
   }, [fetchMeets]);

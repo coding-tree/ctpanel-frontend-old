@@ -50,11 +50,25 @@ const SchedulesTableElement = ({meetingData, isSelected, setSelection}) => (
 )
 
 const TopicDataBaseTableElement = () => (
-  <div>div</div>
+  <StyledRow>
+    <StyledTableData></StyledTableData>
+    <StyledTableData></StyledTableData>
+    <StyledTableData></StyledTableData>
+    <StyledTableData></StyledTableData>
+    <StyledTableData></StyledTableData>
+    <StyledTableData></StyledTableData>
+  </StyledRow>
 )
 
 const MeetingHistoryTableElement = () => (
-  <div>div</div>
+  <StyledRow>
+    <StyledTableData></StyledTableData>
+    <StyledTableData></StyledTableData>
+    <StyledTableData></StyledTableData>
+    <StyledTableData></StyledTableData>
+    <StyledTableData></StyledTableData>
+    <StyledTableData></StyledTableData>
+  </StyledRow>
 )
 
 const TableElement = ({location, meetingData}) => {
