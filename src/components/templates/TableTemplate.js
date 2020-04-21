@@ -5,30 +5,8 @@ import Header from 'components/atoms/Header';
 import TableMenu from 'components/organisms/TableMenu';
 import variables from 'settings/variables';
 
-const TableTemplate = ({location, children}) => {
-  const actuallyLocation = location.pathname
-    .slice(1)
-    .split('-')
-    .join(' ')
-    .toUpperCase();
-
-  return (
-    <StyledWrapper>
-      <StyledTableContainer>
-        <Header tableTitle>{actuallyLocation}</Header>
-        <StyledTable>
-          <TableMenu actuallyLocation={actuallyLocation} />
-          {children}
-        </StyledTable>
-      </StyledTableContainer>
-    </StyledWrapper>
-  );
-};
-
-export default withRouter(TableTemplate);
-
 const StyledWrapper = styled.div`
-  min-height: 100%;
+  height: 100%;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -47,3 +25,21 @@ const StyledTable = styled.div`
   box-shadow: 0 0 10px ${variables.boxShadowColor};
   background: #ffffff;
 `;
+
+const TableTemplate = ({location, children}) => {
+  const actuallyLocation = location.pathname
+
+  return (
+    <StyledWrapper>
+      <StyledTableContainer>
+        <Header tableTitle>{actuallyLocation.slice(1).toUpperCase()}</Header>
+        <StyledTable>
+          <TableMenu actuallyLocation={actuallyLocation} />
+          {children}
+        </StyledTable>
+      </StyledTableContainer>
+    </StyledWrapper>
+  );
+};
+
+export default withRouter(TableTemplate);
