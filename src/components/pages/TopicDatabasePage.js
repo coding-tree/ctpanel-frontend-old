@@ -1,19 +1,42 @@
 import React, {useEffect} from 'react';
+import {withRouter} from 'react-router-dom';
+import {fetchMeets as fetchMeetsAction} from 'selectors/FetchMeets';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import TableTemplate from 'components/templates/TableTemplate';
 import TableList from 'components/organisms/TableList';
-import {withRouter} from 'react-router-dom';
 
-const TopicDatabasePage = () => {
+
+const TopicDatabasePage = ({topicDatabases, fetchMeets}) => {
   useEffect(() => {
-    fetch('/topics')
-      .then((resp) => resp.json())
-      .then((data) => console.log(data));
-  }, []);
+    fetchMeets();
+  }, [fetchMeets]);
+
+  // useEffect(() => {
+  //   fetch('/topics')
+  //     .then((resp) => resp.json())
+  //     .then((data) => console.log(data));
+  // }, []);
   return (
     <TableTemplate>
-      <TableList meetingsList={[{}]} />
+      <TableList topicDatabases={topicDatabases.meetings.results} />
     </TableTemplate>
   );
 };
 
-export default withRouter(TopicDatabasePage);
+const mapStateToProps = ({topicDatabases}) => ({
+  topicDatabases,
+});
+
+const fetchParameters = {
+  methodType: 'GET',
+  requestDataType: 'topicDatabases',
+  generalAttribute: '',
+  specyficAttribute: '',
+};
+
+const mapDispatchToProps = dispatch => ({
+  fetchMeets: () => dispatch(fetchMeetsAction('schedules', fetchParameters)),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TopicDatabasePage));
