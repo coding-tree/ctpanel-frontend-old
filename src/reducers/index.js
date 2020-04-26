@@ -1,4 +1,4 @@
-import { GET_SCHEDULES_REQUEST, GET_SCHEDULES_SUCCESS, GET_SCHEDULES_FAILURE } from 'actions';
+import { GET_MEETS_REQUEST, GET_MEETS_SUCCESS, GET_MEETS_FAILURE } from 'actions';
 
 const initialState = {
   meetingHistory: {
@@ -6,37 +6,43 @@ const initialState = {
     meetings: [],
     error: null,
   },
-  schedules: {
+  meetings: {
     pending: false,
     meetings: [],
     error: null,
   },
-  topicDatabases: {
+  topics: {
     pending: false,
     meetings: [],
     error: null,
   },
 };
 
-const tableReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_SCHEDULES_REQUEST:
+const tableReducer = (state = initialState, {type, payload, meetType}) => {
+  switch (type) {
+    case GET_MEETS_REQUEST:
       return {
         ...state,
-        pending: true
+        [meetType]: {
+          ...state[meetType],
+          pending: true
+        }
       }
-    case GET_SCHEDULES_SUCCESS:
+    case GET_MEETS_SUCCESS:
       return {
         ...state,
-        schedules: {
-          ...state.schedules,
-          meetings: action.payload,
-        },
+        [meetType]: {
+          ...state[meetType],
+          meetings: payload
+        }
       }
-    case GET_SCHEDULES_FAILURE:
+    case GET_MEETS_FAILURE:
       return {
         ...state,
-        pending: false
+        [meetType]: {
+          ...state[meetType],
+          error: true
+        }
       }
     default:
       return state;

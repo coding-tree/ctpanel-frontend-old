@@ -1,17 +1,20 @@
-export const GET_SCHEDULES_REQUEST = 'GET_SCHEDULES_REQUEST';
-export const GET_SCHEDULES_SUCCESS = 'GET_SCHEDULES_SUCCESS';
-export const GET_SCHEDULES_FAILURE = 'GET_SCHEDULES_FAILURE';
+export const GET_MEETS_REQUEST = 'GET_MEETS_REQUEST';
+export const GET_MEETS_SUCCESS = 'GET_MEETS_SUCCESS';
+export const GET_MEETS_FAILURE = 'GET_MEETS_FAILURE';
 
-export const fetchSchedulesPending = () => ({
-  type: GET_SCHEDULES_REQUEST,
+export const fetchMeetsPending = meetType => ({
+  type: GET_MEETS_REQUEST,
+  meetType
 });
 
-export const fetchSchedulesSuccess = payload => ({
-  type: GET_SCHEDULES_SUCCESS,
+export const fetchMeetsSuccess = (payload, meetType) => ({
+  type: GET_MEETS_SUCCESS,
   payload,
+  meetType
 });
 
-export const fetchSchedulesError = error => ({
-  type: GET_SCHEDULES_FAILURE,
+export const fetchMeetsError = (error, meetType) => ({
+  type: GET_MEETS_FAILURE,
   error,
+  meetType
 });
