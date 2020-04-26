@@ -1,68 +1,32 @@
-import {fetchSchedulesSuccess} from 'actions';
+import {fetchMeetsPending, fetchMeetsSuccess, fetchMeetsError} from 'actions';
 
-export const fetchMeets = (location, fetchParameters) => dispatch => {
+export const fetchMeets = fetchParameters => dispatch => {
   const {methodType, requestDataType, generalAttribute, specyficAttribute} = fetchParameters;
-  const meetingHistory = 'meetingHistory';
-  const schedules = 'schedules';
-  const topicDatabases = 'topicDatabases';
-  
-  //Wymagane stringi
-  const createURL = () => {
-    let url;
-    if (requestDataType !== '') url = requestDataType;
-    else console.log('Wymagany jest pierwszy paramentr!');
 
-    if ((generalAttribute !== '') ^ (specyficAttribute !== ''))
-      console.log('Błąd, nie mogą być podane dwa argumenty jednocześnie!');
-    if (generalAttribute !== '') url += `/${generalAttribute}`;
-    if (specyficAttribute !== '') url += `/${specyficAttribute}`;
-
-    return url;
+  const createUrl = () => {
+    if (generalAttribute !== '') return `${requestDataType}/${generalAttribute}`;
+    if (specyficAttribute !== '') return `${requestDataType}/${specyficAttribute}`;
+    if (requestDataType !== '') return requestDataType;
   };
 
-  const url = createURL();
-
   const getData = () => {
+    const url = createUrl();
+
     try {
       fetch(url, {
         method: methodType,
       })
         .then(response => {
-          if (response.status === 200) {
-            console.log('success', `Dane zostały pobrane.`);
-            return response.json();
-          }
-          if (response.status >= 100 && response.status <= 199)
-            return console.log(
-              'error',
-              `Przekroczono czas połączenia lub serwer odrzucił połączenie.<br />Spróbuj ponownie`
-            );
-          if (response.status >= 400 && response.status <= 499)
-            return console.log('error', `Błąd aplikacji. Dane nie zostały pobrane.`);
-          if (response.status >= 500 && response.status <= 599)
-            return console.log('error', `Błąd serwera. Dane nie zostały pobrane.`);
-          return console.log('error', `Inna odpowiedź z serwera. Skontaktuj się z administratorem.`);
+          if (response.status === 200) return response.json();
+          if (response.status >= 400 && response.status <= 499) throw new Error(`There is problem: Błąd aplikacji. Dane nie zostały pobrane.`)
+          if (response.status >= 500 && response.status <= 599) throw new Error(`There is problem: Błąd serwera. Dane nie zostały pobrane.`)
+          throw new Error(`There is problem: Inna odpowiedź z serwera. Skontaktuj się z administratorem.`)
         })
-        .then(data => {
-          switch (location) {
-            case meetingHistory:
-              return console.log('W trakcie pracy...');
-            case schedules:
-              return dispatch(fetchSchedulesSuccess(data));
-            case topicDatabases:
-              return console.log('W trakcie pracy...');
-            default:
-              return console.log('Default');
-          }
-        })
-        .catch(error => {
-          //dispatch(fetchMeetsError(error));
-          console.log('Błąd');
-        });
+        .then(data => dispatch(fetchMeetsSuccess(data, requestDataType)))
+        .catch(error => dispatch(fetchMeetsError(error, requestDataType)));
     } catch (error) {
-      console.log('error', `Wystąpił krytyczny błąd podczas wysyłki e-mail'a.<br />Mail nie został wysłany.`);
-      console.log(error);
-    }
+      throw new Error(`There is problem: ${error}`)
+    };
   };
 
   return getData();
