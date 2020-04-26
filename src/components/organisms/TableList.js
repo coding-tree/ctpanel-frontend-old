@@ -14,6 +14,7 @@ const StyledTableWrapper = styled.table`
 const StyledTableBody = styled.tbody``;
 
 const TableList = ({meetingsList}) => {
+
   return (
     <StyledTableWrapper>
       <TableListMenu />
