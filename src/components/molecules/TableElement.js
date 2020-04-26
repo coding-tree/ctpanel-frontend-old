@@ -39,24 +39,47 @@ const SchedulesTableElement = ({meetingData, isSelected, setSelection}) => (
     <StyledTableData>
       <Checkbox type="checkbox" isSelected={isSelected} setSelection={setSelection}></Checkbox>
     </StyledTableData>
-    <StyledTableData mainColor>#{meetingData.id}</StyledTableData>
+    <StyledTableData mainColor>
+      #{meetingData.id}
+    </StyledTableData>
     <StyledTableData>
       <StyledDate format="DD MMMM YYYY" date={meetingData.date}></StyledDate>
     </StyledTableData>
-    <StyledTableData>{meetingData.topic}</StyledTableData>
-    <StyledTableData right>{meetingData.duration}</StyledTableData>
-    <StyledTableData right>{meetingData.leader}</StyledTableData>
+    <StyledTableData>
+      {meetingData.topic}
+    </StyledTableData>
+    <StyledTableData right>
+      {meetingData.duration}
+    </StyledTableData>
+    <StyledTableData right>
+      {meetingData.leader}
+    </StyledTableData>
   </StyledRow>
 )
 
-const TopicDataBaseTableElement = () => (
-  <StyledRow>
-    <StyledTableData></StyledTableData>
-    <StyledTableData></StyledTableData>
-    <StyledTableData></StyledTableData>
-    <StyledTableData></StyledTableData>
-    <StyledTableData></StyledTableData>
-    <StyledTableData></StyledTableData>
+const TopicDataBaseTableElement = ({meetingData, isSelected, setSelection}) => (
+  <StyledRow isSelected={isSelected}>
+    <StyledTableData>
+      <Checkbox type="checkbox" isSelected={isSelected} setSelection={setSelection}></Checkbox>
+    </StyledTableData>
+    <StyledTableData mainColor>
+      #{meetingData.id}
+    </StyledTableData>
+    <StyledTableData>
+      {meetingData.topic}
+    </StyledTableData>
+    <StyledTableData>
+      Kategoria
+    </StyledTableData>
+    <StyledTableData>
+      {meetingData.userAdded}
+    </StyledTableData>
+    <StyledTableData>
+      {meetingData.votes}
+    </StyledTableData>
+    <StyledTableData>
+      Zagłosuj
+    </StyledTableData>
   </StyledRow>
 )
 
@@ -75,7 +98,7 @@ const TableElement = ({location, meetingData}) => {
   const [isSelected, setSelection] = useState(false);
   switch(location.pathname){
     case "/harmonogram": return <SchedulesTableElement meetingData={meetingData} isSelected={isSelected} setSelection={setSelection}/>
-    case "/baza-tematow": return <TopicDataBaseTableElement />
+    case "/baza-tematow": return <TopicDataBaseTableElement meetingData={meetingData} isSelected={isSelected} setSelection={setSelection}/>
     case "/historia-spotkan": return <MeetingHistoryTableElement />
   }
 };
