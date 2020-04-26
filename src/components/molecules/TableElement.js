@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import Checkbox from 'components/atoms/Checkbox';
 import variables from 'settings/variables';
 import StyledDate from 'components/atoms/StyledDate';
@@ -33,6 +33,12 @@ const StyledTableData = styled.td`
 
   text-align: ${({right}) => right && 'right'};
   color: ${({mainColor}) => mainColor && variables.colorLink};
+
+  ${({buttonsTableData}) => buttonsTableData && 
+  css`
+    display: flex;
+    justify-content: space-around;
+  `}
 `;
 
 const SchedulesTableElement = ({meetingData, isSelected, setSelection}) => (
@@ -78,7 +84,7 @@ const TopicDataBaseTableElement = ({meetingData, isSelected, setSelection}) => (
     <StyledTableData>
       {meetingData.votes}
     </StyledTableData>
-    <StyledTableData>
+    <StyledTableData buttonsTableData>
       <Button meetVote meetVoteUp>+</Button>
       <Button meetVote meetVoteDown>-</Button>
     </StyledTableData>
