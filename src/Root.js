@@ -33,14 +33,14 @@ const Root = (props) => {
       })
       .catch((err) => {
         setIsLoggedIn(false);
-        console.log(err);
+        //console.log(err);
       });
   }, [isLoggedIn]);
 
   useEffect(() => {
     setOriginalUrl(localStorage.getItem('originalUrl'));
-    console.log(originalUrl, isLoggedIn);
-    console.log('jozek');
+    //console.log(originalUrl, isLoggedIn);
+    //console.log('jozek');
 
     if (originalUrl && originalUrl !== '/') {
       window.location.replace(`http://localhost:3000${originalUrl}`);
