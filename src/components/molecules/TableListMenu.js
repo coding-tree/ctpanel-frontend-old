@@ -1,37 +1,9 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import styled from 'styled-components';
 import Icon from 'components/atoms/Icon';
 import variables from 'settings/variables';
 import Checkbox from 'components/atoms/Checkbox';
-
-const TableListMenu = () => {
-  return (
-    <StyledWrapper>
-      <StyledTableRow>
-        <StyledTableHead>
-          <Checkbox disabled type="checkbox"></Checkbox>
-        </StyledTableHead>
-        <StyledTableHead>
-          ID <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-        <StyledTableHead>
-          Data <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-        <StyledTableHead>
-          Temat spotkania <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-        <StyledTableHead right>
-          Planowany czas trwania <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-        <StyledTableHead right>
-          Prowadzący <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-      </StyledTableRow>
-    </StyledWrapper>
-  );
-};
-
-export default TableListMenu;
 
 const StyledWrapper = styled.thead`
   align-items: center;
@@ -57,3 +29,91 @@ const StyledTableHead = styled.th`
   }
   text-align: ${({right}) => right && 'right'};
 `;
+
+const SchedulesTableListMenu = () => (
+  <StyledWrapper>
+      <StyledTableRow>
+        <StyledTableHead>
+          <Checkbox disabled type="checkbox"></Checkbox>
+        </StyledTableHead>
+        <StyledTableHead>
+          ID <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+        <StyledTableHead>
+          Data <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+        <StyledTableHead>
+          Temat spotkania <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+        <StyledTableHead right>
+          Planowany czas trwania <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+        <StyledTableHead right>
+          Prowadzący <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+      </StyledTableRow>
+    </StyledWrapper>
+)
+
+const TopicDataBaseTableListMenu = () => (
+  <StyledWrapper>
+      <StyledTableRow>
+        <StyledTableHead>
+          <Checkbox disabled type="checkbox"></Checkbox>
+        </StyledTableHead>
+        <StyledTableHead>
+          ID <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+        <StyledTableHead>
+          Temat spotkania
+        </StyledTableHead>
+        <StyledTableHead>
+          Kategoria <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+        <StyledTableHead right>
+          Inicjator <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+        <StyledTableHead right>
+          Ocena <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+        <StyledTableHead right>
+          Zagłosuj <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+      </StyledTableRow>
+    </StyledWrapper>
+)
+
+const MeetingHistoryTableListMenu = () => (
+  <StyledWrapper>
+  <StyledTableRow>
+    <StyledTableHead>
+      <Checkbox disabled type="checkbox"></Checkbox>
+    </StyledTableHead>
+    <StyledTableHead>
+      ID <Icon className="fas fa-sort"></Icon>
+    </StyledTableHead>
+    <StyledTableHead>
+      Data <Icon className="fas fa-sort"></Icon>
+    </StyledTableHead>
+    <StyledTableHead>
+      Temat spotkania <Icon className="fas fa-sort"></Icon>
+    </StyledTableHead>
+    <StyledTableHead>
+      Prowadzący <Icon className="fas fa-sort"></Icon>
+    </StyledTableHead>
+    <StyledTableHead right>
+      Materiały <Icon className="fas fa-sort"></Icon>
+    </StyledTableHead>
+  </StyledTableRow>
+</StyledWrapper>
+)
+
+const TableListMenu = ({location}) => {
+  switch(location.pathname){
+    case "/harmonogram": return <SchedulesTableListMenu/>
+    case "/baza-tematow": return <TopicDataBaseTableListMenu/>
+    case "/historia-spotkan": return <MeetingHistoryTableListMenu />
+  }
+};
+
+export default withRouter(TableListMenu);

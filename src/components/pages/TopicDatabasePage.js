@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import TableTemplate from 'components/templates/TableTemplate';
 import TableList from 'components/organisms/TableList';
 
-
 const TopicDatabasePage = ({topics, fetchMeets}) => {
   useEffect(() => {
     fetchMeets();
