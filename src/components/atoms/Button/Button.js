@@ -13,6 +13,20 @@ const Button = styled.button`
   height: ${({height}) => height && height};
   font-family: ${variables.mainFont};
   text-transform: ${({uppercase}) => uppercase && 'uppercase'};
+
+  ${({meetVote}) => meetVote &&
+  css`
+    width: 42px;
+    height: 42px;
+    border: none;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 900;
+    ${({meetVoteUp}) => meetVoteUp && css`background-color: #009640;`}  
+    ${({meetVoteDown}) => meetVoteDown && css`background-color: #E53D00;`}  
+  `}
+
+  
   &:hover {
     transition: 0.3s;
     color: ${variables.colorMain};

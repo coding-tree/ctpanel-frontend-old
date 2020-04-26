@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Checkbox from 'components/atoms/Checkbox';
 import variables from 'settings/variables';
 import StyledDate from 'components/atoms/StyledDate';
+import Button from 'components/atoms/Button/Button';
 
 const StyledRow = styled.tr`
   align-items: center;
@@ -78,7 +79,8 @@ const TopicDataBaseTableElement = ({meetingData, isSelected, setSelection}) => (
       {meetingData.votes}
     </StyledTableData>
     <StyledTableData>
-      Zagłosuj
+      <Button meetVote meetVoteUp>+</Button>
+      <Button meetVote meetVoteDown>-</Button>
     </StyledTableData>
   </StyledRow>
 )
