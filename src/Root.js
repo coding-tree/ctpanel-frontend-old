@@ -27,7 +27,7 @@ const Root = (props) => {
   const [originalUrl, setOriginalUrl] = useState(undefined);
 
   useEffect(() => {
-    fetch('/user')
+    fetch('api/user')
       .then((resp) => resp.json())
       .then((data) => {
         setIsLoggedIn(true);

@@ -39,7 +39,7 @@ const StyledContainer = styled.div`
 
 const LoginPage = ({originalUrl}) => {
   const login = () => {
-    window.location.href = `${process.env.REACT_APP_URL}/login`;
+    window.location.href = `${process.env.REACT_APP_API}/login`;
   };
   return (
     <LoginTemplate>
