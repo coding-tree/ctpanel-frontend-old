@@ -11,6 +11,8 @@ import MenuSidebar from 'components/organisms/MenuSidebar';
 import NextMeet from 'components/organisms/NextMeet';
 import MainTemplate from './components/templates/MainTemplate';
 
+require('dotenv').config();
+
 const LoginPage = lazy(() => import('components/pages/LoginPage'));
 
 const Home = lazy(() => import('components/pages/HomePage'));
@@ -40,10 +42,9 @@ const Root = (props) => {
   useEffect(() => {
     setOriginalUrl(localStorage.getItem('originalUrl'));
     //console.log(originalUrl, isLoggedIn);
-    //console.log('jozek');
 
     if (originalUrl && originalUrl !== '/') {
-      window.location.replace(`http://localhost:3000${originalUrl}`);
+      window.location.replace(`${process.env.REACT_APP_URL}${originalUrl}`);
     }
     localStorage.removeItem('originalUrl');
   }, [originalUrl]);

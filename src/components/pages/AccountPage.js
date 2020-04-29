@@ -17,7 +17,7 @@ const AccountPage = ({history, location}) => {
   }, []);
   console.table(user);
   const logout = () => {
-    window.location.href = 'http://localhost:3001/logout';
+    window.location.href = `${process.env.REACT_APP_API}/logout`;
   };
   return (
     <MainTemplate>
