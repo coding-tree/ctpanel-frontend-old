@@ -6,7 +6,7 @@ export const fetchMeets = (fetchParameters) => (dispatch) => {
   const createUrl = () => {
     if (generalAttribute !== '') return `${requestDataType}/${generalAttribute}`;
     if (specyficAttribute !== '') return `${requestDataType}/${specyficAttribute}`;
-    if (requestDataType !== '') return `${process.env.REACT_APP_PREFIX}${requestDataType}`;
+    if (requestDataType !== '') return `${process.env.REACT_APP_PREFIX}/${requestDataType}`;
   };
 
   const getData = () => {
