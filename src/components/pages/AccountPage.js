@@ -3,10 +3,10 @@ import MainTemplate from 'components/templates/MainTemplate';
 import {useEffect} from 'react';
 import {withRouter} from 'react-router-dom';
 
-const AccountPage = ({history, location}) => {
+const AccountPage = () => {
   const [user, setUser] = useState({});
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_PREFIX}/user`)
+    fetch('/api/user')
       .then((resp) => resp.json())
       .then((data) => {
         setUser(data);
@@ -17,7 +17,7 @@ const AccountPage = ({history, location}) => {
   }, []);
   console.table(user);
   const logout = () => {
-    window.location.href = `${process.env.REACT_APP_API}/logout`;
+    window.location.href = '/api/logout';
   };
   return (
     <MainTemplate>

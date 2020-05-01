@@ -37,10 +37,12 @@ const StyledContainer = styled.div`
   align-items: center;
 `;
 
-const LoginPage = ({originalUrl}) => {
+const LoginPage = () => {
+  
   const login = () => {
-    window.location.href = `${process.env.REACT_APP_API}/login`;
+    window.location.href = `/api/login`;
   };
+  
   return (
     <LoginTemplate>
       <StyledBackground>

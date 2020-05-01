@@ -11,8 +11,6 @@ import MenuSidebar from 'components/organisms/MenuSidebar';
 import NextMeet from 'components/organisms/NextMeet';
 import MainTemplate from './components/templates/MainTemplate';
 
-require('dotenv').config();
-
 const LoginPage = lazy(() => import('components/pages/LoginPage'));
 
 const Home = lazy(() => import('components/pages/HomePage'));
@@ -26,7 +24,7 @@ const Root = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(undefined);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_PREFIX}/user`)
+    fetch(`/api/user`)
       .then((resp) => resp.json())
       .then((data) => {
         setIsLoggedIn(true);
