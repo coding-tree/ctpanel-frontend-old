@@ -6,7 +6,7 @@ import {withRouter} from 'react-router-dom';
 const AccountPage = ({history, location}) => {
   const [user, setUser] = useState({});
   useEffect(() => {
-    fetch('api/user')
+    fetch(`${process.env.REACT_APP_PREFIX}/user`)
       .then((resp) => resp.json())
       .then((data) => {
         setUser(data);

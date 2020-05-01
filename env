@@ -2,3 +2,4 @@ SKIP_PREFLIGHT_CHECK=true
 NODE_PATH=src
 REACT_APP_URL=http://localhost:3000
 REACT_APP_API=http://localhost:3001
+REACT_APP_PREFIX=

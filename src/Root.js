@@ -24,10 +24,9 @@ const Account = lazy(() => import('components/pages/AccountPage'));
 const Root = (props) => {
   const [user, setUser] = useState(undefined);
   const [isLoggedIn, setIsLoggedIn] = useState(undefined);
-  const [originalUrl, setOriginalUrl] = useState(undefined);
 
   useEffect(() => {
-    fetch('api/user')
+    fetch(`${process.env.REACT_APP_PREFIX}/user`)
       .then((resp) => resp.json())
       .then((data) => {
         setIsLoggedIn(true);
@@ -38,16 +37,6 @@ const Root = (props) => {
         //console.log(err);
       });
   }, [isLoggedIn]);
-
-  useEffect(() => {
-    setOriginalUrl(localStorage.getItem('originalUrl'));
-    //console.log(originalUrl, isLoggedIn);
-
-    if (originalUrl && originalUrl !== '/') {
-      window.location.replace(`${process.env.REACT_APP_URL}${originalUrl}`);
-    }
-    localStorage.removeItem('originalUrl');
-  }, [originalUrl]);
 
   if (isLoggedIn === undefined) {
     return <div>Loading...</div>;
@@ -85,7 +74,6 @@ const Root = (props) => {
   }
 
   if (!isLoggedIn) {
-    localStorage.setItem('originalUrl', window.location.pathname);
     return (
       <Provider store={store}>
         <BrowserRouter>
