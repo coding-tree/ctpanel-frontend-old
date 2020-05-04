@@ -16,41 +16,43 @@ const StyledTableActions = styled.div`
   padding: 0 30px 27px 13px;
 `;
 
-const TableMenu = ({actuallyLocation}) => {
-  const schedules = routes.timetable;
-  const topicDatabase = routes.topicDatabase;
-  const meetingHistory = routes.history;
+const SchedulesTableMenu = () => (
+  <StyledTableActions>
+      <Button width="144px" height="42px" primary uppercase>
+          Dodaj <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className="fas fa-plus"></Icon>
+      </Button>
+    <Input></Input>
+  </StyledTableActions>
+);
 
-  return (
-    <StyledWrapper>
-      {actuallyLocation === schedules && (
-        <StyledTableActions>
-          <Button width="144px" height="42px" primary uppercase>
-            Dodaj <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className="fas fa-plus"></Icon>
-          </Button>
-          <Input></Input>
-        </StyledTableActions>
-      )}
+const TopicDataBaseTableMenu = () => (
+  <button>DODAJ +</button>
+);
 
-      {actuallyLocation === topicDatabase && <button>DODAJ +</button>}
-      {actuallyLocation === meetingHistory && (
-        <>
-          <span>data</span>
-          <select>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-          </select>
-          <select>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-          </select>
-          <input type="text" />
-        </>
-      )}
-    </StyledWrapper>
-  );
+const MeetingHistoryTableMenu = () => (
+  <>
+    <span>data</span>
+    <select>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+    </select>
+    <select>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+    </select>
+    <input type="text" />
+  </>
+);
+
+const TableMenu = ({location, meetingData}) => {
+  const [isSelected, setSelection] = useState(false);
+  switch(location.pathname){
+    case routes.timetable: return <SchedulesTableMenu meetingData={meetingData} isSelected={isSelected} setSelection={setSelection}/>
+    case routes.topicDatabase: return <TopicDataBaseTableMenu meetingData={meetingData} isSelected={isSelected} setSelection={setSelection}/>
+    case routes.history: return <MeetingHistoryTableMenu />
+  }
 };
 
 export default TableMenu;
