@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {routes} from 'routes';
 import Button from 'components/atoms/Button/Button';
 import Input from 'components/atoms/Input';
 import Icon from 'components/atoms/Icon';
@@ -16,9 +17,9 @@ const StyledTableActions = styled.div`
 `;
 
 const TableMenu = ({actuallyLocation}) => {
-  const schedules = 'HARMONOGRAM';
-  const topicDatabase = 'BAZA TEMATOW';
-  const meetingHistory = 'HISTORIA SPOTKAN';
+  const schedules = routes.timetable;
+  const topicDatabase = routes.topicDatabase;
+  const meetingHistory = routes.history;
 
   return (
     <StyledWrapper>
