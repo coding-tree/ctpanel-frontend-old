@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router';
 import styled, {css} from 'styled-components';
+import {routes} from 'routes';
 import Checkbox from 'components/atoms/Checkbox';
 import variables from 'settings/variables';
 import StyledDate from 'components/atoms/StyledDate';
@@ -105,9 +106,9 @@ const MeetingHistoryTableElement = () => (
 const TableElement = ({location, meetingData}) => {
   const [isSelected, setSelection] = useState(false);
   switch(location.pathname){
-    case "/harmonogram": return <SchedulesTableElement meetingData={meetingData} isSelected={isSelected} setSelection={setSelection}/>
-    case "/baza-tematow": return <TopicDataBaseTableElement meetingData={meetingData} isSelected={isSelected} setSelection={setSelection}/>
-    case "/historia-spotkan": return <MeetingHistoryTableElement />
+    case routes.timetable: return <SchedulesTableElement meetingData={meetingData} isSelected={isSelected} setSelection={setSelection}/>
+    case routes.topicDatabase: return <TopicDataBaseTableElement meetingData={meetingData} isSelected={isSelected} setSelection={setSelection}/>
+    case routes.history: return <MeetingHistoryTableElement />
   }
 };
 
