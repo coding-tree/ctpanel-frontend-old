@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import styled from 'styled-components';
+import {routes} from 'routes';
 import Icon from 'components/atoms/Icon';
 import variables from 'settings/variables';
 import Checkbox from 'components/atoms/Checkbox';
@@ -110,9 +111,9 @@ const MeetingHistoryTableListMenu = () => (
 
 const TableListMenu = ({location}) => {
   switch(location.pathname){
-    case "/harmonogram": return <SchedulesTableListMenu/>
-    case "/baza-tematow": return <TopicDataBaseTableListMenu/>
-    case "/historia-spotkan": return <MeetingHistoryTableListMenu />
+    case routes.timetable: return <SchedulesTableListMenu/>
+    case routes.topicDatabase: return <TopicDataBaseTableListMenu/>
+    case routes.history: return <MeetingHistoryTableListMenu />
   }
 };
 
