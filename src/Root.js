@@ -24,7 +24,7 @@ const Root = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(undefined);
 
   useEffect(() => {
-    fetch(`/api/user`)
+    fetch(`${process.env.REACT_APP_SERVER_URL}user`)
       .then((resp) => resp.json())
       .then((data) => {
         setIsLoggedIn(true);

@@ -8,6 +8,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "dotenv": "^8.2.0",
+    "env-cmd": "^8.0.2",
     "http-proxy-middleware": "^1.0.3",
     "js-cookie": "^2.2.1",
     "moment": "^2.24.0",
@@ -23,9 +24,14 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start-dev": "env-cmd dev npm start",
+    "start-prod": "env-cmd prod react-scripts start",
     "build": "react-scripts build",
+    "build-dev": "env-cmd -e dev react-scripts build",
+    "build-prod": "env-cmd -e prod react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dupa": "env-cmd -f .env-cmdrc npm start"
   },
   "eslintConfig": {
     "extends": "react-app"

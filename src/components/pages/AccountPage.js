@@ -6,7 +6,7 @@ import {withRouter} from 'react-router-dom';
 const AccountPage = () => {
   const [user, setUser] = useState({});
   useEffect(() => {
-    fetch('/api/user')
+    fetch(`${process.env.REACT_APP_SERVER_URL}user`)
       .then((resp) => resp.json())
       .then((data) => {
         setUser(data);
@@ -17,7 +17,7 @@ const AccountPage = () => {
   }, []);
   console.table(user);
   const logout = () => {
-    window.location.href = '/api/logout';
+    window.location.href = `${process.env.REACT_APP_SERVER_URL}logout`;
   };
   return (
     <MainTemplate>

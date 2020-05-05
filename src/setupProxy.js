@@ -1,17 +1,13 @@
 const {createProxyMiddleware} = require('http-proxy-middleware');
-
 module.exports = (app) => {
   app.use(
     createProxyMiddleware('/api', {
-      target: 'server.localhost/',
+      target: process.env.REACT_APP_SERVER_URL,
       pathRewrite: {
         '^/api': '', // remove base path
       },
       followRedirects: true,
       changeOrigin: true,
-      router: {
-        'client.localhost': 'http://localhost:80/server',
-      },
     })
   );
 };

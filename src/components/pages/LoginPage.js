@@ -39,7 +39,7 @@ const StyledContainer = styled.div`
 
 const LoginPage = () => {
   const login = () => {
-    window.location.href = `/api/login`;
+    window.location.href = `${process.env.REACT_APP_SERVER_URL}login`;
   };
 
   return (
