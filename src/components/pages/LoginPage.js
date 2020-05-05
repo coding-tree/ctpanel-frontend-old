@@ -38,11 +38,10 @@ const StyledContainer = styled.div`
 `;
 
 const LoginPage = () => {
-  
   const login = () => {
     window.location.href = `/api/login`;
   };
-  
+
   return (
     <LoginTemplate>
       <StyledBackground>
