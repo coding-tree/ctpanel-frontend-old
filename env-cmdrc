@@ -1,0 +1,14 @@
+{
+  "dev": {
+    "REACT_APP_SERVER_URL": "http://localhost:3001"
+  },
+  "hotel": {
+    "REACT_APP_SERVER_URL": "http://server.localhost"
+  },
+  "staging": {
+    "REACT_APP_SERVER_URL": "https://develop.ms.codingtree.pl/"
+  },
+  "production": {
+    "REACT_APP_SERVER_URL": "https://ms.codingtree.pl/"
+  }
+}

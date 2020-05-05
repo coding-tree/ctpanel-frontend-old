@@ -24,14 +24,13 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-dev": "env-cmd dev npm start",
-    "start-prod": "env-cmd prod react-scripts start",
+    "start:dev": "env-cmd dev npm run start",
+    "start:hotel": "env-cmd hotel react-scripts start",
     "build": "react-scripts build",
-    "build-dev": "env-cmd -e dev react-scripts build",
-    "build-prod": "env-cmd -e prod react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "dupa": "env-cmd -f .env-cmdrc npm start"
+    "build:dev": "env-cmd -e dev react-scripts build",
+    "build:hotel": "env-cmd -e hotel react-scripts build",
+    "build:prod": "env-cmd -e prod react-scripts build",
+    "test": "react-scripts test"
   },
   "eslintConfig": {
     "extends": "react-app"
