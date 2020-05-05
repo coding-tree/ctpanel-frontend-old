@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import styled from 'styled-components';
 import {routes} from 'routes';
 import Button from 'components/atoms/Button/Button';
@@ -46,13 +47,12 @@ const MeetingHistoryTableMenu = () => (
   </>
 );
 
-const TableMenu = ({location, meetingData}) => {
-  const [isSelected, setSelection] = useState(false);
+const TableMenu = ({location}) => {
   switch(location.pathname){
-    case routes.timetable: return <SchedulesTableMenu meetingData={meetingData} isSelected={isSelected} setSelection={setSelection}/>
-    case routes.topicDatabase: return <TopicDataBaseTableMenu meetingData={meetingData} isSelected={isSelected} setSelection={setSelection}/>
+    case routes.timetable: return <SchedulesTableMenu />
+    case routes.topicDatabase: return <TopicDataBaseTableMenu />
     case routes.history: return <MeetingHistoryTableMenu />
   }
 };
 
-export default TableMenu;
+export default withRouter(TableMenu);
