@@ -2,13 +2,18 @@
   "dev": {
     "REACT_APP_SERVER_URL": "http://localhost:3001"
   },
+  "proxy-dev": {
+    "REACT_APP_SERVER_PROXY_URL": "http://localhost:3001",
+    "REACT_APP_SERVER_URL": "http://localhost:3000/api"
+  },
   "hotel": {
-    "REACT_APP_SERVER_URL": "http://server.localhost"
+    "REACT_APP_SERVER_URL": "https://server.localhost",
+    "HTTPS": true
   },
   "staging": {
-    "REACT_APP_SERVER_URL": "https://develop.ms.codingtree.pl/"
+    "REACT_APP_SERVER_URL": "https://develop.ms.codingtree.pl"
   },
   "production": {
-    "REACT_APP_SERVER_URL": "https://ms.codingtree.pl/"
+    "REACT_APP_SERVER_URL": "https://ms.codingtree.pl"
   }
 }

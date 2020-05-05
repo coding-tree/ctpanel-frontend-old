@@ -15,6 +15,7 @@ export const fetchMeets = (fetchParameters) => (dispatch) => {
     try {
       fetch(url, {
         method: methodType,
+        credentials: 'include'
       })
         .then((response) => {
           if (response.status === 200) return response.json();
