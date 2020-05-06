@@ -6,7 +6,7 @@ export const fetchMeets = (fetchParameters) => (dispatch) => {
   const createUrl = () => {
     if (generalAttribute !== '') return `${requestDataType}/${generalAttribute}`;
     if (specyficAttribute !== '') return `${requestDataType}/${specyficAttribute}`;
-    if (requestDataType !== '') return `/api/${requestDataType}`;
+    if (requestDataType !== '') return `${process.env.REACT_APP_SERVER_URL}/${requestDataType}`;
   };
 
   const getData = () => {
@@ -15,6 +15,7 @@ export const fetchMeets = (fetchParameters) => (dispatch) => {
     try {
       fetch(url, {
         method: methodType,
+        credentials: 'include'
       })
         .then((response) => {
           if (response.status === 200) return response.json();
