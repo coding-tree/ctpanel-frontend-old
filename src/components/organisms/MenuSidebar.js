@@ -10,7 +10,12 @@ import {
   StyledLink,
   MenuIcon,
   CopyrightWrapper,
+  LogoutButton,
 } from 'styledComponents/MenuSidebar';
+
+const logout = () => {
+  window.location.href = `${process.env.REACT_APP_SERVER_URL}/logout`;
+};
 
 const MenuSidebar = () => {
   const year = new Date().getFullYear();
@@ -47,6 +52,16 @@ const MenuSidebar = () => {
               <MenuIcon className="fas fa-user-circle"></MenuIcon>
               Konto
             </StyledLink>
+          </StyledLinkElement>
+          <StyledLinkElement>
+            <LogoutButton
+              onClick={() => {
+                logout();
+              }}
+            >
+              <MenuIcon className="fas fa-sign-out-alt"></MenuIcon>
+              Wyloguj
+            </LogoutButton>
           </StyledLinkElement>
         </StyledLinksList>
       </MenuWrapper>

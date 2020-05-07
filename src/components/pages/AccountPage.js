@@ -16,9 +16,7 @@ const AccountPage = () => {
       });
   }, []);
   console.table(user);
-  const logout = () => {
-    window.location.href = `${process.env.REACT_APP_SERVER_URL}/logout`;
-  };
+
   return (
     <MainTemplate>
       <div
@@ -31,10 +29,7 @@ const AccountPage = () => {
         }}
       >
         <h1>Twoje dane</h1>
-        {/* <img style={{width: '150px', height: '150px', borderRadius: '50%'}} src={user.picture} /> */}
-        <button style={{display: 'block', width: '150px', marginTop: '24px'}} onClick={() => logout()}>
-          Wyloguj się
-        </button>
+        <img style={{width: '150px', height: '150px', borderRadius: '50%'}} src={user.picture} />
       </div>
     </MainTemplate>
   );

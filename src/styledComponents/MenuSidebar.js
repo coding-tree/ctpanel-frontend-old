@@ -48,8 +48,8 @@ export const MenuWrapper = styled.div`
 `;
 
 export const StyledLinksList = styled.ul`
+  display: flex;
   flex-direction: column;
-
   width: 313px;
 `;
 
@@ -58,6 +58,9 @@ export const StyledLinkElement = styled.li`
   border-radius: 3rem 0 0 3rem;
   overflow: hidden;
   margin-bottom: 1.5rem;
+  &:last-of-type {
+    margin-top: auto;
+  }
 `;
 
 export const StyledLink = styled.a`
@@ -75,6 +78,18 @@ export const StyledLink = styled.a`
 export const MenuIcon = styled.i`
   font-size: 2rem;
   padding-right: 1rem;
+`;
+
+export const LogoutButton = styled.button`
+  background-color: ${variables.logoutButtonColor};
+  color: ${variables.colorWhite};
+  width: 100%;
+  align-items: center;
+  text-align: left;
+  padding: 0 0 0 5rem;
+  font-weight: 700;
+  font-size: 1.8rem;
+  border: none;
 `;
 
 export const CopyrightWrapper = styled.div`

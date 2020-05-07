@@ -11,4 +11,5 @@ export default {
   checkboxColor: '#EFE5E6',
   tableHeaderColor: '#FCFBFC',
   tableBorderColor: '#F3EEF0',
+  logoutButtonColor: '#152835',
 };
