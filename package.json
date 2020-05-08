@@ -25,6 +25,7 @@
   "scripts": {
     "start": "react-scripts start",
     "start:dev": "env-cmd dev npm run start",
+    "start:dev-with-proxy": "env-cmd dev-with-proxy npm run start",
     "start:hotel": "env-cmd hotel react-scripts start",
     "build": "react-scripts build",
     "build:dev": "env-cmd -e dev react-scripts build",
