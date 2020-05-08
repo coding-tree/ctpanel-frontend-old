@@ -9,14 +9,14 @@ import Button from 'components/atoms/Button/Button';
 
 const StyledBackground = styled.div`
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   justify-content: center;
   align-items: center;
   &::before {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     content: '';
     background-image: url('background_pattern.png');
