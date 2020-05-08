@@ -153,6 +153,54 @@ const StyledButton = styled.button`
   }
   `;
 
+const StyledTagsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  font-family: inherit;
+  flex-wrap: wrap;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #9d9da3;
+  color: black;
+  margin-bottom: 22px;
+`;
+const StyledTags = styled.div``;
+const StyledTag = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-left: 5px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  flex-wrap: nowrap;
+  background-color: #009640;
+  color: white;
+  font-size: 12px;
+`;
+const StyledTagsInput = styled.input`
+  border: none;
+  padding: 12px;
+  height: 100%;
+  width: auto;
+  display: flex;
+  flex-grow: 1;
+`;
+
+const StyledCloseButton = styled.span`
+font-size: 14px;
+  height: 100%;
+  margin-left: 8px;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  &:hover{
+    cursor: pointer;
+  }
+}
+`;
+const StyledTagsInputBox = styled.div``;
+
 const SchedulesTableMenu = () => (
   <StyledTableActions>
     <Button width="144px" height="42px" primary uppercase>
@@ -161,7 +209,11 @@ const SchedulesTableMenu = () => (
     <StyledModalContainer>
       <StyledBox>
         <StyledHeader>Zaplanuj nowe spotkanie</StyledHeader>
-        <StyledForm>
+        <StyledForm
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
           <StyledLabel>Data</StyledLabel>
           <StyledInput placeholder="wpisz datę"></StyledInput>
           <StyledLabel>Temat spotkania</StyledLabel>
@@ -179,7 +231,21 @@ const SchedulesTableMenu = () => (
           <StyledLabel>Opis spotkania</StyledLabel>
           <StyledTextArea placeholder="wpisz opis"></StyledTextArea>
           <StyledLabel>Tagi</StyledLabel>
-          <StyledInput placeholder="wpisz tagi"></StyledInput>
+          <StyledTagsContainer>
+            <StyledTags>
+              <StyledTag>
+                React <StyledCloseButton>&times;</StyledCloseButton>
+              </StyledTag>
+              <StyledTag>
+                JavaScript<StyledCloseButton>&times;</StyledCloseButton>
+              </StyledTag>
+              <StyledTag>
+                HTML<StyledCloseButton>&times;</StyledCloseButton>
+              </StyledTag>
+            </StyledTags>
+            <StyledTagsInputBox></StyledTagsInputBox>
+            <StyledTagsInput placeholder="wpisz tagi"></StyledTagsInput>
+          </StyledTagsContainer>
           <StyledButtonsContainer>
             <StyledButton>Anuluj</StyledButton>
             <StyledButton>Dodaj</StyledButton>
@@ -187,7 +253,6 @@ const SchedulesTableMenu = () => (
         </StyledForm>
       </StyledBox>
     </StyledModalContainer>
-    <Input></Input>
   </StyledTableActions>
 );
 
