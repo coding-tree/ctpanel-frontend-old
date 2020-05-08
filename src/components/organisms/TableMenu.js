@@ -18,6 +18,7 @@ const StyledTableActions = styled.div`
 `;
 
 const StyledModalContainer = styled.div`
+  font-family: 'Muli', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,6 +38,8 @@ const StyledBox = styled.div`
 `;
 
 const StyledHeader = styled.div`
+  font-weight: 700;
+  font-size: 20px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -47,6 +50,7 @@ const StyledHeader = styled.div`
 `;
 
 const StyledForm = styled.form`
+  font-family: 'Muli', sans-serif;
   padding: 23px;
   display: flex;
   flex-direction: column;
@@ -74,6 +78,7 @@ const StyledTextArea = styled.textarea`
 `;
 
 const StyledLabel = styled.label`
+  font-family: inherit;
   font-weight: 700;
   font-size: 16px;
   margin-bottom: 5px;
@@ -81,8 +86,8 @@ const StyledLabel = styled.label`
 `;
 
 const StyledSelectContainer = styled.div`
+  font-family: inherit;
   margin-bottom: 22px;
-
   position: relative;
   display: flex;
   justify-content: center;
@@ -94,14 +99,17 @@ const StyledSelectContainer = styled.div`
     align-items: center;
     width: 25px;
     position: absolute;
-    right: 0;
+    right: 9px;
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
+    font-size: 2rem;
     content: '\f0dc';
     z-index: 1234;
   }
 `;
 const StyledSelect = styled.select`
+  border-radius: 4px;
+  font-family: inherit;
   width: 100%;
   appearance: none;
   position: relative;
@@ -116,6 +124,7 @@ const StyledSelect = styled.select`
 
 const StyledOption = styled.option`
   padding: 12px;
+  font-family: inherit;
 
   &:checked {
     background-color: #019740;
@@ -124,22 +133,25 @@ const StyledOption = styled.option`
 `;
 
 const StyledButtonsContainer = styled.div`
+  font-family: inherit;
   display: flex;
   justify-content: flex-end;
 `;
 
 const StyledButton = styled.button`
+  font-family: inherit;
   border: 1px solid #dbdbdb;
   padding: 10px 45px;
   border-radius: 4px;
   background: #019740
   color: white;
+  font-weight: 700;
   &:first-of-type {
     color: black;
     margin-right: 8px;
     background: none;
   }
-`;
+  `;
 
 const SchedulesTableMenu = () => (
   <StyledTableActions>
@@ -166,8 +178,8 @@ const SchedulesTableMenu = () => (
           <StyledInput placeholder="link do spotkania"></StyledInput>
           <StyledLabel>Opis spotkania</StyledLabel>
           <StyledTextArea placeholder="wpisz opis"></StyledTextArea>
-          <StyledLabel>Opis spotkania</StyledLabel>
-          <StyledInput placeholder="tagi"></StyledInput>
+          <StyledLabel>Tagi</StyledLabel>
+          <StyledInput placeholder="wpisz tagi"></StyledInput>
           <StyledButtonsContainer>
             <StyledButton>Anuluj</StyledButton>
             <StyledButton>Dodaj</StyledButton>
