@@ -43,11 +43,19 @@ const SchedulesTableMenu = () => {
     </StyledTag>
   ));
 
-  const addTags = (e) => {
+  const handleTags = (e) => {
+    // space
     if (e.keyCode === 32) {
       console.log('wcisnieto spacje');
       setTags([...tags, e.target.value]);
       e.target.value = '';
+    }
+    // backspace
+    if (e.keyCode === 8 && e.target.value === '' && tags.length > 0) {
+      const lastItemInArray = tags[tags.length - 1];
+      console.log('backspace');
+      e.target.value = lastItemInArray;
+      setTags(tags.filter((item) => item !== lastItemInArray));
     }
   };
 
@@ -92,7 +100,7 @@ const SchedulesTableMenu = () => {
             <StyledTagsContainer>
               <StyledTags>{renderedTags}</StyledTags>
               <StyledTagsInputBox></StyledTagsInputBox>
-              <StyledTagsInput placeholder="wpisz tagi" onKeyDown={addTags}></StyledTagsInput>
+              <StyledTagsInput placeholder="wpisz tagi" onKeyDown={handleTags}></StyledTagsInput>
             </StyledTagsContainer>
             <StyledButtonsContainer>
               <StyledButton isModalVisible={isModalVisible} onClick={() => setIsModalVisible(!isModalVisible)}>
