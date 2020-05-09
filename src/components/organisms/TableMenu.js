@@ -35,7 +35,22 @@ const toggleModal = () => {
 };
 
 const SchedulesTableMenu = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(true);
+  const [tags, setTags] = useState(['javascript', 'react', 'html']);
+  const renderedTags = tags.map((tag) => (
+    <StyledTag>
+      {tag} <StyledCloseButton>&times;</StyledCloseButton>
+    </StyledTag>
+  ));
+
+  const addTags = (e) => {
+    if (e.keyCode === 32) {
+      console.log('wcisnieto spacje');
+      setTags([...tags, e.target.value]);
+      e.target.value = '';
+    }
+  };
+
   return (
     <StyledTableActions>
       <Button
@@ -75,19 +90,9 @@ const SchedulesTableMenu = () => {
             <StyledTextArea placeholder="wpisz opis"></StyledTextArea>
             <StyledLabel>Tagi</StyledLabel>
             <StyledTagsContainer>
-              <StyledTags>
-                <StyledTag>
-                  React <StyledCloseButton>&times;</StyledCloseButton>
-                </StyledTag>
-                <StyledTag>
-                  JavaScript<StyledCloseButton>&times;</StyledCloseButton>
-                </StyledTag>
-                <StyledTag>
-                  HTML<StyledCloseButton>&times;</StyledCloseButton>
-                </StyledTag>
-              </StyledTags>
+              <StyledTags>{renderedTags}</StyledTags>
               <StyledTagsInputBox></StyledTagsInputBox>
-              <StyledTagsInput placeholder="wpisz tagi"></StyledTagsInput>
+              <StyledTagsInput placeholder="wpisz tagi" onKeyDown={addTags}></StyledTagsInput>
             </StyledTagsContainer>
             <StyledButtonsContainer>
               <StyledButton isModalVisible={isModalVisible} onClick={() => setIsModalVisible(!isModalVisible)}>

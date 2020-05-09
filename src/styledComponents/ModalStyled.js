@@ -180,8 +180,15 @@ export const StyledTagsContainer = styled.div`
   color: black;
   margin-bottom: 22px;
 `;
-export const StyledTags = styled.div``;
-export const StyledTag = styled.div`
+
+export const StyledTags = styled.ul`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+`;
+
+export const StyledTag = styled.li`
+  margin: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
