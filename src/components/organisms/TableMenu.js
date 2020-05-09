@@ -36,10 +36,11 @@ const toggleModal = () => {
 
 const SchedulesTableMenu = () => {
   const [isModalVisible, setIsModalVisible] = useState(true);
-  const [tags, setTags] = useState(['javascript', 'react', 'html']);
+  const [tags, setTags] = useState([]);
   const renderedTags = tags.map((tag) => (
     <StyledTag>
-      {tag} <StyledCloseButton>&times;</StyledCloseButton>
+      {tag}
+      <StyledCloseButton>&times;</StyledCloseButton>
     </StyledTag>
   ));
 
@@ -100,7 +101,7 @@ const SchedulesTableMenu = () => {
             <StyledTagsContainer>
               <StyledTags>{renderedTags}</StyledTags>
               <StyledTagsInputBox></StyledTagsInputBox>
-              <StyledTagsInput placeholder="wpisz tagi" onKeyDown={handleTags}></StyledTagsInput>
+              <StyledTagsInput placeholder="wpisz tagi" onKeyUp={handleTags}></StyledTagsInput>
             </StyledTagsContainer>
             <StyledButtonsContainer>
               <StyledButton isModalVisible={isModalVisible} onClick={() => setIsModalVisible(!isModalVisible)}>
