@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router';
+import {withRouter} from 'react-router';
 import styled from 'styled-components';
 import {routes} from 'routes';
 import Icon from 'components/atoms/Icon';
@@ -33,87 +33,90 @@ const StyledTableHead = styled.th`
 
 const SchedulesTableListMenu = () => (
   <StyledWrapper>
-      <StyledTableRow>
-        <StyledTableHead>
-          <Checkbox disabled type="checkbox"></Checkbox>
-        </StyledTableHead>
-        <StyledTableHead>
-          ID <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-        <StyledTableHead>
-          Data <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-        <StyledTableHead>
-          Temat spotkania <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-        <StyledTableHead right>
-          Planowany czas trwania <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-        <StyledTableHead right>
-          Prowadzący <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-      </StyledTableRow>
-    </StyledWrapper>
-)
+    <StyledTableRow>
+      <StyledTableHead>
+        <Checkbox disabled type="checkbox"></Checkbox>
+      </StyledTableHead>
+      <StyledTableHead>
+        ID <Icon className="fas fa-sort"></Icon>
+      </StyledTableHead>
+      <StyledTableHead>
+        Data <Icon className="fas fa-sort"></Icon>
+      </StyledTableHead>
+      <StyledTableHead>
+        Temat spotkania <Icon className="fas fa-sort"></Icon>
+      </StyledTableHead>
+      <StyledTableHead right>
+        Planowany czas trwania <Icon className="fas fa-sort"></Icon>
+      </StyledTableHead>
+      <StyledTableHead right>
+        Prowadzący <Icon className="fas fa-sort"></Icon>
+      </StyledTableHead>
+    </StyledTableRow>
+  </StyledWrapper>
+);
 
 const TopicDataBaseTableListMenu = () => (
   <StyledWrapper>
-      <StyledTableRow>
-        <StyledTableHead>
-          <Checkbox disabled type="checkbox"></Checkbox>
-        </StyledTableHead>
-        <StyledTableHead>
-          ID <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-        <StyledTableHead>
-          Temat spotkania
-        </StyledTableHead>
-        <StyledTableHead>
-          Kategoria <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-        <StyledTableHead right>
-          Inicjator <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-        <StyledTableHead right>
-          Ocena <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-        <StyledTableHead right>
-          Zagłosuj <Icon className="fas fa-sort"></Icon>
-        </StyledTableHead>
-      </StyledTableRow>
-    </StyledWrapper>
-)
+    <StyledTableRow>
+      <StyledTableHead>
+        <Checkbox disabled type="checkbox"></Checkbox>
+      </StyledTableHead>
+      <StyledTableHead>
+        ID <Icon className="fas fa-sort"></Icon>
+      </StyledTableHead>
+      <StyledTableHead>Temat spotkania</StyledTableHead>
+      <StyledTableHead>
+        Kategoria <Icon className="fas fa-sort"></Icon>
+      </StyledTableHead>
+      <StyledTableHead right>
+        Inicjator <Icon className="fas fa-sort"></Icon>
+      </StyledTableHead>
+      <StyledTableHead right>
+        Ocena <Icon className="fas fa-sort"></Icon>
+      </StyledTableHead>
+      <StyledTableHead right>
+        Zagłosuj <Icon className="fas fa-sort"></Icon>
+      </StyledTableHead>
+    </StyledTableRow>
+  </StyledWrapper>
+);
 
 const MeetingHistoryTableListMenu = () => (
   <StyledWrapper>
-  <StyledTableRow>
-    <StyledTableHead>
-      <Checkbox disabled type="checkbox"></Checkbox>
-    </StyledTableHead>
-    <StyledTableHead>
-      ID <Icon className="fas fa-sort"></Icon>
-    </StyledTableHead>
-    <StyledTableHead>
-      Data <Icon className="fas fa-sort"></Icon>
-    </StyledTableHead>
-    <StyledTableHead>
-      Temat spotkania <Icon className="fas fa-sort"></Icon>
-    </StyledTableHead>
-    <StyledTableHead>
-      Prowadzący <Icon className="fas fa-sort"></Icon>
-    </StyledTableHead>
-    <StyledTableHead right>
-      Materiały <Icon className="fas fa-sort"></Icon>
-    </StyledTableHead>
-  </StyledTableRow>
-</StyledWrapper>
-)
+    <StyledTableRow>
+      <StyledTableHead>
+        <Checkbox disabled type="checkbox"></Checkbox>
+      </StyledTableHead>
+      <StyledTableHead>
+        ID <Icon className="fas fa-sort"></Icon>
+      </StyledTableHead>
+      <StyledTableHead>
+        Data <Icon className="fas fa-sort"></Icon>
+      </StyledTableHead>
+      <StyledTableHead>
+        Temat spotkania <Icon className="fas fa-sort"></Icon>
+      </StyledTableHead>
+      <StyledTableHead>
+        Prowadzący <Icon className="fas fa-sort"></Icon>
+      </StyledTableHead>
+      <StyledTableHead right>
+        Materiały <Icon className="fas fa-sort"></Icon>
+      </StyledTableHead>
+    </StyledTableRow>
+  </StyledWrapper>
+);
 
 const TableListMenu = ({location}) => {
-  switch(location.pathname){
-    case routes.timetable: return <SchedulesTableListMenu/>
-    case routes.topicDatabase: return <TopicDataBaseTableListMenu/>
-    case routes.history: return <MeetingHistoryTableListMenu />
+  switch (location.pathname) {
+    case routes.timetable:
+      return <SchedulesTableListMenu />;
+    case routes.topicDatabase:
+      return <TopicDataBaseTableListMenu />;
+    case routes.history:
+      return <MeetingHistoryTableListMenu />;
+    default:
+      return console.log('something went wrong');
   }
 };
 

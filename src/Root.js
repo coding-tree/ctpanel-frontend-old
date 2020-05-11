@@ -10,6 +10,7 @@ import {routes} from 'routes';
 import MenuSidebar from 'components/organisms/MenuSidebar';
 import NextMeet from 'components/organisms/NextMeet';
 import MainTemplate from './components/templates/MainTemplate';
+import Formik from './components/pages/Formik';
 
 const LoginPage = lazy(() => import('components/pages/LoginPage'));
 
@@ -28,11 +29,11 @@ const Root = (props) => {
       .then((resp) => resp.json())
       .then((data) => {
         setIsLoggedIn(true);
+        console.log(user);
         setUser(data);
       })
       .catch((err) => {
         setIsLoggedIn(false);
-        //console.log(err);
       });
   }, [isLoggedIn]);
 
@@ -57,6 +58,7 @@ const Root = (props) => {
             <NextMeet />
             <Suspense fallback={<LoadingSpinner />}>
               <Switch>
+                <Route exact path="/contact" component={Formik} />
                 <Route exact path={routes.home} component={Home} />
                 <Route exact strict path={routes.timetable} component={Timetable} />
                 <Route exact strict path={routes.topicDatabase} component={TopicDatabase} />

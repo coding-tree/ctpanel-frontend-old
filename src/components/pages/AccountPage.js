@@ -29,7 +29,7 @@ const AccountPage = () => {
         }}
       >
         <h1>Twoje dane</h1>
-        <img style={{width: '150px', height: '150px', borderRadius: '50%'}} src={user.picture} />
+        <img style={{width: '150px', height: '150px', borderRadius: '50%'}} src={user.picture} alt="user avatar" />
       </div>
     </MainTemplate>
   );

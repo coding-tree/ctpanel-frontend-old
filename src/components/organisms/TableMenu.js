@@ -1,13 +1,10 @@
 import React, {useState} from 'react';
 import {withRouter} from 'react-router';
-import styled from 'styled-components';
 import {routes} from 'routes';
 import Button from 'components/atoms/Button/Button';
-import Input from 'components/atoms/Input';
 import Icon from 'components/atoms/Icon';
 
 import {
-  Container,
   StyledBox,
   StyledButton,
   StyledButtonsContainer,
@@ -29,12 +26,7 @@ import {
   StyledTagsInput,
   StyledTagsInputBox,
   StyledTextArea,
-  StyledWrapper,
 } from 'styledComponents/ModalStyled/';
-
-const toggleModal = () => {
-  alert('it works');
-};
 
 const SchedulesTableMenu = () => {
   const [isModalVisible, setIsModalVisible] = useState(true);
@@ -62,7 +54,7 @@ const SchedulesTableMenu = () => {
   };
 
   const renderedTags = tags.map((tag) => (
-    <StyledTag>
+    <StyledTag key={tag + (Math.random() * 10000).toString()}>
       <StyledTagText>{tag}</StyledTagText>
       <StyledCloseButton onClick={removeTag}>&times;</StyledCloseButton>
     </StyledTag>
@@ -159,6 +151,8 @@ const TableMenu = ({location}) => {
       return <TopicDataBaseTableMenu />;
     case routes.history:
       return <MeetingHistoryTableMenu />;
+    default:
+      return console.log('something went wrong');
   }
 };
 

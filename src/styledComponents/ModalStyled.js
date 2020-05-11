@@ -52,6 +52,11 @@ export const StyledHeader = styled.div`
   padding: 25px;
 `;
 
+export const StyledText = styled.span`
+  padding: 5px 15px;
+  border: 1px solid red;
+`;
+
 export const StyledForm = styled.form`
   font-family: 'Muli', sans-serif;
   padding: 23px;
