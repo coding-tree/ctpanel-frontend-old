@@ -31,7 +31,7 @@ const Contact = ({errors, isSubmitting}) => {
   console.log('errors', errors);
   console.log('isSubmitting', isSubmitting);
   const [tags, setTags] = useState(['js']);
-  const [isModalVisible, setIsModalVisible] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const removeTag = (e) => {
     const selectedTag = e.target.parentNode.firstChild.textContent;
@@ -53,75 +53,93 @@ const Contact = ({errors, isSubmitting}) => {
       setTags(tags.filter((item) => item !== lastItemInArray));
     }
   };
+
   const renderedTags = tags.map((tag) => (
     <StyledTag key={tag + (Math.random() * 10000).toString()}>
       <StyledTagText>{tag}</StyledTagText>
       <StyledCloseButton onClick={removeTag}>&times;</StyledCloseButton>
     </StyledTag>
   ));
+
+  const showVal = (e) => {
+    console.log(e.target.value);
+  };
+
   return (
-    <StyledModalContainer isModalVisible={isModalVisible}>
-      <StyledBox>
-        <StyledHeader>Zaplanuj nowe spotkanie</StyledHeader>
-        <StyledForm>
-          <StyledInputContainer>
-            <StyledLabel htmlFor="date" id="dateLabel">
-              Data
+    <>
+      <button onClick={() => setIsModalVisible(!isModalVisible)}>elo</button>
+      <StyledModalContainer isModalVisible={isModalVisible}>
+        <StyledBox>
+          <StyledHeader>Zaplanuj nowe spotkanie</StyledHeader>
+          <StyledForm initialValues={{topic: 'dupa jeza'}}>
+            <StyledInputContainer>
+              <StyledLabel htmlFor="date" id="dateLabel">
+                Data
+              </StyledLabel>
+              <StyledLabel htmlFor="time" id="timeLabel">
+                Czas
+              </StyledLabel>
+            </StyledInputContainer>
+            <StyledInputContainer>
+              <Field as={StyledInput} onClick={showVal} name="date" type="date" id="date"></Field>
+              <Field as={StyledInput} onClick={showVal} name="time" type="time" id="time"></Field>
+              <ErrorMessage component={StyledText} name="date"></ErrorMessage>
+              <ErrorMessage component={StyledText} name="time"></ErrorMessage>
+            </StyledInputContainer>
+            <StyledLabel htmlFor="topic" id="topicLabel">
+              Temat spotkania
             </StyledLabel>
-            <StyledLabel htmlFor="time" id="timeLabel">
-              Czas
+            <Field as={StyledTextArea} placeholder="wpisz temat" name="topic" id="topic"></Field>
+            <ErrorMessage component={StyledText} name="topic"></ErrorMessage>
+            <StyledLabel htmlFor="leader" id="leaderLabel">
+              Prowadzący
             </StyledLabel>
-          </StyledInputContainer>
-          <StyledInputContainer>
-            <Field as={StyledInput} name="date" type="date" id="date"></Field>
-            <Field as={StyledInput} name="time" type="time" id="time"></Field>
-            <ErrorMessage component={StyledText} name="date"></ErrorMessage>
-            <ErrorMessage component={StyledText} name="time"></ErrorMessage>
-          </StyledInputContainer>
-          <StyledLabel htmlFor="topic" id="topicLabel">
-            Temat spotkania
-          </StyledLabel>
-          <Field as={StyledTextArea} placeholder="wpisz temat" name="topic" id="topic"></Field>
-          <StyledLabel htmlFor="leader" id="leaderLabel">
-            Prowadzący
-          </StyledLabel>
-          <Field as={StyledSelectContainer}>
-            <Field as={StyledSelect} id="leader" name="leader">
-              <Field as={StyledOption} value="Damian Ospara">
-                Damian Ospara
-              </Field>
-              <Field as={StyledOption} value="Kazimierz Bagrowski">
-                Kazimierz Bagrowski
-              </Field>
-              <Field as={StyledOption} value="Jakub Wojtoń">
-                Jakub Wojtoń
+            <Field as={StyledSelectContainer}>
+              <Field as={StyledSelect} id="leader" name="leader">
+                <Field as={StyledOption} value="Damian Ospara">
+                  Damian Ospara
+                </Field>
+                <Field as={StyledOption} value="Kazimierz Bagrowski">
+                  Kazimierz Bagrowski
+                </Field>
+                <Field as={StyledOption} value="Jakub Wojtoń">
+                  Jakub Wojtoń
+                </Field>
               </Field>
             </Field>
-          </Field>
-          <StyledLabel htmlFor="meetingHref" id="meetingHrefLabel">
-            Odnośnik do spotkania
-          </StyledLabel>
-          <Field as={StyledInput} placeholder="link do spotkania" name="meetingHref" id="meetingHref"></Field>
-          <StyledLabel htmlFor="description" id="descriptionLabel">
-            Opis spotkania
-          </StyledLabel>
-          <Field as={StyledTextArea} placeholder="wpisz opis" id="description" name="description"></Field>
-          <StyledTagsContainer>
-            <StyledTags>{renderedTags}</StyledTags>
-            <StyledTagsInputBox></StyledTagsInputBox>
-            <StyledTagsInput placeholder="wpisz tagi" onKeyUp={handleTags}></StyledTagsInput>
-          </StyledTagsContainer>
-          <StyledButtonsContainer>
-            <StyledButton name="cancelButton" id="cancelButton">
-              Anuluj
-            </StyledButton>
-            <StyledButton name="addButton" id="addButton">
-              Dodaj
-            </StyledButton>
-          </StyledButtonsContainer>
-        </StyledForm>
-      </StyledBox>
-    </StyledModalContainer>
+            <StyledLabel htmlFor="meetingHref" id="meetingHrefLabel">
+              Odnośnik do spotkania
+            </StyledLabel>
+            <Field as={StyledInput} placeholder="link do spotkania" name="meetingHref" id="meetingHref"></Field>
+            <ErrorMessage component={StyledText} name="meetingHref"></ErrorMessage>
+            <StyledLabel htmlFor="description" id="descriptionLabel">
+              Opis spotkania
+            </StyledLabel>
+            <Field as={StyledTextArea} placeholder="wpisz opis" id="description" name="description"></Field>
+            <ErrorMessage component={StyledText} name="description"></ErrorMessage>
+            <StyledTagsContainer>
+              <StyledTags name="renderedTags">{renderedTags}</StyledTags>
+              <StyledTagsInputBox></StyledTagsInputBox>
+              <StyledTagsInput placeholder="wpisz tagi" onKeyUp={handleTags}></StyledTagsInput>
+              <ErrorMessage component={StyledText} name="renderedTags"></ErrorMessage>
+            </StyledTagsContainer>
+            <StyledButtonsContainer>
+              <StyledButton
+                onClick={() => setIsModalVisible(!isModalVisible)}
+                type="button"
+                name="cancelButton"
+                id="cancelButton"
+              >
+                Anuluj
+              </StyledButton>
+              <StyledButton name="addButton" id="addButton">
+                Dodaj
+              </StyledButton>
+            </StyledButtonsContainer>
+          </StyledForm>
+        </StyledBox>
+      </StyledModalContainer>
+    </>
   );
 };
 
@@ -139,7 +157,9 @@ const Formik = withFormik({
   },
   validationSchema: Yup.object().shape({
     date: Yup.date('musisz podać datę').required('data jest wymagana'),
-    time: Yup.number('czas musi być timestampem')
+    time: Yup.string('czas musi być stringiem')
+      .min(5)
+      .max(5)
       .min(0, 'aż tak dawno temu nie było spotkania')
       .required('czas jest wymagany'),
     topic: Yup.string('temat musi być tekstem')
