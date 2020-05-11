@@ -8,26 +8,28 @@ import Icon from 'components/atoms/Icon';
 
 import {
   Container,
-  StyledWrapper,
-  StyledTableActions,
-  StyledModalContainer,
   StyledBox,
-  StyledHeader,
-  StyledForm,
-  StyledInput,
-  StyledTextArea,
-  StyledLabel,
-  StyledSelectContainer,
-  StyledSelect,
-  StyledOption,
-  StyledButtonsContainer,
   StyledButton,
-  StyledTagsContainer,
-  StyledTags,
-  StyledTag,
-  StyledTagsInput,
+  StyledButtonsContainer,
   StyledCloseButton,
+  StyledForm,
+  StyledHeader,
+  StyledInput,
+  StyledInputContainer,
+  StyledLabel,
+  StyledModalContainer,
+  StyledOption,
+  StyledSelect,
+  StyledSelectContainer,
+  StyledTableActions,
+  StyledTag,
+  StyledTagText,
+  StyledTags,
+  StyledTagsContainer,
+  StyledTagsInput,
   StyledTagsInputBox,
+  StyledTextArea,
+  StyledWrapper,
 } from 'styledComponents/ModalStyled/';
 
 const toggleModal = () => {
@@ -36,13 +38,12 @@ const toggleModal = () => {
 
 const SchedulesTableMenu = () => {
   const [isModalVisible, setIsModalVisible] = useState(true);
-  const [tags, setTags] = useState([]);
-  const renderedTags = tags.map((tag) => (
-    <StyledTag>
-      {tag}
-      <StyledCloseButton>&times;</StyledCloseButton>
-    </StyledTag>
-  ));
+  const [tags, setTags] = useState(['js']);
+
+  const removeTag = (e) => {
+    const selectedTag = e.target.parentNode.firstChild.textContent;
+    setTags(tags.filter((item) => item !== selectedTag));
+  };
 
   const handleTags = (e) => {
     // space
@@ -59,6 +60,13 @@ const SchedulesTableMenu = () => {
       setTags(tags.filter((item) => item !== lastItemInArray));
     }
   };
+
+  const renderedTags = tags.map((tag) => (
+    <StyledTag>
+      <StyledTagText>{tag}</StyledTagText>
+      <StyledCloseButton onClick={removeTag}>&times;</StyledCloseButton>
+    </StyledTag>
+  ));
 
   return (
     <StyledTableActions>
@@ -81,8 +89,14 @@ const SchedulesTableMenu = () => {
               e.preventDefault();
             }}
           >
-            <StyledLabel>Data</StyledLabel>
-            <StyledInput placeholder="wpisz datę"></StyledInput>
+            <StyledInputContainer>
+              <StyledLabel>Data</StyledLabel>
+              <StyledLabel>Czas</StyledLabel>
+            </StyledInputContainer>
+            <StyledInputContainer>
+              <StyledInput type="date"></StyledInput>
+              <StyledInput type="time"></StyledInput>
+            </StyledInputContainer>
             <StyledLabel>Temat spotkania</StyledLabel>
             <StyledTextArea placeholder="wpisz temat"></StyledTextArea>
             <StyledLabel>Prowadzący</StyledLabel>

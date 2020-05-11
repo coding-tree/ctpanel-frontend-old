@@ -181,6 +181,12 @@ export const StyledTagsContainer = styled.div`
   margin-bottom: 22px;
 `;
 
+export const StyledInputContainer = styled.div`
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  column-gap: 12px;
+`;
+
 export const StyledTags = styled.ul`
   display: flex;
   flex-direction: row;
@@ -201,6 +207,9 @@ export const StyledTag = styled.li`
   color: white;
   font-size: 12px;
 `;
+
+export const StyledTagText = styled.span``;
+
 export const StyledTagsInput = styled.input`
   outline: none;
   border: none;
