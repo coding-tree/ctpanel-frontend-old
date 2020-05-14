@@ -31,7 +31,7 @@ const Contact = ({errors, isSubmitting}) => {
   console.log('errors', errors);
   console.log('isSubmitting', isSubmitting);
   const [tags, setTags] = useState(['js']);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(true);
 
   const removeTag = (e) => {
     const selectedTag = e.target.parentNode.firstChild.textContent;
@@ -42,7 +42,7 @@ const Contact = ({errors, isSubmitting}) => {
     // space
     if (e.keyCode === 32) {
       console.log('wcisnieto spacje');
-      setTags([...tags, e.target.value]);
+      setTags([...tags, e.target.value.replace(' ', '')]);
       e.target.value = '';
     }
     // backspace
@@ -65,13 +65,17 @@ const Contact = ({errors, isSubmitting}) => {
     console.log(e.target.value);
   };
 
+  const StyledField = (props) => (
+    <Field {...props} as="select" id="leader" name="leader" children={props.children}></Field>
+  );
+
   return (
     <>
       <button onClick={() => setIsModalVisible(!isModalVisible)}>elo</button>
       <StyledModalContainer isModalVisible={isModalVisible}>
         <StyledBox>
           <StyledHeader>Zaplanuj nowe spotkanie</StyledHeader>
-          <StyledForm initialValues={{topic: 'dupa jeza'}}>
+          <StyledForm as={Form}>
             <StyledInputContainer>
               <StyledLabel htmlFor="date" id="dateLabel">
                 Data
@@ -81,8 +85,8 @@ const Contact = ({errors, isSubmitting}) => {
               </StyledLabel>
             </StyledInputContainer>
             <StyledInputContainer>
-              <Field as={StyledInput} onClick={showVal} name="date" type="date" id="date"></Field>
-              <Field as={StyledInput} onClick={showVal} name="time" type="time" id="time"></Field>
+              <StyledInput as={Field} onClick={showVal} name="date" type="date" id="date"></StyledInput>
+              <StyledInput as={Field} onClick={showVal} name="time" type="time" id="time"></StyledInput>
               <ErrorMessage component={StyledText} name="date"></ErrorMessage>
               <ErrorMessage component={StyledText} name="time"></ErrorMessage>
             </StyledInputContainer>
@@ -94,23 +98,17 @@ const Contact = ({errors, isSubmitting}) => {
             <StyledLabel htmlFor="leader" id="leaderLabel">
               Prowadzący
             </StyledLabel>
-            <Field as={StyledSelectContainer}>
-              <Field as={StyledSelect} id="leader" name="leader">
-                <Field as={StyledOption} value="Damian Ospara">
-                  Damian Ospara
-                </Field>
-                <Field as={StyledOption} value="Kazimierz Bagrowski">
-                  Kazimierz Bagrowski
-                </Field>
-                <Field as={StyledOption} value="Jakub Wojtoń">
-                  Jakub Wojtoń
-                </Field>
-              </Field>
-            </Field>
+            <StyledSelectContainer>
+              <StyledSelect as={StyledField}>
+                <StyledOption value="Damian Ospara">Damian Ospara</StyledOption>
+                <StyledOption value="Kazimierz Bagrowski">Kazimierz Bagrowski</StyledOption>
+                <StyledOption value="Jakub Wojtoń">Jakub Wojtoń</StyledOption>
+              </StyledSelect>
+            </StyledSelectContainer>
             <StyledLabel htmlFor="meetingHref" id="meetingHrefLabel">
               Odnośnik do spotkania
             </StyledLabel>
-            <Field as={StyledInput} placeholder="link do spotkania" name="meetingHref" id="meetingHref"></Field>
+            <StyledInput as={Field} placeholder="link do spotkania" name="meetingHref" id="meetingHref"></StyledInput>
             <ErrorMessage component={StyledText} name="meetingHref"></ErrorMessage>
             <StyledLabel htmlFor="description" id="descriptionLabel">
               Opis spotkania
@@ -123,6 +121,8 @@ const Contact = ({errors, isSubmitting}) => {
               <StyledTagsInput placeholder="wpisz tagi" onKeyUp={handleTags}></StyledTagsInput>
               <ErrorMessage component={StyledText} name="renderedTags"></ErrorMessage>
             </StyledTagsContainer>
+
+            <StyledInput as={Field} name="tags" id="tags" value={tags}></StyledInput>
             <StyledButtonsContainer>
               <StyledButton
                 onClick={() => setIsModalVisible(!isModalVisible)}
@@ -169,7 +169,7 @@ const Formik = withFormik({
     leader: Yup.string('prowadzący nie może być numerem').required('wprowadź prowadzącego'),
     meetingHref: Yup.string('link musi być linkiem').required('musisz podać link'),
     description: Yup.string('opis musi być tekstem').required('opis jest wymagany'),
-    tags: Yup.array(Yup.string()).required('tagi są wymagane'),
+    tags: Yup.array().min(5, 'musisz dodać co najmniej 5 tagow').required('tagi są wymagane'),
   }),
   handleSubmit: (values) => {
     // fetch idzie tu
