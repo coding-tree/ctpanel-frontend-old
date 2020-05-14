@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {withFormik, Form, Field, ErrorMessage} from 'formik';
+import React, {useState, useEffect} from 'react';
+import {withFormik, Form, Field, ErrorMessage, useFormikContext} from 'formik';
 import * as Yup from 'yup';
 
 import {
@@ -27,11 +27,13 @@ import {
   StyledTextArea,
 } from 'styledComponents/ModalStyled/';
 
-const Contact = ({errors, isSubmitting}) => {
+const Contact = ({errors, isSubmitting}, props) => {
   console.log('errors', errors);
   console.log('isSubmitting', isSubmitting);
   const [tags, setTags] = useState(['js']);
   const [isModalVisible, setIsModalVisible] = useState(true);
+
+  console.log(props);
 
   const removeTag = (e) => {
     const selectedTag = e.target.parentNode.firstChild.textContent;
@@ -60,6 +62,14 @@ const Contact = ({errors, isSubmitting}) => {
       <StyledCloseButton onClick={removeTag}>&times;</StyledCloseButton>
     </StyledTag>
   ));
+
+  const TestField = () => {
+    const {values} = useFormikContext();
+    useEffect(() => {
+      values.userTags = tags.join(',');
+    }, [values]);
+    return null;
+  };
 
   const showVal = (e) => {
     console.log(e.target.value);
@@ -120,10 +130,14 @@ const Contact = ({errors, isSubmitting}) => {
             <StyledTagsContainer>
               <StyledTags name="renderedTags">{renderedTags}</StyledTags>
               <StyledTagsInputBox></StyledTagsInputBox>
+
               <StyledTagsInput placeholder="wpisz tagi" onKeyUp={handleTags}></StyledTagsInput>
               <ErrorMessage component={StyledText} name="tags"></ErrorMessage>
             </StyledTagsContainer>
 
+            <TestField />
+
+            {/* INVISIBLE */}
             <StyledInput as={Field} name="userTags" id="userTags" value={tags}></StyledInput>
             <StyledButtonsContainer>
               <StyledButton
@@ -174,9 +188,9 @@ const Formik = withFormik({
   }),
   handleSubmit: (values) => {
     // fetch idzie tu
-    console.log(values.userTags);
+    console.log('USERTAGS', values.userTags);
     // console.log(values.userTags.join(','));
-    // console.log(values);
+    console.log(values);
   },
 })(Contact);
 
