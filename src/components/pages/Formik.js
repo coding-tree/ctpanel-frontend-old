@@ -68,7 +68,9 @@ const Contact = ({errors, isSubmitting}) => {
   const StyledField = (props) => (
     <Field {...props} as="select" id="leader" name="leader" children={props.children}></Field>
   );
-
+  const StyledCustomTags = (props) => (
+    <Field {...props} as="text" id="userTags" name="userTags" children={props.children}></Field>
+  );
   return (
     <>
       <button onClick={() => setIsModalVisible(!isModalVisible)}>elo</button>
@@ -119,10 +121,10 @@ const Contact = ({errors, isSubmitting}) => {
               <StyledTags name="renderedTags">{renderedTags}</StyledTags>
               <StyledTagsInputBox></StyledTagsInputBox>
               <StyledTagsInput placeholder="wpisz tagi" onKeyUp={handleTags}></StyledTagsInput>
-              <ErrorMessage component={StyledText} name="renderedTags"></ErrorMessage>
+              <ErrorMessage component={StyledText} name="tags"></ErrorMessage>
             </StyledTagsContainer>
 
-            <StyledInput as={Field} name="tags" id="tags" value={tags}></StyledInput>
+            <StyledInput as={Field} name="userTags" id="userTags" value={tags}></StyledInput>
             <StyledButtonsContainer>
               <StyledButton
                 onClick={() => setIsModalVisible(!isModalVisible)}
@@ -144,7 +146,7 @@ const Contact = ({errors, isSubmitting}) => {
 };
 
 const Formik = withFormik({
-  mapPropsToValues: ({date, time, topic, leader, meetingHref, description, tags}) => {
+  mapPropsToValues: ({date, time, topic, leader, meetingHref, description, userTags}) => {
     return {
       date: date || '',
       time: time || '',
@@ -152,7 +154,7 @@ const Formik = withFormik({
       leader: leader || '',
       meetingHref: meetingHref || '',
       description: description || '',
-      tags: tags || [],
+      userTags: userTags || '',
     };
   },
   validationSchema: Yup.object().shape({
@@ -169,11 +171,12 @@ const Formik = withFormik({
     leader: Yup.string('prowadzący nie może być numerem').required('wprowadź prowadzącego'),
     meetingHref: Yup.string('link musi być linkiem').required('musisz podać link'),
     description: Yup.string('opis musi być tekstem').required('opis jest wymagany'),
-    tags: Yup.array().min(5, 'musisz dodać co najmniej 5 tagow').required('tagi są wymagane'),
   }),
   handleSubmit: (values) => {
     // fetch idzie tu
-    console.log(values);
+    console.log(values.userTags);
+    // console.log(values.userTags.join(','));
+    // console.log(values);
   },
 })(Contact);
 
