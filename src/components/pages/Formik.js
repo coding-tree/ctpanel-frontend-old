@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {withFormik, Form, Field, ErrorMessage, useFormikContext} from 'formik';
 import * as Yup from 'yup';
-
+import axios from 'axios';
 import {
   StyledBox,
   StyledButton,
@@ -188,6 +188,14 @@ const Formik = withFormik({
   handleSubmit: (values) => {
     // fetch idzie tu
     console.log(values);
+    axios
+      .post('http://localhost:3001/test', values)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     // console.log(values.userTags.join(','));
     // console.log(values);
   },
