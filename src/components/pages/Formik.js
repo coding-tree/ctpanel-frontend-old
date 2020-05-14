@@ -30,33 +30,33 @@ import {
 const Contact = ({errors, isSubmitting}, props) => {
   console.log('errors', errors);
   console.log('isSubmitting', isSubmitting);
-  const [tags, setTags] = useState(['js']);
+  const [userTags, setUserTags] = useState(['js']);
   const [isModalVisible, setIsModalVisible] = useState(true);
 
   console.log(props);
 
   const removeTag = (e) => {
     const selectedTag = e.target.parentNode.firstChild.textContent;
-    setTags(tags.filter((item) => item !== selectedTag));
+    setUserTags(userTags.filter((item) => item !== selectedTag));
   };
 
   const handleTags = (e) => {
     // space
     if (e.keyCode === 32) {
       console.log('wcisnieto spacje');
-      setTags([...tags, e.target.value.replace(' ', '')]);
+      setUserTags([...userTags, e.target.value.replace(' ', '')]);
       e.target.value = '';
     }
     // backspace
-    if (e.keyCode === 8 && e.target.value === '' && tags.length > 0) {
-      const lastItemInArray = tags[tags.length - 1];
+    if (e.keyCode === 8 && e.target.value === '' && userTags.length > 0) {
+      const lastItemInArray = userTags[userTags.length - 1];
       console.log('backspace');
       e.target.value = lastItemInArray;
-      setTags(tags.filter((item) => item !== lastItemInArray));
+      setUserTags(userTags.filter((item) => item !== lastItemInArray));
     }
   };
 
-  const renderedTags = tags.map((tag) => (
+  const renderedTags = userTags.map((tag) => (
     <StyledTag key={tag + (Math.random() * 10000).toString()}>
       <StyledTagText>{tag}</StyledTagText>
       <StyledCloseButton onClick={removeTag}>&times;</StyledCloseButton>
@@ -66,7 +66,7 @@ const Contact = ({errors, isSubmitting}, props) => {
   const TestField = () => {
     const {values} = useFormikContext();
     useEffect(() => {
-      values.userTags = tags.join(',');
+      values.tags = userTags;
     }, [values]);
     return null;
   };
@@ -78,9 +78,7 @@ const Contact = ({errors, isSubmitting}, props) => {
   const StyledField = (props) => (
     <Field {...props} as="select" id="leader" name="leader" children={props.children}></Field>
   );
-  const StyledCustomTags = (props) => (
-    <Field {...props} as="text" id="userTags" name="userTags" children={props.children}></Field>
-  );
+
   return (
     <>
       <button onClick={() => setIsModalVisible(!isModalVisible)}>elo</button>
@@ -138,7 +136,7 @@ const Contact = ({errors, isSubmitting}, props) => {
             <TestField />
 
             {/* INVISIBLE */}
-            <StyledInput as={Field} name="userTags" id="userTags" value={tags}></StyledInput>
+            <StyledInput style={{display: 'none'}} as={Field} name="tags" id="tags" value={userTags}></StyledInput>
             <StyledButtonsContainer>
               <StyledButton
                 onClick={() => setIsModalVisible(!isModalVisible)}
@@ -160,15 +158,16 @@ const Contact = ({errors, isSubmitting}, props) => {
 };
 
 const Formik = withFormik({
-  mapPropsToValues: ({date, time, topic, leader, meetingHref, description, userTags}) => {
+  mapPropsToValues: ({date, time, topic, leader, meetingHref, description, tags}) => {
     return {
-      date: date || '',
-      time: time || '',
+      // todo - convert date & time to timestamp
+      date: date || new Date().toISOString().slice(0, 10),
+      time: time || '21:30',
       topic: topic || '',
-      leader: leader || '',
+      leader: leader || 'Damian Ospara',
       meetingHref: meetingHref || '',
       description: description || '',
-      userTags: userTags || '',
+      tags: tags || '',
     };
   },
   validationSchema: Yup.object().shape({
@@ -188,9 +187,9 @@ const Formik = withFormik({
   }),
   handleSubmit: (values) => {
     // fetch idzie tu
-    console.log('USERTAGS', values.userTags);
-    // console.log(values.userTags.join(','));
     console.log(values);
+    // console.log(values.userTags.join(','));
+    // console.log(values);
   },
 })(Contact);
 
