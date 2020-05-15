@@ -72,6 +72,7 @@ export const StyledInput = styled.input`
   padding: 12px;
   color: black;
   margin-bottom: 22px;
+  font-size: 16px;
 `;
 
 export const StyledTextArea = styled.textarea`
@@ -83,6 +84,7 @@ export const StyledTextArea = styled.textarea`
   margin-bottom: 22px;
   height: 120px;
   resize: none;
+  font-size: 16px;
 `;
 
 export const StyledLabel = styled.label`
@@ -128,11 +130,13 @@ export const StyledSelect = styled.select`
   padding: 10px;
   background-color: #f1ebeb;
   padding: 12px;
+  font-size: 16px;
 `;
 
 export const StyledOption = styled.option`
   padding: 12px;
   font-family: inherit;
+  font-size: 16px;
 
   &:checked {
     background-color: #019740;
@@ -223,17 +227,20 @@ export const StyledTagsInput = styled.input`
   width: auto;
   display: flex;
   flex-grow: 1;
+  font-size: 16px;
 `;
 
 export const StyledCloseButton = styled.span`
-font-size: 14px;
+font-size: 16px;
   height: 100%;
   margin-left: 8px;
   display: flex;
   align-items:center;
   justify-content: center;
+  transition: 0.25s;
   &:hover{
     cursor: pointer;
+    color: #E53D00;
   }
 }
 `;

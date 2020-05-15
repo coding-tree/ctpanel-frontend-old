@@ -136,7 +136,7 @@ const Contact = ({errors, isSubmitting}, props) => {
             <TestField />
 
             {/* INVISIBLE */}
-            <StyledInput as={Field} name="tags" id="tags" value={userTags}></StyledInput>
+            <StyledInput style={{display: 'none'}} as={Field} name="tags" id="tags" value={userTags}></StyledInput>
             <StyledButtonsContainer>
               <StyledButton
                 onClick={() => setIsModalVisible(!isModalVisible)}
