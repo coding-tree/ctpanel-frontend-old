@@ -193,7 +193,7 @@ const Formik = withFormik({
     let timestamp = date.getTime();
     date = timestamp;
     axios
-      .post('http://localhost:3001/test', {date, topic, leader, meetingHref, description, tags})
+      .post(`${process.env.REACT_APP_SERVER_URL}/meetings`, {date, topic, leader, meetingHref, description, tags})
       .then((response) => {
         console.log(response.data);
       })
