@@ -136,7 +136,7 @@ const Contact = ({errors, isSubmitting}, props) => {
             <TestField />
 
             {/* INVISIBLE */}
-            <StyledInput style={{display: 'none'}} as={Field} name="tags" id="tags" value={userTags}></StyledInput>
+            <StyledInput as={Field} name="tags" id="tags" value={userTags}></StyledInput>
             <StyledButtonsContainer>
               <StyledButton
                 onClick={() => setIsModalVisible(!isModalVisible)}
@@ -187,17 +187,19 @@ const Formik = withFormik({
   }),
   handleSubmit: (values) => {
     // fetch idzie tu
-    console.log(values);
+    let {date, time, topic, leader, meetingHref, description, tags} = values;
+    let dateToConvert = `${date} ${time}`;
+    date = new Date(dateToConvert);
+    let timestamp = date.getTime();
+    date = timestamp;
     axios
-      .post('http://localhost:3001/test', values)
+      .post('http://localhost:3001/test', {date, topic, leader, meetingHref, description, tags})
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
       })
       .catch((err) => {
         console.log(err);
       });
-    // console.log(values.userTags.join(','));
-    // console.log(values);
   },
 })(Contact);
 
