@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {withFormik, Form, Field, ErrorMessage, useFormikContext} from 'formik';
 import * as Yup from 'yup';
+import Button from 'components/atoms/Button/Button';
+import Icon from 'components/atoms/Icon';
 import axios from 'axios';
 import {
   StyledBox,
@@ -81,7 +83,9 @@ const Contact = ({errors, isSubmitting}, props) => {
 
   return (
     <>
-      <button onClick={() => setIsModalVisible(!isModalVisible)}>elo</button>
+      <Button width="144px" height="42px" primary uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
+        Dodaj <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className="fas fa-plus"></Icon>
+      </Button>
       <StyledModalContainer isModalVisible={isModalVisible}>
         <StyledBox>
           <StyledHeader>Zaplanuj nowe spotkanie</StyledHeader>
