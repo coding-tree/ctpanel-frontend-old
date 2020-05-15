@@ -29,7 +29,7 @@ import {
   StyledTextArea,
 } from 'styledComponents/ModalStyled/';
 
-const Contact = ({errors, isSubmitting}, props) => {
+const Topic = ({errors, isSubmitting}, props) => {
   console.log('errors', errors);
   console.log('isSubmitting', isSubmitting);
   const [userTags, setUserTags] = useState(['js']);
@@ -88,51 +88,16 @@ const Contact = ({errors, isSubmitting}, props) => {
       </Button>
       <StyledModalContainer isModalVisible={isModalVisible}>
         <StyledBox>
-          <StyledHeader>Zaplanuj nowe spotkanie</StyledHeader>
+          <StyledHeader>Dodaj nowy temat</StyledHeader>
           <StyledForm as={Form}>
-            <StyledInputContainer>
-              <StyledLabel htmlFor="date" id="dateLabel">
-                Data
-              </StyledLabel>
-              <StyledLabel htmlFor="time" id="timeLabel">
-                Czas
-              </StyledLabel>
-            </StyledInputContainer>
-            <StyledInputContainer>
-              <StyledInput as={Field} onClick={showVal} name="date" type="date" id="date"></StyledInput>
-              <StyledInput as={Field} onClick={showVal} name="time" type="time" id="time"></StyledInput>
-              <ErrorMessage component={StyledText} name="date"></ErrorMessage>
-              <ErrorMessage component={StyledText} name="time"></ErrorMessage>
-            </StyledInputContainer>
-            <StyledLabel htmlFor="topic" id="topicLabel">
-              Temat spotkania
+            <StyledLabel htmlFor="topic" name="topic-label" id="topic-label">
+              Temat
             </StyledLabel>
-            <Field as={StyledTextArea} placeholder="wpisz temat" name="topic" id="topic"></Field>
-            <ErrorMessage component={StyledText} name="topic"></ErrorMessage>
-            <StyledLabel htmlFor="leader" id="leaderLabel">
-              Prowadzący
-            </StyledLabel>
-            <StyledSelectContainer>
-              <StyledSelect as={StyledField}>
-                <StyledOption value="Damian Ospara">Damian Ospara</StyledOption>
-                <StyledOption value="Kazimierz Bagrowski">Kazimierz Bagrowski</StyledOption>
-                <StyledOption value="Jakub Wojtoń">Jakub Wojtoń</StyledOption>
-              </StyledSelect>
-            </StyledSelectContainer>
-            <StyledLabel htmlFor="meetingHref" id="meetingHrefLabel">
-              Odnośnik do spotkania
-            </StyledLabel>
-            <StyledInput as={Field} placeholder="link do spotkania" name="meetingHref" id="meetingHref"></StyledInput>
-            <ErrorMessage component={StyledText} name="meetingHref"></ErrorMessage>
-            <StyledLabel htmlFor="description" id="descriptionLabel">
-              Opis spotkania
-            </StyledLabel>
-            <Field as={StyledTextArea} placeholder="wpisz opis" id="description" name="description"></Field>
-            <ErrorMessage component={StyledText} name="description"></ErrorMessage>
+            <StyledInput placeholder="wprowadź temat" as={Field} name="topic" id="topic"></StyledInput>
+            <StyledLabel htmlFor="tags">Tagi</StyledLabel>
             <StyledTagsContainer>
               <StyledTags name="renderedTags">{renderedTags}</StyledTags>
               <StyledTagsInputBox></StyledTagsInputBox>
-
               <StyledTagsInput placeholder="wpisz tagi" onKeyUp={handleTags}></StyledTagsInput>
               <ErrorMessage component={StyledText} name="tags"></ErrorMessage>
             </StyledTagsContainer>
@@ -162,42 +127,24 @@ const Contact = ({errors, isSubmitting}, props) => {
 };
 
 const Formik = withFormik({
-  mapPropsToValues: ({date, time, topic, leader, meetingHref, description, tags}) => {
+  mapPropsToValues: ({topic, votes, userAdded, addedDate, tags}) => {
     return {
-      // todo - convert date & time to timestamp
-      date: date || new Date().toISOString().slice(0, 10),
-      time: time || '21:30',
       topic: topic || '',
-      leader: leader || 'Damian Ospara',
-      meetingHref: meetingHref || '',
-      description: description || '',
-      tags: tags || '',
+      votes: votes || 0,
+      userAdded: userAdded || 'bezimienny',
+      addedDate: new Date().getTime() || '',
+      tags: tags || [],
     };
   },
   validationSchema: Yup.object().shape({
-    date: Yup.date('musisz podać datę').required('data jest wymagana'),
-    time: Yup.string('czas musi być stringiem')
-      .min(5)
-      .max(5)
-      .min(0, 'aż tak dawno temu nie było spotkania')
-      .required('czas jest wymagany'),
-    topic: Yup.string('temat musi być tekstem')
-      .min(5, 'wpisz chociaż te 5 znaków')
-      .max(256, 'zbyt długi temat, rozbij go na kilka spotkań')
-      .required('temat jest wymagany'),
-    leader: Yup.string('prowadzący nie może być numerem').required('wprowadź prowadzącego'),
-    meetingHref: Yup.string('link musi być linkiem').required('musisz podać link'),
-    description: Yup.string('opis musi być tekstem').required('opis jest wymagany'),
+    topic: Yup.string('temat musi być tekstem'),
+    votes: Yup.number('głosy muszą być liczbą'),
+    userAdded: Yup.string('gall anonim nie może dodawać tematów').required(),
   }),
   handleSubmit: (values) => {
     // fetch idzie tu
-    let {date, time, topic, leader, meetingHref, description, tags} = values;
-    let dateToConvert = `${date} ${time}`;
-    date = new Date(dateToConvert);
-    let timestamp = date.getTime();
-    date = timestamp;
     axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/meetings`, {date, topic, leader, meetingHref, description, tags})
+      .post(`${process.env.REACT_APP_SERVER_URL}/topics`, values)
       .then((response) => {
         console.log(response.data);
       })
@@ -205,6 +152,6 @@ const Formik = withFormik({
         console.log(err);
       });
   },
-})(Contact);
+})(Topic);
 
 export default Formik;

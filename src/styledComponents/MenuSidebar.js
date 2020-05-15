@@ -60,6 +60,7 @@ export const StyledLinkElement = styled.li`
   margin-bottom: 1.5rem;
   &:last-of-type {
     margin-top: auto;
+    margin-bottom: 65px;
   }
 `;
 

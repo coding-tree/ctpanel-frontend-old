@@ -3,18 +3,24 @@ import {withRouter} from 'react-router';
 import {routes} from 'routes';
 import Button from 'components/atoms/Button/Button';
 import Icon from 'components/atoms/Icon';
-import Contact from 'components/pages/Formik';
+import Meeting from 'components/pages/Meeting';
+import Topic from 'components/pages/Topic';
+
 import {StyledTableActions} from 'styledComponents/ModalStyled/';
 
 const SchedulesTableMenu = () => {
   return (
     <StyledTableActions>
-      <Contact />
+      <Meeting />
     </StyledTableActions>
   );
 };
 
-const TopicDataBaseTableMenu = () => <button>DODAJ +</button>;
+const TopicDataBaseTableMenu = () => (
+  <StyledTableActions>
+    <Topic />
+  </StyledTableActions>
+);
 
 const MeetingHistoryTableMenu = () => (
   <>
