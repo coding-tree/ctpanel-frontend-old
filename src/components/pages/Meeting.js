@@ -2,31 +2,36 @@ import React, {useState} from 'react';
 import {withFormik, Form, Field, ErrorMessage} from 'formik';
 import styled from 'styled-components';
 import * as Yup from 'yup';
+import Button from 'components/atoms/Button/Button';
+import Icon from 'components/atoms/Icon';
+import axios from 'axios';
 
-const Contact = ({errors, isSubmitting}, props) => {
+const Meeting = ({errors, isSubmitting, setFieldValue}, props) => {
   const [tags, setTags] = useState(['js']);
   const [isModalVisible, setIsModalVisible] = useState(true);
 
   const removeTag = (e) => {
     const selectedTag = e.target.parentNode.firstChild.textContent;
-    setUserTags(userTags.filter((item) => item !== selectedTag));
+    setTags(tags.filter((item) => item !== selectedTag));
   };
 
   const handleTags = (e) => {
     // space
     if (e.keyCode === 32) {
-      setTags([...tags, e.target.value.replace(' ', '')]);
+      const updatedTags = [...tags, e.target.value.trim()];
+      setFieldValue('tags', [...updatedTags]);
+      setTags(updatedTags);
       e.target.value = '';
     }
     // backspace
     if (e.keyCode === 8 && e.target.value === '' && tags.length > 0) {
       const lastItemInArray = tags[tags.length - 1];
       e.target.value = lastItemInArray;
-      setUserTags(userTags.filter((item) => item !== lastItemInArray));
+      setTags(tags.filter((item) => item !== lastItemInArray));
     }
   };
 
-  const renderedTags = userTags.map((tag) => (
+  const renderedTags = tags.map((tag) => (
     <StyledTag key={tag + (Math.random() * 10000).toString()}>
       <StyledTagText>{tag}</StyledTagText>
       <StyledCloseButton onClick={removeTag}>&times;</StyledCloseButton>
@@ -87,7 +92,7 @@ const Contact = ({errors, isSubmitting}, props) => {
             <StyledLabel htmlFor="description" id="descriptionLabel">
               Opis spotkania
             </StyledLabel>
-            <Field as={StyledTextArea} placeholder="wpisz opis" id="description" name="description"></Field>
+            <StyledTextArea as={Field} placeholder="wpisz opis" id="description" name="description"></StyledTextArea>
             <ErrorMessage component={StyledText} name="description"></ErrorMessage>
             <StyledTagsContainer>
               <StyledTags name="renderedTags">{renderedTags}</StyledTags>
@@ -98,7 +103,8 @@ const Contact = ({errors, isSubmitting}, props) => {
             </StyledTagsContainer>
 
             {/* INVISIBLE */}
-            <StyledInput style={{display: 'none'}} as={Field} name="tags" id="tags" value={userTags}></StyledInput>
+            <StyledInput as={Field} name="tags" id="tags"></StyledInput>
+
             <StyledButtonsContainer>
               <StyledButton
                 onClick={() => setIsModalVisible(!isModalVisible)}
@@ -124,7 +130,7 @@ const Formik = withFormik({
     return {
       // todo - convert date & time to timestamp
       date: date || new Date().toISOString().slice(0, 10),
-      time: time || '21:30',
+      time: time || '21:33',
       topic: topic || '',
       leader: leader || 'Damian Ospara',
       meetingHref: meetingHref || '',
@@ -148,46 +154,27 @@ const Formik = withFormik({
     description: Yup.string('opis musi być tekstem').required('opis jest wymagany'),
   }),
   handleSubmit: (values) => {
+    console.log(values);
     // fetch idzie tu
     let {date, time, topic, leader, meetingHref, description, tags} = values;
     let dateToConvert = `${date} ${time}`;
     date = new Date(dateToConvert);
     let timestamp = date.getTime();
     date = timestamp;
-    axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/meetings`, {date, topic, leader, meetingHref, description, tags})
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // axios
+    //   .post(`${process.env.REACT_APP_SERVER_URL}/meetings`, {date, topic, leader, meetingHref, description, tags})
+    //   .then((response) => {
+    //     console.log(response.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   },
 })(Meeting);
 
 export default Formik;
 
 // STYLES
-
-const Container = styled.div`
-  width: 100%;
-  bottom: 5rem;
-  justify-content: center;
-  font-size: 1.6rem;
-  margin-bottom: 5rem;
-`;
-
-const StyledWrapper = styled.div`
-  width: 100%;
-`;
-
-const StyledTableActions = styled.div`
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 30px 27px 13px;
-`;
-
 const StyledModalContainer = styled.div`
   font-family: 'Muli', sans-serif;
   display: none;
@@ -394,15 +381,14 @@ const StyledTagsInput = styled.input`
 `;
 
 const StyledCloseButton = styled.span`
-font-size: 14px;
+  font-size: 14px;
   height: 100%;
   margin-left: 8px;
   display: flex;
-  align-items:center;
+  align-items: center;
   justify-content: center;
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
-}
 `;
 const StyledTagsInputBox = styled.div``;

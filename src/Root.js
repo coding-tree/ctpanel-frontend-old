@@ -58,6 +58,7 @@ const Root = (props) => {
             <NextMeet />
             <Suspense fallback={<LoadingSpinner />}>
               <Switch>
+                <Route exact path="/contact" component={Meeting} />
                 <Route exact path={routes.home} component={Home} />
                 <Route exact strict path={routes.timetable} component={Timetable} />
                 <Route exact strict path={routes.topicDatabase} component={TopicDatabase} />
