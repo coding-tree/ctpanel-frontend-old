@@ -10,7 +10,6 @@ import {routes} from 'routes';
 import MenuSidebar from 'components/organisms/MenuSidebar';
 import NextMeet from 'components/organisms/NextMeet';
 import MainTemplate from './components/templates/MainTemplate';
-import Meeting from './components/pages/Meeting';
 
 const LoginPage = lazy(() => import('components/pages/LoginPage'));
 
@@ -58,7 +57,6 @@ const Root = (props) => {
             <NextMeet />
             <Suspense fallback={<LoadingSpinner />}>
               <Switch>
-                <Route exact path="/contact" component={Meeting} />
                 <Route exact path={routes.home} component={Home} />
                 <Route exact strict path={routes.timetable} component={Timetable} />
                 <Route exact strict path={routes.topicDatabase} component={TopicDatabase} />

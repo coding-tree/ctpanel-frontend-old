@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import {withFormik, Form, Field, ErrorMessage} from 'formik';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import * as Yup from 'yup';
 import Button from 'components/atoms/Button/Button';
 import Icon from 'components/atoms/Icon';
 import axios from 'axios';
+import variables from 'settings/variables';
 
-const Meeting = ({errors, isSubmitting, setFieldValue}, props) => {
+const Meeting = ({setFieldValue}) => {
   const [tags, setTags] = useState(['js']);
   const [isModalVisible, setIsModalVisible] = useState(true);
 
@@ -38,13 +39,7 @@ const Meeting = ({errors, isSubmitting, setFieldValue}, props) => {
     </StyledTag>
   ));
 
-  const showVal = (e) => {
-    console.log(e.target.value);
-  };
-
-  const StyledField = (props) => (
-    <Field {...props} as="select" id="leader" name="leader" children={props.children}></Field>
-  );
+  const leaders = ['', 'Damian Ospara', 'Józef Rzadkosz'];
 
   return (
     <>
@@ -52,7 +47,7 @@ const Meeting = ({errors, isSubmitting, setFieldValue}, props) => {
         Dodaj <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className="fas fa-plus"></Icon>
       </Button>
       <StyledModalContainer isModalVisible={isModalVisible}>
-        <StyledBox>
+        <StyledBox isModalVisible={isModalVisible}>
           <StyledHeader>Zaplanuj nowe spotkanie</StyledHeader>
           <StyledForm as={Form}>
             <StyledInputContainer>
@@ -63,55 +58,61 @@ const Meeting = ({errors, isSubmitting, setFieldValue}, props) => {
                 Czas
               </StyledLabel>
             </StyledInputContainer>
+
             <StyledInputContainer>
-              <StyledInput as={Field} onClick={showVal} name="date" type="date" id="date"></StyledInput>
-              <StyledInput as={Field} onClick={showVal} name="time" type="time" id="time"></StyledInput>
-              <ErrorMessage component={StyledText} name="date"></ErrorMessage>
-              <ErrorMessage component={StyledText} name="time"></ErrorMessage>
+              <StyledInput as={Field} name="date" type="date" id="date"></StyledInput>
+              <StyledInput as={Field} name="time" type="time" id="time"></StyledInput>
+              <ErrorMessage component={StyledError} name="date"></ErrorMessage>
+              <ErrorMessage component={StyledError} name="time"></ErrorMessage>
             </StyledInputContainer>
             <StyledLabel htmlFor="topic" id="topicLabel">
               Temat spotkania
             </StyledLabel>
-            <Field as={StyledTextArea} placeholder="wpisz temat" name="topic" id="topic"></Field>
-            <ErrorMessage component={StyledText} name="topic"></ErrorMessage>
+            <Field as="textarea" placeholder="Wpisz temat spotkania" name="topic" id="topic"></Field>
+            <ErrorMessage component={StyledError} name="topic"></ErrorMessage>
             <StyledLabel htmlFor="leader" id="leaderLabel">
               Prowadzący
             </StyledLabel>
             <StyledSelectContainer>
-              <StyledSelect as={StyledField}>
-                <StyledOption value="Damian Ospara">Damian Ospara</StyledOption>
-                <StyledOption value="Kazimierz Bagrowski">Kazimierz Bagrowski</StyledOption>
-                <StyledOption value="Jakub Wojtoń">Jakub Wojtoń</StyledOption>
-              </StyledSelect>
+              {/* Invisible select */}
+              <Field as="select" id="leader" name="leader">
+                {leaders.map((el, index) => (
+                  <option key={index}>{el}</option>
+                ))}
+              </Field>
+
+              {/* TODO: Create custom select */}
+              <StyledSelect>Jakiś select</StyledSelect>
+              {leaders.map((el, index) => (
+                <StyledOption onClick={() => setFieldValue('leader', el)} key={index}>
+                  {el}
+                </StyledOption>
+              ))}
+              <ErrorMessage component={StyledError} name="leader"></ErrorMessage>
             </StyledSelectContainer>
             <StyledLabel htmlFor="meetingHref" id="meetingHrefLabel">
               Odnośnik do spotkania
             </StyledLabel>
-            <StyledInput as={Field} placeholder="link do spotkania" name="meetingHref" id="meetingHref"></StyledInput>
-            <ErrorMessage component={StyledText} name="meetingHref"></ErrorMessage>
+            <StyledInput as={Field} placeholder="Link do spotkania" name="meetingHref" id="meetingHref"></StyledInput>
+            <ErrorMessage component={StyledError} name="meetingHref"></ErrorMessage>
             <StyledLabel htmlFor="description" id="descriptionLabel">
               Opis spotkania
             </StyledLabel>
-            <StyledTextArea as={Field} placeholder="wpisz opis" id="description" name="description"></StyledTextArea>
-            <ErrorMessage component={StyledText} name="description"></ErrorMessage>
+            <Field as="textarea" placeholder="Wpisz opis spotkania" id="description" name="description"></Field>
+            <ErrorMessage component={StyledError} name="description"></ErrorMessage>
             <StyledTagsContainer>
               <StyledTags name="renderedTags">{renderedTags}</StyledTags>
               <StyledTagsInputBox></StyledTagsInputBox>
 
               <StyledTagsInput placeholder="wpisz tagi" onKeyUp={handleTags}></StyledTagsInput>
-              <ErrorMessage component={StyledText} name="tags"></ErrorMessage>
+              <ErrorMessage component={StyledError} name="tags"></ErrorMessage>
             </StyledTagsContainer>
 
             {/* INVISIBLE */}
             <StyledInput as={Field} name="tags" id="tags"></StyledInput>
 
             <StyledButtonsContainer>
-              <StyledButton
-                onClick={() => setIsModalVisible(!isModalVisible)}
-                type="button"
-                name="cancelButton"
-                id="cancelButton"
-              >
+              <StyledButton onClick={() => setIsModalVisible(!isModalVisible)} type="button">
                 Anuluj
               </StyledButton>
               <StyledButton name="addButton" id="addButton">
@@ -132,26 +133,22 @@ const Formik = withFormik({
       date: date || new Date().toISOString().slice(0, 10),
       time: time || '21:33',
       topic: topic || '',
-      leader: leader || 'Damian Ospara',
+      leader: leader || '',
       meetingHref: meetingHref || '',
       description: description || '',
       tags: tags || '',
     };
   },
   validationSchema: Yup.object().shape({
-    date: Yup.date('musisz podać datę').required('data jest wymagana'),
-    time: Yup.string('czas musi być stringiem')
-      .min(5)
-      .max(5)
-      .min(0, 'aż tak dawno temu nie było spotkania')
-      .required('czas jest wymagany'),
-    topic: Yup.string('temat musi być tekstem')
-      .min(5, 'wpisz chociaż te 5 znaków')
-      .max(256, 'zbyt długi temat, rozbij go na kilka spotkań')
-      .required('temat jest wymagany'),
-    leader: Yup.string('prowadzący nie może być numerem').required('wprowadź prowadzącego'),
-    meetingHref: Yup.string('link musi być linkiem').required('musisz podać link'),
-    description: Yup.string('opis musi być tekstem').required('opis jest wymagany'),
+    date: Yup.date('Musisz podać datę').required('Data jest wymagana'),
+    time: Yup.string().min(5).max(5).min(0, 'Aż tak dawno temu nie było spotkania').required('Czas jest wymagany'),
+    topic: Yup.string()
+      .min(5, 'Wpisz chociaż te 5 znaków')
+      .max(256, 'Zbyt długi temat, rozbij go na kilka spotkań')
+      .required('Temat jest wymagany'),
+    leader: Yup.string().required('Wprowadź prowadzącego'),
+    meetingHref: Yup.string().required('Musisz podać link'),
+    description: Yup.string().required('Opis jest wymagany'),
   }),
   handleSubmit: (values) => {
     console.log(values);
@@ -174,126 +171,123 @@ const Formik = withFormik({
 
 export default Formik;
 
+const StyledOption = styled.div``;
+const StyledSelect = styled.div`
+  border: 2px solid red;
+`;
+
 // STYLES
 const StyledModalContainer = styled.div`
-  font-family: 'Muli', sans-serif;
-  display: none;
-  ${(props) => props.isModalVisible && 'display: flex'}
+  display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
   height: 100vh;
   width: 100%;
-  border: 1px solid #019740;
-  background-color: #000000aa;
+  background-color: ${variables.modalBackground};
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+  ${({isModalVisible}) =>
+    isModalVisible &&
+    css`
+      opacity: 1;
+      visibility: visible;
+    `}
   top: 0;
   left: 0;
 `;
 const StyledBox = styled.div`
-  background-color: #ffffff;
-  display: flex;
+  background-color: ${variables.colorWhite};
   flex-direction: column;
-  width: 640px;
+  width: 64rem;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 3px 6px ${variables.modalBackground};
+  transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s;
+  opacity: 0;
+  transform: scale(0.7);
+  ${({isModalVisible}) =>
+    isModalVisible &&
+    css`
+      opacity: 1;
+      transform: scale(1);
+    `}
 `;
 
 const StyledHeader = styled.div`
   font-weight: 700;
-  font-size: 20px;
+  font-size: 2rem;
   width: 100%;
   display: flex;
   align-items: center;
   height: 65px;
-  background-color: #019740;
-  color: white;
-  padding: 25px;
+  background-color: ${variables.colorMain};
+  color: ${variables.colorWhite};
+  padding: 2.5rem;
 `;
 
-const StyledText = styled.span`
+const StyledError = styled.span`
   padding: 5px 15px;
-  border: 1px solid red;
+  border-radius: 4px;
+  font-weight: bold;
+  color: ${variables.colorWhite};
+  background-color: ${variables.colorError};
+  margin-bottom: 2rem;
+  height: 3.6rem;
+  align-items: center;
 `;
 
 const StyledForm = styled.form`
-  font-family: 'Muli', sans-serif;
-  padding: 23px;
+  font-family: inherit;
+  padding: 2.3rem;
   display: flex;
   flex-direction: column;
+  textarea {
+    font-family: inherit;
+    font-size: 1.6rem;
+    border-radius: 4px;
+    border: 1px solid ${variables.borderColor};
+    padding: 12px;
+    color: ${variables.colorFont};
+    margin-bottom: 2.2rem;
+    height: 12rem;
+    resize: none;
+    &::placeholder {
+      color: ${variables.colorLink};
+    }
+  }
 `;
 
 const StyledInput = styled.input`
   font-family: inherit;
+  font-size: 1.6rem;
   width: 100%;
+  min-height: 3.6rem;
   border-radius: 4px;
-  border: 1px solid #9d9da3;
-  padding: 12px;
-  color: black;
-  margin-bottom: 22px;
-`;
-
-const StyledTextArea = styled.textarea`
-  font-family: inherit;
-  border-radius: 4px;
-  border: 1px solid #9d9da3;
-  padding: 12px;
-  color: black;
-  margin-bottom: 22px;
-  height: 120px;
-  resize: none;
+  border: 1px solid ${variables.borderColor};
+  padding: 0 12px;
+  color: ${variables.colorFont};
+  margin-bottom: 2.2rem;
+  &::placeholder {
+    color: ${variables.colorLink};
+  }
 `;
 
 const StyledLabel = styled.label`
-  font-family: inherit;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 1.6rem;
   margin-bottom: 5px;
-  color: black;
+  color: ${variables.colorFont};
 `;
 
 const StyledSelectContainer = styled.div`
-  font-family: inherit;
-  margin-bottom: 22px;
+  flex-direction: column;
   position: relative;
-  display: flex;
   justify-content: center;
   align-items: center;
-  &::after {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 25px;
-    position: absolute;
-    right: 9px;
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-    font-size: 2rem;
-    content: '\f0dc';
-    z-index: 1234;
-  }
-`;
-const StyledSelect = styled.select`
-  border-radius: 4px;
-  font-family: inherit;
-  width: 100%;
-  appearance: none;
-  position: relative;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  position: relative;
-  font-family: inherit;
-  padding: 10px;
-  background-color: #f1ebeb;
-  padding: 12px;
-`;
-
-const StyledOption = styled.option`
-  padding: 12px;
-  font-family: inherit;
-
-  &:checked {
-    background-color: #019740;
-    color: white;
-  }
+  margin-bottom: 2.2rem;
 `;
 
 const StyledButtonsContainer = styled.div`
@@ -303,19 +297,18 @@ const StyledButtonsContainer = styled.div`
 `;
 
 const StyledButton = styled.button`
-  font-family: inherit;
-  border: 1px solid #dbdbdb;
+  border: 1px solid ${variables.borderColor};
   padding: 10px 45px;
   border-radius: 4px;
-  background: #019740;
-  color: white;
+  background: ${variables.colorMain};
+  color: ${variables.colorWhite};
   font-weight: 700;
   transition: 0.25s ease-in-out;
   &:hover {
     cursor: pointer;
-    background-color: white;
+    background-color: ${variables.colorWhite};
     border-color: #019740;
-    color: black;
+    color: ${variables.colorFont};
   }
   &:first-of-type {
     color: black;
@@ -330,14 +323,12 @@ const StyledButton = styled.button`
 `;
 
 const StyledTagsContainer = styled.div`
-  display: flex;
   align-items: center;
-  font-family: inherit;
   flex-wrap: wrap;
   width: 100%;
   border-radius: 4px;
-  border: 1px solid #9d9da3;
-  color: black;
+  border: 1px solid ${variables.borderColor};
+  color: ${variables.colorFont};
   margin-bottom: 22px;
 `;
 
@@ -355,17 +346,16 @@ const StyledTags = styled.ul`
 
 const StyledTag = styled.li`
   margin: 5px;
-  display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+
   margin-left: 5px;
   padding: 5px 10px;
   border-radius: 4px;
   flex-wrap: nowrap;
-  background-color: #009640;
-  color: white;
-  font-size: 12px;
+  background-color: ${variables.colorMain};
+  color: ${variables.colorWhite};
+  font-size: 1.2rem;
 `;
 
 const StyledTagText = styled.span``;
@@ -377,11 +367,11 @@ const StyledTagsInput = styled.input`
   height: 100%;
   width: auto;
   display: flex;
-  flex-grow: 1;
 `;
 
 const StyledCloseButton = styled.span`
-  font-size: 14px;
+  font-size: 1.6rem;
+  font-weight: bold;
   height: 100%;
   margin-left: 8px;
   display: flex;

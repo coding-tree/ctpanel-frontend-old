@@ -29,6 +29,11 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
   }
 
+  ::selection {
+    background-color: ${variables.colorMain};
+    color:${variables.colorWhite};
+  }
+
   #root {
     position: absolute;
     left: 34rem;
