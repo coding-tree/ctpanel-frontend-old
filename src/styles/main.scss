@@ -1,11 +1,2 @@
-@import './base/reset';
-@import './base/typography';
-
-@import './utilities/variables';
-@import './utilities/functions';
-@import './utilities/mixins';
-@import './utilities/global';
-
-@import './components/buttons';
-
-@import './layout/navigation';
+// IMPORT FONTS - fix for styled components import bug (on production)
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&family=Muli:wght@400;700&display=swap');

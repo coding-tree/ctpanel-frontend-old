@@ -31,8 +31,8 @@ const GlobalStyle = createGlobalStyle`
 
   #root {
     position: absolute;
-    left: 340px;
-    width: calc(100% - 340px);
+    left: 34rem;
+    width: calc(100% - 34rem);
     flex-direction: column;
   }
 
