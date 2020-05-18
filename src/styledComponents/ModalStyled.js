@@ -1,62 +1,6 @@
-import React, {useState} from 'react';
-import {withRouter} from 'react-router';
-import {routes} from 'routes';
-import Button from 'components/atoms/Button/Button';
-import Icon from 'components/atoms/Icon';
-import Meeting from 'components/pages/Meeting';
-import Topic from 'components/pages/Topic';
+import styled from 'styled-components';
 
-import {StyledTableActions} from 'styledComponents/ModalStyled/';
-
-const SchedulesTableMenu = () => {
-  return (
-    <StyledTableActions>
-      <Meeting />
-    </StyledTableActions>
-  );
-};
-
-const TopicDataBaseTableMenu = () => (
-  <StyledTableActions>
-    <Topic />
-  </StyledTableActions>
-);
-
-const MeetingHistoryTableMenu = () => (
-  <>
-    <span>data</span>
-    <select>
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-    </select>
-    <select>
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-    </select>
-    <input type="text" />
-  </>
-);
-
-const TableMenu = ({location}) => {
-  switch (location.pathname) {
-    case routes.timetable:
-      return <SchedulesTableMenu />;
-    case routes.topicDatabase:
-      return <TopicDataBaseTableMenu />;
-    case routes.history:
-      return <MeetingHistoryTableMenu />;
-    default:
-      return console.log('something went wrong');
-  }
-};
-
-export default withRouter(TableMenu);
-
-// Styles
-
-const Container = styled.div`
+export const Container = styled.div`
   width: 100%;
   bottom: 5rem;
   justify-content: center;
@@ -64,18 +8,18 @@ const Container = styled.div`
   margin-bottom: 5rem;
 `;
 
-const StyledWrapper = styled.div`
+export const StyledWrapper = styled.div`
   width: 100%;
 `;
 
-const StyledTableActions = styled.div`
+export const StyledTableActions = styled.div`
   width: 100%;
   justify-content: space-between;
   align-items: center;
   padding: 0 30px 27px 13px;
 `;
 
-const StyledModalContainer = styled.div`
+export const StyledModalContainer = styled.div`
   font-family: 'Muli', sans-serif;
   display: none;
   ${(props) => props.isModalVisible && 'display: flex'}
@@ -89,14 +33,14 @@ const StyledModalContainer = styled.div`
   top: 0;
   left: 0;
 `;
-const StyledBox = styled.div`
+export const StyledBox = styled.div`
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
   width: 640px;
 `;
 
-const StyledHeader = styled.div`
+export const StyledHeader = styled.div`
   font-weight: 700;
   font-size: 20px;
   width: 100%;
@@ -108,19 +52,19 @@ const StyledHeader = styled.div`
   padding: 25px;
 `;
 
-const StyledText = styled.span`
+export const StyledText = styled.span`
   padding: 5px 15px;
   border: 1px solid red;
 `;
 
-const StyledForm = styled.form`
+export const StyledForm = styled.form`
   font-family: 'Muli', sans-serif;
   padding: 23px;
   display: flex;
   flex-direction: column;
 `;
 
-const StyledInput = styled.input`
+export const StyledInput = styled.input`
   font-family: inherit;
   width: 100%;
   border-radius: 4px;
@@ -128,9 +72,10 @@ const StyledInput = styled.input`
   padding: 12px;
   color: black;
   margin-bottom: 22px;
+  font-size: 16px;
 `;
 
-const StyledTextArea = styled.textarea`
+export const StyledTextArea = styled.textarea`
   font-family: inherit;
   border-radius: 4px;
   border: 1px solid #9d9da3;
@@ -139,9 +84,10 @@ const StyledTextArea = styled.textarea`
   margin-bottom: 22px;
   height: 120px;
   resize: none;
+  font-size: 16px;
 `;
 
-const StyledLabel = styled.label`
+export const StyledLabel = styled.label`
   font-family: inherit;
   font-weight: 700;
   font-size: 16px;
@@ -149,7 +95,7 @@ const StyledLabel = styled.label`
   color: black;
 `;
 
-const StyledSelectContainer = styled.div`
+export const StyledSelectContainer = styled.div`
   font-family: inherit;
   margin-bottom: 22px;
   position: relative;
@@ -171,7 +117,7 @@ const StyledSelectContainer = styled.div`
     z-index: 1234;
   }
 `;
-const StyledSelect = styled.select`
+export const StyledSelect = styled.select`
   border-radius: 4px;
   font-family: inherit;
   width: 100%;
@@ -184,11 +130,13 @@ const StyledSelect = styled.select`
   padding: 10px;
   background-color: #f1ebeb;
   padding: 12px;
+  font-size: 16px;
 `;
 
-const StyledOption = styled.option`
+export const StyledOption = styled.option`
   padding: 12px;
   font-family: inherit;
+  font-size: 16px;
 
   &:checked {
     background-color: #019740;
@@ -196,22 +144,22 @@ const StyledOption = styled.option`
   }
 `;
 
-const StyledButtonsContainer = styled.div`
+export const StyledButtonsContainer = styled.div`
   font-family: inherit;
   display: flex;
   justify-content: flex-end;
 `;
 
-const StyledButton = styled.button`
+export const StyledButton = styled.button`
   font-family: inherit;
   border: 1px solid #dbdbdb;
   padding: 10px 45px;
   border-radius: 4px;
-  background: #019740;
+  background: #019740
   color: white;
   font-weight: 700;
   transition: 0.25s ease-in-out;
-  &:hover {
+  &:hover{
     cursor: pointer;
     background-color: white;
     border-color: #019740;
@@ -221,15 +169,16 @@ const StyledButton = styled.button`
     color: black;
     margin-right: 8px;
     background: none;
-    &:hover {
-      background-color: #e53d00;
-      color: white;
-      border-color: #dbdbdb;
-    }
+      &:hover{
+        background-color: #E53D00;
+        color: white;
+        border-color: #dbdbdb;
+      }
+    
   }
-`;
+  `;
 
-const StyledTagsContainer = styled.div`
+export const StyledTagsContainer = styled.div`
   display: flex;
   align-items: center;
   font-family: inherit;
@@ -241,19 +190,19 @@ const StyledTagsContainer = styled.div`
   margin-bottom: 22px;
 `;
 
-const StyledInputContainer = styled.div`
+export const StyledInputContainer = styled.div`
   display: grid;
   grid-template-columns: 3fr 1fr;
   column-gap: 12px;
 `;
 
-const StyledTags = styled.ul`
+export const StyledTags = styled.ul`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 `;
 
-const StyledTag = styled.li`
+export const StyledTag = styled.li`
   margin: 5px;
   display: flex;
   justify-content: center;
@@ -268,9 +217,9 @@ const StyledTag = styled.li`
   font-size: 12px;
 `;
 
-const StyledTagText = styled.span``;
+export const StyledTagText = styled.span``;
 
-const StyledTagsInput = styled.input`
+export const StyledTagsInput = styled.input`
   outline: none;
   border: none;
   padding: 12px;
@@ -278,18 +227,21 @@ const StyledTagsInput = styled.input`
   width: auto;
   display: flex;
   flex-grow: 1;
+  font-size: 16px;
 `;
 
-const StyledCloseButton = styled.span`
-font-size: 14px;
+export const StyledCloseButton = styled.span`
+font-size: 16px;
   height: 100%;
   margin-left: 8px;
   display: flex;
   align-items:center;
   justify-content: center;
+  transition: 0.25s;
   &:hover{
     cursor: pointer;
+    color: #E53D00;
   }
 }
 `;
-const StyledTagsInputBox = styled.div``;
+export const StyledTagsInputBox = styled.div``;

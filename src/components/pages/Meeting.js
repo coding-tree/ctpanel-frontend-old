@@ -9,7 +9,7 @@ const Contact = ({errors, isSubmitting}, props) => {
 
   const removeTag = (e) => {
     const selectedTag = e.target.parentNode.firstChild.textContent;
-    setTags(tags.filter((item) => item !== selectedTag));
+    setUserTags(userTags.filter((item) => item !== selectedTag));
   };
 
   const handleTags = (e) => {
@@ -22,11 +22,11 @@ const Contact = ({errors, isSubmitting}, props) => {
     if (e.keyCode === 8 && e.target.value === '' && tags.length > 0) {
       const lastItemInArray = tags[tags.length - 1];
       e.target.value = lastItemInArray;
-      setTags(tags.filter((item) => item !== lastItemInArray));
+      setUserTags(userTags.filter((item) => item !== lastItemInArray));
     }
   };
 
-  const renderedTags = tags.map((tag) => (
+  const renderedTags = userTags.map((tag) => (
     <StyledTag key={tag + (Math.random() * 10000).toString()}>
       <StyledTagText>{tag}</StyledTagText>
       <StyledCloseButton onClick={removeTag}>&times;</StyledCloseButton>
@@ -43,7 +43,9 @@ const Contact = ({errors, isSubmitting}, props) => {
 
   return (
     <>
-      <button onClick={() => setIsModalVisible(!isModalVisible)}>elo</button>
+      <Button width="144px" height="42px" primary uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
+        Dodaj <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className="fas fa-plus"></Icon>
+      </Button>
       <StyledModalContainer isModalVisible={isModalVisible}>
         <StyledBox>
           <StyledHeader>Zaplanuj nowe spotkanie</StyledHeader>
@@ -96,7 +98,7 @@ const Contact = ({errors, isSubmitting}, props) => {
             </StyledTagsContainer>
 
             {/* INVISIBLE */}
-            <StyledInput as={Field} name="userTags" id="userTags" value={tags}></StyledInput>
+            <StyledInput style={{display: 'none'}} as={Field} name="tags" id="tags" value={userTags}></StyledInput>
             <StyledButtonsContainer>
               <StyledButton
                 onClick={() => setIsModalVisible(!isModalVisible)}
@@ -118,15 +120,16 @@ const Contact = ({errors, isSubmitting}, props) => {
 };
 
 const Formik = withFormik({
-  mapPropsToValues: ({date, time, topic, leader, meetingHref, description, userTags}) => {
+  mapPropsToValues: ({date, time, topic, leader, meetingHref, description, tags}) => {
     return {
-      date: date || '',
-      time: time || '',
+      // todo - convert date & time to timestamp
+      date: date || new Date().toISOString().slice(0, 10),
+      time: time || '21:30',
       topic: topic || '',
-      leader: leader || '',
+      leader: leader || 'Damian Ospara',
       meetingHref: meetingHref || '',
       description: description || '',
-      userTags: userTags || '',
+      tags: tags || '',
     };
   },
   validationSchema: Yup.object().shape({
@@ -146,11 +149,21 @@ const Formik = withFormik({
   }),
   handleSubmit: (values) => {
     // fetch idzie tu
-    console.log('USERTAGS', values.userTags);
-    // console.log(values.userTags.join(','));
-    console.log(values);
+    let {date, time, topic, leader, meetingHref, description, tags} = values;
+    let dateToConvert = `${date} ${time}`;
+    date = new Date(dateToConvert);
+    let timestamp = date.getTime();
+    date = timestamp;
+    axios
+      .post(`${process.env.REACT_APP_SERVER_URL}/meetings`, {date, topic, leader, meetingHref, description, tags})
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
-})(Contact);
+})(Meeting);
 
 export default Formik;
 
