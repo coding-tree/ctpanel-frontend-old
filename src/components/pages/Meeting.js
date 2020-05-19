@@ -2,14 +2,17 @@ import React, {useState} from 'react';
 import {withFormik, Form, Field, ErrorMessage} from 'formik';
 import styled, {css} from 'styled-components';
 import * as Yup from 'yup';
+import axios from 'axios';
+
 import Button from 'components/atoms/Button/Button';
 import Icon from 'components/atoms/Icon';
-import axios from 'axios';
 import variables from 'settings/variables';
+import CustomFormField, {CustomSelectField} from 'components/molecules/CustomFormField';
 
 const Meeting = ({setFieldValue}) => {
   const [tags, setTags] = useState(['js']);
-  const [isModalVisible, setIsModalVisible] = useState(true);
+  const leaders = ['Damian Ospara', 'Józef Rzadkosz', 'Jakub Wojtoń', 'Kazimierz Bagrowski'];
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const removeTag = (e) => {
     const selectedTag = e.target.parentNode.firstChild.textContent;
@@ -39,78 +42,44 @@ const Meeting = ({setFieldValue}) => {
     </StyledTag>
   ));
 
-  const leaders = ['', 'Damian Ospara', 'Józef Rzadkosz'];
-
   return (
     <>
-      <Button width="144px" height="42px" primary uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
+      <Button standard primary uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
         Dodaj <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className="fas fa-plus"></Icon>
       </Button>
       <StyledModalContainer isModalVisible={isModalVisible}>
         <StyledBox isModalVisible={isModalVisible}>
           <StyledHeader>Zaplanuj nowe spotkanie</StyledHeader>
           <StyledForm as={Form}>
-            <StyledInputContainer>
-              <StyledLabel htmlFor="date" id="dateLabel">
-                Data
-              </StyledLabel>
-              <StyledLabel htmlFor="time" id="timeLabel">
-                Czas
-              </StyledLabel>
-            </StyledInputContainer>
+            <CustomFormField name="date" type="date" label="Data"></CustomFormField>
+            <CustomFormField name="time" type="time" label="Czas"></CustomFormField>
+            <CustomFormField textarea name="topic" label="Temat spotkania"></CustomFormField>
 
-            <StyledInputContainer>
-              <StyledInput as={Field} name="date" type="date" id="date"></StyledInput>
-              <StyledInput as={Field} name="time" type="time" id="time"></StyledInput>
-              <ErrorMessage component={StyledError} name="date"></ErrorMessage>
-              <ErrorMessage component={StyledError} name="time"></ErrorMessage>
-            </StyledInputContainer>
-            <StyledLabel htmlFor="topic" id="topicLabel">
-              Temat spotkania
-            </StyledLabel>
-            <Field as="textarea" placeholder="Wpisz temat spotkania" name="topic" id="topic"></Field>
-            <ErrorMessage component={StyledError} name="topic"></ErrorMessage>
-            <StyledLabel htmlFor="leader" id="leaderLabel">
-              Prowadzący
-            </StyledLabel>
-            <StyledSelectContainer>
-              {/* Invisible select */}
-              <Field as="select" id="leader" name="leader">
-                {leaders.map((el, index) => (
-                  <option key={index}>{el}</option>
-                ))}
-              </Field>
+            <CustomSelectField
+              select
+              name="leader"
+              label="Prowadzący"
+              options={leaders}
+              setFieldValue={setFieldValue}
+            ></CustomSelectField>
+            <CustomFormField name="meetingHref" label="Odnośnik do spotkania"></CustomFormField>
+            <CustomFormField textarea name="description" label="Opis spotkania"></CustomFormField>
 
-              {/* TODO: Create custom select */}
-            </StyledSelectContainer>
-            <StyledLabel htmlFor="meetingHref" id="meetingHrefLabel">
-              Odnośnik do spotkania
-            </StyledLabel>
-            <StyledInput as={Field} placeholder="Link do spotkania" name="meetingHref" id="meetingHref"></StyledInput>
-            <ErrorMessage component={StyledError} name="meetingHref"></ErrorMessage>
-            <StyledLabel htmlFor="description" id="descriptionLabel">
-              Opis spotkania
-            </StyledLabel>
-            <Field as="textarea" placeholder="Wpisz opis spotkania" id="description" name="description"></Field>
-            <ErrorMessage component={StyledError} name="description"></ErrorMessage>
             <StyledTagsContainer>
               <StyledTags name="renderedTags">{renderedTags}</StyledTags>
               <StyledTagsInputBox></StyledTagsInputBox>
-
               <StyledTagsInput placeholder="wpisz tagi" onKeyUp={handleTags}></StyledTagsInput>
               <ErrorMessage component={StyledError} name="tags"></ErrorMessage>
+              <StyledInput invisible="true" as={Field} name="tags" id="tags"></StyledInput>
             </StyledTagsContainer>
 
-            {/* INVISIBLE */}
-            <StyledInput as={Field} name="tags" id="tags"></StyledInput>
-
             <StyledButtonsContainer>
-              <StyledButton onClick={() => setIsModalVisible(!isModalVisible)} type="button">
+              <Button primary standard cancel onClick={() => setIsModalVisible(!isModalVisible)} type="button">
                 Anuluj
-              </StyledButton>
-              <StyledButton name="addButton" id="addButton">
+              </Button>
+              <Button primary standard>
                 Dodaj
-              </StyledButton>
+              </Button>
             </StyledButtonsContainer>
           </StyledForm>
         </StyledBox>
@@ -164,24 +133,19 @@ const Formik = withFormik({
 
 export default Formik;
 
-const StyledOption = styled.div``;
-const StyledSelect = styled.div`
-  border: 2px solid red;
-`;
-
 // STYLES
 const StyledModalContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   background-color: ${variables.modalBackground};
   opacity: 0;
   visibility: hidden;
   transition: 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
-
+  height: auto;
   ${({isModalVisible}) =>
     isModalVisible &&
     css`
@@ -191,12 +155,14 @@ const StyledModalContainer = styled.div`
   top: 0;
   left: 0;
 `;
+
 const StyledBox = styled.div`
   background-color: ${variables.colorWhite};
   flex-direction: column;
   width: 64rem;
   border-radius: 4px;
   overflow: hidden;
+  margin: 10rem 0;
   box-shadow: 0 3px 6px ${variables.modalBackground};
   transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s;
   opacity: 0;
@@ -228,15 +194,26 @@ const StyledError = styled.span`
   color: ${variables.colorWhite};
   background-color: ${variables.colorError};
   margin-bottom: 2rem;
-  height: 3.6rem;
+  min-height: 3.6rem;
   align-items: center;
 `;
 
 const StyledForm = styled.form`
   font-family: inherit;
   padding: 2.3rem;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 2rem;
+  > div:not(:last-child) {
+    grid-column: 1/-1;
+  }
+  > div:first-child {
+    grid-column: 1 / span 1;
+  }
+  > div:nth-child(2) {
+    grid-column: 2 / span 1;
+  }
+
   textarea {
     font-family: inherit;
     font-size: 1.6rem;
@@ -263,56 +240,15 @@ const StyledInput = styled.input`
   padding: 0 12px;
   color: ${variables.colorFont};
   margin-bottom: 2.2rem;
+  display: ${({invisible}) => (invisible ? 'none' : 'flex')};
   &::placeholder {
     color: ${variables.colorLink};
   }
 `;
 
-const StyledLabel = styled.label`
-  font-weight: 700;
-  font-size: 1.6rem;
-  margin-bottom: 5px;
-  color: ${variables.colorFont};
-`;
-
-const StyledSelectContainer = styled.div`
-  flex-direction: column;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 2.2rem;
-`;
-
 const StyledButtonsContainer = styled.div`
-  font-family: inherit;
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const StyledButton = styled.button`
-  border: 1px solid ${variables.borderColor};
-  padding: 10px 45px;
-  border-radius: 4px;
-  background: ${variables.colorMain};
-  color: ${variables.colorWhite};
-  font-weight: 700;
-  transition: 0.25s ease-in-out;
-  &:hover {
-    cursor: pointer;
-    background-color: ${variables.colorWhite};
-    border-color: #019740;
-    color: ${variables.colorFont};
-  }
-  &:first-of-type {
-    color: black;
-    margin-right: 8px;
-    background: none;
-    &:hover {
-      background-color: #e53d00;
-      color: white;
-      border-color: #dbdbdb;
-    }
-  }
+  grid-column: 2/4;
+  justify-content: space-between;
 `;
 
 const StyledTagsContainer = styled.div`
@@ -323,12 +259,6 @@ const StyledTagsContainer = styled.div`
   border: 1px solid ${variables.borderColor};
   color: ${variables.colorFont};
   margin-bottom: 22px;
-`;
-
-const StyledInputContainer = styled.div`
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  column-gap: 12px;
 `;
 
 const StyledTags = styled.ul`

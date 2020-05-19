@@ -11,24 +11,31 @@ const Button = styled.button`
   transition: 0.3s;
   width: ${({width}) => width && width};
   height: ${({height}) => height && height};
-  font-family: ${variables.mainFont};
+  font-family: inherit;
   text-transform: ${({uppercase}) => uppercase && 'uppercase'};
 
-  ${({meetVote}) => meetVote &&
-  css`
-    width: 42px;
-    height: 42px;
-    border: none;
-    color: #ffffff;
-    font-size: 20px;
-    font-weight: 900;
-    ${({meetVoteUp}) => meetVoteUp && css`background-color: #009640;`}  
-    ${({meetVoteDown}) => meetVoteDown && css`background-color: #E53D00;`}  
-  `}
+  ${({meetVote}) =>
+    meetVote &&
+    css`
+      width: 42px;
+      height: 42px;
+      border: none;
+      color: #ffffff;
+      font-size: 20px;
+      font-weight: 900;
+      ${({meetVoteUp}) =>
+        meetVoteUp &&
+        css`
+          background-color: #009640;
+        `}
+      ${({meetVoteDown}) =>
+        meetVoteDown &&
+        css`
+          background-color: #e53d00;
+        `}
+    `}
 
-  
   &:hover {
-    transition: 0.3s;
     color: ${variables.colorMain};
   }
   ${({standard}) =>
@@ -50,6 +57,16 @@ const Button = styled.button`
       background-color: ${variables.colorWhite}
     }
   `}
+  ${({cancel}) =>
+    cancel &&
+    css`
+      background-color: ${variables.colorError};
+      border-color: ${variables.colorError};
+      &:hover {
+        color: ${variables.colorError};
+        background-color: ${variables.colorWhite};
+      }
+    `}
 `;
 
 export default Button;

@@ -71,8 +71,8 @@ const StyledWrapper = styled.nav`
   background-color: ${variables.colorMain};
   overflow-y: auto;
   &::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: inset 0 0 6px ${variables.modalBackground};
+    box-shadow: inset 0 0 6px ${variables.modalBackground};
     border-radius: 10px;
     background-color: #f5f5f5;
   }
@@ -84,8 +84,8 @@ const StyledWrapper = styled.nav`
 
   &::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: inset 0 0 6px ${variables.modalBackground};
+    box-shadow: inset 0 0 6px ${variables.modalBackground};
     background-color: #555;
   }
 `;
@@ -122,7 +122,7 @@ const StyledLinkElement = styled.li`
   margin-bottom: 1.5rem;
   &:last-of-type {
     margin-top: auto;
-    margin-bottom: 10rem;
+    margin-bottom: 5rem;
   }
   &:hover a {
     color: ${variables.colorMain};
@@ -145,7 +145,7 @@ const StyledLinkElement = styled.li`
     transform: scaleX(0);
     background-color: ${variables.backgroundColor};
     z-index: 0;
-    transition: transform 0.3s;
+    transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
     transform-origin: right;
     right: 0;
   }
@@ -160,7 +160,7 @@ const StyledLink = styled.a`
   padding: 0 0 0 5rem;
   font-weight: 700;
   font-size: 1.8rem;
-  transition: all 0.1s cubic-bezier(1, 0.33, 0, 1);
+  transition: all 0.3s;
   z-index: 10;
   cursor: pointer;
   &.active {

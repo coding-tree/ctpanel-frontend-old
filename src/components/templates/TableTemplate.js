@@ -10,6 +10,7 @@ const StyledWrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-bottom: 10rem;
 `;
 
 const StyledTableContainer = styled.div`
@@ -27,7 +28,7 @@ const StyledTable = styled.div`
 `;
 
 const TableTemplate = ({location, children}) => {
-  const actuallyLocation = location.pathname
+  const actuallyLocation = location.pathname;
 
   return (
     <StyledWrapper>
