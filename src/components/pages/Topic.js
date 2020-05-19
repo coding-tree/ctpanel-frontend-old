@@ -278,15 +278,14 @@ export const StyledButtonsContainer = styled.div`
 `;
 
 export const StyledButton = styled.button`
-  font-family: inherit;
   border: 1px solid #dbdbdb;
   padding: 10px 45px;
   border-radius: 4px;
-  background: #019740
+  background: #019740;
   color: white;
   font-weight: 700;
   transition: 0.25s ease-in-out;
-  &:hover{
+  &:hover {
     cursor: pointer;
     background-color: white;
     border-color: #019740;
@@ -296,14 +295,13 @@ export const StyledButton = styled.button`
     color: black;
     margin-right: 8px;
     background: none;
-      &:hover{
-        background-color: #E53D00;
-        color: white;
-        border-color: #dbdbdb;
-      }
-    
+    &:hover {
+      background-color: #e53d00;
+      color: white;
+      border-color: #dbdbdb;
+    }
   }
-  `;
+`;
 
 export const StyledTagsContainer = styled.div`
   display: flex;
