@@ -82,13 +82,6 @@ const Meeting = ({setFieldValue}) => {
               </Field>
 
               {/* TODO: Create custom select */}
-              <StyledSelect>Jakiś select</StyledSelect>
-              {leaders.map((el, index) => (
-                <StyledOption onClick={() => setFieldValue('leader', el)} key={index}>
-                  {el}
-                </StyledOption>
-              ))}
-              <ErrorMessage component={StyledError} name="leader"></ErrorMessage>
             </StyledSelectContainer>
             <StyledLabel htmlFor="meetingHref" id="meetingHrefLabel">
               Odnośnik do spotkania
@@ -158,14 +151,14 @@ const Formik = withFormik({
     date = new Date(dateToConvert);
     let timestamp = date.getTime();
     date = timestamp;
-    // axios
-    //   .post(`${process.env.REACT_APP_SERVER_URL}/meetings`, {date, topic, leader, meetingHref, description, tags})
-    //   .then((response) => {
-    //     console.log(response.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    axios
+      .post(`${process.env.REACT_APP_SERVER_URL}/meetings`, {date, topic, leader, meetingHref, description, tags})
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 })(Meeting);
 
