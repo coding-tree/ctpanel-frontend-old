@@ -142,14 +142,15 @@ const StyledLinkElement = styled.li`
     position: absolute;
     width: 100%;
     height: 100%;
-    transform: scaleY(0);
+    transform: scaleX(0);
     background-color: ${variables.backgroundColor};
     z-index: 0;
     transition: transform 0.3s;
+    transform-origin: right;
     right: 0;
   }
   &:hover::before {
-    transform: scaleY(1);
+    transform: scaleX(1);
   }
 `;
 
