@@ -100,7 +100,7 @@ const TableElement = ({location, meetingData}) => {
         <TopicDataBaseTableElement meetingData={meetingData} isSelected={isSelected} setSelection={setSelection} />
       );
     case routes.history:
-      return <MeetingHistoryTableElement />;
+      return <SchedulesTableElement meetingData={meetingData} isSelected={isSelected} setSelection={setSelection} />;
     default:
       return console.log('something went wrong');
   }

@@ -4,8 +4,8 @@ export const fetchMeets = (fetchParameters) => (dispatch) => {
   const {methodType, requestDataType, generalAttribute, specyficAttribute} = fetchParameters;
 
   const createUrl = () => {
-    if (generalAttribute !== '') return `${requestDataType}/${generalAttribute}`;
-    if (specyficAttribute !== '') return `${requestDataType}/${specyficAttribute}`;
+    if (generalAttribute !== '') return `${process.env.REACT_APP_SERVER_URL}/${generalAttribute}/${requestDataType}`;
+    if (specyficAttribute !== '') return `${process.env.REACT_APP_SERVER_URL}/${requestDataType}/${specyficAttribute}`;
     if (requestDataType !== '') return `${process.env.REACT_APP_SERVER_URL}/${requestDataType}`;
   };
 
@@ -15,7 +15,7 @@ export const fetchMeets = (fetchParameters) => (dispatch) => {
     try {
       fetch(url, {
         method: methodType,
-        credentials: 'include'
+        credentials: 'include',
       })
         .then((response) => {
           if (response.status === 200) return response.json();

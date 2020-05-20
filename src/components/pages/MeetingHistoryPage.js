@@ -1,14 +1,35 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import TableTemplate from 'components/templates/TableTemplate';
 import TableList from 'components/organisms/TableList';
 import {withRouter} from 'react-router-dom';
+import {fetchMeets as fetchMeetsAction} from 'selectors/FetchMeets';
+import {connect} from 'react-redux';
 
-const HistoryPage = () => {
+const HistoryPage = ({archive, fetchMeets}) => {
+  useEffect(() => {
+    fetchMeets();
+    console.log(archive);
+  }, []);
   return (
     <TableTemplate>
-      <TableList meetingsList={[{}]} />
+      <TableList meetingsList={archive.meetings} />
     </TableTemplate>
   );
 };
 
-export default withRouter(HistoryPage);
+const mapStateToProps = ({archive}) => ({
+  archive,
+});
+
+const fetchParameters = {
+  methodType: 'GET',
+  requestDataType: 'archive',
+  generalAttribute: 'meetings',
+  specyficAttribute: '',
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchMeets: () => dispatch(fetchMeetsAction(fetchParameters)),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HistoryPage));
