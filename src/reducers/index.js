@@ -2,7 +2,7 @@ import {GET_MEETS_REQUEST, GET_MEETS_SUCCESS, GET_MEETS_FAILURE} from 'actions';
 
 const initialState = {
   user: {
-    pending: false,
+    pending: true,
     meetings: undefined,
     error: null,
   },
@@ -45,6 +45,8 @@ const tableReducer = (state = initialState, {type, payload, meetType}) => {
         [meetType]: {
           ...state[meetType],
           meetings: payload,
+          pending: false,
+          error: false
         },
       };
     case GET_MEETS_FAILURE:

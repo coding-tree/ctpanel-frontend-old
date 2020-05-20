@@ -22,7 +22,9 @@ const Root = ({user, fetchMeets}) => {
     fetchMeets();
   }, []);
 
-  if (user.meetings) {
+  if (user.pending) {
+    return <div>Loading...</div>;
+  } else if (user.meetings) {
     return (
       <BrowserRouter>
         <MainTemplate>
