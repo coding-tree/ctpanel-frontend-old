@@ -1,22 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import MainTemplate from 'components/templates/MainTemplate';
-import {useEffect} from 'react';
-import {withRouter} from 'react-router-dom';
 
-const AccountPage = () => {
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_URL}/user`, {credentials: 'include'})
-      .then((resp) => resp.json())
-      .then((data) => {
-        setUser(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-  console.table(user);
+import {connect} from 'react-redux';
 
+const AccountPage = ({user}) => {
   return (
     <MainTemplate>
       <div
@@ -29,10 +16,14 @@ const AccountPage = () => {
         }}
       >
         <h1>Twoje dane</h1>
-        <img style={{width: '150px', height: '150px', borderRadius: '50%'}} src={user.picture} alt="user avatar" />
+        <img style={{width: '150px', height: '150px', borderRadius: '50%'}} src={user.meetings.picture} alt="user avatar" />
       </div>
     </MainTemplate>
   );
 };
 
-export default withRouter(AccountPage);
+const mapStateToProps = ({user}) => ({
+  user,
+});
+
+export default connect(mapStateToProps)(AccountPage);
