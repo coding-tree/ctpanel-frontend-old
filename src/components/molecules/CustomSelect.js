@@ -49,7 +49,6 @@ const StyledSelectContainer = styled.div`
   position: relative;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2.2rem;
   select {
     display: none;
   }

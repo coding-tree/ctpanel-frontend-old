@@ -1,90 +1,26 @@
 import React, {useState} from 'react';
-import {withFormik, Form, Field, ErrorMessage} from 'formik';
-import styled, {css} from 'styled-components';
+import {withFormik, Field, ErrorMessage} from 'formik';
+import styled from 'styled-components';
 import * as Yup from 'yup';
 import axios from 'axios';
 
-import Button from 'components/atoms/Button/Button';
-import Icon from 'components/atoms/Icon';
 import variables from 'settings/variables';
-import CustomFormField, {CustomSelectField} from 'components/molecules/CustomFormField';
+import {Input, Textarea, Select, Tags} from 'components/molecules/CustomFormFields';
+import Modal from 'components/organisms/Modal';
 
 const Meeting = ({setFieldValue}) => {
-  const [tags, setTags] = useState(['js']);
   const leaders = ['Damian Ospara', 'Józef Rzadkosz', 'Jakub Wojtoń', 'Kazimierz Bagrowski'];
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const removeTag = (e) => {
-    const selectedTag = e.target.parentNode.firstChild.textContent;
-    setTags(tags.filter((item) => item !== selectedTag));
-  };
-
-  const handleTags = (e) => {
-    // space
-    if (e.keyCode === 32) {
-      const updatedTags = [...tags, e.target.value.trim()];
-      setFieldValue('tags', [...updatedTags]);
-      setTags(updatedTags);
-      e.target.value = '';
-    }
-    // backspace
-    if (e.keyCode === 8 && e.target.value === '' && tags.length > 0) {
-      const lastItemInArray = tags[tags.length - 1];
-      e.target.value = lastItemInArray;
-      setTags(tags.filter((item) => item !== lastItemInArray));
-    }
-  };
-
-  const renderedTags = tags.map((tag) => (
-    <StyledTag key={tag + (Math.random() * 10000).toString()}>
-      <StyledTagText>{tag}</StyledTagText>
-      <StyledCloseButton onClick={removeTag}>&times;</StyledCloseButton>
-    </StyledTag>
-  ));
 
   return (
-    <>
-      <Button standard primary uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
-        Dodaj <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className="fas fa-plus"></Icon>
-      </Button>
-      <StyledModalContainer isModalVisible={isModalVisible}>
-        <StyledBox isModalVisible={isModalVisible}>
-          <StyledHeader>Zaplanuj nowe spotkanie</StyledHeader>
-          <StyledForm as={Form}>
-            <CustomFormField name="date" type="date" label="Data"></CustomFormField>
-            <CustomFormField name="time" type="time" label="Czas"></CustomFormField>
-            <CustomFormField textarea name="topic" label="Temat spotkania"></CustomFormField>
-
-            <CustomSelectField
-              select
-              name="leader"
-              label="Prowadzący"
-              options={leaders}
-              setFieldValue={setFieldValue}
-            ></CustomSelectField>
-            <CustomFormField name="meetingHref" label="Odnośnik do spotkania"></CustomFormField>
-            <CustomFormField textarea name="description" label="Opis spotkania"></CustomFormField>
-
-            <StyledTagsContainer>
-              <StyledTags name="renderedTags">{renderedTags}</StyledTags>
-              <StyledTagsInputBox></StyledTagsInputBox>
-              <StyledTagsInput placeholder="wpisz tagi" onKeyUp={handleTags}></StyledTagsInput>
-              <ErrorMessage component={StyledError} name="tags"></ErrorMessage>
-              <StyledInput invisible="true" as={Field} name="tags" id="tags"></StyledInput>
-            </StyledTagsContainer>
-
-            <StyledButtonsContainer>
-              <Button primary standard cancel onClick={() => setIsModalVisible(!isModalVisible)} type="button">
-                Anuluj
-              </Button>
-              <Button primary standard>
-                Dodaj
-              </Button>
-            </StyledButtonsContainer>
-          </StyledForm>
-        </StyledBox>
-      </StyledModalContainer>
-    </>
+    <Modal column={2} title="Zaplanuj nowe spotkanie">
+      <Input name="date" type="date" label="Data"></Input>
+      <Input name="time" type="time" label="Czas"></Input>
+      <Textarea columns={2} name="topic" label="Temat spotkania"></Textarea>
+      <Select columns={2} name="leader" label="Prowadzący" options={leaders} setFieldValue={setFieldValue}></Select>
+      <Input columns={2} name="meetingHref" label="Odnośnik do spotkania"></Input>
+      <Textarea columns={2} name="description" label="Opis spotkania"></Textarea>
+      <Tags columns={2} name="tags" label="Wpisz kategorie spotkania" setFieldValue={setFieldValue}></Tags>
+    </Modal>
   );
 };
 
@@ -111,6 +47,7 @@ const Formik = withFormik({
     leader: Yup.string().required('Wprowadź prowadzącego'),
     meetingHref: Yup.string().required('Musisz podać link'),
     description: Yup.string().required('Opis jest wymagany'),
+    tags: Yup.string().required('Podaj chociaż jeden tag'),
   }),
   handleSubmit: (values) => {
     console.log(values);
@@ -134,58 +71,6 @@ const Formik = withFormik({
 export default Formik;
 
 // STYLES
-const StyledModalContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  min-height: 100vh;
-  width: 100%;
-  background-color: ${variables.modalBackground};
-  opacity: 0;
-  visibility: hidden;
-  transition: 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
-  height: auto;
-  ${({isModalVisible}) =>
-    isModalVisible &&
-    css`
-      opacity: 1;
-      visibility: visible;
-    `}
-  top: 0;
-  left: 0;
-`;
-
-const StyledBox = styled.div`
-  background-color: ${variables.colorWhite};
-  flex-direction: column;
-  width: 64rem;
-  border-radius: 4px;
-  overflow: hidden;
-  margin: 10rem 0;
-  box-shadow: 0 3px 6px ${variables.modalBackground};
-  transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s;
-  opacity: 0;
-  transform: scale(0.7);
-  ${({isModalVisible}) =>
-    isModalVisible &&
-    css`
-      opacity: 1;
-      transform: scale(1);
-    `}
-`;
-
-const StyledHeader = styled.div`
-  font-weight: 700;
-  font-size: 2rem;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  height: 65px;
-  background-color: ${variables.colorMain};
-  color: ${variables.colorWhite};
-  padding: 2.5rem;
-`;
 
 const StyledError = styled.span`
   padding: 5px 15px;
@@ -196,38 +81,6 @@ const StyledError = styled.span`
   margin-bottom: 2rem;
   min-height: 3.6rem;
   align-items: center;
-`;
-
-const StyledForm = styled.form`
-  font-family: inherit;
-  padding: 2.3rem;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-column-gap: 2rem;
-  > div:not(:last-child) {
-    grid-column: 1/-1;
-  }
-  > div:first-child {
-    grid-column: 1 / span 1;
-  }
-  > div:nth-child(2) {
-    grid-column: 2 / span 1;
-  }
-
-  textarea {
-    font-family: inherit;
-    font-size: 1.6rem;
-    border-radius: 4px;
-    border: 1px solid ${variables.borderColor};
-    padding: 12px;
-    color: ${variables.colorFont};
-    margin-bottom: 2.2rem;
-    height: 12rem;
-    resize: none;
-    &::placeholder {
-      color: ${variables.colorLink};
-    }
-  }
 `;
 
 const StyledInput = styled.input`
@@ -244,11 +97,6 @@ const StyledInput = styled.input`
   &::placeholder {
     color: ${variables.colorLink};
   }
-`;
-
-const StyledButtonsContainer = styled.div`
-  grid-column: 2/4;
-  justify-content: space-between;
 `;
 
 const StyledTagsContainer = styled.div`
