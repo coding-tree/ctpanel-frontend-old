@@ -31,20 +31,25 @@ export const Textarea = ({name, label, placeholder, columns, rows}) => {
   );
 };
 
-export const Select = ({name, label, options, setFieldValue, columns, rows}) => {
+export const Select = ({name, label, options, placeholder, handleSelectChange, columns, rows}) => {
   return (
     <CustomFormFieldWrapper columns={columns} rows={rows} name={name} label={label}>
-      <CustomSelect name={name} options={options} setFieldValue={setFieldValue}></CustomSelect>
+      <CustomSelect
+        name={name}
+        options={options}
+        placeholder={placeholder}
+        handleSelectChange={handleSelectChange}
+      ></CustomSelect>
     </CustomFormFieldWrapper>
   );
 };
 
-export const Tags = ({name, label, setFieldValue, columns, rows}) => {
+export const Tags = ({name, label, onTagsChange, columns, rows, placeholder}) => {
   const [tags, setTags] = useState([]);
   const onlyLetters = /\S+/g;
 
   useEffect(() => {
-    setFieldValue(name, tags);
+    onTagsChange(tags);
   }, [tags]);
 
   const handleTags = (e) => {
@@ -93,7 +98,11 @@ export const Tags = ({name, label, setFieldValue, columns, rows}) => {
               </StyledTag>
             ))}
         </Wrapper>
-        <StyledTagInput onBlur={(e) => handleBlur(e)} onKeyUp={(e) => handleTags(e)}></StyledTagInput>
+        <StyledTagInput
+          placeholder={placeholder}
+          onBlur={(e) => handleBlur(e)}
+          onKeyUp={(e) => handleTags(e)}
+        ></StyledTagInput>
       </StyledTagsContainer>
       <StyledInput invisible="true" as={Field} name={name} id={name}></StyledInput>
     </CustomFormFieldWrapper>
@@ -145,12 +154,15 @@ const StyledTag = styled.span`
 `;
 const StyledTagInput = styled.input`
   font-size: 1.6rem;
-  width: auto;
-
+  width: -webkit-fill-available;
+  font-family: inherit;
   border: none;
   outline: none;
   align-items: center;
   color: ${variables.colorFont};
+  &::placeholder {
+    color: ${variables.colorLink};
+  }
 `;
 
 const StyledInput = styled.input`

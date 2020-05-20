@@ -4,12 +4,12 @@ import styled, {css} from 'styled-components';
 import Icon from 'components/atoms/Icon';
 import {Field} from 'formik';
 
-const CustomSelect = ({name, options, setFieldValue}) => {
+const CustomSelect = ({name, options, handleSelectChange, placeholder}) => {
   const [selectValue, setSelectValue] = useState('');
   const [isSelectVisible, toggleSelectVisibility] = useState(false);
 
   const handleOptionClick = (id, value) => {
-    setFieldValue(id, value);
+    handleSelectChange(value);
     toggleSelectVisibility(false);
     return setSelectValue(value);
   };
@@ -27,7 +27,7 @@ const CustomSelect = ({name, options, setFieldValue}) => {
 
       {/* TODO: Create custom select */}
       <StyledSelect selected={selectValue !== ''} onClick={() => toggleSelectVisibility((prev) => !prev)}>
-        {selectValue}
+        {selectValue || <StyledPlaceholder>{placeholder}</StyledPlaceholder>}
         <Icon absolute right="1.2rem" className="fas fa-sort"></Icon>
       </StyledSelect>
       <StyledOptionContainer isVisible={isSelectVisible}>
@@ -43,6 +43,10 @@ const CustomSelect = ({name, options, setFieldValue}) => {
 };
 
 export default CustomSelect;
+
+const StyledPlaceholder = styled.span`
+  color: ${variables.colorLink};
+`;
 
 const StyledSelectContainer = styled.div`
   flex-direction: column;

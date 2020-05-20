@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {withRouter} from 'react-router';
 import {routes} from 'routes';
 import Meeting from 'components/pages/Meeting';

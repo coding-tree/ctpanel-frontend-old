@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import LoginTemplate from 'components/templates/LoginTemplate';
-import variables from 'settings/variables';
 import Title from 'components/atoms/Title';
 import SocialIcons from 'components/organisms/SocialIcons';
 import Text from 'components/atoms/Text';
