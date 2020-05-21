@@ -11,7 +11,7 @@ const TopicDatabasePage = ({topics, fetchMeets}) => {
   }, [fetchMeets]);
 
   return (
-    <TableTemplate>
+    <TableTemplate title="Baza Tematów">
       <TableList meetingsList={topics.meetings.results} />
     </TableTemplate>
   );
@@ -28,7 +28,7 @@ const fetchParameters = {
   specyficAttribute: '',
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   fetchMeets: () => dispatch(fetchMeetsAction(fetchParameters)),
 });
 

@@ -29,7 +29,6 @@ const initialState = {
 };
 
 const tableReducer = (state = initialState, {type, payload, meetType}) => {
-  console.log('xxx', meetType, payload);
   switch (type) {
     case GET_MEETS_REQUEST:
       return {
