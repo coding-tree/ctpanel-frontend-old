@@ -108,6 +108,8 @@ const StyledSelect = styled.select`
 `;
 const StyledOption = styled.option``;
 const StyledInput = styled.input`
+  font-family: inherit;
+  font-size: 1.4rem;
   display: block;
   width: 100%;
   border: 1px solid #9d9ea3;
