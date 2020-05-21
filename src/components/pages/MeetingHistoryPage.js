@@ -8,10 +8,9 @@ import {connect} from 'react-redux';
 const HistoryPage = ({archive, fetchMeets}) => {
   useEffect(() => {
     fetchMeets();
-    console.log(archive);
   }, []);
   return (
-    <TableTemplate>
+    <TableTemplate title="Historia Spotkań">
       <TableList meetingsList={archive.meetings} />
     </TableTemplate>
   );

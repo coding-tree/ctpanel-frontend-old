@@ -27,15 +27,13 @@ const StyledTable = styled.div`
   background: #ffffff;
 `;
 
-const TableTemplate = ({location, children}) => {
-  const actuallyLocation = location.pathname;
-
+const TableTemplate = ({location, children, title}) => {
   return (
     <StyledWrapper>
       <StyledTableContainer>
-        <Header tableTitle>{actuallyLocation.slice(1).toUpperCase()}</Header>
+        <Header tableTitle>{title}</Header>
         <StyledTable>
-          <TableMenu actuallyLocation={actuallyLocation} />
+          <TableMenu />
           {children}
         </StyledTable>
       </StyledTableContainer>
