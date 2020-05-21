@@ -25,10 +25,9 @@ const AccountPage = ({user}) => {
     <MainTemplate>
       <StyledContainer>
         <StyledUser>
-          <h1>Twoje dane</h1>
           <StyledAvatar src={user.meetings.picture} alt="user avatar" />
-          <h3>{user.meetings.nickname}</h3>
-          <h3>{userRole}</h3>
+          <StyledNickName>{user.meetings.nickname}</StyledNickName>
+          <StyledBeltName>{userRole}</StyledBeltName>
         </StyledUser>
       </StyledContainer>
     </MainTemplate>
@@ -55,6 +54,14 @@ const StyledAvatar = styled.img`
   height: 12rem;
   width: 12rem;
   border-radius: 50%;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+`;
+
+const StyledNickName = styled.h3`
+  font-size: 3.2rem;
+`;
+const StyledBeltName = styled.h6`
+  font-size: 2rem;
 `;
 
 export default connect(mapStateToProps)(AccountPage);
