@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Button from 'components/atoms/Button/Button';
 import Icon from 'components/atoms/Icon';
 import {Form} from 'formik';
@@ -7,6 +7,10 @@ import variables from 'settings/variables';
 
 const Modal = ({children, title, column}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  useEffect(() => {
+    isModalVisible && (document.body.style.overflowY = 'hidden');
+  }, [isModalVisible]);
   return (
     <>
       <Button standard primary uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
@@ -45,6 +49,7 @@ const StyledModalContainer = styled.div`
   background-color: ${variables.modalBackground};
   opacity: 0;
   visibility: hidden;
+  overflow-y: auto;
   transition: 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
   height: auto;
   ${({isModalVisible}) =>
