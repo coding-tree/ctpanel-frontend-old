@@ -35,7 +35,9 @@
     "build:hotel": "env-cmd -e hotel react-scripts build",
     "build:staging": "env-cmd -e staging react-scripts build",
     "build:production": "env-cmd -e production react-scripts build",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -53,7 +55,12 @@
     ]
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.12.0"
+    "@fortawesome/fontawesome-free": "^5.12.0",
+    "@storybook/addon-actions": "^5.3.18",
+    "@storybook/addon-links": "^5.3.18",
+    "@storybook/addons": "^5.3.18",
+    "@storybook/preset-create-react-app": "^2.1.2",
+    "@storybook/react": "^5.3.18"
   },
   "homepage": "."
 }

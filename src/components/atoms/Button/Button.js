@@ -1,6 +1,8 @@
 import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
 
+// Button? Czy {PrimaryButton,CancelButton}
+
 const Button = styled.button`
   justify-content: center;
   align-items: center;
@@ -8,7 +10,7 @@ const Button = styled.button`
   border-radius: 4px;
   cursor: pointer;
   border: 2px solid ${variables.colorMain};
-  transition: 0.3s;
+  transition: all 0.2s;
   width: ${({width}) => width && width};
   height: ${({height}) => height && height};
   font-family: inherit;
@@ -20,7 +22,7 @@ const Button = styled.button`
       width: 42px;
       height: 42px;
       border: none;
-      color: #ffffff;
+      color: ${variables.colorWhite};
       font-size: 20px;
       font-weight: 900;
       ${({meetVoteUp}) =>

@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&family=Muli:wght@400;700&display=swap');
+
+$mainFont: 'Muli', sans-serif;
+$colorWhite: #fff;
+$colorMain: #009640;
+$colorFont: rgba(0, 0, 0, 0.8);
+$backgroundColor: #f8f6f7;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: $mainFont;
+  background-color: $backgroundColor;
+  color: $colorFont;
+}
+
+div,
+span,
+nav,
+li,
+a {
+  display: flex;
+}
+
+::selection {
+  background-color: $colorMain;
+  color: $colorWhite;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  color: $colorWhite;
+  text-decoration: none;
+}

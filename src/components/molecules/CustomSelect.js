@@ -4,12 +4,12 @@ import styled, {css} from 'styled-components';
 import Icon from 'components/atoms/Icon';
 import {Field} from 'formik';
 
-const CustomSelect = ({name, options, handleSelectChange, placeholder}) => {
+const CustomSelect = ({name, options, handleSelectChange = '', placeholder}) => {
   const [selectValue, setSelectValue] = useState('');
   const [isSelectVisible, toggleSelectVisibility] = useState(false);
 
   const handleOptionClick = (id, value) => {
-    handleSelectChange(value);
+    // handleSelectChange(value);
     toggleSelectVisibility(false);
     return setSelectValue(value);
   };
@@ -19,11 +19,11 @@ const CustomSelect = ({name, options, handleSelectChange, placeholder}) => {
   return (
     <StyledSelectContainer>
       {/* Invisible select */}
-      <Field as="select" id={name} name={name}>
+      <select as="select" id={name} name={name}>
         {options.map((el, index) => (
           <option key={index}>{el}</option>
         ))}
-      </Field>
+      </select>
 
       {/* TODO: Create custom select */}
       <StyledSelect selected={selectValue !== ''} onClick={() => toggleSelectVisibility((prev) => !prev)}>
@@ -53,6 +53,7 @@ const StyledSelectContainer = styled.div`
   position: relative;
   justify-content: center;
   align-items: center;
+  width: 100%;
   select {
     display: none;
   }
