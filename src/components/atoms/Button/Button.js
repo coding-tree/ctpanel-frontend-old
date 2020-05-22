@@ -1,8 +1,6 @@
 import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
 
-// Button? Czy {PrimaryButton,CancelButton}
-
 const Button = styled.button`
   justify-content: center;
   align-items: center;

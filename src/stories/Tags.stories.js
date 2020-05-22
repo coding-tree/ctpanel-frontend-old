@@ -10,7 +10,7 @@ const handleTagsChange = action('Tags');
 const Test = () => <Tags name="tags" onTagsChange={handleTagsChange}></Tags>;
 
 export const Primary = withFormik({
-  mapPropsToValues: (props) => {
+  mapPropsToValues: ({tags}) => {
     return {tags: tags || ''};
   },
   handleSubmit: () => {},
