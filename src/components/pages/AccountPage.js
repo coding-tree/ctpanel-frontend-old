@@ -4,9 +4,11 @@ import styled from 'styled-components';
 import {connect} from 'react-redux';
 import variables from 'settings/variables';
 import Button from 'components/atoms/Button/Button';
-
+import axios from 'axios';
 const AccountPage = ({user}) => {
   const [userRole, setUserRole] = useState('Gość');
+  const [userCredentials, setUserCredentials] = useState(undefined);
+
   const parseRoleIdToBeltColor = (userRolesArray) => {
     if (userRolesArray.includes('628160498050793482')) return 'Czarny pas';
     if (userRolesArray.includes('627565298794496030')) return 'Brązowy pas';
@@ -23,67 +25,65 @@ const AccountPage = ({user}) => {
     setUserRole(parseRoleIdToBeltColor(userRoles));
   }, [user]);
 
-  return (
-    <MainTemplate>
-      <StyledWrapper>
-        <StyledHeader>Konto</StyledHeader>
-        <StyledContainer>
-          <StyledUser>
-            <StyledAvatar src={user.meetings.picture} alt="user avatar" />
-            <StyledNickName>{user.meetings.nickname}</StyledNickName>
-            <StyledBeltName>{userRole}</StyledBeltName>
-          </StyledUser>
-          <StyledEditSection>
-            <StyledUserDataContainer>
-              <StyledUserDataTitleContainer>
-                <StyledUserDataTitle>
-                  <StyledTitle>Imię i nazwisko:</StyledTitle>
-                  <StyledUserDataDescription>Kazimierz Bagrowski</StyledUserDataDescription>
-                </StyledUserDataTitle>
-                <StyledUserDataTitle>
-                  <StyledTitle>Wiek:</StyledTitle>
-                  <StyledUserDataDescription>23 lat</StyledUserDataDescription>
-                </StyledUserDataTitle>
-                <StyledUserDataTitle>
-                  <StyledTitle>Technologie:</StyledTitle>
-                  <StyledUserDataDescription>
-                    Node.js, Express, React, JavaScript, MongoDB, Mongoose (MERN stack)
-                  </StyledUserDataDescription>
-                </StyledUserDataTitle>
-                <StyledUserDataTitle>
-                  <StyledTitle>Opis:</StyledTitle>
-                  <StyledUserDataDescription>
-                    Jestem studentem, jak i starostą 3 roku informatyki i dobrze się czuję w środowisku JavaScript
-                    zarówno po stronie klienta, jak i serwera. Brakuje mi nieco zdolności artystycznych, więc grafik ze
-                    mnie żaden, lecz ekipa mówi że mam dobre pomysły i tym nadrabiam. Chcę tworzyć aplikacje, dzięki
-                    którym codzienne czynności stają się prostsze i przyjemniejsze. Wolne chwile spędzam z naszą Panią
-                    Grafik, kotem, rowerem oraz oczywiście poszerzam horyzonty czytając różnorakie artykuły techniczne.
-                  </StyledUserDataDescription>
-                </StyledUserDataTitle>
-                <StyledUserDataTitle>
-                  <StyledTitle>Github:</StyledTitle>
-                  <StyledUserDataDescription>https://github.com/kazbag</StyledUserDataDescription>
-                </StyledUserDataTitle>
-                <StyledUserDataTitle>
-                  <StyledTitle>LinkedIn:</StyledTitle>
-                  <StyledUserDataDescription>
-                    http://linkedin.com/in/kazimierz-bagrowski-0b1023173
-                  </StyledUserDataDescription>
-                </StyledUserDataTitle>
-                <StyledUserDataTitle>
-                  <StyledTitle>Facebook:</StyledTitle>
-                  <StyledUserDataDescription>https://www.facebook.com/kazimierz.bagrowski/</StyledUserDataDescription>
-                </StyledUserDataTitle>
-              </StyledUserDataTitleContainer>
-            </StyledUserDataContainer>
-          </StyledEditSection>
-          <Button standard primary>
-            Edytuj
-          </Button>
-        </StyledContainer>
-      </StyledWrapper>
-    </MainTemplate>
-  );
+  useEffect(() => {
+    const url = `${process.env.REACT_APP_SERVER_URL}/user/${user.meetings.nickname}`;
+    axios
+      .get(url)
+      .then((res) => setUserCredentials(res.data))
+      .catch((err) => console.log(err));
+  }, [user]);
+
+  if (userCredentials) {
+    return (
+      <MainTemplate>
+        <StyledWrapper>
+          <StyledHeader>Konto</StyledHeader>
+          <StyledContainer>
+            <StyledUser>
+              <StyledAvatar src={user.meetings.picture} alt="user avatar" />
+              <StyledNickName>{userCredentials.userNickName}</StyledNickName>
+              <StyledBeltName>{userRole}</StyledBeltName>
+            </StyledUser>
+            <StyledEditSection>
+              <StyledUserDataContainer>
+                <StyledUserDataTitleContainer>
+                  <StyledUserDataTitle>
+                    <StyledTitle>Imię i nazwisko:</StyledTitle>
+                    <StyledUserDataDescription>
+                      {userCredentials.userFirstName} {userCredentials.userSecondName}
+                    </StyledUserDataDescription>
+                  </StyledUserDataTitle>
+                  <StyledUserDataTitle>
+                    <StyledTitle>Wiek:</StyledTitle>
+                    <StyledUserDataDescription>{userCredentials.userAge} lat</StyledUserDataDescription>
+                  </StyledUserDataTitle>
+                  <StyledUserDataTitle>
+                    <StyledTitle>Technologie:</StyledTitle>
+                    <StyledUserDataDescription>{userCredentials.userTechnologies.join(', ')}</StyledUserDataDescription>
+                  </StyledUserDataTitle>
+                  <StyledUserDataTitle>
+                    <StyledTitle>Opis:</StyledTitle>
+                    <StyledUserDataDescription>{userCredentials.userDescription}</StyledUserDataDescription>
+                  </StyledUserDataTitle>
+                  {Object.entries(userCredentials.userSocials).map((el, index) => (
+                    <StyledUserDataTitle key={index}>
+                      <StyledTitle>{el[0]}</StyledTitle>
+                      <StyledUserDataDescription>{el[1]}</StyledUserDataDescription>
+                    </StyledUserDataTitle>
+                  ))}
+                </StyledUserDataTitleContainer>
+              </StyledUserDataContainer>
+            </StyledEditSection>
+            <Button standard primary>
+              Edytuj
+            </Button>
+          </StyledContainer>
+        </StyledWrapper>
+      </MainTemplate>
+    );
+  } else {
+    return <div>loading...</div>;
+  }
 };
 
 const mapStateToProps = ({user}) => ({
@@ -98,7 +98,6 @@ const StyledHeader = styled.h3`
 const StyledWrapper = styled.div`
   margin: 0 auto;
   display: flex;
-
   width: 80%;
   max-width: 1400px;
   flex-direction: column;
@@ -108,7 +107,7 @@ const StyledContainer = styled.div`
   box-shadow: 0 0 10px ${variables.boxShadowColor};
   padding: 2.8rem 2.2rem;
   border-radius: 3rem;
-  background-color: #ffffff;
+  background-color: ${variables.colorWhite};
   Button {
     margin-left: auto;
     margin-top: auto;
@@ -134,7 +133,7 @@ const StyledNickName = styled.h3`
   font-size: 3.2rem;
 `;
 
-const StyledBeltName = styled.h6`
+const StyledBeltName = styled.span`
   font-size: 2rem;
 `;
 
@@ -172,7 +171,7 @@ const StyledUserDataDescription = styled.span`
   font-weight: 300;
 `;
 
-const StyledTitle = styled.h6`
+const StyledTitle = styled.span`
   width: 20rem;
   font-family: inherit;
   font-size: 1.6rem;
