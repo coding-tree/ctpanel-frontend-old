@@ -16,9 +16,19 @@ const StyledInput = styled.input`
 `;
 
 const Input = () => {
-  const handleKeyPress = e => {};
+  const test = (e) => {
+    console.log(e);
+  };
 
-  return <StyledInput type="text" onKeyPress={e => handleKeyPress(e)} placeholder="Wyszukaj..."></StyledInput>;
+  return <StyledInput type="text" onKeyPress={(e) => test(e)} placeholder="Wyszukaj..."></StyledInput>;
+};
+
+export const TestInput = ({handleKeyPress}) => {
+  const test = (value) => {
+    handleKeyPress(value.toUpperCase());
+  };
+
+  return <StyledInput type="text" onKeyPress={(e) => test(e.target.value)} placeholder="Wyszukaj..."></StyledInput>;
 };
 
 export default Input;
