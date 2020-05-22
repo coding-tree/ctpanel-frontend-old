@@ -4,12 +4,12 @@ import styled, {css} from 'styled-components';
 import Icon from 'components/atoms/Icon';
 import {Field} from 'formik';
 
-const CustomSelect = ({name, options, handleSelectChange = '', placeholder}) => {
+const CustomSelect = ({name, options, handleSelectChange, placeholder}) => {
   const [selectValue, setSelectValue] = useState('');
   const [isSelectVisible, toggleSelectVisibility] = useState(false);
 
-  const handleOptionClick = (id, value) => {
-    // handleSelectChange(value);
+  const handleOptionClick = (value) => {
+    handleSelectChange(value);
     toggleSelectVisibility(false);
     return setSelectValue(value);
   };
@@ -19,20 +19,19 @@ const CustomSelect = ({name, options, handleSelectChange = '', placeholder}) => 
   return (
     <StyledSelectContainer>
       {/* Invisible select */}
-      <select as="select" id={name} name={name}>
+      <Field as="select" id={name} name={name}>
         {options.map((el, index) => (
           <option key={index}>{el}</option>
         ))}
-      </select>
+      </Field>
 
-      {/* TODO: Create custom select */}
       <StyledSelect selected={selectValue !== ''} onClick={() => toggleSelectVisibility((prev) => !prev)}>
         {selectValue || <StyledPlaceholder>{placeholder}</StyledPlaceholder>}
         <Icon absolute right="1.2rem" className="fas fa-sort"></Icon>
       </StyledSelect>
       <StyledOptionContainer isVisible={isSelectVisible}>
         {options.map((el, index) => (
-          <StyledOption selected={isSelected(el)} onClick={() => handleOptionClick('leader', el)} key={index}>
+          <StyledOption selected={isSelected(el)} onClick={() => handleOptionClick(el)} key={index}>
             {el}
             {isSelected(el) && <Icon absolute right="1.2rem" className="fas fa-check"></Icon>}
           </StyledOption>

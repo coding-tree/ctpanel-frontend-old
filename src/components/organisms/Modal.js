@@ -88,7 +88,7 @@ const StyledHeader = styled.div`
   padding: 2.5rem;
 `;
 
-const StyledForm = styled.form`
+export const StyledForm = styled.form`
   font-family: inherit;
   padding: 2.3rem;
   display: grid;

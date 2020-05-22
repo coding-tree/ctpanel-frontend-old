@@ -4,7 +4,11 @@ import {action} from '@storybook/addon-actions';
 
 export default {title: 'Button', component: Button};
 
-export const Primary = () => <Button primary>Kliknij mnie</Button>;
+export const Primary = () => (
+  <Button primary standard>
+    Kliknij mnie
+  </Button>
+);
 export const Standard = () => <Button standard>Kliknij mnie</Button>;
 export const Uppercase = () => <Button uppercase>Kliknij mnie</Button>;
 export const Cancel = () => <Button cancel>Kliknij mnie</Button>;
