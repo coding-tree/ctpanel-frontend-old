@@ -21,7 +21,7 @@ const Root = ({user, fetchMeets}) => {
   useEffect(() => {
     fetchMeets();
   }, []);
-  console.log(user);
+
   if (user.pending) {
     return <div>Loading...</div>;
   } else if (user.meetings) {
