@@ -45,7 +45,7 @@ const tableReducer = (state = initialState, {type, payload, meetType}) => {
           ...state[meetType],
           meetings: payload,
           pending: false,
-          error: false
+          error: false,
         },
       };
     case GET_MEETS_FAILURE:
@@ -54,6 +54,7 @@ const tableReducer = (state = initialState, {type, payload, meetType}) => {
         [meetType]: {
           ...state[meetType],
           error: true,
+          pending: false,
         },
       };
     default:
