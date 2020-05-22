@@ -1,10 +1,8 @@
 import React from 'react';
 import SocialIcon from 'components/molecules/SocialIcon';
 import styled from 'styled-components';
-import variables from 'settings/variables';
 
 const StyledSocialIcons = styled.div`
-  /* color: ${variables.colorMain}; */
   justify-content: center;
   align-items: flex-start;
   font-size: 3.2rem;

@@ -16,9 +16,9 @@ export const FormikFields = () => (
   <Formik initialValues={{date: '', title: 'siema'}}>
     {(props) => (
       <form
-        onSubmit={(values, e) => {
-          handleSubmit(e);
+        onSubmit={(e) => {
           e.preventDefault();
+          handleSubmit(e);
         }}
       >
         <CustomSelect title="dupa" handleSelectChange={handleSelectChange} options={options}>

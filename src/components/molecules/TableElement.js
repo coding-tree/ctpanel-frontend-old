@@ -5,7 +5,7 @@ import {routes} from 'routes';
 import Checkbox from 'components/atoms/Checkbox';
 import variables from 'settings/variables';
 import StyledDate from 'components/atoms/StyledDate';
-import Button from 'components/atoms/Button/Button';
+import {PrimaryButton, CancelButton} from 'components/atoms/Button';
 
 const StyledRow = styled.tr`
   align-items: center;
@@ -43,12 +43,12 @@ const StyledTableData = styled.td`
     `}
 `;
 
-const SchedulesTableElement = ({meetingData, isSelected, setSelection}) => (
+const SchedulesTableElement = ({meetingData, isSelected, setSelection, index}) => (
   <StyledRow isSelected={isSelected}>
     <StyledTableData>
       <Checkbox type="checkbox" isSelected={isSelected} setSelection={setSelection}></Checkbox>
     </StyledTableData>
-    <StyledTableData mainColor>#{meetingData.id}</StyledTableData>
+    <StyledTableData mainColor>#{index}</StyledTableData>
     <StyledTableData>
       <StyledDate format="DD MMMM YYYY" date={meetingData.date}></StyledDate>
     </StyledTableData>
@@ -58,23 +58,19 @@ const SchedulesTableElement = ({meetingData, isSelected, setSelection}) => (
   </StyledRow>
 );
 
-const TopicDataBaseTableElement = ({meetingData, isSelected, setSelection}) => (
+const TopicDataBaseTableElement = ({meetingData, isSelected, setSelection, index}) => (
   <StyledRow isSelected={isSelected}>
     <StyledTableData>
       <Checkbox type="checkbox" isSelected={isSelected} setSelection={setSelection}></Checkbox>
     </StyledTableData>
-    <StyledTableData mainColor>#{meetingData.id}</StyledTableData>
+    <StyledTableData mainColor>#{index}</StyledTableData>
     <StyledTableData>{meetingData.topic}</StyledTableData>
     <StyledTableData>Kategoria</StyledTableData>
     <StyledTableData>{meetingData.userAdded}</StyledTableData>
     <StyledTableData>{meetingData.votes}</StyledTableData>
-    <StyledTableData buttonsTableData>
-      <Button meetVote meetVoteUp>
-        +
-      </Button>
-      <Button meetVote meetVoteDown>
-        -
-      </Button>
+    <StyledTableData buttonsTableData right>
+      <PrimaryButton>+</PrimaryButton>
+      <CancelButton>-</CancelButton>
     </StyledTableData>
   </StyledRow>
 );
@@ -90,17 +86,15 @@ const MeetingHistoryTableElement = () => (
   </StyledRow>
 );
 
-const TableElement = ({location, meetingData}) => {
+const TableElement = ({location, meetingData, index}) => {
   const [isSelected, setSelection] = useState(false);
   switch (location.pathname) {
     case routes.timetable:
-      return <SchedulesTableElement meetingData={meetingData} isSelected={isSelected} setSelection={setSelection} />;
+      return <SchedulesTableElement index={index} meetingData={meetingData} isSelected={isSelected} setSelection={setSelection} />;
     case routes.topicDatabase:
-      return (
-        <TopicDataBaseTableElement meetingData={meetingData} isSelected={isSelected} setSelection={setSelection} />
-      );
+      return <TopicDataBaseTableElement index={index} meetingData={meetingData} isSelected={isSelected} setSelection={setSelection} />;
     case routes.history:
-      return <SchedulesTableElement meetingData={meetingData} isSelected={isSelected} setSelection={setSelection} />;
+      return <SchedulesTableElement index={index} meetingData={meetingData} isSelected={isSelected} setSelection={setSelection} />;
     default:
       return console.log('something went wrong');
   }

@@ -9,17 +9,28 @@ const Anchor = styled.a`
   font-size: ${({fontSize}) => fontSize};
   &:hover {
     color: ${variables.colorMain};
-    transition: 0.3s;
+    transition: 0.2s all ease-in-out;
   }
 
-  ${props =>
+  ${({button}) =>
+    button &&
+    css`
+      border: 2px solid ${variables.colorMain};
+      border-radius: 4px;
+      background-color: ${variables.colorMain};
+      &:hover {
+        background-color: ${variables.colorWhite};
+      }
+    `}
+
+  ${(props) =>
     props.buttonLink &&
     css`
       align-items: center;
       padding: 0.9rem 3.3rem;
       color: ${variables.colorWhite};
     `}
-  ${props =>
+  ${(props) =>
     props.social &&
     css`
       color: ${variables.colorMain};

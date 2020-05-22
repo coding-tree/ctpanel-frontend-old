@@ -27,7 +27,7 @@ const StyledTable = styled.div`
   background: #ffffff;
 `;
 
-const TableTemplate = ({location, children, title}) => {
+const TableTemplate = ({children, title}) => {
   return (
     <StyledWrapper>
       <StyledTableContainer>

@@ -16,6 +16,9 @@ const LastMeetWrapper = styled.div`
   flex-direction: column;
   border-radius: 1rem;
   box-shadow: 0 0 10px ${variables.boxShadowColor};
+  a {
+    margin-left: auto;
+  }
 `;
 
 const LastMeet = ({lastMeet}) => {

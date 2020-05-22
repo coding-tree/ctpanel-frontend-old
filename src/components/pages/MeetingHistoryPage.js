@@ -27,7 +27,7 @@ const fetchParameters = {
   specyficAttribute: '',
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   fetchMeets: () => dispatch(fetchMeetsAction(fetchParameters)),
 });
 

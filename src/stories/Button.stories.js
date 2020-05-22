@@ -1,15 +1,10 @@
 import React from 'react';
-import Button from 'components/atoms/Button/Button';
+import Button, {PrimaryButton, CancelButton} from 'components/atoms/Button';
+import {withKnobs, text, boolean, number} from '@storybook/addon-knobs';
 import {action} from '@storybook/addon-actions';
+import {withA11y} from '@storybook/addon-a11y';
 
-export default {title: 'Button', component: Button};
+export default {title: 'Button', component: Button, decorators: [withKnobs, withA11y]};
 
-export const Primary = () => (
-  <Button primary standard>
-    Kliknij mnie
-  </Button>
-);
-export const Standard = () => <Button standard>Kliknij mnie</Button>;
-export const Uppercase = () => <Button uppercase>Kliknij mnie</Button>;
-export const Cancel = () => <Button cancel>Kliknij mnie</Button>;
-export const MeetVote = () => <Button meetVote>+</Button>;
+export const Primary = () => <PrimaryButton large={boolean('Large', true)}>{text('Content', 'Dodaj +')}</PrimaryButton>;
+export const Cancel = () => <CancelButton large={boolean('Large', true)}>{text('Content', 'Anuluj')}</CancelButton>;

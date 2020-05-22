@@ -1,6 +1,6 @@
-import {fetchMeetsPending, fetchMeetsSuccess, fetchMeetsError} from 'actions';
+import {fetchMeetsSuccess, fetchMeetsError} from 'actions';
 
-export const fetchMeets = (fetchParameters) => (dispatch) => {
+export const fetchMeets = fetchParameters => dispatch => {
   const {methodType, requestDataType, generalAttribute, specyficAttribute} = fetchParameters;
 
   const createUrl = () => {
@@ -8,8 +8,7 @@ export const fetchMeets = (fetchParameters) => (dispatch) => {
       return `${process.env.REACT_APP_SERVER_URL}/${generalAttribute}/${requestDataType}`;
     } else if (specyficAttribute !== '') {
       return `${process.env.REACT_APP_SERVER_URL}/${requestDataType}/${specyficAttribute}`;
-    }
-    else {
+    } else {
       return `${process.env.REACT_APP_SERVER_URL}/${requestDataType}`;
     }
   };
@@ -22,16 +21,14 @@ export const fetchMeets = (fetchParameters) => (dispatch) => {
         method: methodType,
         credentials: 'include',
       })
-        .then((response) => {
+        .then(response => {
           if (response.status === 200) return response.json();
-          if (response.status >= 400 && response.status <= 499)
-            throw new Error(`There is problem: Błąd aplikacji. Dane nie zostały pobrane.`);
-          if (response.status >= 500 && response.status <= 599)
-            throw new Error(`There is problem: Błąd serwera. Dane nie zostały pobrane.`);
+          if (response.status >= 400 && response.status <= 499) throw new Error(`There is problem: Błąd aplikacji. Dane nie zostały pobrane.`);
+          if (response.status >= 500 && response.status <= 599) throw new Error(`There is problem: Błąd serwera. Dane nie zostały pobrane.`);
           throw new Error(`There is problem: Inna odpowiedź z serwera. Skontaktuj się z administratorem.`);
         })
-        .then((data) => dispatch(fetchMeetsSuccess(data, requestDataType)))
-        .catch((error) => dispatch(fetchMeetsError(error, requestDataType)));
+        .then(data => dispatch(fetchMeetsSuccess(data, requestDataType)))
+        .catch(error => dispatch(fetchMeetsError(error, requestDataType)));
     } catch (error) {
       throw new Error(`There is problem: ${error}`);
     }

@@ -1,8 +1,8 @@
 import React from 'react';
 import {withRouter} from 'react-router';
 import {routes} from 'routes';
-import Meeting from 'components/pages/Meeting';
-import Topic from 'components/pages/Topic';
+import Meeting from 'components/organisms/MeetingModal';
+import Topic from 'components/organisms/TopicModal';
 import styled from 'styled-components';
 
 const SchedulesTableMenu = () => {

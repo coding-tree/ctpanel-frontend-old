@@ -5,11 +5,12 @@ const Icon = styled.i`
   font-size: ${({fontSize}) => fontSize};
   padding: ${({padding}) => padding};
   color: ${({checkbox}) => checkbox && variables.colorMain};
+  font-weight: 400;
   ${({absolute, top, left, right, bottom}) =>
     absolute &&
     css`
       position: absolute;
-      top: ${(top) => top || 'initial'};
+      top: ${top => top || 'initial'};
       bottom: ${bottom} || 'initial';
       right: ${right} || 'initial';
       left: ${left} || 'initial';

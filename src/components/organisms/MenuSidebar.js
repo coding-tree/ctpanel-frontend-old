@@ -145,7 +145,7 @@ const StyledLinkElement = styled.li`
     transform: scaleX(0);
     background-color: ${variables.backgroundColor};
     z-index: 0;
-    transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: transform 0.2s ease-in-out;
     transform-origin: right;
     right: 0;
   }
@@ -160,7 +160,8 @@ const StyledLink = styled.a`
   padding: 0 0 0 5rem;
   font-weight: 700;
   font-size: 1.8rem;
-  transition: all 0.3s;
+  transition: all 0.2s ease-in-out;
+
   z-index: 10;
   cursor: pointer;
   &.active {

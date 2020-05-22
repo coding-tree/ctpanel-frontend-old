@@ -31,7 +31,7 @@ const LoginStyle = createGlobalStyle`
 
   #root {
     position: absolute;
-    width: calc(100% - 340px);
+    width: 100%;
     flex-direction: column;
     height: 100vh;
   }

@@ -34,12 +34,7 @@ export const Textarea = ({name, label, placeholder, columns, rows}) => {
 export const Select = ({name, label, options, placeholder, handleSelectChange, columns, rows}) => {
   return (
     <CustomFormFieldWrapper columns={columns} rows={rows} name={name} label={label}>
-      <CustomSelect
-        name={name}
-        options={options}
-        placeholder={placeholder}
-        handleSelectChange={handleSelectChange}
-      ></CustomSelect>
+      <CustomSelect name={name} options={options} placeholder={placeholder} handleSelectChange={handleSelectChange}></CustomSelect>
     </CustomFormFieldWrapper>
   );
 };
@@ -52,7 +47,7 @@ export const Tags = ({name, label, onTagsChange, columns, rows, placeholder}) =>
     onTagsChange(tags);
   }, [tags]);
 
-  const handleTags = (e) => {
+  const handleTags = e => {
     const result = e.target.value.match(onlyLetters);
 
     // Block space
@@ -60,36 +55,36 @@ export const Tags = ({name, label, onTagsChange, columns, rows, placeholder}) =>
 
     // Add tag on space
     if (e.target.value.match(onlyLetters) && result && e.keyCode === 32) {
-      setTags((prev) => [...prev, ...result]);
+      setTags(prev => [...prev, ...result]);
       e.target.value = '';
     }
 
     // backspace
     if (e.keyCode === 8 && e.target.value === '' && tags.length > 0) {
       e.target.value = tags.pop().toString();
-      setTags((prev) => [...prev]);
+      setTags(prev => [...prev]);
     }
   };
 
-  const handleBlur = (e) => {
+  const handleBlur = e => {
     if (e.target.value.match(onlyLetters)) {
-      setTags((prev) => [...prev, e.target.value]);
+      setTags(prev => [...prev, e.target.value]);
       e.target.value = '';
     }
   };
-  const deleteTag = (index) => {
-    setTags((prev) => {
+  const deleteTag = index => {
+    setTags(prev => {
       return prev.filter((el, i) => i !== index);
     });
   };
 
-  const focusInput = (e) => {
+  const focusInput = e => {
     e.currentTarget.children[1].focus();
   };
 
   return (
     <CustomFormFieldWrapper columns={columns} rows={rows} name={name} label={label}>
-      <StyledTagsContainer onClick={(e) => focusInput(e)}>
+      <StyledTagsContainer onClick={e => focusInput(e)}>
         <Wrapper>
           {tags &&
             tags.map((el, index) => (
@@ -98,11 +93,7 @@ export const Tags = ({name, label, onTagsChange, columns, rows, placeholder}) =>
               </StyledTag>
             ))}
         </Wrapper>
-        <StyledTagInput
-          placeholder={placeholder}
-          onBlur={(e) => handleBlur(e)}
-          onKeyUp={(e) => handleTags(e)}
-        ></StyledTagInput>
+        <StyledTagInput placeholder={placeholder} onBlur={e => handleBlur(e)} onKeyUp={e => handleTags(e)}></StyledTagInput>
       </StyledTagsContainer>
       <StyledInput as={Field} invisible="true" name={name} id={name}></StyledInput>
     </CustomFormFieldWrapper>

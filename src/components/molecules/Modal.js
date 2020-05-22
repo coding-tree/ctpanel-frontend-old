@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import Button from 'components/atoms/Button/Button';
+import {CancelButton, PrimaryButton} from 'components/atoms/Button';
 import Icon from 'components/atoms/Icon';
 import {Form} from 'formik';
 import styled, {css} from 'styled-components';
@@ -13,9 +13,9 @@ const Modal = ({children, title, column}) => {
   }, [isModalVisible]);
   return (
     <>
-      <Button standard primary uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
+      <PrimaryButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
         Dodaj <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className="fas fa-plus"></Icon>
-      </Button>
+      </PrimaryButton>
 
       <StyledModalContainer isModalVisible={isModalVisible}>
         <StyledBox isModalVisible={isModalVisible}>
@@ -23,12 +23,10 @@ const Modal = ({children, title, column}) => {
           <StyledForm column={column} as={Form}>
             {children}
             <StyledButtonsContainer column={column}>
-              <Button primary standard cancel onClick={() => setIsModalVisible(!isModalVisible)} type="button">
+              <CancelButton large onClick={() => setIsModalVisible(!isModalVisible)} type="button">
                 Anuluj
-              </Button>
-              <Button primary standard>
-                Dodaj
-              </Button>
+              </CancelButton>
+              <PrimaryButton large>Dodaj</PrimaryButton>
             </StyledButtonsContainer>
           </StyledForm>
         </StyledBox>

@@ -3,11 +3,11 @@ import {withFormik} from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import {Input, Textarea, Select, Tags} from 'components/molecules/CustomFormFields';
-import Modal from 'components/organisms/Modal';
+import Modal from 'components/molecules/Modal';
 
 const Meeting = ({setFieldValue}) => {
   const leaders = ['Damian Ospara', 'Józef Rzadkosz', 'Jakub Wojtoń', 'Kazimierz Bagrowski'];
-  const setValue = (name) => (tags) => {
+  const setValue = name => tags => {
     setFieldValue(name, tags);
   };
   return (
@@ -23,20 +23,9 @@ const Meeting = ({setFieldValue}) => {
         options={leaders}
         handleSelectChange={setValue('leader')}
       ></Select>
-      <Input
-        columns={2}
-        name="meetingHref"
-        label="Odnośnik do spotkania"
-        placeholder="Wprowadź adres do spotkania"
-      ></Input>
+      <Input columns={2} name="meetingHref" label="Odnośnik do spotkania" placeholder="Wprowadź adres do spotkania"></Input>
       <Textarea columns={2} name="description" label="Opis spotkania" placeholder="Wpisz opis spotkania"></Textarea>
-      <Tags
-        columns={2}
-        name="tags"
-        label="Kategorie"
-        placeholder="Wpisz kategorie spotkania"
-        onTagsChange={setValue('tags')}
-      ></Tags>
+      <Tags columns={2} name="tags" label="Kategorie" placeholder="Wpisz kategorie spotkania" onTagsChange={setValue('tags')}></Tags>
     </Modal>
   );
 };
@@ -56,7 +45,11 @@ const Formik = withFormik({
   },
   validationSchema: Yup.object().shape({
     date: Yup.date('Musisz podać datę').required('Data jest wymagana'),
-    time: Yup.string().min(5).max(5).min(0, 'Aż tak dawno temu nie było spotkania').required('Czas jest wymagany'),
+    time: Yup.string()
+      .min(5)
+      .max(5)
+      .min(0, 'Aż tak dawno temu nie było spotkania')
+      .required('Czas jest wymagany'),
     topic: Yup.string()
       .min(5, 'Wpisz chociaż te 5 znaków')
       .max(256, 'Zbyt długi temat, rozbij go na kilka spotkań')
@@ -66,7 +59,7 @@ const Formik = withFormik({
     description: Yup.string().required('Opis jest wymagany'),
     tags: Yup.string().required('Podaj chociaż jeden tag'),
   }),
-  handleSubmit: (values) => {
+  handleSubmit: values => {
     // fetch idzie tu
     let {date, time, topic, leader, meetingHref, description, tags} = values;
     let dateToConvert = `${date} ${time}`;
@@ -75,10 +68,10 @@ const Formik = withFormik({
     date = timestamp;
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/meetings`, {date, topic, leader, meetingHref, description, tags})
-      .then((response) => {
+      .then(response => {
         console.log(response.data);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   },

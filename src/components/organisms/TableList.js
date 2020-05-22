@@ -18,11 +18,7 @@ const TableList = ({meetingsList}) => {
     <StyledTableWrapper>
       <TableListMenu />
       <StyledTableBody>
-        {meetingsList &&
-          meetingsList !== undefined &&
-          meetingsList.map((meetingData) => (
-            <TableElement meetingData={meetingData} key={meetingData.id + (Math.random() * 10000).toString()} />
-          ))}
+        {meetingsList && meetingsList.map((meetingData, index) => <TableElement meetingData={meetingData} index={index + 1} key={index} />)}
       </StyledTableBody>
     </StyledTableWrapper>
   );

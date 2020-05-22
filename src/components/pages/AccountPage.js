@@ -3,13 +3,15 @@ import MainTemplate from 'components/templates/MainTemplate';
 import styled from 'styled-components';
 import {connect} from 'react-redux';
 import variables from 'settings/variables';
-import Button from 'components/atoms/Button/Button';
+import {PrimaryButton} from 'components/atoms/Button';
 import axios from 'axios';
+import Header from 'components/atoms/Header';
+
 const AccountPage = ({user}) => {
   const [userRole, setUserRole] = useState('Gość');
   const [userCredentials, setUserCredentials] = useState(undefined);
 
-  const parseRoleIdToBeltColor = (userRolesArray) => {
+  const parseRoleIdToBeltColor = userRolesArray => {
     if (userRolesArray.includes('628160498050793482')) return 'Czarny pas';
     if (userRolesArray.includes('627565298794496030')) return 'Brązowy pas';
     if (userRolesArray.includes('630434499418914841')) return 'Zielony pas';
@@ -29,15 +31,15 @@ const AccountPage = ({user}) => {
     const url = `${process.env.REACT_APP_SERVER_URL}/user/${user.meetings.nickname}`;
     axios
       .get(url)
-      .then((res) => setUserCredentials(res.data))
-      .catch((err) => console.log(err));
+      .then(res => setUserCredentials(res.data))
+      .catch(err => console.log(err));
   }, [user]);
 
   if (userCredentials) {
     return (
       <MainTemplate>
         <StyledWrapper>
-          <StyledHeader>Konto</StyledHeader>
+          <Header tableTitle>Konto</Header>
           <StyledContainer>
             <StyledUser>
               <StyledAvatar src={user.meetings.picture} alt="user avatar" />
@@ -74,9 +76,7 @@ const AccountPage = ({user}) => {
                 </StyledUserDataTitleContainer>
               </StyledUserDataContainer>
             </StyledEditSection>
-            <Button standard primary>
-              Edytuj
-            </Button>
+            <PrimaryButton>Edytuj</PrimaryButton>
           </StyledContainer>
         </StyledWrapper>
       </MainTemplate>
@@ -89,11 +89,6 @@ const AccountPage = ({user}) => {
 const mapStateToProps = ({user}) => ({
   user,
 });
-
-const StyledHeader = styled.h3`
-  padding-bottom: 3rem;
-  font-size: 2em;
-`;
 
 const StyledWrapper = styled.div`
   margin: 0 auto;
@@ -108,7 +103,7 @@ const StyledContainer = styled.div`
   padding: 2.8rem 2.2rem;
   border-radius: 3rem;
   background-color: ${variables.colorWhite};
-  Button {
+  button {
     margin-left: auto;
     margin-top: auto;
   }
@@ -142,11 +137,6 @@ const StyledEditSection = styled.div`
   width: 70%;
   display: flex;
   flex-direction: row;
-`;
-
-const StyledUserData = styled.div`
-  display: flex;
-  flex-direction: column;
 `;
 
 const StyledUserDataContainer = styled.div`
