@@ -33,8 +33,8 @@
     "build": "react-scripts build",
     "build:dev": "env-cmd -e dev react-scripts build",
     "build:hotel": "env-cmd -e hotel react-scripts build",
-    "build:staging": "env-cmd -e staging react-scripts build",
-    "build:production": "env-cmd -e production react-scripts build",
+    "build:staging": "env-cmd staging react-scripts build",
+    "build:production": "env-cmd production react-scripts build",
     "test": "react-scripts test"
   },
   "eslintConfig": {
