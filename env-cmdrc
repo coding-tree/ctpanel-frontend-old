@@ -11,9 +11,9 @@
     "HTTPS": true
   },
   "staging": {
-    "REACT_APP_SERVER_URL": "https://develop.ms.codingtree.pl"
+    "REACT_APP_SERVER_URL": "https://api.develop.ms.codingtree.pl"
   },
   "production": {
-    "REACT_APP_SERVER_URL": "https://ms.codingtree.pl"
+    "REACT_APP_SERVER_URL": "https://api.ms.codingtree.pl"
   }
 }
