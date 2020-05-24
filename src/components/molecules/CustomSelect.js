@@ -8,7 +8,7 @@ const CustomSelect = ({name, options, handleSelectChange, placeholder}) => {
   const [selectValue, setSelectValue] = useState('');
   const [isSelectVisible, toggleSelectVisibility] = useState(false);
 
-  const handleOptionClick = (id, value) => {
+  const handleOptionClick = (value) => {
     handleSelectChange(value);
     toggleSelectVisibility(false);
     return setSelectValue(value);
@@ -25,14 +25,13 @@ const CustomSelect = ({name, options, handleSelectChange, placeholder}) => {
         ))}
       </Field>
 
-      {/* TODO: Create custom select */}
       <StyledSelect selected={selectValue !== ''} onClick={() => toggleSelectVisibility((prev) => !prev)}>
         {selectValue || <StyledPlaceholder>{placeholder}</StyledPlaceholder>}
         <Icon absolute right="1.2rem" className="fas fa-sort"></Icon>
       </StyledSelect>
       <StyledOptionContainer isVisible={isSelectVisible}>
         {options.map((el, index) => (
-          <StyledOption selected={isSelected(el)} onClick={() => handleOptionClick('leader', el)} key={index}>
+          <StyledOption selected={isSelected(el)} onClick={() => handleOptionClick(el)} key={index}>
             {el}
             {isSelected(el) && <Icon absolute right="1.2rem" className="fas fa-check"></Icon>}
           </StyledOption>
@@ -53,6 +52,7 @@ const StyledSelectContainer = styled.div`
   position: relative;
   justify-content: center;
   align-items: center;
+  width: 100%;
   select {
     display: none;
   }

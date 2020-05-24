@@ -1,6 +1,11 @@
 import {GET_MEETS_REQUEST, GET_MEETS_SUCCESS, GET_MEETS_FAILURE} from 'actions';
 
 const initialState = {
+  user: {
+    pending: true,
+    meetings: undefined,
+    error: null,
+  },
   meetingHistory: {
     pending: false,
     meetings: [],
@@ -24,7 +29,6 @@ const initialState = {
 };
 
 const tableReducer = (state = initialState, {type, payload, meetType}) => {
-  console.log('xxx', meetType, payload);
   switch (type) {
     case GET_MEETS_REQUEST:
       return {
@@ -40,6 +44,8 @@ const tableReducer = (state = initialState, {type, payload, meetType}) => {
         [meetType]: {
           ...state[meetType],
           meetings: payload,
+          pending: false,
+          error: false,
         },
       };
     case GET_MEETS_FAILURE:
@@ -48,6 +54,7 @@ const tableReducer = (state = initialState, {type, payload, meetType}) => {
         [meetType]: {
           ...state[meetType],
           error: true,
+          pending: false,
         },
       };
     default:

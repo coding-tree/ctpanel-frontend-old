@@ -1,90 +1,75 @@
-import React, {Suspense, lazy, useState, useEffect} from 'react';
+import React, {Suspense, lazy, useEffect} from 'react';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
-
-import {Provider} from 'react-redux';
-import store from 'store';
-import LoadingSpinner from 'components/atoms/LoadingSpinner';
 
 import {routes} from 'routes';
 
+import {connect} from 'react-redux';
+import LoadingSpinner from 'components/atoms/LoadingSpinner';
+import MainTemplate from './components/templates/MainTemplate';
 import MenuSidebar from 'components/organisms/MenuSidebar';
 import NextMeet from 'components/organisms/NextMeet';
-import MainTemplate from './components/templates/MainTemplate';
+import {fetchMeets as fetchMeetsAction} from 'selectors/FetchMeets';
 
-const LoginPage = lazy(() => import('components/pages/LoginPage'));
-
+const Account = lazy(() => import('components/pages/AccountPage'));
+const History = lazy(() => import('components/pages/MeetingHistoryPage'));
 const Home = lazy(() => import('components/pages/HomePage'));
+const LoginPage = lazy(() => import('components/pages/LoginPage'));
 const Timetable = lazy(() => import('components/pages/SchedulesPage'));
 const TopicDatabase = lazy(() => import('components/pages/TopicDatabasePage'));
-const History = lazy(() => import('components/pages/MeetingHistoryPage'));
-const Account = lazy(() => import('components/pages/AccountPage'));
 
-const Root = (props) => {
-  const [user, setUser] = useState(undefined);
-  const [isLoggedIn, setIsLoggedIn] = useState(undefined);
-
+const Root = ({user, fetchMeets}) => {
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_URL}/user`, {credentials: 'include'})
-      .then((resp) => resp.json())
-      .then((data) => {
-        setIsLoggedIn(true);
-        console.log(user);
-        setUser(data);
-      })
-      .catch((err) => {
-        setIsLoggedIn(false);
-      });
-  }, [isLoggedIn]);
+    fetchMeets();
+  }, []);
 
-  if (isLoggedIn === undefined) {
+  if (user.pending) {
     return <div>Loading...</div>;
-  }
-
-  if (isLoggedIn === undefined) {
+  } else if (user.meetings) {
     return (
-      <Switch>
-        <Redirect to="/" />
-      </Switch>
-    );
-  }
-
-  if (isLoggedIn) {
-    return (
-      <Provider store={store}>
-        <BrowserRouter>
-          <MainTemplate>
-            <MenuSidebar />
-            <NextMeet />
-            <Suspense fallback={<LoadingSpinner />}>
-              <Switch>
-                <Route exact path={routes.home} component={Home} />
-                <Route exact strict path={routes.timetable} component={Timetable} />
-                <Route exact strict path={routes.topicDatabase} component={TopicDatabase} />
-                <Route exact strict path={routes.history} component={History} />
-                <Route exact strict path={routes.account} component={Account} />
-                <Redirect to="/" />
-              </Switch>
-            </Suspense>
-          </MainTemplate>
-        </BrowserRouter>
-      </Provider>
-    );
-  }
-
-  if (!isLoggedIn) {
-    return (
-      <Provider store={store}>
-        <BrowserRouter>
+      <BrowserRouter>
+        <MainTemplate>
+          <MenuSidebar />
+          <NextMeet />
           <Suspense fallback={<LoadingSpinner />}>
             <Switch>
-              <Route strict exact path="/login" component={LoginPage} />
-              <Redirect to="/login" />
+              <Route exact path={routes.home} component={Home} />
+              <Route exact strict path={routes.timetable} component={Timetable} />
+              <Route exact strict path={routes.topicDatabase} component={TopicDatabase} />
+              <Route exact strict path={routes.history} component={History} />
+              <Route exact strict path={routes.account} component={Account} />
+              <Redirect to="/" />
             </Switch>
           </Suspense>
-        </BrowserRouter>
-      </Provider>
+        </MainTemplate>
+      </BrowserRouter>
+    );
+  } else {
+    return (
+      <BrowserRouter>
+        <Suspense fallback={<LoadingSpinner />}>
+          <Switch>
+            <Route strict exact path="/login" component={LoginPage} />
+            <Redirect to="/login" />
+          </Switch>
+        </Suspense>
+      </BrowserRouter>
     );
   }
 };
 
-export default Root;
+const mapStateToProps = ({user}) => ({
+  user,
+});
+
+const fetchParameters = {
+  methodType: 'GET',
+  requestDataType: 'user',
+  generalAttribute: '',
+  specyficAttribute: '',
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchMeets: () => dispatch(fetchMeetsAction(fetchParameters)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Root);

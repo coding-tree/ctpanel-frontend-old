@@ -104,7 +104,7 @@ export const Tags = ({name, label, onTagsChange, columns, rows, placeholder}) =>
           onKeyUp={(e) => handleTags(e)}
         ></StyledTagInput>
       </StyledTagsContainer>
-      <StyledInput invisible="true" as={Field} name={name} id={name}></StyledInput>
+      <StyledInput as={Field} invisible="true" name={name} id={name}></StyledInput>
     </CustomFormFieldWrapper>
   );
 };

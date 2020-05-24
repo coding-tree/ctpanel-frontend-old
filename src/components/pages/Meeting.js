@@ -67,7 +67,6 @@ const Formik = withFormik({
     tags: Yup.string().required('Podaj chociaż jeden tag'),
   }),
   handleSubmit: (values) => {
-    console.log(values);
     // fetch idzie tu
     let {date, time, topic, leader, meetingHref, description, tags} = values;
     let dateToConvert = `${date} ${time}`;

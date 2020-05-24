@@ -11,7 +11,7 @@ const TimetablePage = ({meetings, fetchMeets}) => {
   }, [fetchMeets]);
 
   return (
-    <TableTemplate>
+    <TableTemplate title="Harmonogram Spotkań">
       <TableList meetingsList={meetings.meetings.results} />
     </TableTemplate>
   );

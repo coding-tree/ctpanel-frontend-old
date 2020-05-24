@@ -4,9 +4,14 @@ export const fetchMeets = (fetchParameters) => (dispatch) => {
   const {methodType, requestDataType, generalAttribute, specyficAttribute} = fetchParameters;
 
   const createUrl = () => {
-    if (generalAttribute !== '') return `${process.env.REACT_APP_SERVER_URL}/${generalAttribute}/${requestDataType}`;
-    if (specyficAttribute !== '') return `${process.env.REACT_APP_SERVER_URL}/${requestDataType}/${specyficAttribute}`;
-    if (requestDataType !== '') return `${process.env.REACT_APP_SERVER_URL}/${requestDataType}`;
+    if (generalAttribute !== '') {
+      return `${process.env.REACT_APP_SERVER_URL}/${generalAttribute}/${requestDataType}`;
+    } else if (specyficAttribute !== '') {
+      return `${process.env.REACT_APP_SERVER_URL}/${requestDataType}/${specyficAttribute}`;
+    }
+    else {
+      return `${process.env.REACT_APP_SERVER_URL}/${requestDataType}`;
+    }
   };
 
   const getData = () => {

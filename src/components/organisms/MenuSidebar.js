@@ -69,7 +69,7 @@ const StyledWrapper = styled.nav`
   max-width: 34rem;
   height: 100vh;
   background-color: ${variables.colorMain};
-  overflow-y: auto;
+
   &::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px ${variables.modalBackground};
     box-shadow: inset 0 0 6px ${variables.modalBackground};

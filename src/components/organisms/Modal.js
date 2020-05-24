@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Button from 'components/atoms/Button/Button';
 import Icon from 'components/atoms/Icon';
 import {Form} from 'formik';
@@ -7,6 +7,10 @@ import variables from 'settings/variables';
 
 const Modal = ({children, title, column}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflowY = isModalVisible ? 'hidden' : 'auto';
+  }, [isModalVisible]);
   return (
     <>
       <Button standard primary uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
@@ -36,7 +40,8 @@ const Modal = ({children, title, column}) => {
 export default Modal;
 
 const StyledModalContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-rows: 1fr;
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -45,8 +50,9 @@ const StyledModalContainer = styled.div`
   background-color: ${variables.modalBackground};
   opacity: 0;
   visibility: hidden;
+  overflow-y: auto;
   transition: 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
-  height: auto;
+
   ${({isModalVisible}) =>
     isModalVisible &&
     css`
@@ -55,6 +61,7 @@ const StyledModalContainer = styled.div`
     `}
   top: 0;
   left: 0;
+  bottom: 0;
 `;
 
 const StyledBox = styled.div`
@@ -62,8 +69,8 @@ const StyledBox = styled.div`
   flex-direction: column;
   width: 64rem;
   border-radius: 4px;
-  overflow: hidden;
-  margin: 10rem 0;
+  height: fit-content;
+  margin: 5rem 0;
   box-shadow: 0 3px 6px ${variables.modalBackground};
   transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s;
   opacity: 0;
@@ -88,7 +95,7 @@ const StyledHeader = styled.div`
   padding: 2.5rem;
 `;
 
-const StyledForm = styled.form`
+export const StyledForm = styled.form`
   font-family: inherit;
   padding: 2.3rem;
   display: grid;
