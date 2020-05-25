@@ -100,7 +100,7 @@ const MeetingHistoryTableListMenu = () => (
       <StyledTableHead>
         Prowadzący <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
-      <StyledTableHead right>
+      <StyledTableHead>
         Materiały <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
     </StyledTableRow>
