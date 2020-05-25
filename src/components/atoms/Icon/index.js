@@ -5,7 +5,7 @@ const Icon = styled.i`
   font-size: ${({fontSize}) => fontSize};
   padding: ${({padding}) => padding};
   color: ${({checkbox}) => checkbox && variables.colorMain};
-  font-weight: 400;
+
   ${({absolute, top, left, right, bottom}) =>
     absolute &&
     css`
