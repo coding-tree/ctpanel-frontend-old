@@ -8,7 +8,12 @@ import styled from 'styled-components';
 const SchedulesTableMenu = () => {
   return (
     <StyledTableActions>
-      <Meeting />
+      <StyledHeader>
+        <Meeting />
+        <StyledBox>
+          <StyledInput placeholder="Wyszukaj" />
+        </StyledBox>
+      </StyledHeader>
     </StyledTableActions>
   );
 };

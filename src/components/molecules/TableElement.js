@@ -6,6 +6,7 @@ import Checkbox from 'components/atoms/Checkbox';
 import variables from 'settings/variables';
 import StyledDate from 'components/atoms/StyledDate';
 import {PrimaryButton, CancelButton} from 'components/atoms/Button';
+import Icon from 'components/atoms/Icon';
 
 const StyledRow = styled.tr`
   align-items: center;
@@ -38,8 +39,9 @@ const StyledTableData = styled.td`
   ${({buttonsTableData}) =>
     buttonsTableData &&
     css`
-      display: flex;
-      justify-content: space-around;
+      button:last-child {
+        margin-left: 0.6rem;
+      }
     `}
 `;
 
@@ -67,10 +69,14 @@ const TopicDataBaseTableElement = ({meetingData, isSelected, setSelection, index
     <StyledTableData>{meetingData.topic}</StyledTableData>
     <StyledTableData>Kategoria</StyledTableData>
     <StyledTableData>{meetingData.userAdded}</StyledTableData>
-    <StyledTableData>{meetingData.votes}</StyledTableData>
-    <StyledTableData buttonsTableData right>
-      <PrimaryButton>+</PrimaryButton>
-      <CancelButton>-</CancelButton>
+    <StyledTableData right>{meetingData.votes}</StyledTableData>
+    <StyledTableData right buttonsTableData>
+      <PrimaryButton>
+        <Icon className="fas fa-plus"></Icon>
+      </PrimaryButton>
+      <CancelButton>
+        <Icon className="fas fa-minus"></Icon>
+      </CancelButton>
     </StyledTableData>
   </StyledRow>
 );
@@ -86,7 +92,7 @@ const MeetingHistoryTableElement = ({meetingData, isSelected, setSelection, inde
     </StyledTableData>
     <StyledTableData>{meetingData.topic}</StyledTableData>
     <StyledTableData>{meetingData.leader}</StyledTableData>
-    <StyledTableData>
+    <StyledTableData right>
       <PrimaryButton>Dodaj</PrimaryButton>
     </StyledTableData>
   </StyledRow>
