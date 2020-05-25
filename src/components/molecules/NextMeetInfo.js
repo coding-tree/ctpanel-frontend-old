@@ -10,10 +10,10 @@ const MeetWrapper = styled.div`
   font-size: 1.6rem;
 `;
 
-const NextMeetInfo = ({ date, title }) => {
+const NextMeetInfo = ({date, title}) => {
   return (
     <MeetWrapper>
-      <StyledDate format="dddd DD/MM/YYYY, H:mm" date={date}></StyledDate>
+      <StyledDate uppercase format="dddd DD/MM/YYYY, H:mm" date={date}></StyledDate>
       <Title padding="0 1rem" fontSize="1.6rem">
         -
       </Title>
