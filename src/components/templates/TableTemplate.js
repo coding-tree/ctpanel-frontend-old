@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Header from 'components/atoms/Header';
 import TableMenu from 'components/organisms/TableMenu';
 import variables from 'settings/variables';
+import {SelectedElementProvider} from 'components/context/SelectedElementContext';
 
 const StyledWrapper = styled.div`
   height: 100%;
@@ -32,10 +33,12 @@ const TableTemplate = ({children, title}) => {
     <StyledWrapper>
       <StyledTableContainer>
         <Header tableTitle>{title}</Header>
-        <StyledTable>
-          <TableMenu />
-          {children}
-        </StyledTable>
+        <SelectedElementProvider>
+          <StyledTable>
+            <TableMenu />
+            {children}
+          </StyledTable>
+        </SelectedElementProvider>
       </StyledTableContainer>
     </StyledWrapper>
   );

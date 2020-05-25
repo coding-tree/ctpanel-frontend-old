@@ -18,10 +18,7 @@ const TableList = ({meetingsList}) => {
     <StyledTableWrapper>
       <TableListMenu />
       <StyledTableBody>
-        {meetingsList &&
-          meetingsList.map((meetingData, index) => (
-            <TableElement meetingData={meetingData} index={index + 1} key={index} />
-          ))}
+        {meetingsList && meetingsList.map((meetingData, index) => <TableElement meetingData={meetingData} index={index + 1} key={index} />)}
       </StyledTableBody>
     </StyledTableWrapper>
   );

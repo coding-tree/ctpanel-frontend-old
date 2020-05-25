@@ -1,18 +1,18 @@
 import React from 'react';
-import {withFormik} from 'formik';
+import {Input, Textarea, Select, Tags} from 'components/molecules/CustomFormFields';
+import {CancelButton, PrimaryButton} from 'components/atoms/Button';
+import variables from 'settings/variables';
+import styled from 'styled-components';
+import {withFormik, Form} from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import {Input, Textarea, Select, Tags} from 'components/molecules/CustomFormFields';
-import Modal from 'components/molecules/Modal';
 
-const Meeting = ({setFieldValue, meetingId}) => {
-  const leaders = ['Damian Ospara', 'Józef Rzadkosz', 'Jakub Wojtoń', 'Kazimierz Bagrowski'];
-  const setValue = (name) => (tags) => {
+const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible}) => {
+  const setValue = name => tags => {
     setFieldValue(name, tags);
   };
   return (
-    <Modal column={2} title="Zaplanuj nowe spotkanie">
-      {meetingId}
+    <StyledForm column={column} as={Form}>
       <Input name="date" type="date" label="Data"></Input>
       <Input name="time" type="time" label="Czas"></Input>
       <Textarea columns={2} name="topic" label="Temat spotkania" placeholder="Wprowadź temat spotkania"></Textarea>
@@ -24,25 +24,20 @@ const Meeting = ({setFieldValue, meetingId}) => {
         options={leaders}
         handleSelectChange={setValue('leader')}
       ></Select>
-      <Input
-        columns={2}
-        name="meetingHref"
-        label="Odnośnik do spotkania"
-        placeholder="Wprowadź adres do spotkania"
-      ></Input>
+      <Input columns={2} name="meetingHref" label="Odnośnik do spotkania" placeholder="Wprowadź adres do spotkania"></Input>
       <Textarea columns={2} name="description" label="Opis spotkania" placeholder="Wpisz opis spotkania"></Textarea>
-      <Tags
-        columns={2}
-        name="tags"
-        label="Kategorie"
-        placeholder="Wpisz kategorie spotkania"
-        onTagsChange={setValue('tags')}
-      ></Tags>
-    </Modal>
+      <Tags columns={2} name="tags" label="Kategorie" placeholder="Wpisz kategorie spotkania" onTagsChange={setValue('tags')}></Tags>
+      <StyledButtonsContainer column={column}>
+        <CancelButton large onClick={() => setIsModalVisible(!isModalVisible)} type="button">
+          Anuluj
+        </CancelButton>
+        <PrimaryButton large>Dodaj</PrimaryButton>
+      </StyledButtonsContainer>
+    </StyledForm>
   );
 };
 
-const Formik = withFormik({
+const AddMeeting = withFormik({
   mapPropsToValues: ({date, time, topic, leader, meetingHref, description, tags}) => {
     return {
       // todo - convert date & time to timestamp
@@ -57,7 +52,11 @@ const Formik = withFormik({
   },
   validationSchema: Yup.object().shape({
     date: Yup.date('Musisz podać datę').required('Data jest wymagana'),
-    time: Yup.string().min(5).max(5).min(0, 'Aż tak dawno temu nie było spotkania').required('Czas jest wymagany'),
+    time: Yup.string()
+      .min(5)
+      .max(5)
+      .min(0, 'Aż tak dawno temu nie było spotkania')
+      .required('Czas jest wymagany'),
     topic: Yup.string()
       .min(5, 'Wpisz chociaż te 5 znaków')
       .max(256, 'Zbyt długi temat, rozbij go na kilka spotkań')
@@ -67,7 +66,7 @@ const Formik = withFormik({
     description: Yup.string().required('Opis jest wymagany'),
     tags: Yup.string().required('Podaj chociaż jeden tag'),
   }),
-  handleSubmit: (values) => {
+  handleSubmit: values => {
     // fetch idzie tu
     let {date, time, topic, leader, meetingHref, description, tags} = values;
     let dateToConvert = `${date} ${time}`;
@@ -76,13 +75,43 @@ const Formik = withFormik({
     date = timestamp;
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/meetings`, {date, topic, leader, meetingHref, description, tags})
-      .then((response) => {
+      .then(response => {
         console.log(response.data);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   },
-})(Meeting);
+})(Formik);
 
-export default Formik;
+export default AddMeeting;
+
+export const StyledForm = styled.form`
+  font-family: inherit;
+  padding: 2.3rem;
+  display: grid;
+  grid-template-columns: ${({column}) => (column ? `repeat(${column}, 1fr)` : 'repeat(1, 1fr)')};
+  grid-column-gap: 2rem;
+
+  textarea {
+    font-family: inherit;
+    font-size: 1.6rem;
+    border-radius: 4px;
+    border: 1px solid ${variables.borderColor};
+    padding: 12px;
+    color: ${variables.colorFont};
+    height: 12rem;
+    resize: none;
+    &::placeholder {
+      color: ${variables.colorLink};
+    }
+  }
+`;
+
+const StyledButtonsContainer = styled.div`
+  justify-self: end;
+  grid-column: ${({column}) => (column ? `span ${column}` : 'span 1')};
+  display: grid;
+  grid-column-gap: 1rem;
+  grid-template-columns: ${({buttons}) => (buttons ? `repeat(${buttons}, 1fr)` : 'repeat(2, 1fr)')};
+`;

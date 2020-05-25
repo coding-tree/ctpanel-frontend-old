@@ -1,17 +1,43 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {withRouter} from 'react-router';
 import {routes} from 'routes';
-import Meeting from 'components/organisms/MeetingModal';
+
 import Topic from 'components/organisms/TopicModal';
 import styled from 'styled-components';
+import {SelectedElementContext} from 'components/context/SelectedElementContext';
+import {AddModal, DeleteModal} from 'components/molecules/Modal';
+import AddMeeting from 'components/organisms/AddMeeting';
+import variables from 'settings/variables';
 
-const SchedulesTableMenu = ({meetingId}) => {
+const SchedulesTableMenu = () => {
+  const [selectedElement] = useContext(SelectedElementContext);
+  const leaders = ['Damian Ospara', 'Józef Rzadkosz', 'Jakub Wojtoń', 'Kazimierz Bagrowski'];
+
   return (
     <StyledTableActions>
-      <Meeting />
+      <AddModal title="Dodaj" icon="fas fa-plus" modalTitle="Zaplanuj nowe spotkanie">
+        <AddMeeting column={2} leaders={leaders}></AddMeeting>
+      </AddModal>
+      {selectedElement.length === 1 && (
+        <AddModal title="Edytuj" icon="fas fa-pen" modalTitle="Edytuj spotkanie">
+          <EditForm></EditForm>
+        </AddModal>
+      )}
+      {selectedElement.length > 0 && (
+        <DeleteModal title="Usuń" icon="fas fa-minus" modalTitle="Edytuj spotkanie">
+          <EditForm></EditForm>
+        </DeleteModal>
+      )}
     </StyledTableActions>
   );
 };
+
+const EditForm = () => (
+  <form>
+    <input type="text" />
+    <button>Siema</button>
+  </form>
+);
 
 const TopicDataBaseTableMenu = () => (
   <StyledTableActions>
@@ -67,8 +93,9 @@ export default withRouter(TableMenu);
 // Styles
 
 const StyledTableActions = styled.div`
-  width: 100%;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  grid-column-gap: 2rem;
   align-items: center;
   padding: 0 30px 27px 13px;
 `;
@@ -90,14 +117,14 @@ const StyledBox = styled.div`
   align-items: center;
 `;
 const StyledLabel = styled.label`
-  color: #9d9ea3;
+  color: ${variables.colorLink};
   font-size: 1.6rem;
   text-transform: ${({uppercase}) => uppercase && 'uppercase'};
   padding-right: 2rem;
 `;
 const StyledIcon = styled.i`
   font-size: 1.6rem;
-  color: #9d9ea3;
+  color: ${variables.colorLink};
   padding-right: 1rem;
 `;
 const StyledSelect = styled.select`
@@ -112,10 +139,10 @@ const StyledInput = styled.input`
   font-size: 1.4rem;
   display: block;
   width: 100%;
-  border: 1px solid #9d9ea3;
+  border: 1px solid ${variables.colorLink};
   padding: 15px 30px;
   border-radius: 4px;
   &::placeholder {
-    color: #9d9ea3;
+    color: ${variables.colorLink};
   }
 `;

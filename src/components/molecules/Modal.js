@@ -1,51 +1,51 @@
 import React, {useState, useEffect} from 'react';
 import {CancelButton, PrimaryButton} from 'components/atoms/Button';
 import Icon from 'components/atoms/Icon';
-import {Form} from 'formik';
 import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
 
-const Modal = ({children, title, column}) => {
+export const DeleteModal = ({children, modalTitle, title, icon}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  return (
+    <>
+      <CancelButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
+        {title} <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className={icon}></Icon>
+      </CancelButton>
+      <Modal title={modalTitle} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}>
+        {React.cloneElement(children, {isModalVisible, setIsModalVisible})}
+      </Modal>
+    </>
+  );
+};
 
+export const AddModal = ({children, modalTitle, title, icon}) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  return (
+    <>
+      <PrimaryButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
+        {title} <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className={icon}></Icon>
+      </PrimaryButton>
+      <Modal title={modalTitle} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}>
+        {React.cloneElement(children, {isModalVisible, setIsModalVisible})}
+      </Modal>
+    </>
+  );
+};
+
+const Modal = ({children, title, isModalVisible}) => {
   useEffect(() => {
     document.body.style.overflowY = isModalVisible ? 'hidden' : 'auto';
   }, [isModalVisible]);
 
   return (
-    <>
-      <StyledButtonsContainer buttons="3">
-        <PrimaryButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
-          Dodaj <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className="fas fa-plus"></Icon>
-        </PrimaryButton>
-
-        <PrimaryButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
-          Edytuj <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className="fas fa-pen"></Icon>
-        </PrimaryButton>
-
-        <CancelButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
-          Usuń <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className="fas fa-minus"></Icon>
-        </CancelButton>
-      </StyledButtonsContainer>
-      <StyledModalContainer isModalVisible={isModalVisible}>
-        <StyledBox isModalVisible={isModalVisible}>
-          <StyledHeader>{title}</StyledHeader>
-          <StyledForm column={column} as={Form}>
-            {children}
-            <StyledButtonsContainer column={column}>
-              <CancelButton large onClick={() => setIsModalVisible(!isModalVisible)} type="button">
-                Anuluj
-              </CancelButton>
-              <PrimaryButton large>Dodaj</PrimaryButton>
-            </StyledButtonsContainer>
-          </StyledForm>
-        </StyledBox>
-      </StyledModalContainer>
-    </>
+    <StyledModalContainer isModalVisible={isModalVisible}>
+      <StyledBox isModalVisible={isModalVisible}>
+        <StyledHeader>{title}</StyledHeader>
+        {children}
+      </StyledBox>
+    </StyledModalContainer>
   );
 };
-
-export default Modal;
 
 const StyledModalContainer = styled.div`
   display: grid;
@@ -101,34 +101,4 @@ const StyledHeader = styled.div`
   background-color: ${variables.colorMain};
   color: ${variables.colorWhite};
   padding: 2.5rem;
-`;
-
-export const StyledForm = styled.form`
-  font-family: inherit;
-  padding: 2.3rem;
-  display: grid;
-  grid-template-columns: ${({column}) => (column ? `repeat(${column}, 1fr)` : 'repeat(1, 1fr)')};
-  grid-column-gap: 2rem;
-
-  textarea {
-    font-family: inherit;
-    font-size: 1.6rem;
-    border-radius: 4px;
-    border: 1px solid ${variables.borderColor};
-    padding: 12px;
-    color: ${variables.colorFont};
-    height: 12rem;
-    resize: none;
-    &::placeholder {
-      color: ${variables.colorLink};
-    }
-  }
-`;
-
-const StyledButtonsContainer = styled.div`
-  justify-self: end;
-  grid-column: ${({column}) => (column ? `span ${column}` : 'span 1')};
-  display: grid;
-  grid-column-gap: 1rem;
-  grid-template-columns: ${({buttons}) => (buttons ? `repeat(${buttons}, 1fr)` : 'repeat(2, 1fr)')};
 `;
