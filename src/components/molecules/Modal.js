@@ -11,12 +11,22 @@ const Modal = ({children, title, column}) => {
   useEffect(() => {
     document.body.style.overflowY = isModalVisible ? 'hidden' : 'auto';
   }, [isModalVisible]);
+
   return (
     <>
-      <PrimaryButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
-        Dodaj <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className="fas fa-plus"></Icon>
-      </PrimaryButton>
+      <StyledButtonsContainer buttons="3">
+        <PrimaryButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
+          Dodaj <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className="fas fa-plus"></Icon>
+        </PrimaryButton>
 
+        <PrimaryButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
+          Edytuj <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className="fas fa-pen"></Icon>
+        </PrimaryButton>
+
+        <CancelButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
+          Usuń <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className="fas fa-minus"></Icon>
+        </CancelButton>
+      </StyledButtonsContainer>
       <StyledModalContainer isModalVisible={isModalVisible}>
         <StyledBox isModalVisible={isModalVisible}>
           <StyledHeader>{title}</StyledHeader>
@@ -120,5 +130,5 @@ const StyledButtonsContainer = styled.div`
   grid-column: ${({column}) => (column ? `span ${column}` : 'span 1')};
   display: grid;
   grid-column-gap: 1rem;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: ${({buttons}) => (buttons ? `repeat(${buttons}, 1fr)` : 'repeat(2, 1fr)')};
 `;

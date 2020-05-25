@@ -13,9 +13,11 @@ const StyledRow = styled.tr`
   padding: 0 10px;
   border-bottom: 1px solid ${variables.tableBorderColor};
   background-color: ${({isSelected}) => isSelected && variables.tableHeaderColor};
-
+  transition: 0.15s ease-in-out;
   &:hover {
     background-color: ${variables.tableHeaderColor};
+    cursor: pointer;
+    color: ${variables.colorMain};
   }
 `;
 
@@ -46,7 +48,13 @@ const StyledTableData = styled.td`
 const SchedulesTableElement = ({meetingData, isSelected, setSelection, index}) => (
   <StyledRow isSelected={isSelected}>
     <StyledTableData>
-      <Checkbox type="checkbox" isSelected={isSelected} setSelection={setSelection}></Checkbox>
+      <Checkbox
+        type="checkbox"
+        isSelected={isSelected}
+        setSelection={setSelection}
+        id={meetingData._id}
+        onClick={() => console.log(meetingData._id)}
+      ></Checkbox>
     </StyledTableData>
     <StyledTableData mainColor>#{index}</StyledTableData>
     <StyledTableData>
@@ -88,13 +96,35 @@ const MeetingHistoryTableElement = () => (
 
 const TableElement = ({location, meetingData, index}) => {
   const [isSelected, setSelection] = useState(false);
+
   switch (location.pathname) {
     case routes.timetable:
-      return <SchedulesTableElement index={index} meetingData={meetingData} isSelected={isSelected} setSelection={setSelection} />;
+      return (
+        <SchedulesTableElement
+          index={index}
+          meetingData={meetingData}
+          isSelected={isSelected}
+          setSelection={setSelection}
+        />
+      );
     case routes.topicDatabase:
-      return <TopicDataBaseTableElement index={index} meetingData={meetingData} isSelected={isSelected} setSelection={setSelection} />;
+      return (
+        <TopicDataBaseTableElement
+          index={index}
+          meetingData={meetingData}
+          isSelected={isSelected}
+          setSelection={setSelection}
+        />
+      );
     case routes.history:
-      return <SchedulesTableElement index={index} meetingData={meetingData} isSelected={isSelected} setSelection={setSelection} />;
+      return (
+        <MeetingHistoryTableElement
+          index={index}
+          meetingData={meetingData}
+          isSelected={isSelected}
+          setSelection={setSelection}
+        />
+      );
     default:
       return console.log('something went wrong');
   }

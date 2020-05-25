@@ -5,7 +5,7 @@ import Meeting from 'components/organisms/MeetingModal';
 import Topic from 'components/organisms/TopicModal';
 import styled from 'styled-components';
 
-const SchedulesTableMenu = () => {
+const SchedulesTableMenu = ({meetingId}) => {
   return (
     <StyledTableActions>
       <Meeting />

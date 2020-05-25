@@ -9,6 +9,7 @@ const HistoryPage = ({archive, fetchMeets}) => {
   useEffect(() => {
     fetchMeets();
   }, []);
+
   return (
     <TableTemplate title="Historia Spotkań">
       <TableList meetingsList={archive.meetings} />
@@ -27,7 +28,7 @@ const fetchParameters = {
   specyficAttribute: '',
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   fetchMeets: () => dispatch(fetchMeetsAction(fetchParameters)),
 });
 
