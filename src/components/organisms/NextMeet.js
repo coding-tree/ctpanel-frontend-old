@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import variables from 'settings/variables';
 
 import Title from 'components/atoms/Title';
 import NextMeetInfo from 'components/molecules/NextMeetInfo';
+import axios from 'axios';
 
 const StyledWrapper = styled.div`
   width: calc(100%);
@@ -17,18 +18,18 @@ const StyledWrapper = styled.div`
 `;
 
 const NextMeet = () => {
-  const fakeData = {
-    id: 1,
-    date: 1578864600000,
-    title: 'Testowanie komponentów przy użyciu JEST',
-  };
+  const [upcoming, setUpcoming] = useState({});
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_SERVER_URL}/meetings/incoming`).then(resp => setUpcoming(resp.data));
+  }, []);
 
   return (
     <StyledWrapper>
       <Title important uppercase>
         Najbliższe spotkanie
       </Title>
-      <NextMeetInfo date={fakeData.date} title={fakeData.title}></NextMeetInfo>
+      <NextMeetInfo date={upcoming.date} title={upcoming.topic}></NextMeetInfo>
     </StyledWrapper>
   );
 };

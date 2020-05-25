@@ -69,7 +69,7 @@ const TopicDataBaseTableListMenu = () => (
       <StyledTableHead>
         Kategoria <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
-      <StyledTableHead right>
+      <StyledTableHead>
         Inicjator <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
       <StyledTableHead right>
@@ -100,7 +100,7 @@ const MeetingHistoryTableListMenu = () => (
       <StyledTableHead>
         Prowadzący <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
-      <StyledTableHead right>
+      <StyledTableHead>
         Materiały <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
     </StyledTableRow>

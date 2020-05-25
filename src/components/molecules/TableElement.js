@@ -8,6 +8,7 @@ import StyledDate from 'components/atoms/StyledDate';
 import {PrimaryButton, CancelButton} from 'components/atoms/Button';
 import {SelectedElementContext} from 'components/context/SelectedElementContext';
 
+
 const StyledRow = styled.tr`
   align-items: center;
   height: 50px;
@@ -41,8 +42,9 @@ const StyledTableData = styled.td`
   ${({buttonsTableData}) =>
     buttonsTableData &&
     css`
-      display: flex;
-      justify-content: space-around;
+      button:last-child {
+        margin-left: 0.6rem;
+      }
     `}
 `;
 
@@ -82,14 +84,21 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
   );
 };
 
-const MeetingHistoryTableElement = () => (
-  <StyledRow>
-    <StyledTableData></StyledTableData>
-    <StyledTableData></StyledTableData>
-    <StyledTableData></StyledTableData>
-    <StyledTableData></StyledTableData>
-    <StyledTableData></StyledTableData>
-    <StyledTableData></StyledTableData>
+
+const MeetingHistoryTableElement = ({meetingData, isSelected, setSelection, index}) => (
+  <StyledRow isSelected={isSelected}>
+    <StyledTableData>
+      <Checkbox type="checkbox" isSelected={isSelected} setSelection={setSelection}></Checkbox>
+    </StyledTableData>
+    <StyledTableData mainColor>#{index}</StyledTableData>
+    <StyledTableData>
+      <StyledDate format="DD MMMM YYYY" date={meetingData.date}></StyledDate>
+    </StyledTableData>
+    <StyledTableData>{meetingData.topic}</StyledTableData>
+    <StyledTableData>{meetingData.leader}</StyledTableData>
+    <StyledTableData right>
+      <PrimaryButton>Dodaj</PrimaryButton>
+    </StyledTableData>
   </StyledRow>
 );
 
