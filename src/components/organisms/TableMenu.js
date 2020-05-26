@@ -5,10 +5,11 @@ import {routes} from 'routes';
 import Topic from 'components/organisms/TopicModal';
 import styled from 'styled-components';
 import {SelectedElementContext} from 'components/context/SelectedElementContext';
-import {AddModal, DeleteModal} from 'components/molecules/Modal';
+import {AddModal, DeleteModal, EditModal} from 'components/molecules/Modal';
 import AddMeeting from 'components/organisms/AddMeeting';
+import EditMeeting from 'components/organisms/EditMeeting';
 import variables from 'settings/variables';
-import {DeleteForm, EditForm} from 'components/molecules/Forms';
+import {DeleteMeeting} from 'components/molecules/MeetingForms';
 
 const SchedulesTableMenu = () => {
   const [selectedElement] = useContext(SelectedElementContext);
@@ -20,13 +21,13 @@ const SchedulesTableMenu = () => {
         <AddMeeting column={2} leaders={leaders} destination="meetings"></AddMeeting>
       </AddModal>
       {selectedElement.length === 1 && (
-        <AddModal title="Edytuj" icon="fas fa-pen" modalTitle="Edytuj spotkanie">
-          <EditForm selectedElement={selectedElement} destination="meetings"></EditForm>
-        </AddModal>
+        <EditModal title="Edytuj" icon="fas fa-pen" modalTitle="Edytuj spotkanie">
+          <EditMeeting column={2} leaders={leaders} selectedElement={selectedElement} destination="meetings"></EditMeeting>
+        </EditModal>
       )}
       {selectedElement.length > 0 && (
         <DeleteModal title="Usuń" icon="fas fa-minus" modalTitle="Usuń spotkanie">
-          <DeleteForm selectedElement={selectedElement} destination="meetings"></DeleteForm>
+          <DeleteMeeting selectedElement={selectedElement} destination="meetings"></DeleteMeeting>
         </DeleteModal>
       )}
     </StyledTableActions>

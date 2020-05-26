@@ -12,7 +12,7 @@ const HeaderWrapper = styled.div`
   padding-bottom: 7rem;
 `;
 
-const LastMeetHeader = ({ leader, topic, date }) => {
+const LastMeetHeader = ({leader, topic, date}) => {
   return (
     <HeaderWrapper>
       <Title left uppercase>

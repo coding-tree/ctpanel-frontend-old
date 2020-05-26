@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {CancelButton, PrimaryButton} from 'components/atoms/Button';
+import {PrimaryButton, EditButton, DeleteButton} from 'components/atoms/Button';
 import Icon from 'components/atoms/Icon';
 import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
@@ -8,9 +8,9 @@ export const DeleteModal = ({children, modalTitle, title, icon}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   return (
     <>
-      <CancelButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
+      <DeleteButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
         {title} <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className={icon}></Icon>
-      </CancelButton>
+      </DeleteButton>
       <Modal title={modalTitle} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}>
         {React.cloneElement(children, {isModalVisible, setIsModalVisible})}
       </Modal>
@@ -25,6 +25,19 @@ export const AddModal = ({children, modalTitle, title, icon}) => {
       <PrimaryButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
         {title} <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className={icon}></Icon>
       </PrimaryButton>
+      <Modal title={modalTitle} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}>
+        {React.cloneElement(children, {isModalVisible, setIsModalVisible})}
+      </Modal>
+    </>
+  );
+};
+export const EditModal = ({children, modalTitle, title, icon}) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  return (
+    <>
+      <EditButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
+        {title} <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className={icon}></Icon>
+      </EditButton>
       <Modal title={modalTitle} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}>
         {React.cloneElement(children, {isModalVisible, setIsModalVisible})}
       </Modal>

@@ -29,7 +29,13 @@ const NextMeet = () => {
       <Title important uppercase>
         Najbliższe spotkanie
       </Title>
-      <NextMeetInfo date={upcoming.date} title={upcoming.topic}></NextMeetInfo>
+      {upcoming ? (
+        <NextMeetInfo date={upcoming.date} title={upcoming.topic}></NextMeetInfo>
+      ) : (
+        <Title important uppercase fontSize="1.6rem">
+          Brak nadchodzących spotkań
+        </Title>
+      )}
     </StyledWrapper>
   );
 };

@@ -1,12 +1,13 @@
-import React, {useState, useContext} from 'react';
+import React, {useContext} from 'react';
 import {withRouter} from 'react-router';
 import styled, {css} from 'styled-components';
 import {routes} from 'routes';
 import Checkbox from 'components/atoms/Checkbox';
 import variables from 'settings/variables';
 import StyledDate from 'components/atoms/StyledDate';
-import {PrimaryButton, CancelButton} from 'components/atoms/Button';
+import {PrimaryButton, DeleteButton} from 'components/atoms/Button';
 import {SelectedElementContext} from 'components/context/SelectedElementContext';
+import Icon from 'components/atoms/Icon';
 
 const StyledRow = styled.tr`
   align-items: center;
@@ -76,8 +77,12 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
       <StyledTableData>{meetingData.userAdded}</StyledTableData>
       <StyledTableData>{meetingData.votes}</StyledTableData>
       <StyledTableData buttonsTableData right>
-        <PrimaryButton>+</PrimaryButton>
-        <CancelButton>-</CancelButton>
+        <PrimaryButton>
+          <Icon className="fas fa-plus"></Icon>
+        </PrimaryButton>
+        <DeleteButton>
+          <Icon className="fas fa-minus"></Icon>
+        </DeleteButton>
       </StyledTableData>
     </StyledRow>
   );
@@ -106,9 +111,9 @@ const TableElement = ({location, meetingData, index}) => {
   const isSelected = selectedElement && selectedElement.includes(meetingData);
 
   const handleSelection = (singleElem, selectedElem) => {
-    return toggleSelection((prev) => {
+    return toggleSelection(prev => {
       if (selectedElem) {
-        return prev.filter((elem) => elem._id !== singleElem._id);
+        return prev.filter(elem => elem._id !== singleElem._id);
       }
       return [...prev, singleElem];
     });

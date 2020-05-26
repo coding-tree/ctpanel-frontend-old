@@ -4,25 +4,25 @@ import axios from 'axios';
 import styled from 'styled-components';
 import variables from 'settings/variables';
 
-export const DeleteForm = ({selectedElement, destination, isModalVisible, setIsModalVisible}) => {
+export const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModalVisible}) => {
   const listItems = selectedElement.map((el, index) => {
     return <StyledListItem key={index}>{el.topic}</StyledListItem>;
   });
 
   const deleteItems = () => {
     axios.all(
-      selectedElement.map((element) => {
+      selectedElement.map(element => {
         return axios
           .delete(`${process.env.REACT_APP_SERVER_URL}/${destination}/${element._id}`)
-          .then((response) => console.log(response))
+          .then(response => console.log(response))
           .then(() => setIsModalVisible(!isModalVisible))
-          .catch((err) => console.log(err));
+          .catch(err => console.log(err));
       })
     );
   };
 
   return (
-    <StyledForm onSubmit={(e) => e.preventDefault()}>
+    <StyledForm onSubmit={e => e.preventDefault()}>
       <StyledTitle>Czy na pewno chcesz usunąć {listItems.length} następujące rekordy?</StyledTitle>
       <StyledList>{listItems}</StyledList>
       <StyledButtonsContainer>
@@ -32,22 +32,6 @@ export const DeleteForm = ({selectedElement, destination, isModalVisible, setIsM
         <PrimaryButton width="true" onClick={deleteItems}>
           Usuń
         </PrimaryButton>
-      </StyledButtonsContainer>
-    </StyledForm>
-  );
-};
-
-export const EditForm = ({selectedElement, destination, isModalVisible, setIsModalVisible}) => {
-  return (
-    <StyledForm onSubmit={(e) => e.preventDefault()}>
-      <StyledTitle>
-        Edytuj temat &nbsp; "<StyledTopic>{selectedElement[0].topic}</StyledTopic>"
-      </StyledTitle>
-      <StyledButtonsContainer>
-        <DeleteButton onClick={() => setIsModalVisible(!isModalVisible)} width="true">
-          Anuluj
-        </DeleteButton>
-        <PrimaryButton width="true">Zapisz</PrimaryButton>
       </StyledButtonsContainer>
     </StyledForm>
   );

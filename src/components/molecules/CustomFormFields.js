@@ -31,16 +31,16 @@ export const Textarea = ({name, label, placeholder, columns, rows}) => {
   );
 };
 
-export const Select = ({name, label, options, placeholder, handleSelectChange, columns, rows}) => {
+export const Select = ({name, label, options, placeholder, handleSelectChange, columns, rows, leader = ''}) => {
   return (
     <CustomFormFieldWrapper columns={columns} rows={rows} name={name} label={label}>
-      <CustomSelect name={name} options={options} placeholder={placeholder} handleSelectChange={handleSelectChange}></CustomSelect>
+      <CustomSelect name={name} options={options} placeholder={placeholder} leader={leader} handleSelectChange={handleSelectChange}></CustomSelect>
     </CustomFormFieldWrapper>
   );
 };
 
-export const Tags = ({name, label, onTagsChange, columns, rows, placeholder}) => {
-  const [tags, setTags] = useState([]);
+export const Tags = ({name, label, onTagsChange, columns, rows, placeholder, activeTags = []}) => {
+  const [tags, setTags] = useState(activeTags || []);
   const onlyLetters = /\S+/g;
 
   useEffect(() => {

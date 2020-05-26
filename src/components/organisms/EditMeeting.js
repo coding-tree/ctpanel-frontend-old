@@ -7,7 +7,10 @@ import {withFormik, Form} from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 
-const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible}) => {
+const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible, selectedElement}) => {
+  const [editData] = selectedElement;
+  const {tags, leader} = editData;
+
   const setValue = name => tags => {
     setFieldValue(name, tags);
   };
@@ -22,32 +25,36 @@ const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisib
         label="Prowadzący"
         placeholder="Wybierz prowadzącego"
         options={leaders}
+        leader={leader}
         handleSelectChange={setValue('leader')}
       ></Select>
       <Input columns={2} name="meetingHref" label="Odnośnik do spotkania" placeholder="Wprowadź adres do spotkania"></Input>
       <Textarea columns={2} name="description" label="Opis spotkania" placeholder="Wpisz opis spotkania"></Textarea>
-      <Tags columns={2} name="tags" label="Kategorie" placeholder="Wpisz kategorie spotkania" onTagsChange={setValue('tags')}></Tags>
+      <Tags columns={2} activeTags={tags} name="tags" label="Kategorie" placeholder="Wpisz kategorie spotkania" onTagsChange={setValue('tags')}></Tags>
       <StyledButtonsContainer column={column}>
         <CancelButton large onClick={() => setIsModalVisible(!isModalVisible)} type="button">
           Anuluj
         </CancelButton>
-        <PrimaryButton large>Dodaj</PrimaryButton>
+        <PrimaryButton type="submit" large>
+          Dodaj
+        </PrimaryButton>
       </StyledButtonsContainer>
     </StyledForm>
   );
 };
 
 const EditMeeting = withFormik({
-  mapPropsToValues: ({date, time, topic, leader, meetingHref, description, tags}) => {
+  mapPropsToValues: ({date, time, topic, leader, meetingHref, description, tags, selectedElement}) => {
+    const [editData] = selectedElement;
     return {
       // todo - convert date & time to timestamp
-      date: date || new Date().toISOString().slice(0, 10),
-      time: time || '21:33',
-      topic: topic || '',
-      leader: leader || '',
-      meetingHref: meetingHref || '',
-      description: description || '',
-      tags: tags || '',
+      date: date || new Date(editData.date).toISOString().slice(0, 10) || new Date().toISOString().slice(0, 10),
+      time: time || editData.time || '21:33',
+      topic: topic || editData.topic || '',
+      leader: leader || editData.leader || '',
+      meetingHref: meetingHref || editData.meetingHref || '',
+      description: description || editData.description || '',
+      tags: tags || editData.tags || '',
     };
   },
   validationSchema: Yup.object().shape({
@@ -66,15 +73,16 @@ const EditMeeting = withFormik({
     description: Yup.string().required('Opis jest wymagany'),
     tags: Yup.string().required('Podaj chociaż jeden tag'),
   }),
-  handleSubmit: values => {
+  handleSubmit: ({date, time, topic, leader, meetingHref, description, tags}, {props}) => {
+    const [editData] = props.selectedElement;
     // fetch idzie tu
-    let {date, time, topic, leader, meetingHref, description, tags} = values;
     let dateToConvert = `${date} ${time}`;
     date = new Date(dateToConvert);
     let timestamp = date.getTime();
     date = timestamp;
+
     axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/meetings`, {date, topic, leader, meetingHref, description, tags})
+      .put(`${process.env.REACT_APP_SERVER_URL}/meetings/${editData._id}`, {date, topic, leader, meetingHref, description, tags})
       .then(response => {
         console.log(response.data);
       })
