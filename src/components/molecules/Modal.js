@@ -3,6 +3,7 @@ import {PrimaryButton, EditButton, DeleteButton} from 'components/atoms/Button';
 import Icon from 'components/atoms/Icon';
 import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
+import Title from 'components/atoms/Title';
 
 export const DeleteModal = ({children, modalTitle, title, icon}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -45,15 +46,27 @@ export const EditModal = ({children, modalTitle, title, icon}) => {
   );
 };
 
-const Modal = ({children, title, isModalVisible}) => {
+const Modal = ({children, title, isModalVisible, setIsModalVisible}) => {
   useEffect(() => {
     document.body.style.overflowY = isModalVisible ? 'hidden' : 'auto';
   }, [isModalVisible]);
 
+  const closeModal = e => {
+    const current = e.currentTarget;
+    if (current === e.target) {
+      setIsModalVisible(false);
+    }
+  };
+
   return (
-    <StyledModalContainer isModalVisible={isModalVisible}>
+    <StyledModalContainer onClick={e => closeModal(e)} isModalVisible={isModalVisible}>
       <StyledBox isModalVisible={isModalVisible}>
-        <StyledHeader>{title}</StyledHeader>
+        <StyledHeader>
+          <Title white fontSize="2rem">
+            {title}
+          </Title>
+          <Icon onClick={() => setIsModalVisible(false)} fontSize="2rem" className="fas fa-times"></Icon>
+        </StyledHeader>
         {children}
       </StyledBox>
     </StyledModalContainer>
@@ -105,11 +118,9 @@ const StyledBox = styled.div`
 `;
 
 const StyledHeader = styled.div`
-  font-weight: 700;
-  font-size: 2rem;
   width: 100%;
-  display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 65px;
   background-color: ${variables.colorMain};
   color: ${variables.colorWhite};

@@ -1,10 +1,9 @@
 import React from 'react';
-import {CancelButton, PrimaryButton, DeleteButton} from 'components/atoms/Button';
+import {DeleteButton, CancelButton} from 'components/atoms/Button';
 import axios from 'axios';
 import styled from 'styled-components';
-import variables from 'settings/variables';
 
-export const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModalVisible}) => {
+const DeleteTopic = ({selectedElement, destination, isModalVisible, setIsModalVisible}) => {
   const listItems = selectedElement.map((el, index) => {
     return <StyledListItem key={index}>{el.topic}</StyledListItem>;
   });
@@ -26,16 +25,18 @@ export const DeleteMeeting = ({selectedElement, destination, isModalVisible, set
       <StyledTitle>Czy na pewno chcesz usunąć {listItems.length} następujące rekordy?</StyledTitle>
       <StyledList>{listItems}</StyledList>
       <StyledButtonsContainer>
-        <DeleteButton onClick={() => setIsModalVisible(!isModalVisible)} width="true">
+        <CancelButton large onClick={() => setIsModalVisible(!isModalVisible)}>
           Anuluj
-        </DeleteButton>
-        <PrimaryButton width="true" onClick={deleteItems}>
+        </CancelButton>
+        <DeleteButton large onClick={deleteItems}>
           Usuń
-        </PrimaryButton>
+        </DeleteButton>
       </StyledButtonsContainer>
     </StyledForm>
   );
 };
+
+export default DeleteTopic;
 
 const StyledTitle = styled.h3`
   font-family: inherit;
@@ -46,7 +47,6 @@ const StyledTitle = styled.h3`
 `;
 
 const StyledButtonsContainer = styled.div`
-  display: flex;
   justify-content: flex-end;
   margin-top: 3rem;
   button:last-child {
@@ -61,17 +61,10 @@ const StyledForm = styled.form`
 
 const StyledList = styled.ul`
   margin: 3rem 0;
+  list-style: disc inside;
 `;
 
 const StyledListItem = styled.li`
   font-size: 1.6rem;
-  margin-left: 3.5rem;
-`;
-
-const StyledTopic = styled.span`
-  display: inline-block;
-  width: 50%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  display: list-item;
 `;

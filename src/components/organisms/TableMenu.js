@@ -1,15 +1,17 @@
 import React, {useContext} from 'react';
+import styled from 'styled-components';
 import {withRouter} from 'react-router';
 import {routes} from 'routes';
 
-import Topic from 'components/organisms/TopicModal';
-import styled from 'styled-components';
 import {SelectedElementContext} from 'components/context/SelectedElementContext';
 import {AddModal, DeleteModal, EditModal} from 'components/molecules/Modal';
 import AddMeeting from 'components/organisms/AddMeeting';
 import EditMeeting from 'components/organisms/EditMeeting';
+import DeleteMeeting from 'components/organisms/DeleteMeeting';
 import variables from 'settings/variables';
-import {DeleteMeeting} from 'components/molecules/MeetingForms';
+import AddTopic from './AddTopic';
+import EditTopic from './EditTopic';
+import DeleteTopic from './DeleteTopic';
 
 const SchedulesTableMenu = () => {
   const [selectedElement] = useContext(SelectedElementContext);
@@ -34,11 +36,27 @@ const SchedulesTableMenu = () => {
   );
 };
 
-const TopicDataBaseTableMenu = () => (
-  <StyledTableActions>
-    <Topic />
-  </StyledTableActions>
-);
+const TopicDataBaseTableMenu = () => {
+  const [selectedElement] = useContext(SelectedElementContext);
+
+  return (
+    <StyledTableActions>
+      <AddModal title="Dodaj" icon="fas fa-plus" modalTitle="Dodaj nowy temat">
+        <AddTopic></AddTopic>
+      </AddModal>
+      {selectedElement.length === 1 && (
+        <EditModal title="Edytuj" icon="fas fa-pen" modalTitle="Edytuj temat">
+          <EditTopic selectedElement={selectedElement}></EditTopic>
+        </EditModal>
+      )}
+      {selectedElement.length > 0 && (
+        <DeleteModal title="Usuń" icon="fas fa-minus" modalTitle="Usuń temat">
+          <DeleteTopic selectedElement={selectedElement} destination="topics"></DeleteTopic>
+        </DeleteModal>
+      )}
+    </StyledTableActions>
+  );
+};
 
 const MeetingHistoryTableMenu = () => (
   <StyledTableActions>

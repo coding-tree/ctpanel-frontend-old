@@ -75,7 +75,7 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
       <StyledTableData>{meetingData.topic}</StyledTableData>
       <StyledTableData>Kategoria</StyledTableData>
       <StyledTableData>{meetingData.userAdded}</StyledTableData>
-      <StyledTableData>{meetingData.votes}</StyledTableData>
+      <StyledTableData right>{meetingData.votes}</StyledTableData>
       <StyledTableData buttonsTableData right>
         <PrimaryButton>
           <Icon className="fas fa-plus"></Icon>

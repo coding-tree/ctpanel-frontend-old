@@ -46,7 +46,7 @@ const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisib
 const EditMeeting = withFormik({
   mapPropsToValues: ({date, time, topic, leader, meetingHref, description, tags, selectedElement}) => {
     const [editData] = selectedElement;
-    console.log(editData);
+
     return {
       // todo - convert date & time to timestamp
       date: new Date(editData.date).toISOString().slice(0, 10) || date || new Date().toISOString().slice(0, 10),
