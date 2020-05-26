@@ -1,23 +1,37 @@
 import React, {lazy} from 'react';
 import styled from 'styled-components';
 import variables from 'settings/variables';
+import LastMeetHeader from 'components/molecules/LastMeetHeader';
 
 const Text = lazy(() => import('components/atoms/Text'));
 const DownloadButton = lazy(() => import('components/molecules/DownloadButton'));
-const LastMeetHeader = lazy(() => import('components/molecules/LastMeetHeader'));
 const LastMeetLinks = lazy(() => import('components/molecules/LastMeetLinks'));
 
 const LastMeetWrapper = styled.div`
-  position: relative;
-  width: 80%;
+  display: grid;
+  grid-row-gap: 7rem;
+  grid-template-columns: repeat(3, 1fr);
+  width: 90%;
   max-width: 1400px;
   padding: 7rem 5rem;
   background-color: ${variables.colorWhite};
-  flex-direction: column;
   border-radius: 1rem;
   box-shadow: 0 0 10px ${variables.boxShadowColor};
   a {
-    margin-left: auto;
+    grid-column: 3/4;
+    justify-self: end;
+    align-self: end;
+  }
+
+  > div:first-of-type {
+    grid-column: 1/-1;
+  }
+  > div:last-of-type {
+    grid-column: 1 / span 2;
+  }
+
+  .lastmeet__description {
+    grid-column: 1/-1;
   }
 `;
 
@@ -27,7 +41,7 @@ const LastMeet = ({lastMeet}) => {
   return (
     <LastMeetWrapper>
       <LastMeetHeader leader={leader} topic={topic} date={date}></LastMeetHeader>
-      <Text columnView margin="0 0 5rem 0">
+      <Text className="lastmeet__description" columnView>
         {description}
       </Text>
       <LastMeetLinks usefulLinks={usefulLinks}></LastMeetLinks>

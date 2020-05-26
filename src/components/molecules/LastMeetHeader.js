@@ -5,23 +5,29 @@ import StyledDate from 'components/atoms/StyledDate';
 import Title from 'components/atoms/Title';
 
 const HeaderWrapper = styled.div`
+  display: grid;
   position: relative;
-  width: 100%;
-  justify-content: center;
+  grid-template-columns: 1fr 3fr 1fr;
+  justify-content: space-between;
+  justify-items: center;
+  grid-column-gap: 3rem;
   align-items: center;
-  padding-bottom: 7rem;
+  > div:last-child {
+    justify-self: end;
+  }
+  ${Title}:nth-child(2) {
+    text-align: center;
+  }
 `;
 
 const LastMeetHeader = ({leader, topic, date}) => {
   return (
     <HeaderWrapper>
-      <Title left uppercase>
-        {leader}
-      </Title>
+      <Title uppercase>{leader}</Title>
       <Title uppercase important fontSize="3.2rem">
         {topic}
       </Title>
-      <StyledDate right fontSize="2rem" format="MM.DoYYYY" date={date}></StyledDate>
+      <StyledDate fontSize="2rem" format="MM.DoYYYY" date={date}></StyledDate>
     </HeaderWrapper>
   );
 };

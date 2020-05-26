@@ -46,15 +46,16 @@ const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisib
 const EditMeeting = withFormik({
   mapPropsToValues: ({date, time, topic, leader, meetingHref, description, tags, selectedElement}) => {
     const [editData] = selectedElement;
+    console.log(editData);
     return {
       // todo - convert date & time to timestamp
-      date: date || new Date(editData.date).toISOString().slice(0, 10) || new Date().toISOString().slice(0, 10),
-      time: time || editData.time || '21:33',
-      topic: topic || editData.topic || '',
-      leader: leader || editData.leader || '',
-      meetingHref: meetingHref || editData.meetingHref || '',
-      description: description || editData.description || '',
-      tags: tags || editData.tags || '',
+      date: new Date(editData.date).toISOString().slice(0, 10) || date || new Date().toISOString().slice(0, 10),
+      time: editData.time || time || '21:33',
+      topic: editData.topic || topic || '',
+      leader: editData.leader || leader || '',
+      meetingHref: editData.meetingHref || meetingHref || '',
+      description: editData.description || description || '',
+      tags: editData.tags || tags || '',
     };
   },
   validationSchema: Yup.object().shape({
