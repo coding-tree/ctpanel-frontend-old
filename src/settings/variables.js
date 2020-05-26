@@ -2,6 +2,8 @@ export default {
   logoFont: "'Josefin Sans', sans-serif;",
   mainFont: "'Muli', sans-serif;",
   colorError: '#ff2c2c',
+  colorEdit: '#4F86C6',
+  colorCancel: '#888888',
   colorWhite: '#fff',
   colorMain: '#009640',
   colorFont: 'rgba(0,0,0,.8)',

@@ -24,6 +24,13 @@ const Button = styled.button`
       min-width: 144px;
       padding: 0 3rem;
     `}
+  ${({small}) =>
+    small &&
+    css`
+      min-width: auto;
+      height: auto;
+      padding: 0.5rem 1.5rem;
+    `}
 `;
 
 export const PrimaryButton = styled(Button)`
@@ -37,11 +44,29 @@ export const PrimaryButton = styled(Button)`
 `;
 
 export const CancelButton = styled(Button)`
+  color: ${variables.colorCancel};
+  background-color: ${variables.colorWhite};
+  border-color: ${variables.colorCancel};
+  &:hover {
+    color: ${variables.colorWhite};
+    background-color: ${variables.colorCancel};
+  }
+`;
+export const DeleteButton = styled(Button)`
   color: ${variables.colorWhite};
   background-color: ${variables.colorError};
   border-color: ${variables.colorError};
   &:hover {
     color: ${variables.colorError};
+    background-color: ${variables.colorWhite};
+  }
+`;
+export const EditButton = styled(Button)`
+  color: ${variables.colorWhite};
+  background-color: ${variables.colorEdit};
+  border-color: ${variables.colorEdit};
+  &:hover {
+    color: ${variables.colorEdit};
     background-color: ${variables.colorWhite};
   }
 `;

@@ -2,7 +2,7 @@ import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
 
 const Icon = styled.i`
-  font-size: ${({fontSize}) => fontSize};
+  font-size: ${({fontSize}) => (fontSize ? fontSize : '1.6rem')};
   padding: ${({padding}) => padding};
   color: ${({checkbox}) => checkbox && variables.colorMain};
 
