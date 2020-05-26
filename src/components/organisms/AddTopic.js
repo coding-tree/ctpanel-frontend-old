@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import {CancelButton, PrimaryButton} from 'components/atoms/Button';
 
 const Formik = ({setFieldValue, column, isModalVisible, setIsModalVisible}) => {
-  const setTags = name => tags => {
+  const setTags = (name) => (tags) => {
     setFieldValue(name, tags);
   };
   return (
@@ -38,22 +38,18 @@ const AddTopic = withFormik({
     };
   },
   validationSchema: Yup.object().shape({
-    topic: Yup.string()
-      .min(3, 'Temat musi mieć minimum 3 znaki')
-      .required('Wprowadź temat'),
-    userAdded: Yup.string()
-      .min(3, 'To pole musi mieć minimum 3 znaki')
-      .required('Wprowadź informacje o użytkowniku'),
+    topic: Yup.string().min(3, 'Temat musi mieć minimum 3 znaki').required('Wprowadź temat'),
+    userAdded: Yup.string().min(3, 'To pole musi mieć minimum 3 znaki').required('Wprowadź informacje o użytkowniku'),
     votes: Yup.number('głosy muszą być liczbą'),
   }),
-  handleSubmit: values => {
+  handleSubmit: (values) => {
     // fetch idzie tu
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/topics`, values)
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   },

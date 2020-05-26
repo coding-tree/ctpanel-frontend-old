@@ -8,7 +8,7 @@ import {SelectedElementContext} from 'components/context/SelectedElementContext'
 import {AddModal, DeleteModal} from 'components/molecules/Modal';
 import AddMeeting from 'components/organisms/AddMeeting';
 import variables from 'settings/variables';
-import {DeleteForm} from 'components/molecules/Forms';
+import {DeleteForm, EditForm} from 'components/molecules/Forms';
 
 const SchedulesTableMenu = () => {
   const [selectedElement] = useContext(SelectedElementContext);
@@ -32,13 +32,6 @@ const SchedulesTableMenu = () => {
     </StyledTableActions>
   );
 };
-
-const EditForm = () => (
-  <form>
-    <input type="text" />
-    <button>Siema</button>
-  </form>
-);
 
 const TopicDataBaseTableMenu = () => (
   <StyledTableActions>

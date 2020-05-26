@@ -24,6 +24,13 @@ const Button = styled.button`
       min-width: 144px;
       padding: 0 3rem;
     `}
+  ${({width}) =>
+    width &&
+    css`
+      min-width: 130px;
+      min-height: 36px;
+      padding: 0 3rem;
+    `}
 `;
 
 export const PrimaryButton = styled(Button)`
@@ -43,6 +50,17 @@ export const CancelButton = styled(Button)`
   &:hover {
     color: ${variables.colorError};
     background-color: ${variables.colorWhite};
+  }
+`;
+
+export const DeleteButton = styled(Button)`
+  border: 2px solid ${variables.borderColor};
+  color: ${variables.colorBlack};
+  background-color: ${variables.colorWhite};
+
+  &:hover {
+    color: ${variables.colorWhite};
+    background-color: ${variables.colorMain};
   }
 `;
 
