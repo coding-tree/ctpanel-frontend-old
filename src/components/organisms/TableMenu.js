@@ -8,6 +8,7 @@ import {SelectedElementContext} from 'components/context/SelectedElementContext'
 import {AddModal, DeleteModal} from 'components/molecules/Modal';
 import AddMeeting from 'components/organisms/AddMeeting';
 import variables from 'settings/variables';
+import {DeleteForm} from 'components/molecules/Forms';
 
 const SchedulesTableMenu = () => {
   const [selectedElement] = useContext(SelectedElementContext);
@@ -25,7 +26,7 @@ const SchedulesTableMenu = () => {
       )}
       {selectedElement.length > 0 && (
         <DeleteModal title="Usuń" icon="fas fa-minus" modalTitle="Edytuj spotkanie">
-          <EditForm></EditForm>
+          <DeleteForm selectedElement={selectedElement} destination="meetings"></DeleteForm>
         </DeleteModal>
       )}
     </StyledTableActions>

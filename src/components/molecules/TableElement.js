@@ -8,7 +8,6 @@ import StyledDate from 'components/atoms/StyledDate';
 import {PrimaryButton, CancelButton} from 'components/atoms/Button';
 import {SelectedElementContext} from 'components/context/SelectedElementContext';
 
-
 const StyledRow = styled.tr`
   align-items: center;
   height: 50px;
@@ -84,7 +83,6 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
   );
 };
 
-
 const MeetingHistoryTableElement = ({meetingData, isSelected, setSelection, index}) => (
   <StyledRow isSelected={isSelected}>
     <StyledTableData>
@@ -108,9 +106,9 @@ const TableElement = ({location, meetingData, index}) => {
   const isSelected = selectedElement && selectedElement.includes(meetingData);
 
   const handleSelection = (singleElem, selectedElem) => {
-    return toggleSelection(prev => {
+    return toggleSelection((prev) => {
       if (selectedElem) {
-        return prev.filter(elem => elem._id !== singleElem._id);
+        return prev.filter((elem) => elem._id !== singleElem._id);
       }
       return [...prev, singleElem];
     });
