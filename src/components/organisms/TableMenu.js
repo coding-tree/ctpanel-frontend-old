@@ -17,15 +17,15 @@ const SchedulesTableMenu = () => {
   return (
     <StyledTableActions>
       <AddModal title="Dodaj" icon="fas fa-plus" modalTitle="Zaplanuj nowe spotkanie">
-        <AddMeeting column={2} leaders={leaders}></AddMeeting>
+        <AddMeeting column={2} leaders={leaders} destination="meetings"></AddMeeting>
       </AddModal>
       {selectedElement.length === 1 && (
         <AddModal title="Edytuj" icon="fas fa-pen" modalTitle="Edytuj spotkanie">
-          <EditForm></EditForm>
+          <EditForm selectedElement={selectedElement} destination="meetings"></EditForm>
         </AddModal>
       )}
       {selectedElement.length > 0 && (
-        <DeleteModal title="Usuń" icon="fas fa-minus" modalTitle="Edytuj spotkanie">
+        <DeleteModal title="Usuń" icon="fas fa-minus" modalTitle="Usuń spotkanie">
           <DeleteForm selectedElement={selectedElement} destination="meetings"></DeleteForm>
         </DeleteModal>
       )}

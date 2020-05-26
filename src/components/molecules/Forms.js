@@ -10,58 +10,55 @@ export const DeleteForm = ({selectedElement, destination, isModalVisible, setIsM
   });
 
   const deleteItems = () => {
-    // axios.all(
-    //   selectedElement.map((element) => {
-    //     return axios
-    //       .delete(`${process.env.REACT_APP_SERVER_URL}/${destination}/${element._id}`)
-    //       .then((response) => console.log(response))
-    //       .catch((err) => console.log(err));
-    //   })
-    // );
+    axios.all(
+      selectedElement.map((element) => {
+        return axios
+          .delete(`${process.env.REACT_APP_SERVER_URL}/${destination}/${element._id}`)
+          .then((response) => console.log(response))
+          .then(() => setIsModalVisible(!isModalVisible))
+          .catch((err) => console.log(err));
+      })
+    );
   };
 
   return (
     <StyledForm onSubmit={(e) => e.preventDefault()}>
-      <StyledTitle>Czy na pewno chcesz usunąć x następujące rekordy?</StyledTitle>
+      <StyledTitle>Czy na pewno chcesz usunąć {listItems.length} następujące rekordy?</StyledTitle>
       <StyledList>{listItems}</StyledList>
       <StyledButtonsContainer>
         <DeleteButton onClick={() => setIsModalVisible(!isModalVisible)} width="true">
           Anuluj
         </DeleteButton>
-        <PrimaryButton width="true">Usuń</PrimaryButton>
+        <PrimaryButton width="true" onClick={deleteItems}>
+          Usuń
+        </PrimaryButton>
       </StyledButtonsContainer>
     </StyledForm>
   );
 };
 
-export const EditForm = ({selectedElement, destination}) => (
-  <form onSubmit={(e) => e.preventDefault()}>
-    <h3>Czy na pewno chcesz usunąć x następujące rekordy?</h3>
-    <CancelButton>Anuluj</CancelButton>
-    <PrimaryButton>Usuń</PrimaryButton>
-  </form>
-);
-
-export const EditTopicForm = ({selectedElement, destination}) => (
-  <form onSubmit={(e) => e.preventDefault()}>
-    <h3>Czy na pewno chcesz usunąć ten element?</h3>
-    <PrimaryButton>Tak</PrimaryButton>
-    <CancelButton>Nie</CancelButton>
-  </form>
-);
-
-export const EditMeetingForm = ({selectedElement, destination}) => (
-  <form onSubmit={(e) => e.preventDefault()}>
-    <h3>Czy na pewno chcesz usunąć ten element?</h3>
-    <PrimaryButton>Tak</PrimaryButton>
-    <CancelButton>Nie</CancelButton>
-  </form>
-);
+export const EditForm = ({selectedElement, destination, isModalVisible, setIsModalVisible}) => {
+  return (
+    <StyledForm onSubmit={(e) => e.preventDefault()}>
+      <StyledTitle>
+        Edytuj temat &nbsp; "<StyledTopic>{selectedElement[0].topic}</StyledTopic>"
+      </StyledTitle>
+      <StyledButtonsContainer>
+        <DeleteButton onClick={() => setIsModalVisible(!isModalVisible)} width="true">
+          Anuluj
+        </DeleteButton>
+        <PrimaryButton width="true">Zapisz</PrimaryButton>
+      </StyledButtonsContainer>
+    </StyledForm>
+  );
+};
 
 const StyledTitle = styled.h3`
   font-family: inherit;
   font-size: 1.6rem;
   font-weight: 700;
+  display: flex;
+  align-items: center;
 `;
 
 const StyledButtonsContainer = styled.div`
@@ -79,11 +76,18 @@ const StyledForm = styled.form`
 `;
 
 const StyledList = styled.ul`
-  list-style: none;
-  margin-bottom: 3rem;
+  margin: 3rem 0;
 `;
 
 const StyledListItem = styled.li`
   font-size: 1.6rem;
-  text-indent: 3.5rem;
+  margin-left: 3.5rem;
+`;
+
+const StyledTopic = styled.span`
+  display: inline-block;
+  width: 50%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
