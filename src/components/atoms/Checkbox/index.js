@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
 import Icon from '../Icon';
+import {SelectedElementContext} from 'components/context/SelectedElementContext';
 
 const StyledWrapper = styled.div`
   height: 20px;
@@ -11,7 +12,8 @@ const StyledWrapper = styled.div`
   justify-content: center;
   align-items: center;
   transition: 0.2s background;
-  cursor: ${({disabled}) => (!disabled ? 'pointer' : 'not-allowed')};
+  cursor: pointer;
+
   ${({checked}) =>
     checked &&
     css`
@@ -22,9 +24,9 @@ const StyledWrapper = styled.div`
 `;
 const StyledCheckbox = styled.input``;
 
-const Checkbox = ({isSelected, disabled}) => {
+const Checkbox = ({isSelected, onClick}) => {
   return (
-    <StyledWrapper checked={isSelected} disabled={disabled}>
+    <StyledWrapper onClick={onClick} checked={isSelected}>
       <Icon fontSize="1rem" className={isSelected && 'fas fa-check'}></Icon>
       <StyledCheckbox value={isSelected} type="checkbox" hidden></StyledCheckbox>
     </StyledWrapper>

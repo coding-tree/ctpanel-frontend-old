@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {withRouter} from 'react-router';
 import styled from 'styled-components';
 import {routes} from 'routes';
 import Icon from 'components/atoms/Icon';
 import variables from 'settings/variables';
 import Checkbox from 'components/atoms/Checkbox';
+import {SelectedElementContext} from 'components/context/SelectedElementContext';
 
 const StyledWrapper = styled.thead`
   align-items: center;
@@ -31,36 +32,38 @@ const StyledTableHead = styled.th`
   text-align: ${({right}) => right && 'right'};
 `;
 
-const SchedulesTableListMenu = () => (
-  <StyledWrapper>
-    <StyledTableRow>
-      <StyledTableHead>
-        <Checkbox disabled type="checkbox"></Checkbox>
-      </StyledTableHead>
-      <StyledTableHead>
-        ID <Icon className="fas fa-sort"></Icon>
-      </StyledTableHead>
-      <StyledTableHead>
-        Data <Icon className="fas fa-sort"></Icon>
-      </StyledTableHead>
-      <StyledTableHead>
-        Temat spotkania <Icon className="fas fa-sort"></Icon>
-      </StyledTableHead>
-      <StyledTableHead right>
-        Planowany czas trwania <Icon className="fas fa-sort"></Icon>
-      </StyledTableHead>
-      <StyledTableHead right>
-        Prowadzący <Icon className="fas fa-sort"></Icon>
-      </StyledTableHead>
-    </StyledTableRow>
-  </StyledWrapper>
-);
+const SchedulesTableListMenu = ({handleSelection, isSelected}) => {
+  return (
+    <StyledWrapper>
+      <StyledTableRow>
+        <StyledTableHead>
+          <Checkbox onClick={handleSelection} isSelected={isSelected}></Checkbox>
+        </StyledTableHead>
+        <StyledTableHead>
+          ID <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+        <StyledTableHead>
+          Data <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+        <StyledTableHead>
+          Temat spotkania <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+        <StyledTableHead right>
+          Planowany czas trwania <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+        <StyledTableHead right>
+          Prowadzący <Icon className="fas fa-sort"></Icon>
+        </StyledTableHead>
+      </StyledTableRow>
+    </StyledWrapper>
+  );
+};
 
-const TopicDataBaseTableListMenu = () => (
+const TopicDataBaseTableListMenu = ({handleSelection, isSelected}) => (
   <StyledWrapper>
     <StyledTableRow>
       <StyledTableHead>
-        <Checkbox disabled type="checkbox"></Checkbox>
+        <Checkbox onClick={handleSelection} isSelected={isSelected}></Checkbox>
       </StyledTableHead>
       <StyledTableHead>
         ID <Icon className="fas fa-sort"></Icon>
@@ -82,11 +85,11 @@ const TopicDataBaseTableListMenu = () => (
   </StyledWrapper>
 );
 
-const MeetingHistoryTableListMenu = () => (
+const MeetingHistoryTableListMenu = ({handleSelection, isSelected}) => (
   <StyledWrapper>
     <StyledTableRow>
       <StyledTableHead>
-        <Checkbox disabled type="checkbox"></Checkbox>
+        <Checkbox onClick={handleSelection} isSelected={isSelected}></Checkbox>
       </StyledTableHead>
       <StyledTableHead>
         ID <Icon className="fas fa-sort"></Icon>
@@ -100,21 +103,33 @@ const MeetingHistoryTableListMenu = () => (
       <StyledTableHead>
         Prowadzący <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
-      <StyledTableHead>
+      <StyledTableHead right>
         Materiały <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
     </StyledTableRow>
   </StyledWrapper>
 );
 
-const TableListMenu = ({location}) => {
+const TableListMenu = ({location, meetingsList}) => {
+  const [selectedElement, setSelectedElement] = useContext(SelectedElementContext);
+
+  const isSelected = meetingsList && selectedElement && meetingsList.length === selectedElement.length;
+
+  const markAll = () => {
+    if (selectedElement.length === 0) {
+      setSelectedElement(meetingsList);
+    } else {
+      setSelectedElement([]);
+    }
+  };
+
   switch (location.pathname) {
     case routes.timetable:
-      return <SchedulesTableListMenu />;
+      return <SchedulesTableListMenu handleSelection={markAll} isSelected={isSelected} meetingsList={meetingsList} />;
     case routes.topicDatabase:
-      return <TopicDataBaseTableListMenu />;
+      return <TopicDataBaseTableListMenu handleSelection={markAll} isSelected={isSelected} meetingsList={meetingsList} />;
     case routes.history:
-      return <MeetingHistoryTableListMenu />;
+      return <MeetingHistoryTableListMenu handleSelection={markAll} isSelected={isSelected} meetingsList={meetingsList} />;
     default:
       return console.log('something went wrong');
   }

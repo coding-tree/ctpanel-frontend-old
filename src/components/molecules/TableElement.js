@@ -52,7 +52,7 @@ const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}
   return (
     <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
       <StyledTableData>
-        <Checkbox type="checkbox" isSelected={isSelected}></Checkbox>
+        <Checkbox isSelected={isSelected}></Checkbox>
       </StyledTableData>
       <StyledTableData mainColor>#{index}</StyledTableData>
       <StyledTableData>
@@ -69,7 +69,7 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
   return (
     <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
       <StyledTableData>
-        <Checkbox isSelected={isSelected} type="checkbox"></Checkbox>
+        <Checkbox isSelected={isSelected}></Checkbox>
       </StyledTableData>
       <StyledTableData mainColor>#{index}</StyledTableData>
       <StyledTableData>{meetingData.topic}</StyledTableData>
@@ -88,10 +88,10 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
   );
 };
 
-const MeetingHistoryTableElement = ({meetingData, isSelected, setSelection, index}) => (
-  <StyledRow isSelected={isSelected}>
+const MeetingHistoryTableElement = ({meetingData, isSelected, toggleSelection, index}) => (
+  <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
     <StyledTableData>
-      <Checkbox type="checkbox" isSelected={isSelected} setSelection={setSelection}></Checkbox>
+      <Checkbox isSelected={isSelected}></Checkbox>
     </StyledTableData>
     <StyledTableData mainColor>#{index}</StyledTableData>
     <StyledTableData>
@@ -100,7 +100,7 @@ const MeetingHistoryTableElement = ({meetingData, isSelected, setSelection, inde
     <StyledTableData>{meetingData.topic}</StyledTableData>
     <StyledTableData>{meetingData.leader}</StyledTableData>
     <StyledTableData right>
-      <PrimaryButton>Dodaj</PrimaryButton>
+      <PrimaryButton small>Dodaj</PrimaryButton>
     </StyledTableData>
   </StyledRow>
 );
@@ -117,7 +117,6 @@ const TableElement = ({location, meetingData, index}) => {
       }
       return [...prev, singleElem];
     });
-    return '';
   };
 
   switch (location.pathname) {
@@ -126,7 +125,7 @@ const TableElement = ({location, meetingData, index}) => {
     case routes.topicDatabase:
       return <TopicDataBaseTableElement isSelected={isSelected} toggleSelection={handleSelection} index={index} meetingData={meetingData} />;
     case routes.history:
-      return <MeetingHistoryTableElement index={index} meetingData={meetingData} />;
+      return <MeetingHistoryTableElement isSelected={isSelected} toggleSelection={handleSelection} index={index} meetingData={meetingData} />;
     default:
       return console.log('something went wrong');
   }

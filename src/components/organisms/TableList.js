@@ -16,7 +16,7 @@ const StyledTableBody = styled.tbody``;
 const TableList = ({meetingsList}) => {
   return (
     <StyledTableWrapper>
-      <TableListMenu />
+      <TableListMenu meetingsList={meetingsList} />
       <StyledTableBody>
         {meetingsList && meetingsList.map((meetingData, index) => <TableElement meetingData={meetingData} index={index + 1} key={index} />)}
       </StyledTableBody>

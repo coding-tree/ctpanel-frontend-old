@@ -32,6 +32,7 @@ const SchedulesTableMenu = () => {
           <DeleteMeeting selectedElement={selectedElement} destination="meetings"></DeleteMeeting>
         </DeleteModal>
       )}
+      <StyledInput placeholder="Wyszukaj" />
     </StyledTableActions>
   );
 };
@@ -60,31 +61,26 @@ const TopicDataBaseTableMenu = () => {
 
 const MeetingHistoryTableMenu = () => (
   <StyledTableActions>
-    <StyledHeader>
-      <StyledContainer>
-        <StyledBox>
-          <StyledIcon className="far fa-calendar"></StyledIcon>
-          <StyledLabel uppercase>data</StyledLabel>
-          <StyledSelect uppercase>
-            <StyledOption>OSTATNI TYDZIEŃ</StyledOption>
-            <StyledOption>2</StyledOption>
-            <StyledOption>3</StyledOption>
-          </StyledSelect>
-        </StyledBox>
-        <StyledBox>
-          <StyledIcon className="fas fa-list-alt"></StyledIcon>
-          <StyledLabel uppercase>kategoria</StyledLabel>
-          <StyledSelect uppercase>
-            <StyledOption>kategoria</StyledOption>
-            <StyledOption>2</StyledOption>
-            <StyledOption>3</StyledOption>
-          </StyledSelect>
-        </StyledBox>
-      </StyledContainer>
-      <StyledBox>
-        <StyledInput placeholder="Wyszukaj" />
-      </StyledBox>
-    </StyledHeader>
+    <StyledBox>
+      <StyledIcon className="far fa-calendar"></StyledIcon>
+      <StyledLabel uppercase>data</StyledLabel>
+      <StyledSelect uppercase>
+        <StyledOption>OSTATNI TYDZIEŃ</StyledOption>
+        <StyledOption>2</StyledOption>
+        <StyledOption>3</StyledOption>
+      </StyledSelect>
+    </StyledBox>
+    <StyledBox>
+      <StyledIcon className="fas fa-list-alt"></StyledIcon>
+      <StyledLabel uppercase>kategoria</StyledLabel>
+      <StyledSelect uppercase>
+        <StyledOption>kategoria</StyledOption>
+        <StyledOption>2</StyledOption>
+        <StyledOption>3</StyledOption>
+      </StyledSelect>
+    </StyledBox>
+
+    <StyledInput placeholder="Wyszukaj" />
   </StyledTableActions>
 );
 
@@ -107,24 +103,12 @@ export default withRouter(TableMenu);
 
 const StyledTableActions = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, max-content);
+  grid-template-columns: repeat(3, max-content) 1fr max-content;
   grid-column-gap: 2rem;
   align-items: center;
   padding: 0 30px 27px 13px;
 `;
 
-const StyledHeader = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  > div:last-child {
-    flex: 0 0 36rem;
-  }
-`;
-const StyledContainer = styled.div`
-  flex: 0 0 45%;
-  justify-content: space-between;
-`;
 const StyledBox = styled.div`
   display: flex;
   align-items: center;
@@ -147,6 +131,7 @@ const StyledSelect = styled.select`
   font-family: inherit;
 `;
 const StyledOption = styled.option``;
+
 const StyledInput = styled.input`
   font-family: inherit;
   font-size: 1.4rem;
@@ -154,7 +139,11 @@ const StyledInput = styled.input`
   width: 100%;
   border: 1px solid ${variables.colorLink};
   padding: 15px 30px;
+  width: 36rem;
   border-radius: 4px;
+  justify-self: end;
+  grid-column: 5/-1;
+
   &::placeholder {
     color: ${variables.colorLink};
   }
