@@ -52,6 +52,7 @@ export const CancelButton = styled(Button)`
     background-color: ${variables.colorCancel};
   }
 `;
+
 export const DeleteButton = styled(Button)`
   color: ${variables.colorWhite};
   background-color: ${variables.colorError};
@@ -61,6 +62,7 @@ export const DeleteButton = styled(Button)`
     background-color: ${variables.colorWhite};
   }
 `;
+
 export const EditButton = styled(Button)`
   color: ${variables.colorWhite};
   background-color: ${variables.colorEdit};
@@ -68,17 +70,6 @@ export const EditButton = styled(Button)`
   &:hover {
     color: ${variables.colorEdit};
     background-color: ${variables.colorWhite};
-  }
-`;
-
-export const DeleteButton = styled(Button)`
-  border: 2px solid ${variables.borderColor};
-  color: ${variables.colorBlack};
-  background-color: ${variables.colorWhite};
-
-  &:hover {
-    color: ${variables.colorWhite};
-    background-color: ${variables.colorMain};
   }
 `;
 
