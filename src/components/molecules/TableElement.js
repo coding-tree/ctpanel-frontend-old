@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {withRouter} from 'react-router';
 import styled, {css} from 'styled-components';
 import {routes} from 'routes';
@@ -8,6 +8,7 @@ import StyledDate from 'components/atoms/StyledDate';
 import {PrimaryButton, DeleteButton} from 'components/atoms/Button';
 import {SelectedElementContext} from 'components/context/SelectedElementContext';
 import Icon from 'components/atoms/Icon';
+import axios from 'axios';
 
 const StyledRow = styled.tr`
   align-items: center;
@@ -66,6 +67,31 @@ const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}
 };
 
 const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, index}) => {
+  const [userId, setUserId] = useState(null);
+  const [myVotes, setMyVotes] = useState([]);
+
+  useEffect(() => {
+    const url = `${process.env.REACT_APP_SERVER_URL}/user`;
+    axios
+      .get(url, {withCredentials: true})
+      .then(res => setUserId(res.data.id))
+      .catch(err => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    setMyVotes(meetingData.usersVote);
+  }, [meetingData]);
+
+  const votedClass = voteType => {
+    const currentVote = myVotes.find(el => el.id === userId);
+    return currentVote && voteType === currentVote.vote;
+  };
+
+  const handleVoting = (e, id, voteType) => {
+    e.stopPropagation();
+    axios.put(`http://localhost:3001/topics/vote/${id}?vote=${voteType}`).catch(err => console.log(err));
+  };
+
   return (
     <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
       <StyledTableData>
@@ -77,10 +103,10 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
       <StyledTableData>{meetingData.userAdded}</StyledTableData>
       <StyledTableData right>{meetingData.votes}</StyledTableData>
       <StyledTableData buttonsTableData right>
-        <PrimaryButton>
+        <PrimaryButton inactive voted={votedClass('up')} onClick={e => handleVoting(e, meetingData._id, 'up')}>
           <Icon className="fas fa-plus"></Icon>
         </PrimaryButton>
-        <DeleteButton>
+        <DeleteButton inactive voted={votedClass('down')} onClick={e => handleVoting(e, meetingData._id, 'down')}>
           <Icon className="fas fa-minus"></Icon>
         </DeleteButton>
       </StyledTableData>

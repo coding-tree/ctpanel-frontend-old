@@ -13,6 +13,7 @@ import AddTopic from './AddTopic';
 import EditTopic from './EditTopic';
 import DeleteTopic from './DeleteTopic';
 import axios from 'axios';
+
 const SchedulesTableMenu = () => {
   const [selectedElement] = useContext(SelectedElementContext);
   const leaders = ['Damian Ospara', 'Józef Rzadkosz', 'Jakub Wojtoń', 'Kazimierz Bagrowski'];
@@ -21,14 +22,13 @@ const SchedulesTableMenu = () => {
   useEffect(() => {
     axios
       .get('http://localhost:3001/topics')
-      .then((response) => {
-        console.log(response.data.results);
+      .then(response => {
         setTopics(response.data.results);
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   }, []);
 
-  const topicNames = topics.map((topic) => topic.topic);
+  const topicNames = topics.map(topic => topic.topic);
   return (
     <StyledTableActions>
       <AddModal title="Dodaj" icon="fas fa-plus" modalTitle="Zaplanuj nowe spotkanie">

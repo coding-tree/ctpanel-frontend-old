@@ -18,6 +18,7 @@ const Button = styled.button`
   height: 42px;
   font-size: 1.6rem;
   padding: 0 1.2rem;
+
   ${({large}) =>
     large &&
     css`
@@ -37,9 +38,27 @@ export const PrimaryButton = styled(Button)`
   border: 2px solid ${variables.colorMain};
   color: ${variables.colorWhite};
   background-color: ${variables.colorMain};
+  ${({inactive}) =>
+    inactive &&
+    css`
+      border-color: ${variables.colorCancel};
+      color: ${variables.colorWhite};
+      background-color: ${variables.colorCancel};
+      opacity: 0.3;
+    `}
+  ${({voted}) =>
+    voted &&
+    css`
+      border-color: ${variables.colorMain};
+      color: ${variables.colorWhite};
+      background-color: ${variables.colorMain};
+      opacity: 1;
+    `}
   &:hover {
+    border-color: ${variables.colorMain};
     color: ${variables.colorMain};
     background-color: ${variables.colorWhite};
+    opacity: 1;
   }
 `;
 
@@ -47,6 +66,7 @@ export const CancelButton = styled(Button)`
   color: ${variables.colorCancel};
   background-color: ${variables.colorWhite};
   border-color: ${variables.colorCancel};
+
   &:hover {
     color: ${variables.colorWhite};
     background-color: ${variables.colorCancel};
@@ -57,9 +77,27 @@ export const DeleteButton = styled(Button)`
   color: ${variables.colorWhite};
   background-color: ${variables.colorError};
   border-color: ${variables.colorError};
+  ${({inactive}) =>
+    inactive &&
+    css`
+      border-color: ${variables.colorCancel};
+      color: ${variables.colorWhite};
+      background-color: ${variables.colorCancel};
+      opacity: 0.3;
+    `}
+  ${({voted}) =>
+    voted &&
+    css`
+      color: ${variables.colorWhite};
+      background-color: ${variables.colorError};
+      border-color: ${variables.colorError};
+      opacity: 1;
+    `}
   &:hover {
+    border-color: ${variables.colorError};
     color: ${variables.colorError};
     background-color: ${variables.colorWhite};
+    opacity: 1;
   }
 `;
 
