@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {withRouter} from 'react-router';
 import {routes} from 'routes';
@@ -12,19 +12,31 @@ import variables from 'settings/variables';
 import AddTopic from './AddTopic';
 import EditTopic from './EditTopic';
 import DeleteTopic from './DeleteTopic';
-
+import axios from 'axios';
 const SchedulesTableMenu = () => {
   const [selectedElement] = useContext(SelectedElementContext);
   const leaders = ['Damian Ospara', 'Józef Rzadkosz', 'Jakub Wojtoń', 'Kazimierz Bagrowski'];
+  const [topics, setTopics] = useState([]);
 
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/topics')
+      .then((response) => {
+        console.log(response.data.results);
+        setTopics(response.data.results);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const topicNames = topics.map((topic) => topic.topic);
   return (
     <StyledTableActions>
       <AddModal title="Dodaj" icon="fas fa-plus" modalTitle="Zaplanuj nowe spotkanie">
-        <AddMeeting column={2} leaders={leaders} destination="meetings"></AddMeeting>
+        <AddMeeting column={2} leaders={leaders} topicNames={topicNames} destination="meetings"></AddMeeting>
       </AddModal>
       {selectedElement.length === 1 && (
         <EditModal title="Edytuj" icon="fas fa-pen" modalTitle="Edytuj spotkanie">
-          <EditMeeting column={2} leaders={leaders} selectedElement={selectedElement} destination="meetings"></EditMeeting>
+          <EditMeeting column={2} leaders={leaders} topicNames={topicNames} selectedElement={selectedElement} destination="meetings"></EditMeeting>
         </EditModal>
       )}
       {selectedElement.length > 0 && (

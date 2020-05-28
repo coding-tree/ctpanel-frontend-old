@@ -7,15 +7,24 @@ import {withFormik, Form} from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 
-const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible}) => {
-  const setValue = name => tags => {
+const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible, topicNames}) => {
+  const setValue = (name) => (tags) => {
     setFieldValue(name, tags);
   };
+
   return (
     <StyledForm column={column} as={Form}>
       <Input name="date" type="date" label="Data"></Input>
       <Input name="time" type="time" label="Czas"></Input>
-      <Textarea columns={2} name="topic" label="Temat spotkania" placeholder="Wprowadź temat spotkania"></Textarea>
+      <Select
+        columns={2}
+        name="topics"
+        label="Wybierz temat"
+        placeholder="Wybierz temat z istniejących"
+        options={topicNames}
+        handleSelectChange={setValue('topic')}
+      ></Select>
+      <Textarea columns={2} name="topic" label="Lub wpisz swój" placeholder="Wprowadź temat spotkania"></Textarea>
       <Select
         columns={2}
         name="leader"
@@ -52,21 +61,14 @@ const EditMeeting = withFormik({
   },
   validationSchema: Yup.object().shape({
     date: Yup.date('Musisz podać datę').required('Data jest wymagana'),
-    time: Yup.string()
-      .min(5)
-      .max(5)
-      .min(0, 'Aż tak dawno temu nie było spotkania')
-      .required('Czas jest wymagany'),
-    topic: Yup.string()
-      .min(5, 'Wpisz chociaż te 5 znaków')
-      .max(256, 'Zbyt długi temat, rozbij go na kilka spotkań')
-      .required('Temat jest wymagany'),
+    time: Yup.string().min(5).max(5).min(0, 'Aż tak dawno temu nie było spotkania').required('Czas jest wymagany'),
+    topic: Yup.string().min(5, 'Wpisz chociaż te 5 znaków').max(256, 'Zbyt długi temat, rozbij go na kilka spotkań').required('Temat jest wymagany'),
     leader: Yup.string().required('Wprowadź prowadzącego'),
     meetingHref: Yup.string().required('Musisz podać link'),
     description: Yup.string().required('Opis jest wymagany'),
     tags: Yup.string().required('Podaj chociaż jeden tag'),
   }),
-  handleSubmit: values => {
+  handleSubmit: (values) => {
     // fetch idzie tu
     let {date, time, topic, leader, meetingHref, description, tags} = values;
     let dateToConvert = `${date} ${time}`;
@@ -75,10 +77,10 @@ const EditMeeting = withFormik({
     date = timestamp;
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/meetings`, {date, topic, leader, meetingHref, description, tags})
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   },
