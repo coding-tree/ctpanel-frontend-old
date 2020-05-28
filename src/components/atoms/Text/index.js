@@ -5,6 +5,7 @@ const Text = styled.div`
   font-size: 1.6rem;
   margin: ${props => (props.margin ? props.margin : 'initial')};
   text-align: justify;
+
   ${props =>
     props.columnView &&
     css`

@@ -39,6 +39,13 @@ const StyledTableData = styled.td`
 
   text-align: ${({right}) => right && 'right'};
   color: ${({mainColor}) => mainColor && variables.colorLink};
+  ${({vote}) =>
+    vote &&
+    css`
+      color: ${vote === 'positive' && variables.colorMain};
+      color: ${vote === 'negative' && variables.colorError};
+      color: ${vote === 'neutral' && variables.colorCancel};
+    `};
 
   ${({buttonsTableData}) =>
     buttonsTableData &&
@@ -92,6 +99,12 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
     axios.put(`http://localhost:3001/topics/vote/${id}?vote=${voteType}`).catch(err => console.log(err));
   };
 
+  const formatVote = vote => {
+    if (vote > 0) return 'positive';
+    if (vote < 0) return 'negative';
+    return 'neutral';
+  };
+
   return (
     <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
       <StyledTableData>
@@ -101,7 +114,9 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
       <StyledTableData>{meetingData.topic}</StyledTableData>
       <StyledTableData>Kategoria</StyledTableData>
       <StyledTableData>{meetingData.userAdded}</StyledTableData>
-      <StyledTableData right>{meetingData.votes}</StyledTableData>
+      <StyledTableData right vote={formatVote(meetingData.votes)}>
+        {meetingData.votes > 0 ? `+${meetingData.votes}` : meetingData.votes}
+      </StyledTableData>
       <StyledTableData buttonsTableData right>
         <PrimaryButton inactive voted={votedClass('up')} onClick={e => handleVoting(e, meetingData._id, 'up')}>
           <Icon className="fas fa-plus"></Icon>

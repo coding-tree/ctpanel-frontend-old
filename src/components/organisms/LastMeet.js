@@ -37,7 +37,7 @@ const LastMeetWrapper = styled.div`
 
 const LastMeet = ({lastMeet}) => {
   const {leader, topic, date, description, usefulLinks, resourcesURL} = lastMeet;
-
+  console.log(lastMeet);
   return (
     <LastMeetWrapper>
       <LastMeetHeader leader={leader} topic={topic} date={date}></LastMeetHeader>
@@ -46,9 +46,11 @@ const LastMeet = ({lastMeet}) => {
       </Text>
       <LastMeetLinks usefulLinks={usefulLinks}></LastMeetLinks>
 
-      <DownloadButton resourcesURL={resourcesURL} iconClassName="fas fa-download">
-        Pobierz materiały
-      </DownloadButton>
+      {resourcesURL && (
+        <DownloadButton resourcesURL={resourcesURL} iconClassName="fas fa-download">
+          Pobierz materiały
+        </DownloadButton>
+      )}
     </LastMeetWrapper>
   );
 };

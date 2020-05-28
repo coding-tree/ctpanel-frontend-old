@@ -12,6 +12,9 @@ const HeaderWrapper = styled.div`
   justify-items: center;
   grid-column-gap: 3rem;
   align-items: center;
+  > div:first-child {
+    justify-self: start;
+  }
   > div:last-child {
     justify-self: end;
   }
