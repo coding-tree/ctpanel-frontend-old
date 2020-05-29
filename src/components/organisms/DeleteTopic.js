@@ -2,22 +2,30 @@ import React from 'react';
 import {DeleteButton, CancelButton} from 'components/atoms/Button';
 import axios from 'axios';
 import styled from 'styled-components';
+import {toast} from 'react-toastify';
 
-const DeleteTopic = ({selectedElement, destination, isModalVisible, setIsModalVisible}) => {
+const DeleteTopic = ({selectedElement, destination, isModalVisible, setIsModalVisible, setSubmitting}) => {
   const listItems = selectedElement.map((el, index) => {
     return <StyledListItem key={index}>{el.topic}</StyledListItem>;
   });
 
   const deleteItems = () => {
-    axios.all(
-      selectedElement.map(element => {
-        return axios
-          .delete(`${process.env.REACT_APP_SERVER_URL}/${destination}/${element._id}`)
-          .then(response => console.log(response))
-          .then(() => setIsModalVisible(!isModalVisible))
-          .catch(err => console.log(err));
+    setSubmitting(true);
+    axios
+      .all(
+        selectedElement.map(element => {
+          return axios.delete(`${process.env.REACT_APP_SERVER_URL}/${destination}/${element._id}`);
+        })
+      )
+      .then(() => {
+        setIsModalVisible(false);
+        setSubmitting(false);
+        toast.success('Pomyślnie usunięto tematy!');
       })
-    );
+      .catch(() => {
+        setSubmitting(false);
+        toast.error('Nie udało się usunąć tematów...');
+      });
   };
 
   return (

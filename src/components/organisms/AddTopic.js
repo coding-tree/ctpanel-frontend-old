@@ -6,22 +6,25 @@ import {Input, Tags} from 'components/molecules/CustomFormFields';
 import variables from 'settings/variables';
 import styled from 'styled-components';
 import {CancelButton, PrimaryButton} from 'components/atoms/Button';
+import {toast} from 'react-toastify';
 
-const Formik = ({setFieldValue, column, isModalVisible, setIsModalVisible}) => {
-  const setTags = (name) => (tags) => {
+const Formik = ({setFieldValue, column, status, isModalVisible, setIsModalVisible, isSubmitting}) => {
+  const setTags = name => tags => {
     setFieldValue(name, tags);
   };
   return (
     <StyledForm as={Form}>
       <Input name="topic" label="Temat" placeholder="Wprowadź temat"></Input>
       <Input name="userAdded" label="Inicjator" placeholder="Wpisz swoje dane"></Input>
-      <Tags placeholder="Wpisz kategorie tematu" onTagsChange={setTags('tags')} name="tags" label="Tagi"></Tags>
+      <Tags shouldReset={status} placeholder="Wpisz kategorie tematu" onTagsChange={setTags('tags')} name="tags" label="Tagi"></Tags>
 
       <StyledButtonsContainer column={column}>
         <CancelButton large onClick={() => setIsModalVisible(!isModalVisible)} type="button">
           Anuluj
         </CancelButton>
-        <PrimaryButton large>Dodaj</PrimaryButton>
+        <PrimaryButton disabled={isSubmitting} large>
+          Dodaj
+        </PrimaryButton>
       </StyledButtonsContainer>
     </StyledForm>
   );
@@ -38,19 +41,30 @@ const AddTopic = withFormik({
     };
   },
   validationSchema: Yup.object().shape({
-    topic: Yup.string().min(3, 'Temat musi mieć minimum 3 znaki').required('Wprowadź temat'),
-    userAdded: Yup.string().min(3, 'To pole musi mieć minimum 3 znaki').required('Wprowadź informacje o użytkowniku'),
+    topic: Yup.string()
+      .min(3, 'Temat musi mieć minimum 3 znaki')
+      .required('Wprowadź temat'),
+    userAdded: Yup.string()
+      .min(3, 'To pole musi mieć minimum 3 znaki')
+      .required('Wprowadź informacje o użytkowniku'),
     votes: Yup.number('głosy muszą być liczbą'),
   }),
-  handleSubmit: (values) => {
+  handleSubmit: (values, {resetForm, setStatus, props}) => {
+    props.setSubmitting(true);
     // fetch idzie tu
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/topics`, values)
-      .then((response) => {
-        console.log(response.data);
+      .then(() => {
+        setStatus(true);
+        resetForm();
+        props.setIsModalVisible(false);
+        props.setSubmitting(false);
+        toast.success('Dodano nowy temat!');
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        setStatus(false);
+        props.setSubmitting(false);
+        toast.error('Nie udało się dodać tematu...');
       });
   },
 })(Formik);

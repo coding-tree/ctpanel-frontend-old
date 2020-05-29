@@ -73,17 +73,8 @@ const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}
   );
 };
 
-const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, index}) => {
-  const [userId, setUserId] = useState(null);
+const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, index, userId}) => {
   const [myVotes, setMyVotes] = useState([]);
-
-  useEffect(() => {
-    const url = `${process.env.REACT_APP_SERVER_URL}/user`;
-    axios
-      .get(url, {withCredentials: true})
-      .then(res => setUserId(res.data.id))
-      .catch(err => console.log(err));
-  }, []);
 
   useEffect(() => {
     setMyVotes(meetingData.usersVote);
@@ -104,6 +95,8 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
     if (vote < 0) return 'negative';
     return 'neutral';
   };
+
+  console.log(userId);
 
   return (
     <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
@@ -146,7 +139,7 @@ const MeetingHistoryTableElement = ({meetingData, isSelected, toggleSelection, i
   </StyledRow>
 );
 
-const TableElement = ({location, meetingData, index}) => {
+const TableElement = ({location, meetingData, index, userId}) => {
   const [selectedElement, toggleSelection] = useContext(SelectedElementContext);
 
   const isSelected = selectedElement && selectedElement.includes(meetingData);
@@ -164,7 +157,7 @@ const TableElement = ({location, meetingData, index}) => {
     case routes.timetable:
       return <SchedulesTableElement isSelected={isSelected} toggleSelection={handleSelection} index={index} meetingData={meetingData} />;
     case routes.topicDatabase:
-      return <TopicDataBaseTableElement isSelected={isSelected} toggleSelection={handleSelection} index={index} meetingData={meetingData} />;
+      return <TopicDataBaseTableElement userId={userId} isSelected={isSelected} toggleSelection={handleSelection} index={index} meetingData={meetingData} />;
     case routes.history:
       return <MeetingHistoryTableElement isSelected={isSelected} toggleSelection={handleSelection} index={index} meetingData={meetingData} />;
     default:

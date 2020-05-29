@@ -36,7 +36,7 @@ const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModal
         <CancelButton large onClick={() => setIsModalVisible(!isModalVisible)}>
           Anuluj
         </CancelButton>
-        <DeleteButton large width="true" onClick={deleteItems}>
+        <DeleteButton large onClick={deleteItems}>
           Usuń
         </DeleteButton>
       </StyledButtonsContainer>

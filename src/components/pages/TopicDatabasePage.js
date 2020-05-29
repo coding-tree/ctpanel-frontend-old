@@ -4,6 +4,7 @@ import {fetchMeets as fetchMeetsAction} from 'selectors/FetchMeets';
 import {connect} from 'react-redux';
 import TableTemplate from 'components/templates/TableTemplate';
 import TableList from 'components/organisms/TableList';
+import {ToastContainer} from 'react-toastify';
 
 const TopicDatabasePage = ({topics, fetchMeets}) => {
   useEffect(() => {
@@ -13,6 +14,7 @@ const TopicDatabasePage = ({topics, fetchMeets}) => {
   return (
     <TableTemplate title="Baza Tematów">
       <TableList meetingsList={topics.meetings.results} />
+      <ToastContainer></ToastContainer>
     </TableTemplate>
   );
 };
@@ -28,7 +30,7 @@ const fetchParameters = {
   specyficAttribute: '',
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   fetchMeets: () => dispatch(fetchMeetsAction(fetchParameters)),
 });
 

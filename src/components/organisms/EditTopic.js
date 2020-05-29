@@ -6,8 +6,9 @@ import {Input, Tags} from 'components/molecules/CustomFormFields';
 import variables from 'settings/variables';
 import styled from 'styled-components';
 import {CancelButton, PrimaryButton} from 'components/atoms/Button';
+import {toast} from 'react-toastify';
 
-const Formik = ({setFieldValue, column, isModalVisible, setIsModalVisible, selectedElement}) => {
+const Formik = ({setFieldValue, column, setIsModalVisible, selectedElement}) => {
   const [editData] = selectedElement;
   const setTags = name => tags => {
     setFieldValue(name, tags);
@@ -49,15 +50,20 @@ const EditTopic = withFormik({
     votes: Yup.number('głosy muszą być liczbą'),
   }),
   handleSubmit: (values, {props}) => {
+    props.setSubmitting(true);
+
     const [editData] = props.selectedElement;
     // fetch idzie tu
     axios
       .put(`${process.env.REACT_APP_SERVER_URL}/topics/${editData._id}`, values)
-      .then(response => {
-        console.log(response.data);
+      .then(() => {
+        props.setIsModalVisible(false);
+        props.setSubmitting(false);
+        toast.success('Pomyślnie edytowano temat!');
       })
-      .catch(err => {
-        console.log(err);
+      .catch(() => {
+        props.setSubmitting(false);
+        toast.error('Nie udało się edytować tematu...');
       });
   },
 })(Formik);
