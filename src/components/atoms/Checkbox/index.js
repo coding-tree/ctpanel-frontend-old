@@ -1,8 +1,7 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
 import Icon from '../Icon';
-import {SelectedElementContext} from 'components/context/SelectedElementContext';
 
 const StyledWrapper = styled.div`
   height: 20px;

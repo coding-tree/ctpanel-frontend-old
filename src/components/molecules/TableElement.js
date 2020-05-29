@@ -96,8 +96,6 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
     return 'neutral';
   };
 
-  console.log(userId);
-
   return (
     <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
       <StyledTableData>

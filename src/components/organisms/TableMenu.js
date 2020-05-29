@@ -152,19 +152,20 @@ const StyledSelect = styled.select`
 `;
 const StyledOption = styled.option``;
 
-const StyledInput = styled.input`
-  font-family: inherit;
-  font-size: 1.4rem;
-  display: block;
-  width: 100%;
-  border: 1px solid ${variables.colorLink};
-  padding: 15px 30px;
-  width: 36rem;
-  border-radius: 4px;
-  justify-self: end;
-  grid-column: 5/-1;
+// TODO: Enable Input
+// const StyledInput = styled.input`
+//   font-family: inherit;
+//   font-size: 1.4rem;
+//   display: block;
+//   width: 100%;
+//   border: 1px solid ${variables.colorLink};
+//   padding: 15px 30px;
+//   width: 36rem;
+//   border-radius: 4px;
+//   justify-self: end;
+//   grid-column: 5/-1;
 
-  &::placeholder {
-    color: ${variables.colorLink};
-  }
-`;
+//   &::placeholder {
+//     color: ${variables.colorLink};
+//   }
+// `;
