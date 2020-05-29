@@ -7,7 +7,7 @@ import {withFormik, Form} from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 
-const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible, selectedElement}) => {
+const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible, selectedElement, topicNames}) => {
   const [editData] = selectedElement;
   const {tags, leader} = editData;
 
@@ -18,6 +18,14 @@ const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisib
     <StyledForm column={column} as={Form}>
       <Input name="date" type="date" label="Data"></Input>
       <Input name="time" type="time" label="Czas"></Input>
+      <Select
+        columns={2}
+        name="topics"
+        label="Wybierz temat"
+        placeholder="Wybierz temat z istniejących"
+        options={topicNames}
+        handleSelectChange={setValue('topic')}
+      ></Select>
       <Textarea columns={2} name="topic" label="Temat spotkania" placeholder="Wprowadź temat spotkania"></Textarea>
       <Select
         columns={2}
