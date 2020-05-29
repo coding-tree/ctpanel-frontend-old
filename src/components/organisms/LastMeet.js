@@ -38,21 +38,29 @@ const LastMeetWrapper = styled.div`
 const LastMeet = ({lastMeet}) => {
   const {leader, topic, date, description, usefulLinks, resourcesURL} = lastMeet;
   console.log(lastMeet);
-  return (
-    <LastMeetWrapper>
-      <LastMeetHeader leader={leader} topic={topic} date={date}></LastMeetHeader>
-      <Text className="lastmeet__description" columnView>
-        {description}
-      </Text>
-      <LastMeetLinks usefulLinks={usefulLinks}></LastMeetLinks>
+  if (lastMeet) {
+    return (
+      <LastMeetWrapper>
+        <LastMeetHeader leader={leader} topic={topic} date={date}></LastMeetHeader>
+        <Text className="lastmeet__description" columnView>
+          {description}
+        </Text>
+        <LastMeetLinks usefulLinks={usefulLinks}></LastMeetLinks>
 
-      {resourcesURL && (
-        <DownloadButton resourcesURL={resourcesURL} iconClassName="fas fa-download">
-          Pobierz materiały
-        </DownloadButton>
-      )}
-    </LastMeetWrapper>
-  );
+        {resourcesURL && (
+          <DownloadButton resourcesURL={resourcesURL} iconClassName="fas fa-download">
+            Pobierz materiały
+          </DownloadButton>
+        )}
+      </LastMeetWrapper>
+    );
+  } else {
+    return (
+      <LastMeetWrapper>
+        <LastMeetHeader>Brak nadchodzących spotkań</LastMeetHeader>
+      </LastMeetWrapper>
+    );
+  }
 };
 
 export default LastMeet;
