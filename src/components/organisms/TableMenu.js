@@ -29,9 +29,8 @@ const SchedulesTableMenu = () => {
       .catch(err => console.log(err));
   }, []);
 
-  console.log(selectedElement);
-
   const topicNames = topics.map(topic => topic.topic);
+
   return (
     <StyledTableActions>
       <AddModal title="Dodaj" icon="fas fa-plus" modalTitle="Zaplanuj nowe spotkanie">
@@ -124,7 +123,7 @@ export default withRouter(TableMenu);
 
 const StyledTableActions = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, max-content) 1fr max-content;
+  grid-template-columns: repeat(4, max-content) 1fr max-content;
   grid-column-gap: 2rem;
   align-items: center;
   padding: 0 30px 27px 13px;

@@ -6,8 +6,9 @@ import styled from 'styled-components';
 import {withFormik, Form} from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import {toast} from 'react-toastify';
 
-const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible, selectedElement}) => {
+const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible, selectedElement, isSubmitting}) => {
   const [editData] = selectedElement;
   const {tags, leader} = editData;
 
@@ -36,7 +37,7 @@ const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisib
           Anuluj
         </CancelButton>
         <PrimaryButton type="submit" large>
-          Dodaj
+          Edytuj
         </PrimaryButton>
       </StyledButtonsContainer>
     </StyledForm>
@@ -75,6 +76,8 @@ const EditMeeting = withFormik({
     tags: Yup.string().required('Podaj chociaż jeden tag'),
   }),
   handleSubmit: ({date, time, topic, leader, meetingHref, description, tags}, {props}) => {
+    props.setSubmitting(true);
+
     const [editData] = props.selectedElement;
     // fetch idzie tu
     let dateToConvert = `${date} ${time}`;
@@ -84,11 +87,14 @@ const EditMeeting = withFormik({
 
     axios
       .put(`${process.env.REACT_APP_SERVER_URL}/meetings/${editData._id}`, {date, topic, leader, meetingHref, description, tags})
-      .then(response => {
-        console.log(response.data);
+      .then(() => {
+        props.setIsModalVisible(false);
+        props.setSubmitting(false);
+        toast.success('Pomyślnie edytowano spotkanie!');
       })
       .catch(err => {
-        console.log(err);
+        props.setSubmitting(false);
+        toast.error('Coś poszło nie tak... Spróbuj jeszcze raz');
       });
   },
 })(Formik);

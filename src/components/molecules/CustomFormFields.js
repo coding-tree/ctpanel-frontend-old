@@ -31,21 +31,31 @@ export const Textarea = ({name, label, placeholder, columns, rows}) => {
   );
 };
 
-export const Select = ({name, label, options, placeholder, handleSelectChange, columns, rows, leader = ''}) => {
+export const Select = ({name, label, shouldReset, options, placeholder, handleSelectChange, columns, rows, leader = ''}) => {
   return (
     <CustomFormFieldWrapper columns={columns} rows={rows} name={name} label={label}>
-      <CustomSelect name={name} options={options} placeholder={placeholder} leader={leader} handleSelectChange={handleSelectChange}></CustomSelect>
+      <CustomSelect
+        shouldReset={shouldReset}
+        name={name}
+        options={options}
+        placeholder={placeholder}
+        leader={leader}
+        handleSelectChange={handleSelectChange}
+      ></CustomSelect>
     </CustomFormFieldWrapper>
   );
 };
 
-export const Tags = ({name, label, onTagsChange, columns, rows, placeholder, activeTags = []}) => {
+export const Tags = ({name, label, onTagsChange, columns, rows, placeholder, activeTags = [], shouldReset}) => {
   const [tags, setTags] = useState(activeTags || []);
   const onlyLetters = /\S+/g;
 
   useEffect(() => {
     onTagsChange(tags);
   }, [tags]);
+  useEffect(() => {
+    shouldReset && setTags([]);
+  }, [shouldReset]);
 
   const handleTags = e => {
     const result = e.target.value.match(onlyLetters);

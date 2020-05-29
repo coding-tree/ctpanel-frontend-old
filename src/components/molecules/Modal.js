@@ -4,31 +4,38 @@ import Icon from 'components/atoms/Icon';
 import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
 import Title from 'components/atoms/Title';
+import Loader from 'components/atoms/Loader';
 
 export const DeleteModal = ({children, modalTitle, title, icon}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isSubmitting, setSubmitting] = useState(false);
+
   return (
     <>
       <DeleteButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
         {title} <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className={icon}></Icon>
       </DeleteButton>
       <Modal title={modalTitle} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}>
-        {React.cloneElement(children, {isModalVisible, setIsModalVisible})}
+        {React.cloneElement(children, {isModalVisible, setIsModalVisible, isSubmitting, setSubmitting})}
       </Modal>
+      <Loader title="Trwa usuwanie tematów..." isLoading={isSubmitting}></Loader>
     </>
   );
 };
 
 export const AddModal = ({children, modalTitle, title, icon}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isSubmitting, setSubmitting] = useState(false);
+
   return (
     <>
       <PrimaryButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
         {title} <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className={icon}></Icon>
       </PrimaryButton>
       <Modal title={modalTitle} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}>
-        {React.cloneElement(children, {isModalVisible, setIsModalVisible})}
+        {React.cloneElement(children, {isModalVisible, setIsModalVisible, isSubmitting, setSubmitting})}
       </Modal>
+      <Loader title="Trwa dodawanie tematu..." isLoading={isSubmitting}></Loader>
     </>
   );
 };
@@ -49,14 +56,17 @@ export const JoinModal = ({children, modalTitle, title, icon}) => {
 
 export const EditModal = ({children, modalTitle, title, icon}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isSubmitting, setSubmitting] = useState(false);
+
   return (
     <>
       <EditButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
         {title} <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className={icon}></Icon>
       </EditButton>
       <Modal title={modalTitle} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}>
-        {React.cloneElement(children, {isModalVisible, setIsModalVisible})}
+        {React.cloneElement(children, {isModalVisible, setIsModalVisible, isSubmitting, setSubmitting})}
       </Modal>
+      <Loader title="Trwa edycja tematu..." isLoading={isSubmitting}></Loader>
     </>
   );
 };

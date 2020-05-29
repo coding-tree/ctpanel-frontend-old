@@ -49,6 +49,27 @@ const GlobalStyle = createGlobalStyle`
     color: ${variables.colorWhite};
     text-decoration: none;
   }
+  .Toastify__toast-container {
+    width:auto;
+  }
+  .Toastify__toast--success {
+    background: ${variables.colorMain} !important;
+  }
+  .Toastify__toast--error {
+    background: ${variables.colorError} !important;
+  }
+  .Toastify__close-button {
+    margin-left: 1rem !important;
+    & > svg {
+      height: 20px;
+      width: 18px;
+    }
+  }
+  .Toastify__toast {
+    font-weight: bold;
+    padding: 28px;
+    font-family: inherit;
+}
 `;
 
 export default GlobalStyle;

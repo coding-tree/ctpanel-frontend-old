@@ -1,23 +1,31 @@
 import React from 'react';
-import {PrimaryButton, DeleteButton, CancelButton} from 'components/atoms/Button';
+import {DeleteButton, CancelButton} from 'components/atoms/Button';
 import axios from 'axios';
 import styled from 'styled-components';
+import {toast} from 'react-toastify';
 
-const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModalVisible}) => {
+const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModalVisible, setSubmitting}) => {
   const listItems = selectedElement.map((el, index) => {
     return <StyledListItem key={index}>{el.topic}</StyledListItem>;
   });
 
   const deleteItems = () => {
-    axios.all(
-      selectedElement.map(element => {
-        return axios
-          .delete(`${process.env.REACT_APP_SERVER_URL}/${destination}/${element._id}`)
-          .then(response => console.log(response))
-          .then(() => setIsModalVisible(!isModalVisible))
-          .catch(err => console.log(err));
+    setSubmitting(true);
+    axios
+      .all(
+        selectedElement.map(element => {
+          return axios.delete(`${process.env.REACT_APP_SERVER_URL}/${destination}/${element._id}`);
+        })
+      )
+      .then(() => {
+        setSubmitting(false);
+        setIsModalVisible(false);
+        toast.success('Pomyślnie usunięto spotkania!');
       })
-    );
+      .catch(() => {
+        setSubmitting(false);
+        toast.error('Nie udało się usunąć spotkań!');
+      });
   };
 
   return (

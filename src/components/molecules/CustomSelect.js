@@ -1,20 +1,24 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import variables from 'settings/variables';
 import styled, {css} from 'styled-components';
 import Icon from 'components/atoms/Icon';
 import {Field} from 'formik';
 
-const CustomSelect = ({name, options, handleSelectChange, placeholder, leader}) => {
+const CustomSelect = ({name, options, handleSelectChange, placeholder, leader, shouldReset}) => {
   const [selectValue, setSelectValue] = useState(leader || '');
   const [isSelectVisible, toggleSelectVisibility] = useState(false);
 
-  const handleOptionClick = (value) => {
+  const handleOptionClick = value => {
     handleSelectChange(value);
     toggleSelectVisibility(false);
     return setSelectValue(value);
   };
 
-  const isSelected = (value) => selectValue === value;
+  useEffect(() => {
+    shouldReset && setSelectValue('');
+  }, [shouldReset]);
+
+  const isSelected = value => selectValue === value;
 
   return (
     <StyledSelectContainer>
@@ -25,7 +29,7 @@ const CustomSelect = ({name, options, handleSelectChange, placeholder, leader}) 
         ))}
       </Field>
 
-      <StyledSelect selected={selectValue !== ''} onClick={() => toggleSelectVisibility((prev) => !prev)}>
+      <StyledSelect selected={selectValue !== ''} onClick={() => toggleSelectVisibility(prev => !prev)}>
         {selectValue || <StyledPlaceholder>{placeholder}</StyledPlaceholder>}
         <Icon absolute right="1.2rem" className="fas fa-sort"></Icon>
       </StyledSelect>

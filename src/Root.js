@@ -1,6 +1,6 @@
 import React, {Suspense, lazy, useEffect} from 'react';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
-
+import 'react-toastify/dist/ReactToastify.css';
 import {routes} from 'routes';
 
 import {connect} from 'react-redux';
@@ -68,7 +68,7 @@ const fetchParameters = {
   specyficAttribute: '',
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   fetchMeets: () => dispatch(fetchMeetsAction(fetchParameters)),
 });
 

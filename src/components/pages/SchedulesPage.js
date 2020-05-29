@@ -4,6 +4,7 @@ import TableList from 'components/organisms/TableList';
 import {fetchMeets as fetchMeetsAction} from 'selectors/FetchMeets';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
+import {ToastContainer} from 'react-toastify';
 
 const TimetablePage = ({meetings, fetchMeets}) => {
   useEffect(() => {
@@ -13,6 +14,7 @@ const TimetablePage = ({meetings, fetchMeets}) => {
   return (
     <TableTemplate title="Harmonogram Spotkań">
       <TableList meetingsList={meetings.meetings.results} />
+      <ToastContainer></ToastContainer>
     </TableTemplate>
   );
 };
@@ -28,7 +30,7 @@ const fetchParameters = {
   specyficAttribute: '',
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   fetchMeets: () => dispatch(fetchMeetsAction(fetchParameters)),
 });
 

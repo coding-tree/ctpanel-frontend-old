@@ -6,47 +6,54 @@ import styled from 'styled-components';
 import {withFormik, Form} from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import {toast} from 'react-toastify';
 
-const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible, topicNames}) => {
-  const setValue = (name) => (tags) => {
+const Formik = ({column, status, leaders, setFieldValue, setIsModalVisible, isModalVisible, topicNames, isSubmitting}) => {
+  const setValue = name => tags => {
     setFieldValue(name, tags);
   };
 
   return (
-    <StyledForm column={column} as={Form}>
-      <Input name="date" type="date" label="Data"></Input>
-      <Input name="time" type="time" label="Czas"></Input>
-      <Select
-        columns={2}
-        name="topics"
-        label="Wybierz temat"
-        placeholder="Wybierz temat z istniejących"
-        options={topicNames}
-        handleSelectChange={setValue('topic')}
-      ></Select>
-      <Textarea columns={2} name="topic" label="Lub wpisz swój" placeholder="Wprowadź temat spotkania"></Textarea>
-      <Select
-        columns={2}
-        name="leader"
-        label="Prowadzący"
-        placeholder="Wybierz prowadzącego"
-        options={leaders}
-        handleSelectChange={setValue('leader')}
-      ></Select>
-      <Input columns={2} name="meetingHref" label="Odnośnik do spotkania" placeholder="Wprowadź adres do spotkania"></Input>
-      <Textarea columns={2} name="description" label="Opis spotkania" placeholder="Wpisz opis spotkania"></Textarea>
-      <Tags columns={2} name="tags" label="Kategorie" placeholder="Wpisz kategorie spotkania" onTagsChange={setValue('tags')}></Tags>
-      <StyledButtonsContainer column={column}>
-        <CancelButton large onClick={() => setIsModalVisible(!isModalVisible)} type="button">
-          Anuluj
-        </CancelButton>
-        <PrimaryButton large>Dodaj</PrimaryButton>
-      </StyledButtonsContainer>
-    </StyledForm>
+    <>
+      <StyledForm column={column} as={Form}>
+        <Input name="date" type="date" label="Data"></Input>
+        <Input name="time" type="time" label="Czas"></Input>
+        <Select
+          columns={2}
+          name="topics"
+          label="Wybierz temat"
+          placeholder="Wybierz temat z istniejących"
+          options={topicNames}
+          shouldReset={status}
+          handleSelectChange={setValue('topic')}
+        ></Select>
+        <Textarea columns={2} name="topic" label="Lub wpisz swój" placeholder="Wprowadź temat spotkania"></Textarea>
+        <Select
+          columns={2}
+          name="leader"
+          label="Prowadzący"
+          placeholder="Wybierz prowadzącego"
+          options={leaders}
+          shouldReset={status}
+          handleSelectChange={setValue('leader')}
+        ></Select>
+        <Input columns={2} name="meetingHref" label="Odnośnik do spotkania" placeholder="Wprowadź adres do spotkania"></Input>
+        <Textarea columns={2} name="description" label="Opis spotkania" placeholder="Wpisz opis spotkania"></Textarea>
+        <Tags shouldReset={status} columns={2} name="tags" label="Kategorie" placeholder="Wpisz kategorie spotkania" onTagsChange={setValue('tags')}></Tags>
+        <StyledButtonsContainer column={column}>
+          <CancelButton large onClick={() => setIsModalVisible(!isModalVisible)} type="button">
+            Anuluj
+          </CancelButton>
+          <PrimaryButton disabled={isSubmitting} large>
+            Dodaj
+          </PrimaryButton>
+        </StyledButtonsContainer>
+      </StyledForm>
+    </>
   );
 };
 
-const EditMeeting = withFormik({
+const AddMeeting = withFormik({
   mapPropsToValues: ({date, time, topic, leader, meetingHref, description, tags}) => {
     return {
       // todo - convert date & time to timestamp
@@ -56,37 +63,51 @@ const EditMeeting = withFormik({
       leader: leader || '',
       meetingHref: meetingHref || '',
       description: description || '',
-      tags: tags || '',
+      tags: tags || [],
     };
   },
   validationSchema: Yup.object().shape({
     date: Yup.date('Musisz podać datę').required('Data jest wymagana'),
-    time: Yup.string().min(5).max(5).min(0, 'Aż tak dawno temu nie było spotkania').required('Czas jest wymagany'),
-    topic: Yup.string().min(5, 'Wpisz chociaż te 5 znaków').max(256, 'Zbyt długi temat, rozbij go na kilka spotkań').required('Temat jest wymagany'),
+    time: Yup.string()
+      .min(5)
+      .max(5)
+      .min(0, 'Aż tak dawno temu nie było spotkania')
+      .required('Czas jest wymagany'),
+    topic: Yup.string()
+      .min(5, 'Wpisz chociaż te 5 znaków')
+      .max(256, 'Zbyt długi temat, rozbij go na kilka spotkań')
+      .required('Temat jest wymagany'),
     leader: Yup.string().required('Wprowadź prowadzącego'),
     meetingHref: Yup.string().required('Musisz podać link'),
     description: Yup.string().required('Opis jest wymagany'),
     tags: Yup.string().required('Podaj chociaż jeden tag'),
   }),
-  handleSubmit: (values) => {
+  handleSubmit: (values, {resetForm, setStatus, props}) => {
+    props.setSubmitting(true);
     // fetch idzie tu
     let {date, time, topic, leader, meetingHref, description, tags} = values;
     let dateToConvert = `${date} ${time}`;
     date = new Date(dateToConvert);
     let timestamp = date.getTime();
     date = timestamp;
+
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/meetings`, {date, topic, leader, meetingHref, description, tags})
-      .then((response) => {
-        console.log(response.data);
+      .then(() => {
+        setStatus(true);
+        resetForm();
+        props.setIsModalVisible(false);
+        props.setSubmitting(false);
+        toast.success('Dodano nowe spotkanie!');
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        setStatus(false);
+        toast.error('Nie udało się dodać spotkania...');
       });
   },
 })(Formik);
 
-export default EditMeeting;
+export default AddMeeting;
 
 export const StyledForm = styled.form`
   font-family: inherit;
