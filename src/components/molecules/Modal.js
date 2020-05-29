@@ -32,6 +32,21 @@ export const AddModal = ({children, modalTitle, title, icon}) => {
     </>
   );
 };
+
+export const JoinModal = ({children, modalTitle, title, icon}) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  return (
+    <>
+      <PrimaryButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
+        {title} <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className={icon}></Icon>
+      </PrimaryButton>
+      <Modal title={modalTitle} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}>
+        {React.cloneElement(children, {isModalVisible, setIsModalVisible})}
+      </Modal>
+    </>
+  );
+};
+
 export const EditModal = ({children, modalTitle, title, icon}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   return (
@@ -125,4 +140,6 @@ const StyledHeader = styled.div`
   background-color: ${variables.colorMain};
   color: ${variables.colorWhite};
   padding: 2.5rem;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 `;

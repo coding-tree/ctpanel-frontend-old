@@ -11,7 +11,7 @@ const MenuSidebar = () => {
   const year = new Date().getFullYear();
   return (
     <StyledWrapper>
-      <TitleWrapper>Manager Spotkań</TitleWrapper>
+      <TitleWrapper>Coding Tree Panel</TitleWrapper>
       <MenuWrapper>
         <StyledLinksList>
           <StyledLinkElement>

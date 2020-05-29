@@ -4,7 +4,7 @@ import {withRouter} from 'react-router';
 import {routes} from 'routes';
 
 import {SelectedElementContext} from 'components/context/SelectedElementContext';
-import {AddModal, DeleteModal, EditModal} from 'components/molecules/Modal';
+import {AddModal, DeleteModal, EditModal, JoinModal} from 'components/molecules/Modal';
 import AddMeeting from 'components/organisms/AddMeeting';
 import EditMeeting from 'components/organisms/EditMeeting';
 import DeleteMeeting from 'components/organisms/DeleteMeeting';
@@ -13,6 +13,7 @@ import AddTopic from './AddTopic';
 import EditTopic from './EditTopic';
 import DeleteTopic from './DeleteTopic';
 import axios from 'axios';
+import JoinMeeting from './JoinMeeting';
 
 const SchedulesTableMenu = () => {
   const [selectedElement] = useContext(SelectedElementContext);
@@ -28,23 +29,31 @@ const SchedulesTableMenu = () => {
       .catch(err => console.log(err));
   }, []);
 
+  console.log(selectedElement);
+
   const topicNames = topics.map(topic => topic.topic);
   return (
     <StyledTableActions>
       <AddModal title="Dodaj" icon="fas fa-plus" modalTitle="Zaplanuj nowe spotkanie">
         <AddMeeting column={2} leaders={leaders} topicNames={topicNames} destination="meetings"></AddMeeting>
       </AddModal>
-      {selectedElement.length === 1 && (
-        <EditModal title="Edytuj" icon="fas fa-pen" modalTitle="Edytuj spotkanie">
-          <EditMeeting column={2} leaders={leaders} topicNames={topicNames} selectedElement={selectedElement} destination="meetings"></EditMeeting>
-        </EditModal>
-      )}
       {selectedElement.length > 0 && (
         <DeleteModal title="Usuń" icon="fas fa-minus" modalTitle="Usuń spotkanie">
           <DeleteMeeting selectedElement={selectedElement} destination="meetings"></DeleteMeeting>
         </DeleteModal>
       )}
-      <StyledInput placeholder="Wyszukaj" />
+      {selectedElement.length === 1 && (
+        <>
+          <EditModal title="Edytuj" icon="fas fa-pen" modalTitle="Edytuj spotkanie">
+            <EditMeeting column={2} leaders={leaders} topicNames={topicNames} selectedElement={selectedElement} destination="meetings"></EditMeeting>
+          </EditModal>
+          <JoinModal title="Dołącz" modalTitle="Dołącz do spotkania">
+            <JoinMeeting href={selectedElement[0].meetingHref}></JoinMeeting>
+          </JoinModal>
+        </>
+      )}
+      {/* TODO: Implement Search */}
+      {/* <StyledInput placeholder="Wyszukaj" /> */}
     </StyledTableActions>
   );
 };
@@ -91,8 +100,8 @@ const MeetingHistoryTableMenu = () => (
         <StyledOption>3</StyledOption>
       </StyledSelect>
     </StyledBox>
-
-    <StyledInput placeholder="Wyszukaj" />
+    {/* TODO: Implement Search */}
+    {/* <StyledInput placeholder="Wyszukaj" /> */}
   </StyledTableActions>
 );
 
