@@ -11,6 +11,11 @@ const initialState = {
     meetings: [],
     error: null,
   },
+  schedule: {
+    pending: false,
+    meetings: [],
+    error: null,
+  },
   meetings: {
     pending: false,
     meetings: [],

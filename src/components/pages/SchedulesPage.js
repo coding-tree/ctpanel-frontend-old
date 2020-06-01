@@ -6,28 +6,28 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import {ToastContainer} from 'react-toastify';
 
-const TimetablePage = ({meetings, fetchMeets}) => {
+const TimetablePage = ({schedule, fetchMeets}) => {
   useEffect(() => {
     fetchMeets();
   }, [fetchMeets]);
 
   return (
     <TableTemplate title="Harmonogram Spotkań">
-      <TableList meetingsList={meetings.meetings.results} />
+      <TableList meetingsList={schedule.meetings} />
       <ToastContainer></ToastContainer>
     </TableTemplate>
   );
 };
 
-const mapStateToProps = ({meetings}) => ({
-  meetings,
+const mapStateToProps = ({schedule}) => ({
+  schedule,
 });
 
 const fetchParameters = {
   methodType: 'GET',
-  requestDataType: 'meetings',
-  generalAttribute: '',
-  specificAttribute: '',
+  requestDataType: 'schedule',
+  generalAttribute: 'meetings',
+  specificAttribute: 'schedule',
 };
 
 const mapDispatchToProps = dispatch => ({
