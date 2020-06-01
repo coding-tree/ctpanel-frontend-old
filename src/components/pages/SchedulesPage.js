@@ -6,6 +6,8 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import {ToastContainer} from 'react-toastify';
 
+let daysLimit = 5;
+
 const TimetablePage = ({schedule, fetchMeets}) => {
   useEffect(() => {
     fetchMeets();
@@ -28,7 +30,7 @@ const fetchParameters = {
   requestDataType: 'schedule',
   generalAttribute: 'meetings',
   specificAttribute: 'schedule',
-  limit: '7',
+  limit: daysLimit,
 };
 
 const mapDispatchToProps = dispatch => ({
