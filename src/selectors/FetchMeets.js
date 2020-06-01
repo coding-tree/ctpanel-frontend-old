@@ -1,13 +1,13 @@
 import {fetchMeetsSuccess, fetchMeetsError} from 'actions';
 
 export const fetchMeets = fetchParameters => dispatch => {
-  const {methodType, requestDataType, generalAttribute, specyficAttribute} = fetchParameters;
+  const {methodType, requestDataType, generalAttribute, specificAttribute} = fetchParameters;
 
   const createUrl = () => {
     if (generalAttribute !== '') {
       return `${process.env.REACT_APP_SERVER_URL}/${generalAttribute}/${requestDataType}`;
-    } else if (specyficAttribute !== '') {
-      return `${process.env.REACT_APP_SERVER_URL}/${requestDataType}/${specyficAttribute}`;
+    } else if (specificAttribute !== '') {
+      return `${process.env.REACT_APP_SERVER_URL}/${requestDataType}/${specificAttribute}`;
     } else {
       return `${process.env.REACT_APP_SERVER_URL}/${requestDataType}`;
     }

@@ -65,7 +65,7 @@ const fetchParameters = {
   methodType: 'GET',
   requestDataType: 'user',
   generalAttribute: '',
-  specyficAttribute: '',
+  specificAttribute: '',
 };
 
 const mapDispatchToProps = dispatch => ({

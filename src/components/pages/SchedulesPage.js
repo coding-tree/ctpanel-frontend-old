@@ -27,7 +27,7 @@ const fetchParameters = {
   methodType: 'GET',
   requestDataType: 'meetings',
   generalAttribute: '',
-  specyficAttribute: '',
+  specificAttribute: '',
 };
 
 const mapDispatchToProps = dispatch => ({

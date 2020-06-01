@@ -27,7 +27,7 @@ const fetchParameters = {
   methodType: 'GET',
   requestDataType: 'topics',
   generalAttribute: '',
-  specyficAttribute: '',
+  specificAttribute: '',
 };
 
 const mapDispatchToProps = dispatch => ({
