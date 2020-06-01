@@ -28,6 +28,7 @@ const fetchParameters = {
   requestDataType: 'schedule',
   generalAttribute: 'meetings',
   specificAttribute: 'schedule',
+  limit: '7',
 };
 
 const mapDispatchToProps = dispatch => ({

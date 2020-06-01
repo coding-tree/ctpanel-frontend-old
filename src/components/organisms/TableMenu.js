@@ -51,6 +51,17 @@ const SchedulesTableMenu = () => {
           </JoinModal>
         </>
       )}
+      <StyledNumberInput
+        type="text"
+        placeholder="ile dni wstecz wyświetlić?"
+        onChange={e => {
+          if (e.target.value > 0) {
+            console.log(e.target.value);
+          } else {
+            e.target.value = '';
+          }
+        }}
+      />
       {/* TODO: Implement Search */}
       {/* <StyledInput placeholder="Wyszukaj" /> */}
     </StyledTableActions>
@@ -151,6 +162,14 @@ const StyledSelect = styled.select`
   font-family: inherit;
 `;
 const StyledOption = styled.option``;
+
+const StyledNumberInput = styled.input`
+  padding: 1.5rem 3rem;
+  width: auto;
+  border: 1px solid ${variables.borderColor};
+  grid-column-start: 5;
+  margin-left: auto;
+`;
 
 // TODO: Enable Input
 // const StyledInput = styled.input`
