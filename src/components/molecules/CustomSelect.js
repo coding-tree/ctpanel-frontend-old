@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import variables from 'settings/variables';
 import styled, {css} from 'styled-components';
 import Icon from 'components/atoms/Icon';
@@ -7,6 +7,7 @@ import {Field} from 'formik';
 const CustomSelect = ({name, options, handleSelectChange, placeholder, leader, shouldReset}) => {
   const [selectValue, setSelectValue] = useState(leader || '');
   const [isSelectVisible, toggleSelectVisibility] = useState(false);
+  const [selectVisible, setSelectVisible] = useState('');
 
   const handleOptionClick = value => {
     handleSelectChange(value);
@@ -14,34 +15,53 @@ const CustomSelect = ({name, options, handleSelectChange, placeholder, leader, s
     return setSelectValue(value);
   };
 
+  const handleSelectClose = e => {
+    if (!node.current.contains(e.target)) {
+      setSelectVisible(Math.random());
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleSelectClose);
+    return () => {
+      document.removeEventListener('mousedown', handleSelectClose);
+    };
+  }, []);
+
+  useEffect(() => {
+    toggleSelectVisibility(false);
+  }, [selectVisible]);
+
   useEffect(() => {
     shouldReset && setSelectValue('');
   }, [shouldReset]);
 
   const isSelected = value => selectValue === value;
-
+  const node = useRef();
   return (
-    <StyledSelectContainer>
-      {/* Invisible select */}
-      <Field as="select" id={name} name={name}>
-        {options.map((el, index) => (
-          <option key={index}>{el}</option>
-        ))}
-      </Field>
+    <div ref={node}>
+      <StyledSelectContainer>
+        {/* Invisible select */}
+        <Field as="select" id={name} name={name}>
+          {options.map((el, index) => (
+            <option key={index}>{el}</option>
+          ))}
+        </Field>
 
-      <StyledSelect selected={selectValue !== ''} onClick={() => toggleSelectVisibility(prev => !prev)}>
-        {selectValue || <StyledPlaceholder>{placeholder}</StyledPlaceholder>}
-        <Icon absolute right="1.2rem" className="fas fa-sort"></Icon>
-      </StyledSelect>
-      <StyledOptionContainer isVisible={isSelectVisible}>
-        {options.map((el, index) => (
-          <StyledOption selected={isSelected(el)} onClick={() => handleOptionClick(el)} key={index}>
-            {el}
-            {isSelected(el) && <Icon absolute right="1.2rem" className="fas fa-check"></Icon>}
-          </StyledOption>
-        ))}
-      </StyledOptionContainer>
-    </StyledSelectContainer>
+        <StyledSelect selected={selectValue !== ''} onClick={() => toggleSelectVisibility(prev => !prev)}>
+          {selectValue || <StyledPlaceholder>{placeholder}</StyledPlaceholder>}
+          <Icon absolute right="1.2rem" className="fas fa-sort"></Icon>
+        </StyledSelect>
+        <StyledOptionContainer isVisible={isSelectVisible}>
+          {options.map((el, index) => (
+            <StyledOption selected={isSelected(el)} onClick={() => handleOptionClick(el)} key={index}>
+              {el}
+              {isSelected(el) && <Icon absolute right="1.2rem" className="fas fa-check"></Icon>}
+            </StyledOption>
+          ))}
+        </StyledOptionContainer>
+      </StyledSelectContainer>
+    </div>
   );
 };
 
