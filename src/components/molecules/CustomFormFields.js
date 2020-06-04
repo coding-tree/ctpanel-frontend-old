@@ -15,10 +15,13 @@ const CustomFormFieldWrapper = ({children, name, label, columns, rows}) => {
   );
 };
 
-export const Input = ({name, label, type = 'text', placeholder, columns, rows}) => {
+export const Input = ({name, inputStatus, setInputStatus, label, type = 'text', placeholder, columns, rows}) => {
+  const handleInputStatus = e => {
+    console.log(e.target);
+  };
   return (
     <CustomFormFieldWrapper columns={columns} rows={rows} name={name} label={label}>
-      <StyledInput as={Field} name={name} type={type} id={name} placeholder={placeholder}></StyledInput>
+      <StyledInput onClick={() => setInputStatus(!inputStatus)} as={Field} name={name} type={type} id={name} placeholder={placeholder}></StyledInput>
     </CustomFormFieldWrapper>
   );
 };
@@ -31,7 +34,7 @@ export const Textarea = ({name, label, placeholder, columns, rows}) => {
   );
 };
 
-export const Select = ({name, label, shouldReset, options, placeholder, handleSelectChange, columns, rows, leader = ''}) => {
+export const Select = ({name, inputStatus, label, shouldReset, options, placeholder, handleSelectChange, columns, rows, leader = ''}) => {
   return (
     <CustomFormFieldWrapper columns={columns} rows={rows} name={name} label={label}>
       <CustomSelect
@@ -41,6 +44,7 @@ export const Select = ({name, label, shouldReset, options, placeholder, handleSe
         placeholder={placeholder}
         leader={leader}
         handleSelectChange={handleSelectChange}
+        inputStatus={inputStatus}
       ></CustomSelect>
     </CustomFormFieldWrapper>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Input, Textarea, Select, Tags} from 'components/molecules/CustomFormFields';
 import {CancelButton, PrimaryButton} from 'components/atoms/Button';
 import variables from 'settings/variables';
@@ -13,6 +13,8 @@ const Formik = ({column, status, leaders, setFieldValue, setIsModalVisible, isMo
     setFieldValue(name, tags);
   };
 
+  const [inputStatus, setInputStatus] = useState(false);
+
   return (
     <>
       <StyledForm column={column} as={Form}>
@@ -25,10 +27,13 @@ const Formik = ({column, status, leaders, setFieldValue, setIsModalVisible, isMo
           placeholder="Wybierz temat z istniejących"
           options={topicNames}
           shouldReset={status}
+          inputStatus={inputStatus}
           handleSelectChange={setValue('topic')}
         ></Select>
         <Textarea columns={2} name="topic" label="Lub wpisz swój" placeholder="Wprowadź temat spotkania"></Textarea>
         <Select
+          inputStatus={inputStatus}
+          setInputStatus={setInputStatus}
           columns={2}
           name="leader"
           label="Prowadzący"
@@ -37,6 +42,14 @@ const Formik = ({column, status, leaders, setFieldValue, setIsModalVisible, isMo
           shouldReset={status}
           handleSelectChange={setValue('leader')}
         ></Select>
+        <Input
+          inputStatus={inputStatus}
+          setInputStatus={setInputStatus}
+          columns={2}
+          name="leader"
+          label="Lub wybierz spoza listy"
+          placeholder="Wprowadź prowadzącego"
+        ></Input>
         <Input columns={2} name="meetingHref" label="Odnośnik do spotkania" placeholder="Wprowadź adres do spotkania"></Input>
         <Textarea columns={2} name="description" label="Opis spotkania" placeholder="Wpisz opis spotkania"></Textarea>
         <Tags shouldReset={status} columns={2} name="tags" label="Kategorie" placeholder="Wpisz kategorie spotkania" onTagsChange={setValue('tags')}></Tags>

@@ -4,7 +4,7 @@ import styled, {css} from 'styled-components';
 import Icon from 'components/atoms/Icon';
 import {Field} from 'formik';
 
-const CustomSelect = ({name, options, handleSelectChange, placeholder, leader, shouldReset}) => {
+const CustomSelect = ({name, inputStatus, options, handleSelectChange, placeholder, leader, shouldReset}) => {
   const [selectValue, setSelectValue] = useState(leader || '');
   const [isSelectVisible, toggleSelectVisibility] = useState(false);
   const [selectVisible, setSelectVisible] = useState('');
@@ -35,6 +35,10 @@ const CustomSelect = ({name, options, handleSelectChange, placeholder, leader, s
   useEffect(() => {
     shouldReset && setSelectValue('');
   }, [shouldReset]);
+
+  useEffect(() => {
+    inputStatus && setSelectValue('');
+  }, [inputStatus]);
 
   const isSelected = value => selectValue === value;
   const node = useRef();
