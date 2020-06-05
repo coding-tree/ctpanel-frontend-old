@@ -103,7 +103,7 @@ const AddMeeting = withFormik({
     meetingHref: Yup.string().required('Musisz podać link'),
     description: Yup.string().required('Opis jest wymagany'),
     tags: Yup.string().required('Podaj chociaż jeden tag'),
-    usefulLinks: Yup.string().required('linki są tymczasowo wymagane'),
+    usefulLinks: Yup.string(),
   }),
   handleSubmit: (values, {resetForm, setStatus, props}) => {
     props.setSubmitting(true);
