@@ -16,14 +16,19 @@ const CustomFormFieldWrapper = ({children, name, label, columns, rows}) => {
 };
 
 export const Input = ({name, inputStatus, setInputStatus, label, type = 'text', placeholder, columns, rows}) => {
-  const handleInputStatus = e => {
-    console.log(e.target);
-  };
-  return (
-    <CustomFormFieldWrapper columns={columns} rows={rows} name={name} label={label}>
-      <StyledInput onClick={() => setInputStatus(!inputStatus)} as={Field} name={name} type={type} id={name} placeholder={placeholder}></StyledInput>
-    </CustomFormFieldWrapper>
-  );
+  if (setInputStatus) {
+    return (
+      <CustomFormFieldWrapper columns={columns} rows={rows} name={name} label={label}>
+        <StyledInput onClick={() => setInputStatus(!inputStatus)} as={Field} name={name} type={type} id={name} placeholder={placeholder}></StyledInput>
+      </CustomFormFieldWrapper>
+    );
+  } else {
+    return (
+      <CustomFormFieldWrapper columns={columns} rows={rows} name={name} label={label}>
+        <StyledInput as={Field} name={name} type={type} id={name} placeholder={placeholder}></StyledInput>
+      </CustomFormFieldWrapper>
+    );
+  }
 };
 
 export const Textarea = ({name, label, placeholder, columns, rows}) => {

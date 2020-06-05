@@ -53,6 +53,14 @@ const Formik = ({column, status, leaders, setFieldValue, setIsModalVisible, isMo
         <Input columns={2} name="meetingHref" label="Odnośnik do spotkania" placeholder="Wprowadź adres do spotkania"></Input>
         <Textarea columns={2} name="description" label="Opis spotkania" placeholder="Wpisz opis spotkania"></Textarea>
         <Tags shouldReset={status} columns={2} name="tags" label="Kategorie" placeholder="Wpisz kategorie spotkania" onTagsChange={setValue('tags')}></Tags>
+        <Tags
+          shouldReset={status}
+          columns={2}
+          name="usefulLinks"
+          label="Przydatne linki"
+          placeholder="Dodaj linki"
+          onTagsChange={setValue('usefulLinks')}
+        ></Tags>
         <StyledButtonsContainer column={column}>
           <CancelButton large onClick={() => setIsModalVisible(!isModalVisible)} type="button">
             Anuluj
@@ -67,7 +75,7 @@ const Formik = ({column, status, leaders, setFieldValue, setIsModalVisible, isMo
 };
 
 const AddMeeting = withFormik({
-  mapPropsToValues: ({date, time, topic, leader, meetingHref, description, tags}) => {
+  mapPropsToValues: ({date, time, topic, leader, meetingHref, description, tags, usefulLinks}) => {
     return {
       // todo - convert date & time to timestamp
       date: date || new Date().toISOString().slice(0, 10),
@@ -77,6 +85,7 @@ const AddMeeting = withFormik({
       meetingHref: meetingHref || '',
       description: description || '',
       tags: tags || [],
+      usefulLinks: usefulLinks || [],
     };
   },
   validationSchema: Yup.object().shape({
@@ -94,18 +103,19 @@ const AddMeeting = withFormik({
     meetingHref: Yup.string().required('Musisz podać link'),
     description: Yup.string().required('Opis jest wymagany'),
     tags: Yup.string().required('Podaj chociaż jeden tag'),
+    usefulLinks: Yup.string(),
   }),
   handleSubmit: (values, {resetForm, setStatus, props}) => {
     props.setSubmitting(true);
     // fetch idzie tu
-    let {date, time, topic, leader, meetingHref, description, tags} = values;
+    let {date, time, topic, leader, meetingHref, description, tags, usefulLinks} = values;
     let dateToConvert = `${date} ${time}`;
     date = new Date(dateToConvert);
     let timestamp = date.getTime();
     date = timestamp;
 
     axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/meetings`, {date, topic, leader, meetingHref, description, tags})
+      .post(`${process.env.REACT_APP_SERVER_URL}/meetings`, {date, topic, leader, meetingHref, description, tags, usefulLinks})
       .then(() => {
         setStatus(true);
         resetForm();

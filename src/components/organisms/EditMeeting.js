@@ -40,6 +40,7 @@ const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisib
       <Input columns={2} name="meetingHref" label="Odnośnik do spotkania" placeholder="Wprowadź adres do spotkania"></Input>
       <Textarea columns={2} name="description" label="Opis spotkania" placeholder="Wpisz opis spotkania"></Textarea>
       <Tags columns={2} activeTags={tags} name="tags" label="Kategorie" placeholder="Wpisz kategorie spotkania" onTagsChange={setValue('tags')}></Tags>
+      <Tags columns={2} name="usefulLinks" label="Przydatne linki" placeholder="Dodaj linki" onTagsChange={setValue('usefulLinks')}></Tags>
       <StyledButtonsContainer column={column}>
         <CancelButton large onClick={() => setIsModalVisible(!isModalVisible)} type="button">
           Anuluj
@@ -53,7 +54,7 @@ const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisib
 };
 
 const EditMeeting = withFormik({
-  mapPropsToValues: ({date, time, topic, leader, meetingHref, description, tags, selectedElement}) => {
+  mapPropsToValues: ({date, time, topic, leader, meetingHref, description, tags, usefulLinks, selectedElement}) => {
     const [editData] = selectedElement;
 
     return {
@@ -65,6 +66,7 @@ const EditMeeting = withFormik({
       meetingHref: editData.meetingHref || meetingHref || '',
       description: editData.description || description || '',
       tags: editData.tags || tags || '',
+      usefulLinks: editData.usefulLinks || usefulLinks || '',
     };
   },
   validationSchema: Yup.object().shape({
@@ -82,8 +84,9 @@ const EditMeeting = withFormik({
     meetingHref: Yup.string().required('Musisz podać link'),
     description: Yup.string().required('Opis jest wymagany'),
     tags: Yup.string().required('Podaj chociaż jeden tag'),
+    usefulLinks: Yup.string(),
   }),
-  handleSubmit: ({date, time, topic, leader, meetingHref, description, tags}, {props}) => {
+  handleSubmit: ({date, time, topic, leader, meetingHref, description, tags, usefulLinks}, {props}) => {
     props.setSubmitting(true);
 
     const [editData] = props.selectedElement;
@@ -94,7 +97,7 @@ const EditMeeting = withFormik({
     date = timestamp;
 
     axios
-      .put(`${process.env.REACT_APP_SERVER_URL}/meetings/${editData._id}`, {date, topic, leader, meetingHref, description, tags})
+      .put(`${process.env.REACT_APP_SERVER_URL}/meetings/${editData._id}`, {date, topic, leader, meetingHref, description, tags, usefulLinks})
       .then(() => {
         props.setIsModalVisible(false);
         props.setSubmitting(false);

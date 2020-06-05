@@ -9,9 +9,10 @@ const LastMeetLinks = lazy(() => import('components/molecules/LastMeetLinks'));
 
 const LastMeetWrapper = styled.div`
   display: grid;
+  grid-column-gap: 3.5rem;
   grid-row-gap: 7rem;
-  grid-template-columns: repeat(3, 1fr);
-  width: 90%;
+  grid-template-columns: repeat(6, 1fr);
+  width: 80%;
   max-width: 1400px;
   padding: 7rem 5rem;
   background-color: ${variables.colorWhite};
@@ -31,7 +32,7 @@ const LastMeetWrapper = styled.div`
   }
 
   .lastmeet__description {
-    grid-column: 1/-1;
+    grid-column: 1/7;
   }
 `;
 
@@ -42,11 +43,8 @@ const LastMeet = ({lastMeet}) => {
     return (
       <LastMeetWrapper>
         <LastMeetHeader leader={leader} topic={topic} date={date}></LastMeetHeader>
-        <Text className="lastmeet__description" columnView>
-          {description}
-        </Text>
+        <Text className="lastmeet__description">{description}</Text>
         <LastMeetLinks usefulLinks={usefulLinks}></LastMeetLinks>
-
         {resourcesURL && (
           <DownloadButton resourcesURL={resourcesURL} iconClassName="fas fa-download">
             Pobierz materiały
