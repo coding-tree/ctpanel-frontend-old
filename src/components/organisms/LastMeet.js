@@ -12,7 +12,7 @@ const LastMeetWrapper = styled.div`
   grid-column-gap: 3.5rem;
   grid-row-gap: 7rem;
   grid-template-columns: repeat(6, 1fr);
-  width: 90%;
+  width: 80%;
   max-width: 1400px;
   padding: 7rem 5rem;
   background-color: ${variables.colorWhite};
