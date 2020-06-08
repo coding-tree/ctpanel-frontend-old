@@ -10,8 +10,7 @@ import {toast} from 'react-toastify';
 
 const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible, selectedElement, topicNames}) => {
   const [editData] = selectedElement;
-  const {tags, leader} = editData;
-
+  const {tags, leader, usefulLinks} = editData;
   const setValue = name => tags => {
     setFieldValue(name, tags);
   };
@@ -40,7 +39,14 @@ const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisib
       <Input columns={2} name="meetingHref" label="Odnośnik do spotkania" placeholder="Wprowadź adres do spotkania"></Input>
       <Textarea columns={2} name="description" label="Opis spotkania" placeholder="Wpisz opis spotkania"></Textarea>
       <Tags columns={2} activeTags={tags} name="tags" label="Kategorie" placeholder="Wpisz kategorie spotkania" onTagsChange={setValue('tags')}></Tags>
-      <Tags columns={2} name="usefulLinks" label="Przydatne linki" placeholder="Dodaj linki" onTagsChange={setValue('usefulLinks')}></Tags>
+      <Tags
+        columns={2}
+        activeTags={usefulLinks}
+        name="usefulLinks"
+        label="Przydatne linki"
+        placeholder="Dodaj linki"
+        onTagsChange={setValue('usefulLinks')}
+      ></Tags>
       <StyledButtonsContainer column={column}>
         <CancelButton large onClick={() => setIsModalVisible(!isModalVisible)} type="button">
           Anuluj
@@ -56,7 +62,7 @@ const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisib
 const EditMeeting = withFormik({
   mapPropsToValues: ({date, time, topic, leader, meetingHref, description, tags, usefulLinks, selectedElement}) => {
     const [editData] = selectedElement;
-
+    console.log(editData);
     return {
       // todo - convert date & time to timestamp
       date: new Date(editData.date).toISOString().slice(0, 10) || date || new Date().toISOString().slice(0, 10),
