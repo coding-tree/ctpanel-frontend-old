@@ -15,13 +15,30 @@ const StyledRow = styled.tr`
   height: 50px;
   padding: 0 10px;
   border-bottom: 1px solid ${variables.tableBorderColor};
-  background-color: ${({isSelected}) => isSelected && variables.tableHeaderColor};
+  background-color: ${({isSelected}) => isSelected && variables.colorMain};
   transition: 0.2s ease-in-out;
   &:hover {
-    background-color: ${variables.tableHeaderColor};
+    background-color: ${variables.colorMain};
     cursor: pointer;
-    color: ${variables.colorMain};
+    /* color: ${variables.colorWhite}; */
   }
+  ${({description}) =>
+    description &&
+    css`
+      display: none;
+      background-color: ${variables.colorWhite};
+      color: ${variables.colorBlack} !important;
+      &:hover {
+        background-color: ${variables.colorWhite};
+      }
+    `}
+  ${({isSelected}) =>
+    isSelected &&
+    css`
+    color: ${variables.colorWhite};
+      /* background-color: ${variables.colorWhite}; */
+      display: table-row;
+    `}
 `;
 
 const StyledTableData = styled.td`
@@ -29,7 +46,7 @@ const StyledTableData = styled.td`
   padding: 1rem 3rem;
   border: none;
   white-space: nowrap;
-
+ 
   &:first-child {
     padding: 0 0 0 2rem;
   }
@@ -54,22 +71,90 @@ const StyledTableData = styled.td`
         margin-left: 0.6rem;
       }
     `}
+  ${({description}) =>
+    description &&
+    css`
+      word-wrap: break-word;
+      word-break: break-all;
+      white-space: normal;
+      display: none;
+      cursor: default;
+    `}
+      ${({isSelected}) =>
+        isSelected === true &&
+        css`
+          display: table-cell;
+        `}
 `;
 
+const StyledDescriptionBox = styled.div`
+  padding: 2rem;
+  margin-left: 4rem;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  grid-column-gap: 3rem;
+  grid-template-rows: repeat (3, max-content);
+`;
+
+const StyledText = styled.span`
+  line-height: 1.7;
+  word-wrap: break-word;
+  font-weight: 100 !important;
+  margin-bottom: 2.5rem;
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+  ${({bold}) =>
+    bold &&
+    css`
+      font-weight: 700 !important;
+    `}
+`;
+
+const StyledLink = styled.a`
+  color: ${variables.colorLink};
+  &:hover {
+    color: ${variables.colorMain};
+  }
+`;
+
+const StyledTag = styled.span``;
+
 const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}) => {
+  const renderTags = meetingData.tags.map((tag, index) => {
+    return <StyledTag key={index}>{tag} &nbsp;</StyledTag>;
+  });
   return (
-    <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
-      <StyledTableData>
-        <Checkbox isSelected={isSelected}></Checkbox>
-      </StyledTableData>
-      <StyledTableData mainColor>#{index}</StyledTableData>
-      <StyledTableData>
-        <StyledDate format="DD MMMM YYYY" date={meetingData.date}></StyledDate>
-      </StyledTableData>
-      <StyledTableData>{meetingData.topic}</StyledTableData>
-      <StyledTableData right>{meetingData.duration}</StyledTableData>
-      <StyledTableData right>{meetingData.leader}</StyledTableData>
-    </StyledRow>
+    <>
+      <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
+        <StyledTableData>
+          <Checkbox isSelected={isSelected}></Checkbox>
+        </StyledTableData>
+        <StyledTableData mainColor>#{index}</StyledTableData>
+        <StyledTableData>
+          <StyledDate format="DD MMMM YYYY" date={meetingData.date}></StyledDate>
+        </StyledTableData>
+        <StyledTableData>{meetingData.topic}</StyledTableData>
+        <StyledTableData right>{meetingData.duration}</StyledTableData>
+        <StyledTableData right>{meetingData.leader}</StyledTableData>
+      </StyledRow>
+      <StyledRow description isSelected={isSelected}>
+        <StyledTableData description colSpan={6} isSelected={isSelected}>
+          <StyledDescriptionBox>
+            <StyledText bold>Odnośnik do spotkania:</StyledText>
+            <StyledText>
+              <StyledLink target="_blank" rel="noreferrer noopener" href={meetingData.meetingHref}>
+                {meetingData.meetingHref}
+              </StyledLink>
+            </StyledText>
+            <StyledText bold>Opis spotkania:</StyledText>
+            <StyledText>{meetingData.description}</StyledText>
+            <StyledText bold>Tagi:</StyledText>
+            <StyledText>{renderTags}</StyledText>
+          </StyledDescriptionBox>
+        </StyledTableData>
+      </StyledRow>
+    </>
   );
 };
 
@@ -120,22 +205,45 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
   );
 };
 
-const MeetingHistoryTableElement = ({meetingData, isSelected, toggleSelection, index}) => (
-  <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
-    <StyledTableData>
-      <Checkbox isSelected={isSelected}></Checkbox>
-    </StyledTableData>
-    <StyledTableData mainColor>#{index}</StyledTableData>
-    <StyledTableData>
-      <StyledDate format="DD MMMM YYYY" date={meetingData.date}></StyledDate>
-    </StyledTableData>
-    <StyledTableData>{meetingData.topic}</StyledTableData>
-    <StyledTableData>{meetingData.leader}</StyledTableData>
-    <StyledTableData right>
-      <PrimaryButton small>Dodaj</PrimaryButton>
-    </StyledTableData>
-  </StyledRow>
-);
+const MeetingHistoryTableElement = ({meetingData, isSelected, toggleSelection, index}) => {
+  const renderTags = meetingData.tags.map((tag, index) => {
+    return <StyledTag key={index}>{tag} &nbsp;</StyledTag>;
+  });
+  return (
+    <>
+      <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
+        <StyledTableData>
+          <Checkbox isSelected={isSelected}></Checkbox>
+        </StyledTableData>
+        <StyledTableData mainColor>#{index}</StyledTableData>
+        <StyledTableData>
+          <StyledDate format="DD MMMM YYYY" date={meetingData.date}></StyledDate>
+        </StyledTableData>
+        <StyledTableData>{meetingData.topic}</StyledTableData>
+        <StyledTableData>{meetingData.leader}</StyledTableData>
+        <StyledTableData right>
+          <PrimaryButton small>Dodaj</PrimaryButton>
+        </StyledTableData>
+      </StyledRow>
+      <StyledRow description isSelected={isSelected}>
+        <StyledTableData description colSpan={6} isSelected={isSelected}>
+          <StyledDescriptionBox>
+            <StyledText bold>Odnośnik do spotkania:</StyledText>
+            <StyledText>
+              <StyledLink target="_blank" rel="noreferrer noopener" href={meetingData.meetingHref}>
+                {meetingData.meetingHref}
+              </StyledLink>
+            </StyledText>
+            <StyledText bold>Opis spotkania:</StyledText>
+            <StyledText>{meetingData.description}</StyledText>
+            <StyledText bold>Tagi:</StyledText>
+            <StyledText>{renderTags}</StyledText>
+          </StyledDescriptionBox>
+        </StyledTableData>
+      </StyledRow>
+    </>
+  );
+};
 
 const TableElement = ({location, meetingData, index, userId}) => {
   const [selectedElement, toggleSelection] = useContext(SelectedElementContext);
