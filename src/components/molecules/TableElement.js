@@ -26,6 +26,9 @@ const StyledRow = styled.tr`
     description &&
     css`
       display: none;
+      &:hover {
+        color: ${variables.colorBlack};
+      }
     `}
   ${({isSelected}) =>
     isSelected === true &&
@@ -67,6 +70,8 @@ const StyledTableData = styled.td`
   ${({description}) =>
     description &&
     css`
+      word-wrap: break-word;
+
       display: none;
     `}
       ${({isSelected}) =>
@@ -76,7 +81,49 @@ const StyledTableData = styled.td`
         `}
 `;
 
+const StyledDescriptionBox = styled.div`
+  padding: 2rem;
+  margin-left: 4rem;
+  display: grid;
+  grid-template-columns: 2fr 10fr;
+  grid-column-gap: 1.5rem;
+`;
+
+const StyledDescriptions = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const StyledDescriptionsInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const StyledText = styled.span`
+  word-wrap: break-word;
+  font-weight: 100 !important;
+  margin-bottom: 2.5rem;
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+  ${({bold}) =>
+    bold &&
+    css`
+      font-weight: 700 !important;
+    `}
+`;
+const StyledLink = styled.a`
+  color: ${variables.colorLink};
+  &:hover {
+    color: ${variables.colorMain};
+  }
+`;
+
+const StyledTag = styled.span``;
+
 const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}) => {
+  const renderTags = meetingData.tags.map((tag, index) => {
+    return <StyledTag key={index}>{tag} &nbsp;</StyledTag>;
+  });
+  console.log(meetingData.tags);
   return (
     <>
       <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
@@ -93,7 +140,22 @@ const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}
       </StyledRow>
       <StyledRow description isSelected={isSelected}>
         <StyledTableData description colSpan={6} isSelected={isSelected}>
-          <p>lorem ipsum asdoikfosdk fowekork owekro kweorko wekorkwoe krowekr</p>
+          <StyledDescriptionBox>
+            <StyledDescriptions>
+              <StyledText bold>Odnośnik do spotkania:</StyledText>
+              <StyledText bold>Opis spotkania:</StyledText>
+              <StyledText bold>Tagi:</StyledText>
+            </StyledDescriptions>
+            <StyledDescriptionsInfo>
+              <StyledText>
+                <StyledLink target="_blank" rel="noreferrer noopener" href={meetingData.meetingHref}>
+                  {meetingData.meetingHref}
+                </StyledLink>
+              </StyledText>
+              <StyledText>{meetingData.description}</StyledText>
+              <StyledText>{renderTags}</StyledText>
+            </StyledDescriptionsInfo>
+          </StyledDescriptionBox>
         </StyledTableData>
       </StyledRow>
     </>
