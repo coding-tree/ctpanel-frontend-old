@@ -15,24 +15,28 @@ const StyledRow = styled.tr`
   height: 50px;
   padding: 0 10px;
   border-bottom: 1px solid ${variables.tableBorderColor};
-  background-color: ${({isSelected}) => isSelected && variables.tableHeaderColor};
+  background-color: ${({isSelected}) => isSelected && variables.colorMain};
   transition: 0.2s ease-in-out;
   &:hover {
-    background-color: ${variables.tableHeaderColor};
+    background-color: ${variables.colorMain};
     cursor: pointer;
-    color: ${variables.colorMain};
+    color: ${variables.colorWhite};
   }
   ${({description}) =>
     description &&
     css`
       display: none;
+      background-color: ${variables.colorWhite};
+      color: ${variables.colorBlack} !important;
       &:hover {
-        color: ${variables.colorBlack};
+        color: ${variables.colorWhite} !important};
       }
     `}
-  ${({isSelected}) =>
-    isSelected === true &&
+  ${({isSelected, description}) =>
+    isSelected &&
     css`
+    color: ${variables.colorWhite};
+      /* background-color: ${variables.colorWhite}; */
       display: table-row;
     `}
 `;
@@ -109,7 +113,7 @@ const StyledText = styled.span`
 const StyledLink = styled.a`
   color: ${variables.colorLink};
   &:hover {
-    color: ${variables.colorMain};
+    color: ${variables.colorBlack};
   }
 `;
 
