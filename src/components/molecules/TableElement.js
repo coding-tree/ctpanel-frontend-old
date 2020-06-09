@@ -20,7 +20,7 @@ const StyledRow = styled.tr`
   &:hover {
     background-color: ${variables.colorMain};
     cursor: pointer;
-    color: ${variables.colorWhite};
+    /* color: ${variables.colorWhite}; */
   }
   ${({description}) =>
     description &&
@@ -29,10 +29,10 @@ const StyledRow = styled.tr`
       background-color: ${variables.colorWhite};
       color: ${variables.colorBlack} !important;
       &:hover {
-        color: ${variables.colorWhite} !important};
+        background-color: ${variables.colorWhite};
       }
     `}
-  ${({isSelected, description}) =>
+  ${({isSelected}) =>
     isSelected &&
     css`
     color: ${variables.colorWhite};
@@ -110,10 +110,11 @@ const StyledText = styled.span`
       font-weight: 700 !important;
     `}
 `;
+
 const StyledLink = styled.a`
   color: ${variables.colorLink};
   &:hover {
-    color: ${variables.colorBlack};
+    color: ${variables.colorMain};
   }
 `;
 
@@ -123,7 +124,6 @@ const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}
   const renderTags = meetingData.tags.map((tag, index) => {
     return <StyledTag key={index}>{tag} &nbsp;</StyledTag>;
   });
-  console.log(meetingData.tags);
   return (
     <>
       <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
@@ -205,22 +205,45 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
   );
 };
 
-const MeetingHistoryTableElement = ({meetingData, isSelected, toggleSelection, index}) => (
-  <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
-    <StyledTableData>
-      <Checkbox isSelected={isSelected}></Checkbox>
-    </StyledTableData>
-    <StyledTableData mainColor>#{index}</StyledTableData>
-    <StyledTableData>
-      <StyledDate format="DD MMMM YYYY" date={meetingData.date}></StyledDate>
-    </StyledTableData>
-    <StyledTableData>{meetingData.topic}</StyledTableData>
-    <StyledTableData>{meetingData.leader}</StyledTableData>
-    <StyledTableData right>
-      <PrimaryButton small>Dodaj</PrimaryButton>
-    </StyledTableData>
-  </StyledRow>
-);
+const MeetingHistoryTableElement = ({meetingData, isSelected, toggleSelection, index}) => {
+  const renderTags = meetingData.tags.map((tag, index) => {
+    return <StyledTag key={index}>{tag} &nbsp;</StyledTag>;
+  });
+  return (
+    <>
+      <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
+        <StyledTableData>
+          <Checkbox isSelected={isSelected}></Checkbox>
+        </StyledTableData>
+        <StyledTableData mainColor>#{index}</StyledTableData>
+        <StyledTableData>
+          <StyledDate format="DD MMMM YYYY" date={meetingData.date}></StyledDate>
+        </StyledTableData>
+        <StyledTableData>{meetingData.topic}</StyledTableData>
+        <StyledTableData>{meetingData.leader}</StyledTableData>
+        <StyledTableData right>
+          <PrimaryButton small>Dodaj</PrimaryButton>
+        </StyledTableData>
+      </StyledRow>
+      <StyledRow description isSelected={isSelected}>
+        <StyledTableData description colSpan={6} isSelected={isSelected}>
+          <StyledDescriptionBox>
+            <StyledText bold>Odnośnik do spotkania:</StyledText>
+            <StyledText>
+              <StyledLink target="_blank" rel="noreferrer noopener" href={meetingData.meetingHref}>
+                {meetingData.meetingHref}
+              </StyledLink>
+            </StyledText>
+            <StyledText bold>Opis spotkania:</StyledText>
+            <StyledText>{meetingData.description}</StyledText>
+            <StyledText bold>Tagi:</StyledText>
+            <StyledText>{renderTags}</StyledText>
+          </StyledDescriptionBox>
+        </StyledTableData>
+      </StyledRow>
+    </>
+  );
+};
 
 const TableElement = ({location, meetingData, index, userId}) => {
   const [selectedElement, toggleSelection] = useContext(SelectedElementContext);
