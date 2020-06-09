@@ -22,6 +22,16 @@ const StyledRow = styled.tr`
     cursor: pointer;
     color: ${variables.colorMain};
   }
+  ${({description}) =>
+    description &&
+    css`
+      display: none;
+    `}
+  ${({isSelected}) =>
+    isSelected === true &&
+    css`
+      display: table-row;
+    `}
 `;
 
 const StyledTableData = styled.td`
@@ -54,22 +64,39 @@ const StyledTableData = styled.td`
         margin-left: 0.6rem;
       }
     `}
+  ${({description}) =>
+    description &&
+    css`
+      display: none;
+    `}
+      ${({isSelected}) =>
+        isSelected === true &&
+        css`
+          display: table-cell;
+        `}
 `;
 
 const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}) => {
   return (
-    <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
-      <StyledTableData>
-        <Checkbox isSelected={isSelected}></Checkbox>
-      </StyledTableData>
-      <StyledTableData mainColor>#{index}</StyledTableData>
-      <StyledTableData>
-        <StyledDate format="DD MMMM YYYY" date={meetingData.date}></StyledDate>
-      </StyledTableData>
-      <StyledTableData>{meetingData.topic}</StyledTableData>
-      <StyledTableData right>{meetingData.duration}</StyledTableData>
-      <StyledTableData right>{meetingData.leader}</StyledTableData>
-    </StyledRow>
+    <>
+      <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
+        <StyledTableData>
+          <Checkbox isSelected={isSelected}></Checkbox>
+        </StyledTableData>
+        <StyledTableData mainColor>#{index}</StyledTableData>
+        <StyledTableData>
+          <StyledDate format="DD MMMM YYYY" date={meetingData.date}></StyledDate>
+        </StyledTableData>
+        <StyledTableData>{meetingData.topic}</StyledTableData>
+        <StyledTableData right>{meetingData.duration}</StyledTableData>
+        <StyledTableData right>{meetingData.leader}</StyledTableData>
+      </StyledRow>
+      <StyledRow description isSelected={isSelected}>
+        <StyledTableData description colSpan={6} isSelected={isSelected}>
+          <p>lorem ipsum asdoikfosdk fowekork owekro kweorko wekorkwoe krowekr</p>
+        </StyledTableData>
+      </StyledRow>
+    </>
   );
 };
 
