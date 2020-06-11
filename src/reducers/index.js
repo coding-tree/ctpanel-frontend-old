@@ -1,7 +1,5 @@
 import {GET_MEETS_REQUEST, GET_MEETS_SUCCESS, GET_MEETS_FAILURE} from 'actions';
 
-
-
 const _meetingHistory = {
   pending: false,
   meetings: [],
