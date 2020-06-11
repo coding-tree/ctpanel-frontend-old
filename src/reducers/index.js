@@ -26,7 +26,7 @@ const _topics = {
   error: null
 };
 
-export function meetingHistoryReducer(state = _meetingHistory, action){
+const meetingHistoryReducer = (state = _meetingHistory, action) => {
   switch(action.type) {
     case REQUEST_MEETING_HISTORY:
       return {
@@ -49,7 +49,7 @@ export function meetingHistoryReducer(state = _meetingHistory, action){
         return state;
     };
 };
-export function scheduleReducer(state = _schedule, action){
+const scheduleReducer = (state = _schedule, action) => {
   switch(action.type) {
     case REQUEST_SCHEDULE:
       return {
@@ -72,7 +72,7 @@ export function scheduleReducer(state = _schedule, action){
         return state;
     };
 };
-export function meetingsReducer(state = _meetings, action){
+const meetingsReducer = (state = _meetings, action) => {
   switch(action.type) {
     case REQUEST_MEETINGS:
       return {
@@ -95,7 +95,7 @@ export function meetingsReducer(state = _meetings, action){
         return state;
     };
 };
-export function topicsReducer(state = _topics, action){
+const topicsReducer = (state = _topics, action) => {
   switch(action.type) {
     case REQUEST_TOPICS:
       return {
@@ -166,4 +166,10 @@ const tableReducer = (state = initialState, {type, payload, meetType}) => {
   }
 };
 
-export default tableReducer;
+export default combineReducers({
+  meetingHistoryReducer,
+  scheduleReducer,
+  meetingsReducer,
+  topicsReducer,
+  tableReducer
+});
