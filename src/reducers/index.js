@@ -23,92 +23,92 @@ const _topics = {
 
 export function meetingHistoryReducer(state = _meetingHistory, action){
   switch(action.type) {
-    case INVALIDATE_MEETING_HISTORY:
-      return {
-        ...state,
-        error: true
-      }
     case REQUEST_MEETING_HISTORY:
       return {
         ...state,
         pending: true,
         error: false
-      }
+      };
     case RECEIVE_MEETING_HISTORY:
       return {
           pending: false,
           meetings: action.meetings,
           error: null
-      }
+      };
+    case INVALIDATE_MEETING_HISTORY:
+      return {
+        ...state,
+        error: true
+      };
     default: 
         return state;
     };
 };
-export function meetingHistoryReducer(state = _schedule, action){
+export function scheduleReducer(state = _schedule, action){
   switch(action.type) {
-    case INVALIDATE_SCHEDULE:
-      return {
-        ...state,
-        error: true
-      }
     case REQUEST_SCHEDULE:
       return {
         ...state,
         pending: true,
         error: false
-      }
+      };
     case RECEIVE_SCHEDULE:
       return {
           pending: false,
           meetings: action.meetings,
           error: null
-      }
+      };
+    case INVALIDATE_SCHEDULE:
+      return {
+        ...state,
+        error: true
+      };
     default: 
         return state;
     };
 };
-export function meetingHistoryReducer(state = _meetings, action){
+export function meetingsReducer(state = _meetings, action){
   switch(action.type) {
-    case INVALIDATE_MEETINGS:
-      return {
-        ...state,
-        error: true
-      }
     case REQUEST_MEETINGS:
       return {
         ...state,
         pending: true,
         error: false
-      }
+      };
     case RECEIVE_MEETINGS:
       return {
           pending: false,
           meetings: action.meetings,
           error: null
-      }
+      };
+    case INVALIDATE_MEETINGS:
+      return {
+        ...state,
+        error: true
+      };
     default: 
         return state;
     };
 };
-export function meetingHistoryReducer(state = _meetingHistory, action){
+export function topicsReducer(state = _topics, action){
   switch(action.type) {
-    case INVALIDATE_MEETING_HISTORY:
-      return {
-        ...state,
-        error: true
-      }
-    case REQUEST_MEETING_HISTORY:
+    case REQUEST_TOPICS:
       return {
         ...state,
         pending: true,
         error: false
       }
-    case RECEIVE_MEETING_HISTORY:
+    case RECEIVE_TOPICS:
       return {
           pending: false,
           meetings: action.meetings,
           error: null
       }
+      case INVALIDATE_TOPICS:
+        return {
+          ...state,
+          error: true
+        }
     default: 
         return state;
     };
