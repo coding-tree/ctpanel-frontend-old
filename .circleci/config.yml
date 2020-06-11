@@ -31,7 +31,7 @@ jobs:
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           from: build
           overwrite: true
-          to: "s3://ms.codingtree.pl"
+          to: "s3://ctpanel.pl
 
 
 workflows:
