@@ -31,13 +31,14 @@ jobs:
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           from: build
           overwrite: true
-          to: "s3://ctpanel.pl
+          to: "s3://ctpanel.pl"
 
 
 workflows:
   build-and-deploy-staging:
     jobs:
       - deploy-front-s3:
+          context: CTPanel
           filters:
             branches:
               only: develop # only deploy on the develop branch
