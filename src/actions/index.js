@@ -45,15 +45,15 @@ export const fetchMeetingsError = error => ({
 });
 
 export const fetchTopicsPending = () => ({
-  type: INVALIDATE_MEETINGS
+  type: REQUEST_TOPICS
 });
 
 export const fetchTopicsSuccess = meetings => ({
-  type: GET_MEETS_SUCCESS,
+  type: RECEIVE_TOPICS,
   meetings
 });
 
 export const fetchTopicsError = error => ({
-  type: GET_MEETS_FAILURE,
+  type: INVALIDATE_TOPICS,
   error
 });
