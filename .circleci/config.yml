@@ -41,4 +41,5 @@ workflows:
 #          context: CTPanel
           filters:
             branches:
-              only: develop # only deploy on the develop branch
+#              only: develop # only deploy on the develop branch
+              only: feature/circleci
