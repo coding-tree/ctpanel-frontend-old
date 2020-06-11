@@ -166,10 +166,12 @@ const tableReducer = (state = initialState, {type, payload, meetType}) => {
   }
 };
 
-export default combineReducers({
+const rootReducer = combineReducers({
   meetingHistoryReducer,
   scheduleReducer,
   meetingsReducer,
   topicsReducer,
   tableReducer
 });
+
+export default rootReducer;
