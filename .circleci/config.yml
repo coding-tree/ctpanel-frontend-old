@@ -38,6 +38,7 @@ workflows:
   build-and-deploy-staging:
     jobs:
       - deploy-front-s3:
+          context: CTPanel
           filters:
             branches:
               only: develop # only deploy on the develop branch
