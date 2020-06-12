@@ -160,7 +160,7 @@ const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}
 
 const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, index, userId}) => {
   const [myVotes, setMyVotes] = useState([]);
-
+  console.log(meetingData);
   useEffect(() => {
     setMyVotes(meetingData.usersVote);
   }, [meetingData]);
@@ -180,28 +180,42 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
     if (vote < 0) return 'negative';
     return 'neutral';
   };
-
+  const renderTags = meetingData.tags.map((tag, index) => {
+    return <StyledTag key={index}>{tag} &nbsp;</StyledTag>;
+  });
   return (
-    <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
-      <StyledTableData>
-        <Checkbox isSelected={isSelected}></Checkbox>
-      </StyledTableData>
-      <StyledTableData mainColor>#{index}</StyledTableData>
-      <StyledTableData>{meetingData.topic}</StyledTableData>
-      <StyledTableData>Kategoria</StyledTableData>
-      <StyledTableData>{meetingData.userAdded}</StyledTableData>
-      <StyledTableData right vote={formatVote(meetingData.votes)}>
-        {meetingData.votes > 0 ? `+${meetingData.votes}` : meetingData.votes}
-      </StyledTableData>
-      <StyledTableData buttonsTableData right>
-        <PrimaryButton inactive voted={votedClass('up')} onClick={e => handleVoting(e, meetingData._id, 'up')}>
-          <Icon className="fas fa-plus"></Icon>
-        </PrimaryButton>
-        <DeleteButton inactive voted={votedClass('down')} onClick={e => handleVoting(e, meetingData._id, 'down')}>
-          <Icon className="fas fa-minus"></Icon>
-        </DeleteButton>
-      </StyledTableData>
-    </StyledRow>
+    <>
+      <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
+        <StyledTableData>
+          <Checkbox isSelected={isSelected}></Checkbox>
+        </StyledTableData>
+        <StyledTableData mainColor>#{index}</StyledTableData>
+        <StyledTableData>{meetingData.topic}</StyledTableData>
+        <StyledTableData>Kategoria</StyledTableData>
+        <StyledTableData>{meetingData.userAdded}</StyledTableData>
+        <StyledTableData right vote={formatVote(meetingData.votes)}>
+          {meetingData.votes > 0 ? `+${meetingData.votes}` : meetingData.votes}
+        </StyledTableData>
+        <StyledTableData buttonsTableData right>
+          <PrimaryButton inactive voted={votedClass('up')} onClick={e => handleVoting(e, meetingData._id, 'up')}>
+            <Icon className="fas fa-plus"></Icon>
+          </PrimaryButton>
+          <DeleteButton inactive voted={votedClass('down')} onClick={e => handleVoting(e, meetingData._id, 'down')}>
+            <Icon className="fas fa-minus"></Icon>
+          </DeleteButton>
+        </StyledTableData>
+      </StyledRow>
+      <StyledRow description isSelected={isSelected}>
+        <StyledTableData description colSpan={6} isSelected={isSelected}>
+          <StyledDescriptionBox>
+            <StyledText bold>Opis tematu:</StyledText>
+            <StyledText>{meetingData.description}</StyledText>
+            <StyledText bold>Tagi:</StyledText>
+            <StyledText>{renderTags}</StyledText>
+          </StyledDescriptionBox>
+        </StyledTableData>
+      </StyledRow>
+    </>
   );
 };
 
