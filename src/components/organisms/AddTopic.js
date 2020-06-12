@@ -16,6 +16,7 @@ const Formik = ({setFieldValue, column, status, isModalVisible, setIsModalVisibl
     <StyledForm as={Form}>
       <Input name="topic" label="Temat" placeholder="Wprowadź temat"></Input>
       <Input name="userAdded" label="Inicjator" placeholder="Wpisz swoje dane"></Input>
+      <Input name="description" label="Opis" placeholder="Wpisz opis tematu"></Input>
       <Tags shouldReset={status} placeholder="Wpisz kategorie tematu" onTagsChange={setTags('tags')} name="tags" label="Tagi"></Tags>
 
       <StyledButtonsContainer column={column}>
@@ -31,9 +32,10 @@ const Formik = ({setFieldValue, column, status, isModalVisible, setIsModalVisibl
 };
 
 const AddTopic = withFormik({
-  mapPropsToValues: ({topic, votes, userAdded, tags}) => {
+  mapPropsToValues: ({topic, description, votes, userAdded, tags}) => {
     return {
       topic: topic || '',
+      description: description || 'brak opisu spotkania',
       votes: votes || 0,
       userAdded: userAdded || 'bezimienny',
       addedDate: new Date().getTime() || '',
@@ -44,6 +46,7 @@ const AddTopic = withFormik({
     topic: Yup.string()
       .min(3, 'Temat musi mieć minimum 3 znaki')
       .required('Wprowadź temat'),
+    description: Yup.string(),
     userAdded: Yup.string()
       .min(3, 'To pole musi mieć minimum 3 znaki')
       .required('Wprowadź informacje o użytkowniku'),
