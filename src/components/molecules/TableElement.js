@@ -15,10 +15,10 @@ const StyledRow = styled.tr`
   height: 50px;
   padding: 0 10px;
   border-bottom: 1px solid ${variables.tableBorderColor};
-  background-color: ${({isSelected}) => isSelected && variables.colorMain};
+  background-color: ${({isSelected}) => isSelected && variables.backgroundColor};
   transition: 0.2s ease-in-out;
   &:hover {
-    background-color: ${variables.colorMain};
+    background-color: ${variables.tableHeaderColor};
     cursor: pointer;
     /* color: ${variables.colorWhite}; */
   }
@@ -29,14 +29,12 @@ const StyledRow = styled.tr`
       background-color: ${variables.colorWhite};
       color: ${variables.colorBlack} !important;
       &:hover {
-        background-color: ${variables.colorWhite};
+        background: none;
       }
     `}
   ${({isSelected}) =>
     isSelected &&
     css`
-    color: ${variables.colorWhite};
-      /* background-color: ${variables.colorWhite}; */
       display: table-row;
     `}
 `;
@@ -185,7 +183,7 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
   });
   return (
     <>
-      <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
+      <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} topic isSelected={isSelected}>
         <StyledTableData>
           <Checkbox isSelected={isSelected}></Checkbox>
         </StyledTableData>
