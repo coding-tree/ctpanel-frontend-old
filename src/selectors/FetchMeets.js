@@ -8,7 +8,7 @@ import {
 
 export const getUser = () => (
   async dispatch => {
-    dispatch(getUserPending());
+    //dispatch(getUserPending());
     try {
       const response = await fetch(process.env.REACT_APP_SERVER_URL + "/user", {credentials: 'include'});
       const data = await response.json();
