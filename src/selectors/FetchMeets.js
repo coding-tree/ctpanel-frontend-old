@@ -1,82 +1,68 @@
 import { 
-  fetchMeetingHistoryPending, fetchMeetingHistorySuccess, fetchMeetingHistoryError, 
-  fetchSchedulePending, fetchScheduleSuccess, fetchScheduleError, 
-  fetchMeetingsPending, fetchMeetingsSuccess, fetchMeetingsError, 
-  fetchTopicsPending, fetchTopicsSuccess, fetchTopicsError
+  getUserPending, getUserSuccess, getUserError,
+  getMeetingHistoryPending, getMeetingHistorySuccess, getMeetingHistoryError, 
+  getSchedulePending, getScheduleSuccess, getScheduleError, 
+  getMeetingsPending, getMeetingsSuccess, getMeetingsError, 
+  getTopicsPending, getTopicsSuccess, getTopicsError
 } from 'actions';
 
-export const fetchUser = async () => {
-  try {
-    const response = await fetch(process.env.REACT_APP_SERVER_URL + "/user");
-    const data = await response.json();
-    return data;
-  } catch(error){
-    console.log(error);
+export const getUser = () => (
+  async dispatch => {
+    dispatch(getUserPending());
+    try {
+      const response = await fetch(process.env.REACT_APP_SERVER_URL + "/user", {credentials: 'include'});
+      const data = await response.json();
+      dispatch(getUserSuccess(data));
+    } catch(error){
+      dispatch(getUserError(error));
+    };
   }
-}
-
-
-
-export const fetchMeetingHistory = () => {
-  return async dispatch => {
+);
+export const getMeetingHistory = () => (
+  async dispatch => {
+    dispatch(getMeetingHistoryPending());
+    try {
+      const response = await fetch(process.env.REACT_APP_SERVER_URL + "/meetings/archive");
+      const data = await response.json();
+      dispatch(getMeetingHistorySuccess(data));
+    } catch(error){
+      dispatch(getMeetingHistoryError(error));
+    };
+  }
+);
+export const getSchedule = () => (
+  async dispatch => {
+    dispatch(getSchedulePending());
     try {
       const response = await fetch(process.env.REACT_APP_SERVER_URL + "/meetings/schedule");
       const data = await response.json();
-      dispatch(fetchMeetingHistorySuccess(data));
-      //return data;
+      dispatch(getScheduleSuccess(data));
     } catch(error){
-      console.log(error);
-    }
+      dispatch(getScheduleError(error));
+    };
   }
-
-}
-
-
-
-export const fetchTopics = async () => {
-  try {
-    const response = await fetch(process.env.REACT_APP_SERVER_URL + "/topics");
-    const data = await response.json();
-    return data;
-  } catch(error){
-    console.log(error);
+);
+export const getMeetings = () => (
+  async dispatch => {
+    dispatch(getMeetingsPending());
+    try {
+      const response = await fetch(process.env.REACT_APP_SERVER_URL + "/meetings");
+      const data = await response.json();
+      dispatch(getMeetingsSuccess(data));
+    } catch(error){
+      dispatch(getMeetingsError(error));
+    };
   }
-}
-
-// export const fetchMeets = fetchParameters => dispatch => {
-//   const {methodType, requestDataType, generalAttribute, specificAttribute, limit} = fetchParameters;
-
-//   const createUrl = () => {
-//     if (generalAttribute !== '') {
-//       if (limit) return `${process.env.REACT_APP_SERVER_URL}/${generalAttribute}/${requestDataType}/?limit=${limit}`;
-//       return `${process.env.REACT_APP_SERVER_URL}/${generalAttribute}/${requestDataType}`;
-//     } else if (specificAttribute !== '') {
-//       return `${process.env.REACT_APP_SERVER_URL}/${requestDataType}/${specificAttribute}`;
-//     } else {
-//       return `${process.env.REACT_APP_SERVER_URL}/${requestDataType}`;
-//     }
-//   };
-
-//   const getData = () => {
-//     const url = createUrl();
-
-//     try {
-//       fetch(url, {
-//         method: methodType,
-//         credentials: 'include',
-//       })
-//         .then(response => {
-//           if (response.status === 200) return response.json();
-//           if (response.status >= 400 && response.status <= 499) throw new Error(`There is problem: Błąd aplikacji. Dane nie zostały pobrane.`);
-//           if (response.status >= 500 && response.status <= 599) throw new Error(`There is problem: Błąd serwera. Dane nie zostały pobrane.`);
-//           throw new Error(`There is problem: Inna odpowiedź z serwera. Skontaktuj się z administratorem.`);
-//         })
-//         .then(data => dispatch(fetchMeetsSuccess(data, requestDataType)))
-//         .catch(error => dispatch(fetchMeetsError(error, requestDataType)));
-//     } catch (error) {
-//       throw new Error(`There is problem: ${error}`);
-//     }
-//   };
-
-//   return getData();
-// };
+);
+export const getTopics = () => (
+  async dispatch => {
+    dispatch(getTopicsPending());
+    try {
+      const response = await fetch(process.env.REACT_APP_SERVER_URL + "/topics");
+      const data = await response.json();
+      dispatch(getTopicsSuccess(data));
+    } catch(error){
+      dispatch(getTopicsError(error));
+    };
+  }
+);

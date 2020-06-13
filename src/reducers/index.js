@@ -1,12 +1,17 @@
-import { combineReducers } from 'redux'
-
+import { combineReducers } from 'redux';
 import {
+  REQUEST_USER, RECEIVE_USER, INVALIDATE_USER,
   REQUEST_MEETING_HISTORY, RECEIVE_MEETING_HISTORY, INVALIDATE_MEETING_HISTORY,
   REQUEST_SCHEDULE, RECEIVE_SCHEDULE, INVALIDATE_SCHEDULE,
   REQUEST_MEETINGS, RECEIVE_MEETINGS, INVALIDATE_MEETINGS,
   REQUEST_TOPICS, RECEIVE_TOPICS, INVALIDATE_TOPICS
 } from 'actions';
 
+const _user = {
+  pending: false,
+  meetings: undefined,
+  error: null
+};
 const _meetingHistory = {
   pending: false,
   meetings: [],
@@ -28,6 +33,29 @@ const _topics = {
   error: null
 };
 
+const userReducer = (state = _user, action) => {
+  switch(action.type) {
+    case REQUEST_USER:
+      return {
+        ...state,
+        pending: true,
+        error: false
+      };
+    case RECEIVE_USER:
+      return {
+          pending: false,
+          meetings: action.meetings,
+          error: null
+      };
+    case INVALIDATE_USER:
+      return {
+        ...state,
+        error: true
+      };
+    default: 
+        return state;
+    };
+};
 const meetingHistoryReducer = (state = _meetingHistory, action) => {
   switch(action.type) {
     case REQUEST_MEETING_HISTORY:
@@ -121,59 +149,12 @@ const topicsReducer = (state = _topics, action) => {
     };
 };
 
-const initialState = {
-  user: {
-    pending: true,
-    meetings: undefined,
-    error: null,
-  },
-  archive: {
-    pending: false,
-    meetings: [],
-    error: null,
-  },
-};
-
-const tableReducer = (state = initialState, {type, payload, meetType}) => {
-  switch (type) {
-    case "GET_MEETS_REQUEST":
-      return {
-        ...state,
-        [meetType]: {
-          ...state[meetType],
-          pending: true,
-        },
-      };
-    case "GET_MEETS_SUCCESS":
-      return {
-        ...state,
-        [meetType]: {
-          ...state[meetType],
-          meetings: payload,
-          pending: false,
-          error: false,
-        },
-      };
-    case "GET_MEETS_FAILURE":
-      return {
-        ...state,
-        [meetType]: {
-          ...state[meetType],
-          error: true,
-          pending: false,
-        },
-      };
-    default:
-      return state;
-  }
-};
-
 const rootReducer = combineReducers({
+  userReducer,
   meetingHistoryReducer,
   scheduleReducer,
   meetingsReducer,
-  topicsReducer,
-  tableReducer
+  topicsReducer
 });
 
 export default rootReducer;
