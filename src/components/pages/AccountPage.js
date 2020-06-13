@@ -7,7 +7,8 @@ import {PrimaryButton} from 'components/atoms/Button';
 import axios from 'axios';
 import Header from 'components/atoms/Header';
 
-const AccountPage = ({user}) => {
+const AccountPage = ({userReducer}) => {
+  const {pending, meetings, error} = userReducer;
   const [userRole, setUserRole] = useState('Gość');
   const [userCredentials, setUserCredentials] = useState(undefined);
 
@@ -23,17 +24,17 @@ const AccountPage = ({user}) => {
   };
 
   useEffect(() => {
-    const userRoles = user.meetings._json['https://codingtree.pl/oauth2/roles'];
+    const userRoles = meetings._json['https://codingtree.pl/oauth2/roles'];
     setUserRole(parseRoleIdToBeltColor(userRoles));
-  }, [user]);
+  }, [meetings]);
 
   useEffect(() => {
-    const url = `${process.env.REACT_APP_SERVER_URL}/user/${user.meetings.nickname}`;
+    const url = `${process.env.REACT_APP_SERVER_URL}/user/${meetings.nickname}`;
     axios
       .get(url)
       .then(res => setUserCredentials(res.data))
       .catch(err => console.log(err));
-  }, [user]);
+  }, [meetings]);
 
   if (userCredentials) {
     return (
@@ -42,7 +43,7 @@ const AccountPage = ({user}) => {
           <Header tableTitle>Konto</Header>
           <StyledContainer>
             <StyledUser>
-              <StyledAvatar src={user.meetings.picture} alt="user avatar" />
+              <StyledAvatar src={meetings.picture} alt="user avatar" />
               <StyledNickName>{userCredentials.userNickName}</StyledNickName>
               <StyledBeltName>{userRole}</StyledBeltName>
             </StyledUser>
@@ -86,8 +87,8 @@ const AccountPage = ({user}) => {
   }
 };
 
-const mapStateToProps = ({user}) => ({
-  user,
+const mapStateToProps = ({userReducer}) => ({
+  userReducer,
 });
 
 const StyledWrapper = styled.div`

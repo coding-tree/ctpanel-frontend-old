@@ -8,7 +8,7 @@ import LoadingSpinner from 'components/atoms/LoadingSpinner';
 import MainTemplate from './components/templates/MainTemplate';
 import MenuSidebar from 'components/organisms/MenuSidebar';
 import NextMeet from 'components/organisms/NextMeet';
-import {fetchUser as fetchMeetsAction} from 'selectors/FetchMeets';
+import {getUser as fetchMeetsAction} from 'selectors/FetchMeets';
 
 const Account = lazy(() => import('components/pages/AccountPage'));
 const History = lazy(() => import('components/pages/MeetingHistoryPage'));
@@ -17,14 +17,15 @@ const LoginPage = lazy(() => import('components/pages/LoginPage'));
 const Timetable = lazy(() => import('components/pages/SchedulesPage'));
 const TopicDatabase = lazy(() => import('components/pages/TopicDatabasePage'));
 
-const Root = () => {
+const Root = ({userReducer, getUser}) => {
+  const {pending, meetings, error} = userReducer;
   useEffect(() => {
-    //fetchMeets();
+    getUser();
   }, []);
 
-  // if (user.pending) {
-  //   return <div>Loading...</div>;
-  // } else if (user.meetings) {
+  if (pending) {
+    return <div>Loading...</div>;
+  } else if (meetings) {
     return (
       <BrowserRouter>
         <MainTemplate>
@@ -43,27 +44,26 @@ const Root = () => {
         </MainTemplate>
       </BrowserRouter>
     );
-  // } else {
-  //   return (
-  //     <BrowserRouter>
-  //       <Suspense fallback={<LoadingSpinner />}>
-  //         <Switch>
-  //           <Route strict exact path="/login" component={LoginPage} />
-  //           <Redirect to="/login" />
-  //         </Switch>
-  //       </Suspense>
-  //     </BrowserRouter>
-  //   );
-  // }
+  } else {
+    return (
+      <BrowserRouter>
+        <Suspense fallback={<LoadingSpinner />}>
+          <Switch>
+            <Route strict exact path="/login" component={LoginPage} />
+            <Redirect to="/login" />
+          </Switch>
+        </Suspense>
+      </BrowserRouter>
+    );
+  }
 };
 
-const mapStateToProps = ({user}) => ({
-  user,
+const mapStateToProps = ({userReducer}) => ({
+  userReducer
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   fetchMeets: () => dispatch(fetchMeetsAction()),
-// });
+const mapDispatchToProps = dispatch => ({
+  getUser: () => dispatch(fetchMeetsAction()),
+});
 
-export default Root;
-
+export default connect(mapStateToProps, mapDispatchToProps)(Root);
