@@ -8,7 +8,7 @@ import LoadingSpinner from 'components/atoms/LoadingSpinner';
 import MainTemplate from './components/templates/MainTemplate';
 import MenuSidebar from 'components/organisms/MenuSidebar';
 import NextMeet from 'components/organisms/NextMeet';
-import {fetchMeets as fetchMeetsAction} from 'selectors/FetchMeets';
+import {fetchUser as fetchMeetsAction} from 'selectors/FetchMeets';
 
 const Account = lazy(() => import('components/pages/AccountPage'));
 const History = lazy(() => import('components/pages/MeetingHistoryPage'));
@@ -17,14 +17,14 @@ const LoginPage = lazy(() => import('components/pages/LoginPage'));
 const Timetable = lazy(() => import('components/pages/SchedulesPage'));
 const TopicDatabase = lazy(() => import('components/pages/TopicDatabasePage'));
 
-const Root = ({user, fetchMeets}) => {
+const Root = () => {
   useEffect(() => {
-    fetchMeets();
+    //fetchMeets();
   }, []);
 
-  if (user.pending) {
-    return <div>Loading...</div>;
-  } else if (user.meetings) {
+  // if (user.pending) {
+  //   return <div>Loading...</div>;
+  // } else if (user.meetings) {
     return (
       <BrowserRouter>
         <MainTemplate>
@@ -43,33 +43,27 @@ const Root = ({user, fetchMeets}) => {
         </MainTemplate>
       </BrowserRouter>
     );
-  } else {
-    return (
-      <BrowserRouter>
-        <Suspense fallback={<LoadingSpinner />}>
-          <Switch>
-            <Route strict exact path="/login" component={LoginPage} />
-            <Redirect to="/login" />
-          </Switch>
-        </Suspense>
-      </BrowserRouter>
-    );
-  }
+  // } else {
+  //   return (
+  //     <BrowserRouter>
+  //       <Suspense fallback={<LoadingSpinner />}>
+  //         <Switch>
+  //           <Route strict exact path="/login" component={LoginPage} />
+  //           <Redirect to="/login" />
+  //         </Switch>
+  //       </Suspense>
+  //     </BrowserRouter>
+  //   );
+  // }
 };
 
 const mapStateToProps = ({user}) => ({
   user,
 });
 
-const fetchParameters = {
-  methodType: 'GET',
-  requestDataType: 'user',
-  generalAttribute: '',
-  specificAttribute: '',
-};
+// const mapDispatchToProps = dispatch => ({
+//   fetchMeets: () => dispatch(fetchMeetsAction()),
+// });
 
-const mapDispatchToProps = dispatch => ({
-  fetchMeets: () => dispatch(fetchMeetsAction(fetchParameters)),
-});
+export default Root;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Root);

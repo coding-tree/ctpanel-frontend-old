@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import TableTemplate from 'components/templates/TableTemplate';
 import TableList from 'components/organisms/TableList';
 import {withRouter} from 'react-router-dom';
-import {fetchMeets as fetchMeetsAction} from 'selectors/FetchMeets';
+import {fetchMeetingHistory as fetchMeetsAction} from 'selectors/FetchMeets';
 import {connect} from 'react-redux';
 
 const HistoryPage = ({archive, fetchMeets}) => {
@@ -29,7 +29,7 @@ const fetchParameters = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchMeets: () => dispatch(fetchMeetsAction(fetchParameters)),
+  fetchMeets: () => dispatch(fetchMeetsAction()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HistoryPage));

@@ -1,3 +1,5 @@
+import { combineReducers } from 'redux'
+
 import {
   REQUEST_MEETING_HISTORY, RECEIVE_MEETING_HISTORY, INVALIDATE_MEETING_HISTORY,
   REQUEST_SCHEDULE, RECEIVE_SCHEDULE, INVALIDATE_SCHEDULE,
@@ -134,7 +136,7 @@ const initialState = {
 
 const tableReducer = (state = initialState, {type, payload, meetType}) => {
   switch (type) {
-    case GET_MEETS_REQUEST:
+    case "GET_MEETS_REQUEST":
       return {
         ...state,
         [meetType]: {
@@ -142,7 +144,7 @@ const tableReducer = (state = initialState, {type, payload, meetType}) => {
           pending: true,
         },
       };
-    case GET_MEETS_SUCCESS:
+    case "GET_MEETS_SUCCESS":
       return {
         ...state,
         [meetType]: {
@@ -152,7 +154,7 @@ const tableReducer = (state = initialState, {type, payload, meetType}) => {
           error: false,
         },
       };
-    case GET_MEETS_FAILURE:
+    case "GET_MEETS_FAILURE":
       return {
         ...state,
         [meetType]: {
