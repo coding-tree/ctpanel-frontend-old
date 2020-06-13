@@ -22,7 +22,7 @@ const Root = ({userReducer, getUser}) => {
   useEffect(() => {
     getUser();
   }, []);
-  console.log(pending);
+
   if (pending) {
     return <div>Loading...</div>;
   } else if (meetings) {
