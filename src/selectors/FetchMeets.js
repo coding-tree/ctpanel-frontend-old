@@ -79,6 +79,24 @@ export const removeMeetings = () => (
     
   }
 );
+export const editMeetings = (dataToSend, id) => (
+  async dispatch => {
+    try {
+      const response = await fetch(process.env.REACT_APP_SERVER_URL + "/topics/" + id, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+
+      });
+    } catch(error){
+      console.log(error);
+    };
+  }
+);
+
 
 export const getTopics = () => (
   async dispatch => {
