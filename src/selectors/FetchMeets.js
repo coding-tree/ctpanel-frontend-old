@@ -82,7 +82,7 @@ export const removeMeetings = () => (
 export const editMeetings = (dataToSend, id) => (
   async dispatch => {
     try {
-      const response = await fetch(process.env.REACT_APP_SERVER_URL + "/xxx/" + id, {
+      const response = await fetch(process.env.REACT_APP_SERVER_URL + "/meetings/" + id, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
