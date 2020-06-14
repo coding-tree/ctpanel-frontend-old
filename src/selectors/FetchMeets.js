@@ -92,9 +92,21 @@ export const getTopics = () => (
     };
   }
 );
-export const postTopics = () => (
+export const postTopic = dataToSend => (
   async dispatch => {
+    try {
+      const response = await fetch(process.env.REACT_APP_SERVER_URL + "/topics", {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
 
+      });
+    } catch(error){
+      console.log(error);
+    };
   }
 );
 export const removeTopics = () => (
