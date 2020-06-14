@@ -82,7 +82,7 @@ export const removeMeetings = () => (
 export const editMeetings = (dataToSend, id) => (
   async dispatch => {
     try {
-      const response = await fetch(process.env.REACT_APP_SERVER_URL + "/topics/" + id, {
+      const response = await fetch(process.env.REACT_APP_SERVER_URL + "/xxx/" + id, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
@@ -130,5 +130,22 @@ export const postTopic = dataToSend => (
 export const removeTopics = () => (
   async dispatch => {
     
+  }
+);
+export const editTopics = (dataToSend, id) => (
+  async dispatch => {
+    try {
+      const response = await fetch(process.env.REACT_APP_SERVER_URL + "/topics/" + id, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+
+      });
+    } catch(error){
+      console.log(error);
+    };
   }
 );

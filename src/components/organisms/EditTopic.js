@@ -9,7 +9,7 @@ import {CancelButton, PrimaryButton} from 'components/atoms/Button';
 import {toast} from 'react-toastify';
 
 import {connect} from 'react-redux';
-import {removeMeetings as fetchMeetsAction} from 'selectors/FetchMeets';
+import {editTopics as fetchMeetsAction} from 'selectors/FetchMeets';
 
 const Formik = ({setFieldValue, column, setIsModalVisible, selectedElement}) => {
   const [editData] = selectedElement;
@@ -55,7 +55,7 @@ const EditTopic = withFormik({
   handleSubmit: (values, {props}) => {
     props.setSubmitting(true);
     const [editData] = props.selectedElement;
-    props.postMeetings(values, editData._id)
+    props.editTopics(values, editData._id)
     .then(() => {
       props.setIsModalVisible(false);
       props.setSubmitting(false);
@@ -69,7 +69,7 @@ const EditTopic = withFormik({
 })(Formik);
 
 const mapDispatchToProps = dispatch => ({
-  removeMeetings: (dataToSend, id) => dispatch(fetchMeetsAction(dataToSend, id)),
+  editTopics: (dataToSend, id) => dispatch(fetchMeetsAction(dataToSend, id)),
 });
 
 export default connect(null, mapDispatchToProps)(EditTopic);
