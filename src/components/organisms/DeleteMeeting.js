@@ -24,6 +24,7 @@ const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModal
       setSubmitting(false);
       toast.error('Nie udało się usunąć spotkań!');
     });
+  }
 
   return (
     <StyledForm onSubmit={e => e.preventDefault()}>

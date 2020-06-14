@@ -77,7 +77,7 @@ export const postMeetings = dataToSend => (
 export const removeMeetings = (selectedElements, destination) => (
   async dispatch => {
     const removeElements = (selectedElements, destination) => selectedElements.map(element => (
-      fetch(process.env.REACT_APP_SERVER_URL + destination + element._id, {
+      fetch(process.env.REACT_APP_SERVER_URL + "/" + destination + "/" + element._id, {
         method: 'DELETE'
       })
     ));
@@ -105,6 +105,7 @@ export const editMeetings = (dataToSend, id) => (
     };
   }
 );
+
 
 export const getTopics = () => (
   async dispatch => {
@@ -135,9 +136,19 @@ export const postTopic = dataToSend => (
     };
   }
 );
-export const removeTopics = () => (
+export const removeTopics = (selectedElements, destination) => (
   async dispatch => {
+    const removeElements = (selectedElements, destination) => selectedElements.map(element => (
+      fetch(process.env.REACT_APP_SERVER_URL + "/" + destination + "/" + element._id, {
+        method: 'DELETE'
+      })
+    ));
     
+    try {
+      const response = await Promise.all(removeElements(selectedElements, destination));
+    } catch(error) {
+      console.log(error);
+    }
   }
 );
 export const editTopics = (dataToSend, id) => (
