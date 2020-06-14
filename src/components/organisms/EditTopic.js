@@ -20,20 +20,21 @@ const Formik = ({setFieldValue, column, setIsModalVisible, selectedElement}) => 
     <StyledForm as={Form}>
       <Input name="topic" label="Temat" placeholder="Wprowadź temat"></Input>
       <Input name="userAdded" label="Inicjator" placeholder="Wpisz swoje dane"></Input>
+      <Input name="description" label="Opis" placeholder="Wpisz opis"></Input>
       <Tags activeTags={editData.tags} placeholder="Wpisz kategorie tematu" onTagsChange={setTags('tags')} name="tags" label="Tagi"></Tags>
 
       <StyledButtonsContainer column={column}>
         <CancelButton large onClick={() => setIsModalVisible(false)} type="button">
           Anuluj
         </CancelButton>
-        <PrimaryButton large>Dodaj</PrimaryButton>
+        <PrimaryButton large>Zapisz</PrimaryButton>
       </StyledButtonsContainer>
     </StyledForm>
   );
 };
 
 const EditTopic = withFormik({
-  mapPropsToValues: ({topic, votes, userAdded, tags, selectedElement}) => {
+  mapPropsToValues: ({topic, description, votes, userAdded, tags, selectedElement}) => {
     const [editData] = selectedElement;
     return {
       topic: topic || editData.topic || '',
@@ -41,6 +42,7 @@ const EditTopic = withFormik({
       userAdded: userAdded || editData.userAdded || 'bezimienny',
       addedDate: new Date().getTime() || '',
       tags: tags || editData.tags || [],
+      description: description || editData.description || 'brak opisu',
     };
   },
   validationSchema: Yup.object().shape({
@@ -51,6 +53,7 @@ const EditTopic = withFormik({
       .min(3, 'To pole musi mieć minimum 3 znaki')
       .required('Wprowadź informacje o użytkowniku'),
     votes: Yup.number('głosy muszą być liczbą'),
+    description: Yup.string(),
   }),
   handleSubmit: (values, {props}) => {
     props.setSubmitting(true);
