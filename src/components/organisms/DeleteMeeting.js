@@ -4,29 +4,26 @@ import axios from 'axios';
 import styled from 'styled-components';
 import {toast} from 'react-toastify';
 
-const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModalVisible, setSubmitting}) => {
+import {connect} from 'react-redux';
+import {removeMeetings as fetchMeetsAction} from 'selectors/FetchMeets';
+
+const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModalVisible, setSubmitting, removeMeetings}) => {
   const listItems = selectedElement.map((el, index) => {
     return <StyledListItem key={index}>{el.topic}</StyledListItem>;
   });
 
   const deleteItems = () => {
     setSubmitting(true);
-    axios
-      .all(
-        selectedElement.map(element => {
-          return axios.delete(`${process.env.REACT_APP_SERVER_URL}/${destination}/${element._id}`);
-        })
-      )
-      .then(() => {
-        setSubmitting(false);
-        setIsModalVisible(false);
-        toast.success('Pomyślnie usunięto spotkania!');
-      })
-      .catch(() => {
-        setSubmitting(false);
-        toast.error('Nie udało się usunąć spotkań!');
-      });
-  };
+    removeMeetings(selectedElement, destination)
+    .then(() => {
+      setSubmitting(false);
+      setIsModalVisible(false);
+      toast.success('Pomyślnie usunięto spotkania!');
+    })
+    .catch(() => {
+      setSubmitting(false);
+      toast.error('Nie udało się usunąć spotkań!');
+    });
 
   return (
     <StyledForm onSubmit={e => e.preventDefault()}>
@@ -44,7 +41,11 @@ const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModal
   );
 };
 
-export default DeleteMeeting;
+const mapDispatchToProps = dispatch => ({
+  removeMeetings: (selectedElements, destination) => dispatch(fetchMeetsAction(selectedElements, destination)),
+});
+
+export default connect(null, mapDispatchToProps)(DeleteMeeting);
 
 const StyledTitle = styled.h3`
   font-family: inherit;

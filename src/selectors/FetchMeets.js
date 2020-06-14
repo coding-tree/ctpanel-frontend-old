@@ -74,9 +74,19 @@ export const postMeetings = dataToSend => (
     };
   }
 );
-export const removeMeetings = () => (
+export const removeMeetings = (selectedElements, destination) => (
   async dispatch => {
+    const removeElements = (selectedElements, destination) => selectedElements.map(element => (
+      fetch(process.env.REACT_APP_SERVER_URL + destination + element._id, {
+        method: 'DELETE'
+      })
+    ));
     
+    try {
+      const response = await Promise.all(removeElements(selectedElements, destination));
+    } catch(error) {
+      console.log(error);
+    }
   }
 );
 export const editMeetings = (dataToSend, id) => (
@@ -89,14 +99,12 @@ export const editMeetings = (dataToSend, id) => (
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(dataToSend)
-
       });
     } catch(error){
       console.log(error);
     };
   }
 );
-
 
 export const getTopics = () => (
   async dispatch => {
