@@ -18,6 +18,7 @@ export const getUser = () => (
     };
   }
 );
+
 export const getMeetingHistory = () => (
   async dispatch => {
     dispatch(getMeetingHistoryPending());
@@ -30,6 +31,7 @@ export const getMeetingHistory = () => (
     };
   }
 );
+
 export const getSchedule = () => (
   async dispatch => {
     dispatch(getSchedulePending());
@@ -42,6 +44,7 @@ export const getSchedule = () => (
     };
   }
 );
+
 export const getMeetings = () => (
   async dispatch => {
     dispatch(getMeetingsPending());
@@ -54,6 +57,29 @@ export const getMeetings = () => (
     };
   }
 );
+export const postMeetings = dataToSend => (
+  async dispatch => {
+    try {
+      const response = await fetch(process.env.REACT_APP_SERVER_URL + "/meetings", {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+
+      });
+    } catch(error){
+      console.log(error);
+    };
+  }
+);
+export const removeMeetings = () => (
+  async dispatch => {
+    
+  }
+);
+
 export const getTopics = () => (
   async dispatch => {
     dispatch(getTopicsPending());
@@ -64,5 +90,15 @@ export const getTopics = () => (
     } catch(error){
       dispatch(getTopicsError(error));
     };
+  }
+);
+export const postTopics = () => (
+  async dispatch => {
+
+  }
+);
+export const removeTopics = () => (
+  async dispatch => {
+    
   }
 );
