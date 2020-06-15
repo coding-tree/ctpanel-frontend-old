@@ -30,7 +30,7 @@ const LastMeetHeader = ({leader, topic, date}) => {
       <Title uppercase important fontSize="3.2rem">
         {topic}
       </Title>
-      <StyledDate fontSize="2rem" format="MM.DoYYYY" date={date}></StyledDate>
+      <StyledDate fontSize="2rem" format="DoMM.YYYY" date={date}></StyledDate>
     </HeaderWrapper>
   );
 };
