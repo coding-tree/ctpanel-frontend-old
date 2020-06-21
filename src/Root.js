@@ -8,7 +8,7 @@ import LoadingSpinner from 'components/atoms/LoadingSpinner';
 import MainTemplate from './components/templates/MainTemplate';
 import MenuSidebar from 'components/organisms/MenuSidebar';
 import NextMeet from 'components/organisms/NextMeet';
-import {getUser as fetchMeetsAction} from 'selectors/FetchMeets';
+import {getUser as fetchUserAction} from 'selectors/FetchMeets';
 
 const Account = lazy(() => import('components/pages/AccountPage'));
 const History = lazy(() => import('components/pages/MeetingHistoryPage'));
@@ -63,7 +63,7 @@ const mapStateToProps = ({userReducer}) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUser: () => dispatch(fetchMeetsAction()),
+  getUser: () => dispatch(fetchUserAction()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Root);
