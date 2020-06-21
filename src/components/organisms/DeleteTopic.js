@@ -5,16 +5,16 @@ import styled from 'styled-components';
 import {toast} from 'react-toastify';
 
 import {connect} from 'react-redux';
-import {removeTopics as fetchMeetsAction} from 'selectors/FetchMeets';
+import {deleteTopics as deleteTopicsAction} from 'selectors/FetchMeets';
 
-const DeleteTopic = ({selectedElement, destination, isModalVisible, setIsModalVisible, setSubmitting, removeTopics}) => {
+const DeleteTopic = ({selectedElement, destination, isModalVisible, setIsModalVisible, setSubmitting, deleteTopics}) => {
   const listItems = selectedElement.map((el, index) => {
     return <StyledListItem key={index}>{el.topic}</StyledListItem>;
   });
 
   const deleteItems = () => {
     setSubmitting(true);
-    removeTopics(selectedElement, destination)
+    deleteTopics(selectedElement, destination)
     .then(() => {
       setIsModalVisible(false);
       setSubmitting(false);
@@ -43,7 +43,7 @@ const DeleteTopic = ({selectedElement, destination, isModalVisible, setIsModalVi
 };
 
 const mapDispatchToProps = dispatch => ({
-  removeTopics: (selectedElements, destination) => dispatch(fetchMeetsAction(selectedElements, destination)),
+  deleteTopics: (selectedElements, destination) => dispatch(deleteTopicsAction(selectedElements, destination)),
 });
 
 export default connect(null, mapDispatchToProps)(DeleteTopic);

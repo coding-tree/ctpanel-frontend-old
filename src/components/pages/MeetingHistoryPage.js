@@ -2,13 +2,13 @@ import React, {useEffect} from 'react';
 import TableTemplate from 'components/templates/TableTemplate';
 import TableList from 'components/organisms/TableList';
 import {withRouter} from 'react-router-dom';
-import {getMeetingHistory as fetchMeetsAction} from 'selectors/FetchMeets';
+import {getMeetingsHistory as getMeetingsHistoryAction} from 'selectors/FetchMeets';
 import {connect} from 'react-redux';
 
-const HistoryPage = ({meetingHistoryReducer, getMeetingHistory}) => {
+const HistoryPage = ({meetingHistoryReducer, getMeetingsHistory}) => {
   const {pending, meetings, error} = meetingHistoryReducer;
   useEffect(() => {
-    getMeetingHistory();
+    getMeetingsHistory();
   }, []);
 
   return (
@@ -23,7 +23,7 @@ const mapStateToProps = ({meetingHistoryReducer}) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getMeetingHistory: () => dispatch(fetchMeetsAction()),
+  getMeetingsHistory: () => dispatch(getMeetingsHistoryAction()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HistoryPage));

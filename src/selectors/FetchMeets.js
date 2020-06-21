@@ -1,6 +1,6 @@
 import { 
   getUserPending, getUserSuccess, getUserError,
-  getMeetingHistoryPending, getMeetingHistorySuccess, getMeetingHistoryError, 
+  getMeetingsHistoryPending, getMeetingsHistorySuccess, getMeetingsHistoryError, 
   getSchedulePending, getScheduleSuccess, getScheduleError, 
   getMeetingsPending, getMeetingsSuccess, getMeetingsError, 
   getTopicsPending, getTopicsSuccess, getTopicsError
@@ -19,15 +19,15 @@ export const getUser = () => (
   }
 );
 
-export const getMeetingHistory = () => (
+export const getMeetingsHistory = () => (
   async dispatch => {
-    dispatch(getMeetingHistoryPending());
+    dispatch(getMeetingsHistoryPending());
     try {
       const response = await fetch(process.env.REACT_APP_SERVER_URL + "/meetings/archive");
       const data = await response.json();
-      dispatch(getMeetingHistorySuccess(data));
+      dispatch(getMeetingsHistorySuccess(data));
     } catch(error){
-      dispatch(getMeetingHistoryError(error));
+      dispatch(getMeetingsHistoryError(error));
     };
   }
 );
@@ -57,7 +57,7 @@ export const getMeetings = () => (
     };
   }
 );
-export const postMeetings = dataToSend => (
+export const addMeeting = dataToSend => (
   async dispatch => {
     try {
       const response = await fetch(process.env.REACT_APP_SERVER_URL + "/meetings", {
@@ -74,7 +74,7 @@ export const postMeetings = dataToSend => (
     };
   }
 );
-export const removeMeetings = (selectedElements, destination) => (
+export const deleteMeetings = (selectedElements, destination) => (
   async dispatch => {
     const removeElements = (selectedElements, destination) => selectedElements.map(element => (
       fetch(process.env.REACT_APP_SERVER_URL + "/" + destination + "/" + element._id, {
@@ -89,7 +89,7 @@ export const removeMeetings = (selectedElements, destination) => (
     }
   }
 );
-export const editMeetings = (dataToSend, id) => (
+export const editMeeting = (dataToSend, id) => (
   async dispatch => {
     try {
       const response = await fetch(process.env.REACT_APP_SERVER_URL + "/meetings/" + id, {
@@ -119,7 +119,7 @@ export const getTopics = () => (
     };
   }
 );
-export const postTopic = dataToSend => (
+export const addTopic = dataToSend => (
   async dispatch => {
     try {
       const response = await fetch(process.env.REACT_APP_SERVER_URL + "/topics", {
@@ -136,7 +136,7 @@ export const postTopic = dataToSend => (
     };
   }
 );
-export const removeTopics = (selectedElements, destination) => (
+export const deleteTopics = (selectedElements, destination) => (
   async dispatch => {
     const removeElements = (selectedElements, destination) => selectedElements.map(element => (
       fetch(process.env.REACT_APP_SERVER_URL + "/" + destination + "/" + element._id, {
@@ -151,7 +151,7 @@ export const removeTopics = (selectedElements, destination) => (
     }
   }
 );
-export const editTopics = (dataToSend, id) => (
+export const editTopic = (dataToSend, id) => (
   async dispatch => {
     try {
       const response = await fetch(process.env.REACT_APP_SERVER_URL + "/topics/" + id, {

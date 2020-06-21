@@ -30,14 +30,14 @@ export const getUserError = error => ({
   error
 });
 
-export const getMeetingHistoryPending = () => ({
+export const getMeetingsHistoryPending = () => ({
   type: GET_MEETING_HISTORY_REQUEST
 });
-export const getMeetingHistorySuccess = meetings => ({
+export const getMeetingsHistorySuccess = meetings => ({
   type: GET_MEETING_HISTORY_RECEIVED,
   meetings
 });
-export const getMeetingHistoryError = error => ({
+export const getMeetingsHistoryError = error => ({
   type: GET_MEETING_HISTORY_ERROR,
   error
 });

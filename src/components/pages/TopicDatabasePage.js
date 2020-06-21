@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {withRouter} from 'react-router-dom';
-import {getTopics as fetchMeetsAction} from 'selectors/FetchMeets';
+import {getTopics as getTopicsAction} from 'selectors/FetchMeets';
 import {connect} from 'react-redux';
 import TableTemplate from 'components/templates/TableTemplate';
 import TableList from 'components/organisms/TableList';
@@ -25,7 +25,7 @@ const mapStateToProps = ({topicsReducer}) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getTopics: () => dispatch(fetchMeetsAction()),
+  getTopics: () => dispatch(getTopicsAction()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TopicDatabasePage));

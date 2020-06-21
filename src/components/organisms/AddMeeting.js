@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import {toast} from 'react-toastify';
 
 import {connect} from 'react-redux';
-import {postMeetings as fetchMeetsAction} from 'selectors/FetchMeets';
+import {addMeeting as addMeetingAction} from 'selectors/FetchMeets';
 
 const Formik = ({column, status, leaders, setFieldValue, setIsModalVisible, isModalVisible, topicNames, isSubmitting}) => {
   const setValue = name => tags => {
@@ -114,7 +114,7 @@ const AddMeeting = withFormik({
     date = new Date(dateToConvert);
     let timestamp = date.getTime();
     date = timestamp;
-    props.postMeetings({date, topic, leader, meetingHref, description, tags, usefulLinks})
+    props.addMeeting({date, topic, leader, meetingHref, description, tags, usefulLinks})
     .then(() => {
       setStatus(true);
       resetForm();
@@ -130,7 +130,7 @@ const AddMeeting = withFormik({
 })(Formik);
 
 const mapDispatchToProps = dispatch => ({
-  postMeetings: dataToSend => dispatch(fetchMeetsAction(dataToSend)),
+  addMeeting: dataToSend => dispatch(addMeetingAction(dataToSend)),
 });
 
 export default connect(null, mapDispatchToProps)(AddMeeting);

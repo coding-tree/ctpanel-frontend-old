@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import TableTemplate from 'components/templates/TableTemplate';
 import TableList from 'components/organisms/TableList';
-import {getSchedule as fetchMeetsAction} from 'selectors/FetchMeets';
+import {getSchedule as getScheduleAction} from 'selectors/FetchMeets';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import {ToastContainer} from 'react-toastify';
@@ -27,7 +27,7 @@ const mapStateToProps = ({scheduleReducer}) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getSchedule: () => dispatch(fetchMeetsAction()),
+  getSchedule: () => dispatch(getScheduleAction()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TimetablePage));

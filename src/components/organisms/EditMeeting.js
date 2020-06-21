@@ -9,7 +9,7 @@ import axios from 'axios';
 import {toast} from 'react-toastify';
 
 import {connect} from 'react-redux';
-import {editMeetings as fetchMeetsAction} from 'selectors/FetchMeets';
+import {editMeeting as editMeetingAction} from 'selectors/FetchMeets';
 
 const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible, selectedElement, topicNames}) => {
   const [editData] = selectedElement;
@@ -101,7 +101,7 @@ const EditMeeting = withFormik({
     date = new Date(dateToConvert);
     let timestamp = date.getTime();
     date = timestamp;
-    props.editMeetings({date, topic, leader, meetingHref, description, tags, usefulLinks}, editData._id)
+    props.editMeeting({date, topic, leader, meetingHref, description, tags, usefulLinks}, editData._id)
     .then(() => {
       props.setIsModalVisible(false);
       props.setSubmitting(false);
@@ -115,7 +115,7 @@ const EditMeeting = withFormik({
 })(Formik);
 
 const mapDispatchToProps = dispatch => ({
-  editMeetings: (dataToSend, id) => dispatch(fetchMeetsAction(dataToSend, id)),
+  editMeeting: (dataToSend, id) => dispatch(editMeetingAction(dataToSend, id)),
 });
 
 export default connect(null, mapDispatchToProps)(EditMeeting);
