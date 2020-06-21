@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import {
-  REQUEST_USER, RECEIVE_USER, INVALIDATE_USER,
-  REQUEST_MEETING_HISTORY, RECEIVE_MEETING_HISTORY, INVALIDATE_MEETING_HISTORY,
-  REQUEST_SCHEDULE, RECEIVE_SCHEDULE, INVALIDATE_SCHEDULE,
-  REQUEST_MEETINGS, RECEIVE_MEETINGS, INVALIDATE_MEETINGS,
-  REQUEST_TOPICS, RECEIVE_TOPICS, INVALIDATE_TOPICS
+  GET_USER_REQUEST, GET_USER_RECEIVED, GET_USER_ERROR,
+  GET_MEETING_HISTORY_REQUEST, GET_MEETING_HISTORY_RECEIVED, GET_MEETING_HISTORY_ERROR,
+  GET_SCHEDULE_REQUEST, GET_SCHEDULE_RECEIVED, GET_SCHEDULE_ERROR,
+  GET_MEETINGS_REQUEST, GET_MEETINGS_RECEIVED, GET_MEETINGS_ERROR,
+  GET_TOPICS_REQUEST, GET_TOPICS_RECEIVED, GET_TOPICS_ERROR
 } from 'actions';
 
 const _user = {
@@ -35,19 +35,19 @@ const _topics = {
 
 const userReducer = (state = _user, action) => {
   switch(action.type) {
-    case REQUEST_USER:
+    case GET_USER_REQUEST:
       return {
         ...state,
         pending: true,
         error: false
       };
-    case RECEIVE_USER:
+    case GET_USER_RECEIVED:
       return {
           pending: false,
           meetings: action.meetings,
           error: null
       };
-    case INVALIDATE_USER:
+    case GET_USER_ERROR:
       return {
         ...state,
         error: true
@@ -58,19 +58,19 @@ const userReducer = (state = _user, action) => {
 };
 const meetingHistoryReducer = (state = _meetingHistory, action) => {
   switch(action.type) {
-    case REQUEST_MEETING_HISTORY:
+    case GET_MEETING_HISTORY_REQUEST:
       return {
         ...state,
         pending: true,
         error: false
       };
-    case RECEIVE_MEETING_HISTORY:
+    case GET_MEETING_HISTORY_RECEIVED:
       return {
           pending: false,
           meetings: action.meetings,
           error: null
       };
-    case INVALIDATE_MEETING_HISTORY:
+    case GET_MEETING_HISTORY_ERROR:
       return {
         ...state,
         error: true
@@ -81,19 +81,19 @@ const meetingHistoryReducer = (state = _meetingHistory, action) => {
 };
 const scheduleReducer = (state = _schedule, action) => {
   switch(action.type) {
-    case REQUEST_SCHEDULE:
+    case GET_SCHEDULE_REQUEST:
       return {
         ...state,
         pending: true,
         error: false
       };
-    case RECEIVE_SCHEDULE:
+    case GET_SCHEDULE_RECEIVED:
       return {
           pending: false,
           meetings: action.meetings,
           error: null
       };
-    case INVALIDATE_SCHEDULE:
+    case GET_SCHEDULE_ERROR:
       return {
         ...state,
         error: true
@@ -104,19 +104,19 @@ const scheduleReducer = (state = _schedule, action) => {
 };
 const meetingsReducer = (state = _meetings, action) => {
   switch(action.type) {
-    case REQUEST_MEETINGS:
+    case GET_MEETINGS_REQUEST:
       return {
         ...state,
         pending: true,
         error: false
       };
-    case RECEIVE_MEETINGS:
+    case GET_MEETINGS_RECEIVED:
       return {
           pending: false,
           meetings: action.meetings,
           error: null
       };
-    case INVALIDATE_MEETINGS:
+    case GET_MEETINGS_ERROR:
       return {
         ...state,
         error: true
@@ -127,19 +127,19 @@ const meetingsReducer = (state = _meetings, action) => {
 };
 const topicsReducer = (state = _topics, action) => {
   switch(action.type) {
-    case REQUEST_TOPICS:
+    case GET_TOPICS_REQUEST:
       return {
         ...state,
         pending: true,
         error: false
       }
-    case RECEIVE_TOPICS:
+    case GET_TOPICS_RECEIVED:
       return {
           pending: false,
           meetings: action.meetings,
           error: null
       }
-      case INVALIDATE_TOPICS:
+      case GET_TOPICS_ERROR:
         return {
           ...state,
           error: true
