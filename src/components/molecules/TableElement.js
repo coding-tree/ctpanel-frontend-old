@@ -122,6 +122,16 @@ const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}
   const renderTags = meetingData.tags.map((tag, index) => {
     return <StyledTag key={index}>{tag} &nbsp;</StyledTag>;
   });
+  const renderLinks = meetingData.usefulLinks.map((link, index) => {
+    return (
+      <StyledTag key={index}>
+        <StyledLink href={link} target="_blank" rel="nofollow noopener noreferrer">
+          {link}
+        </StyledLink>
+        &nbsp;
+      </StyledTag>
+    );
+  });
   return (
     <>
       <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
@@ -149,6 +159,8 @@ const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}
             <StyledText>{meetingData.description}</StyledText>
             <StyledText bold>Tagi:</StyledText>
             <StyledText>{renderTags}</StyledText>
+            <StyledText bold>Linki:</StyledText>
+            <StyledText>{renderLinks}</StyledText>
           </StyledDescriptionBox>
         </StyledTableData>
       </StyledRow>
