@@ -8,7 +8,7 @@ import LoadingSpinner from 'components/atoms/LoadingSpinner';
 import MainTemplate from './components/templates/MainTemplate';
 import MenuSidebar from 'components/organisms/MenuSidebar';
 import NextMeet from 'components/organisms/NextMeet';
-import {fetchMeets as fetchMeetsAction} from 'selectors/FetchMeets';
+import {getUser as fetchUserAction} from 'selectors/FetchMeets';
 
 const Account = lazy(() => import('components/pages/AccountPage'));
 const History = lazy(() => import('components/pages/MeetingHistoryPage'));
@@ -17,14 +17,15 @@ const LoginPage = lazy(() => import('components/pages/LoginPage'));
 const Timetable = lazy(() => import('components/pages/SchedulesPage'));
 const TopicDatabase = lazy(() => import('components/pages/TopicDatabasePage'));
 
-const Root = ({user, fetchMeets}) => {
+const Root = ({userReducer, getUser}) => {
+  const {pending, meetings, error} = userReducer;
   useEffect(() => {
-    fetchMeets();
+    getUser();
   }, []);
 
-  if (user.pending) {
+  if (pending) {
     return <div>Loading...</div>;
-  } else if (user.meetings) {
+  } else if (meetings) {
     return (
       <BrowserRouter>
         <MainTemplate>
@@ -57,19 +58,12 @@ const Root = ({user, fetchMeets}) => {
   }
 };
 
-const mapStateToProps = ({user}) => ({
-  user,
+const mapStateToProps = ({userReducer}) => ({
+  userReducer
 });
 
-const fetchParameters = {
-  methodType: 'GET',
-  requestDataType: 'user',
-  generalAttribute: '',
-  specificAttribute: '',
-};
-
 const mapDispatchToProps = dispatch => ({
-  fetchMeets: () => dispatch(fetchMeetsAction(fetchParameters)),
+  getUser: () => dispatch(fetchUserAction()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Root);

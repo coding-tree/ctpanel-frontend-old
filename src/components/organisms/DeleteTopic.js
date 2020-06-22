@@ -4,28 +4,26 @@ import axios from 'axios';
 import styled from 'styled-components';
 import {toast} from 'react-toastify';
 
-const DeleteTopic = ({selectedElement, destination, isModalVisible, setIsModalVisible, setSubmitting}) => {
+import {connect} from 'react-redux';
+import {deleteTopics as deleteTopicsAction} from 'selectors/FetchMeets';
+
+const DeleteTopic = ({selectedElement, destination, isModalVisible, setIsModalVisible, setSubmitting, deleteTopics}) => {
   const listItems = selectedElement.map((el, index) => {
     return <StyledListItem key={index}>{el.topic}</StyledListItem>;
   });
 
   const deleteItems = () => {
     setSubmitting(true);
-    axios
-      .all(
-        selectedElement.map(element => {
-          return axios.delete(`${process.env.REACT_APP_SERVER_URL}/${destination}/${element._id}`);
-        })
-      )
-      .then(() => {
-        setIsModalVisible(false);
-        setSubmitting(false);
-        toast.success('Pomyślnie usunięto tematy!');
-      })
-      .catch(() => {
-        setSubmitting(false);
-        toast.error('Nie udało się usunąć tematów...');
-      });
+    deleteTopics(selectedElement, destination)
+    .then(() => {
+      setIsModalVisible(false);
+      setSubmitting(false);
+      toast.success('Pomyślnie usunięto tematy!');
+    })
+    .catch(() => {
+      setSubmitting(false);
+      toast.error('Nie udało się usunąć tematów...');
+    });
   };
 
   return (
@@ -44,7 +42,11 @@ const DeleteTopic = ({selectedElement, destination, isModalVisible, setIsModalVi
   );
 };
 
-export default DeleteTopic;
+const mapDispatchToProps = dispatch => ({
+  deleteTopics: (selectedElements, destination) => dispatch(deleteTopicsAction(selectedElements, destination)),
+});
+
+export default connect(null, mapDispatchToProps)(DeleteTopic);
 
 const StyledTitle = styled.h3`
   font-family: inherit;

@@ -8,6 +8,9 @@ import styled from 'styled-components';
 import {CancelButton, PrimaryButton} from 'components/atoms/Button';
 import {toast} from 'react-toastify';
 
+import {connect} from 'react-redux';
+import {editTopic as editTopicAction} from 'selectors/FetchMeets';
+
 const Formik = ({setFieldValue, column, setIsModalVisible, selectedElement}) => {
   const [editData] = selectedElement;
   const setTags = name => tags => {
@@ -54,24 +57,25 @@ const EditTopic = withFormik({
   }),
   handleSubmit: (values, {props}) => {
     props.setSubmitting(true);
-
     const [editData] = props.selectedElement;
-    // fetch idzie tu
-    axios
-      .put(`${process.env.REACT_APP_SERVER_URL}/topics/${editData._id}`, values)
-      .then(() => {
-        props.setIsModalVisible(false);
-        props.setSubmitting(false);
-        toast.success('Pomyślnie edytowano temat!');
-      })
-      .catch(() => {
-        props.setSubmitting(false);
-        toast.error('Nie udało się edytować tematu...');
-      });
+    props.editTopic(values, editData._id)
+    .then(() => {
+      props.setIsModalVisible(false);
+      props.setSubmitting(false);
+      toast.success('Pomyślnie edytowano temat!');
+    })
+    .catch(() => {
+      props.setSubmitting(false);
+      toast.error('Nie udało się edytować tematu...');
+    });
   },
 })(Formik);
 
-export default EditTopic;
+const mapDispatchToProps = dispatch => ({
+  editTopic: (dataToSend, id) => dispatch(editTopicAction(dataToSend, id)),
+});
+
+export default connect(null, mapDispatchToProps)(EditTopic);
 
 export const StyledForm = styled.form`
   font-family: inherit;

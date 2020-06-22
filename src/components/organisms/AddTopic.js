@@ -8,6 +8,9 @@ import styled from 'styled-components';
 import {CancelButton, PrimaryButton} from 'components/atoms/Button';
 import {toast} from 'react-toastify';
 
+import {connect} from 'react-redux';
+import {addTopic as addTopicAction} from 'selectors/FetchMeets';
+
 const Formik = ({setFieldValue, column, status, isModalVisible, setIsModalVisible, isSubmitting}) => {
   const setTags = name => tags => {
     setFieldValue(name, tags);
@@ -54,25 +57,27 @@ const AddTopic = withFormik({
   }),
   handleSubmit: (values, {resetForm, setStatus, props}) => {
     props.setSubmitting(true);
-    // fetch idzie tu
-    axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/topics`, values)
-      .then(() => {
-        setStatus(true);
-        resetForm();
-        props.setIsModalVisible(false);
-        props.setSubmitting(false);
-        toast.success('Dodano nowy temat!');
-      })
-      .catch(() => {
-        setStatus(false);
-        props.setSubmitting(false);
-        toast.error('Nie udało się dodać tematu...');
-      });
+    props.addTopic(values)
+    .then(() => {
+      setStatus(true);
+      resetForm();
+      props.setIsModalVisible(false);
+      props.setSubmitting(false);
+      toast.success('Dodano nowy temat!');
+    })
+    .catch(() => {
+      setStatus(false);
+      props.setSubmitting(false);
+      toast.error('Nie udało się dodać tematu...');
+    });
   },
 })(Formik);
 
-export default AddTopic;
+const mapDispatchToProps = dispatch => ({
+  addTopic: dataToSend => dispatch(addTopicAction(dataToSend)),
+});
+
+export default connect(null, mapDispatchToProps)(AddTopic);
 
 export const StyledForm = styled.form`
   font-family: inherit;

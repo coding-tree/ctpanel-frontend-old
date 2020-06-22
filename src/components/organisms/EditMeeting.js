@@ -8,6 +8,9 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import {toast} from 'react-toastify';
 
+import {connect} from 'react-redux';
+import {editMeeting as editMeetingAction} from 'selectors/FetchMeets';
+
 const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible, selectedElement, topicNames}) => {
   const [editData] = selectedElement;
   const {tags, leader, usefulLinks} = editData;
@@ -62,7 +65,6 @@ const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisib
 const EditMeeting = withFormik({
   mapPropsToValues: ({date, time, topic, leader, meetingHref, description, tags, usefulLinks, selectedElement}) => {
     const [editData] = selectedElement;
-    console.log(editData);
     return {
       // todo - convert date & time to timestamp
       date: new Date(editData.date).toISOString().slice(0, 10) || date || new Date().toISOString().slice(0, 10),
@@ -94,29 +96,29 @@ const EditMeeting = withFormik({
   }),
   handleSubmit: ({date, time, topic, leader, meetingHref, description, tags, usefulLinks}, {props}) => {
     props.setSubmitting(true);
-
     const [editData] = props.selectedElement;
-    // fetch idzie tu
     let dateToConvert = `${date} ${time}`;
     date = new Date(dateToConvert);
     let timestamp = date.getTime();
     date = timestamp;
-
-    axios
-      .put(`${process.env.REACT_APP_SERVER_URL}/meetings/${editData._id}`, {date, topic, leader, meetingHref, description, tags, usefulLinks})
-      .then(() => {
-        props.setIsModalVisible(false);
-        props.setSubmitting(false);
-        toast.success('Pomyślnie edytowano spotkanie!');
-      })
-      .catch(err => {
-        props.setSubmitting(false);
-        toast.error('Coś poszło nie tak... Spróbuj jeszcze raz');
-      });
+    props.editMeeting({date, topic, leader, meetingHref, description, tags, usefulLinks}, editData._id)
+    .then(() => {
+      props.setIsModalVisible(false);
+      props.setSubmitting(false);
+      toast.success('Pomyślnie edytowano spotkanie!');
+    })
+    .catch(err => {
+      props.setSubmitting(false);
+      toast.error('Coś poszło nie tak... Spróbuj jeszcze raz');
+    });
   },
 })(Formik);
 
-export default EditMeeting;
+const mapDispatchToProps = dispatch => ({
+  editMeeting: (dataToSend, id) => dispatch(editMeetingAction(dataToSend, id)),
+});
+
+export default connect(null, mapDispatchToProps)(EditMeeting);
 
 export const StyledForm = styled.form`
   font-family: inherit;

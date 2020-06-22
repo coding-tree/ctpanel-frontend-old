@@ -5,8 +5,10 @@ import variables from 'settings/variables';
 import styled from 'styled-components';
 import {withFormik, Form} from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
 import {toast} from 'react-toastify';
+
+import {connect} from 'react-redux';
+import {addMeeting as addMeetingAction} from 'selectors/FetchMeets';
 
 const Formik = ({column, status, leaders, setFieldValue, setIsModalVisible, isModalVisible, topicNames, isSubmitting}) => {
   const setValue = name => tags => {
@@ -107,30 +109,31 @@ const AddMeeting = withFormik({
   }),
   handleSubmit: (values, {resetForm, setStatus, props}) => {
     props.setSubmitting(true);
-    // fetch idzie tu
     let {date, time, topic, leader, meetingHref, description, tags, usefulLinks} = values;
     let dateToConvert = `${date} ${time}`;
     date = new Date(dateToConvert);
     let timestamp = date.getTime();
     date = timestamp;
-
-    axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/meetings`, {date, topic, leader, meetingHref, description, tags, usefulLinks})
-      .then(() => {
-        setStatus(true);
-        resetForm();
-        props.setIsModalVisible(false);
-        props.setSubmitting(false);
-        toast.success('Dodano nowe spotkanie!');
-      })
-      .catch(() => {
-        setStatus(false);
-        toast.error('Nie udało się dodać spotkania...');
-      });
+    props.addMeeting({date, topic, leader, meetingHref, description, tags, usefulLinks})
+    .then(() => {
+      setStatus(true);
+      resetForm();
+      props.setIsModalVisible(false);
+      props.setSubmitting(false);
+      toast.success('Dodano nowe spotkanie!');
+    })
+    .catch(() => {
+      setStatus(false);
+      toast.error('Nie udało się dodać spotkania...');
+    });
   },
 })(Formik);
 
-export default AddMeeting;
+const mapDispatchToProps = dispatch => ({
+  addMeeting: dataToSend => dispatch(addMeetingAction(dataToSend)),
+});
+
+export default connect(null, mapDispatchToProps)(AddMeeting);
 
 export const StyledForm = styled.form`
   font-family: inherit;

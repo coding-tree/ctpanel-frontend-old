@@ -38,7 +38,6 @@ const LastMeetWrapper = styled.div`
 
 const LastMeet = ({lastMeet}) => {
   const {leader, topic, date, description, usefulLinks, resourcesURL} = lastMeet;
-  // console.log(lastMeet);
   if (lastMeet) {
     return (
       <LastMeetWrapper>

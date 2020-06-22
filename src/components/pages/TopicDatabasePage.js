@@ -1,37 +1,31 @@
 import React, {useEffect} from 'react';
 import {withRouter} from 'react-router-dom';
-import {fetchMeets as fetchMeetsAction} from 'selectors/FetchMeets';
+import {getTopics as getTopicsAction} from 'selectors/FetchMeets';
 import {connect} from 'react-redux';
 import TableTemplate from 'components/templates/TableTemplate';
 import TableList from 'components/organisms/TableList';
 import {ToastContainer} from 'react-toastify';
 
-const TopicDatabasePage = ({topics, fetchMeets}) => {
+const TopicDatabasePage = ({topicsReducer, getTopics}) => {
+  const {pending, meetings, error} = topicsReducer;
   useEffect(() => {
-    fetchMeets();
-  }, [fetchMeets]);
+    getTopics();
+  }, [getTopics]);
 
   return (
     <TableTemplate title="Baza Tematów">
-      <TableList meetingsList={topics.meetings.results} />
+      <TableList meetingsList={meetings.results} />
       <ToastContainer></ToastContainer>
     </TableTemplate>
   );
 };
 
-const mapStateToProps = ({topics}) => ({
-  topics,
+const mapStateToProps = ({topicsReducer}) => ({
+  topicsReducer,
 });
 
-const fetchParameters = {
-  methodType: 'GET',
-  requestDataType: 'topics',
-  generalAttribute: '',
-  specificAttribute: '',
-};
-
 const mapDispatchToProps = dispatch => ({
-  fetchMeets: () => dispatch(fetchMeetsAction(fetchParameters)),
+  getTopics: () => dispatch(getTopicsAction()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TopicDatabasePage));
