@@ -22,7 +22,7 @@ const SchedulesTableMenu = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/topics')
+      .get(`${process.env.REACT_APP_SERVER_URL}/topics`)
       .then(response => {
         setTopics(response.data.results);
       })

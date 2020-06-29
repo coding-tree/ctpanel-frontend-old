@@ -182,7 +182,7 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
 
   const handleVoting = (e, id, voteType) => {
     e.stopPropagation();
-    axios.put(`http://localhost:3001/topics/vote/${id}?vote=${voteType}`).catch(err => console.log(err));
+    axios.put(`${process.env.REACT_APP_SERVER_URL}/topics/vote/${id}?vote=${voteType}`).catch(err => console.log(err));
   };
 
   const formatVote = vote => {
