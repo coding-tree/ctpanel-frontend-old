@@ -26,17 +26,17 @@ const AccountPage = ({userReducer}) => {
   useEffect(() => {
     const userRoles = meetings._json['https://codingtree.pl/oauth2/roles'];
     setUserRole(parseRoleIdToBeltColor(userRoles));
-  }, [meetings]);
+  }, []);
 
-  useEffect(() => {
-    const url = `${process.env.REACT_APP_SERVER_URL}/user/${meetings.nickname}`;
-    axios
-      .get(url)
-      .then(res => setUserCredentials(res.data))
-      .catch(err => console.log(err));
-  }, [meetings]);
+  // useEffect(() => {
+  //   const url = `${process.env.REACT_APP_SERVER_URL}/user`;
+  //   axios
+  //     .get({withCredentials: true, url})
+  //     .then(res => setUserCredentials(res))
+  //     .catch(err => console.log(err));
+  // }, [meetings]);
 
-  if (userCredentials) {
+  if (!pending) {
     return (
       <MainTemplate>
         <StyledWrapper>
@@ -44,7 +44,7 @@ const AccountPage = ({userReducer}) => {
           <StyledContainer>
             <StyledUser>
               <StyledAvatar src={meetings.picture} alt="user avatar" />
-              <StyledNickName>{userCredentials.userNickName}</StyledNickName>
+              <StyledNickName>{meetings.nickname}</StyledNickName>
               <StyledBeltName>{userRole}</StyledBeltName>
             </StyledUser>
             <StyledEditSection>
@@ -52,28 +52,26 @@ const AccountPage = ({userReducer}) => {
                 <StyledUserDataTitleContainer>
                   <StyledUserDataTitle>
                     <StyledTitle>Imię i nazwisko:</StyledTitle>
-                    <StyledUserDataDescription>
-                      {userCredentials.userFirstName} {userCredentials.userSecondName}
-                    </StyledUserDataDescription>
+                    <StyledUserDataDescription>{/* {meetings.userFirstName} {userCredentials.userSecondName} */}</StyledUserDataDescription>
                   </StyledUserDataTitle>
                   <StyledUserDataTitle>
                     <StyledTitle>Wiek:</StyledTitle>
-                    <StyledUserDataDescription>{userCredentials.userAge} lat</StyledUserDataDescription>
+                    {/* <StyledUserDataDescription>{userCredentials.userAge} lat</StyledUserDataDescription> */}
                   </StyledUserDataTitle>
                   <StyledUserDataTitle>
                     <StyledTitle>Technologie:</StyledTitle>
-                    <StyledUserDataDescription>{userCredentials.userTechnologies.join(', ')}</StyledUserDataDescription>
+                    {/* <StyledUserDataDescription>{userCredentials.userTechnologies.join(', ')}</StyledUserDataDescription> */}
                   </StyledUserDataTitle>
                   <StyledUserDataTitle>
                     <StyledTitle>Opis:</StyledTitle>
-                    <StyledUserDataDescription>{userCredentials.userDescription}</StyledUserDataDescription>
+                    {/* <StyledUserDataDescription>{userCredentials.userDescription}</StyledUserDataDescription> */}
                   </StyledUserDataTitle>
-                  {Object.entries(userCredentials.userSocials).map((el, index) => (
+                  {/* {Object.entries(userCredentials.userSocials).map((el, index) => (
                     <StyledUserDataTitle key={index}>
                       <StyledTitle>{el[0]}</StyledTitle>
                       <StyledUserDataDescription>{el[1]}</StyledUserDataDescription>
                     </StyledUserDataTitle>
-                  ))}
+                  ))} */}
                 </StyledUserDataTitleContainer>
               </StyledUserDataContainer>
             </StyledEditSection>

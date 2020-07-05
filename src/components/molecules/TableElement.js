@@ -170,7 +170,7 @@ const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}
 
 const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, index, userId}) => {
   const [myVotes, setMyVotes] = useState([]);
-  console.log(meetingData);
+  // console.log(meetingData); Zaczytuje 2 razy
   useEffect(() => {
     setMyVotes(meetingData.usersVote);
   }, [meetingData]);
