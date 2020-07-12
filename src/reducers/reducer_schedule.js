@@ -2,7 +2,7 @@ import {
   GET_SCHEDULE_REQUEST,
   GET_SCHEDULE_RECEIVED,
   GET_SCHEDULE_ERROR
-} from 'actions';
+} from 'actions/schedule';
 
 const _initialState = {
   pending: false,

@@ -2,7 +2,7 @@ import {
   GET_MEETING_HISTORY_REQUEST,
   GET_MEETING_HISTORY_RECEIVED,
   GET_MEETING_HISTORY_ERROR
-} from 'actions';
+} from 'actions/meetingHistory';
 
 const _initialState = {
   pending: false,

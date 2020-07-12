@@ -2,7 +2,7 @@ import {
     GET_USER_REQUEST,
     GET_USER_RECEIVED,
     GET_USER_ERROR
-} from 'actions';
+} from 'actions/user';
 
 const _initialState = {
     pending: false,

@@ -2,7 +2,7 @@ import {
   GET_MEETINGS_REQUEST,
   GET_MEETINGS_RECEIVED,
   GET_MEETINGS_ERROR
-} from 'actions';
+} from 'actions/meetings';
 
 const _initialState = {
   pending: false,

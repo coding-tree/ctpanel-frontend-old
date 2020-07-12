@@ -2,7 +2,7 @@ import {
   GET_TOPICS_REQUEST,
   GET_TOPICS_RECEIVED,
   GET_TOPICS_ERROR
-} from 'actions';
+} from 'actions/topics';
 
 const _initialState = {
   pending: false,
