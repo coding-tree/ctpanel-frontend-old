@@ -2,13 +2,15 @@ import React, {Suspense, lazy, useEffect} from 'react';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import {routes} from 'routes';
-
 import {connect} from 'react-redux';
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { getUser as fetchUserAction } from 'selectors/fetchUser';
+
 import LoadingSpinner from 'components/atoms/LoadingSpinner';
 import MainTemplate from './components/templates/MainTemplate';
 import MenuSidebar from 'components/organisms/MenuSidebar';
 import NextMeet from 'components/organisms/NextMeet';
-import {getUser as fetchUserAction} from 'selectors/FetchMeets';
 
 const Account = lazy(() => import('components/pages/AccountPage'));
 const History = lazy(() => import('components/pages/MeetingHistoryPage'));
@@ -17,8 +19,11 @@ const LoginPage = lazy(() => import('components/pages/LoginPage'));
 const Timetable = lazy(() => import('components/pages/SchedulesPage'));
 const TopicDatabase = lazy(() => import('components/pages/TopicDatabasePage'));
 
-const Root = ({userReducer, getUser}) => {
-  const {pending, meetings, error} = userReducer;
+const Root = () => {
+  const dispatch = useDispatch();
+  const getUser = () => dispatch(fetchUserAction());
+  const {pending, meetings, error} = useSelector(state => state.userReducer);
+
   useEffect(() => {
     getUser();
   }, []);
@@ -58,12 +63,4 @@ const Root = ({userReducer, getUser}) => {
   }
 };
 
-const mapStateToProps = ({userReducer}) => ({
-  userReducer
-});
-
-const mapDispatchToProps = dispatch => ({
-  getUser: () => dispatch(fetchUserAction()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Root);
+export default Root;

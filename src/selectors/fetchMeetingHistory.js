@@ -2,7 +2,7 @@ import {
     getMeetingsHistoryPending,
     getMeetingsHistorySuccess,
     getMeetingsHistoryError
-} from 'actions';
+} from 'actions/meetingHistory';
 
 export const getMeetingsHistory = () => {
     return async dispatch => {

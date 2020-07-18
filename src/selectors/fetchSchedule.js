@@ -2,7 +2,7 @@ import {
     getSchedulePending,
     getScheduleSuccess,
     getScheduleError
-} from 'actions';
+} from 'actions/schedule';
 
 export const getSchedule = () => {
     return async dispatch => {

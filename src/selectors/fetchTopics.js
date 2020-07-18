@@ -2,7 +2,7 @@ import {
     getTopicsPending,
     getTopicsSuccess,
     getTopicsError
-} from 'actions';
+} from 'actions/topics';
 
 export const getTopics = () => {
     return async dispatch => {

@@ -2,7 +2,7 @@ import {
     getUserPending,
     getUserSuccess,
     getUserError
-} from 'actions';
+} from 'actions/user';
   
 export const getUser = () => {
     return async dispatch => {

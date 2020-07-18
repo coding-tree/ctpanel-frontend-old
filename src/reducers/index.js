@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   meetings: meetingsReducer,
   schedule: scheduleReducer,
   topics: topicsReducer,
-  user: userReducer,
+  user: userReducer
 });
 
 export default rootReducer;

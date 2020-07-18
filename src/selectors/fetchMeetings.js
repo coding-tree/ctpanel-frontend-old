@@ -2,7 +2,7 @@ import {
     getMeetingsPending,
     getMeetingsSuccess,
     getMeetingsError
-} from 'actions';
+} from 'actions/meetings';
 
 export const getMeetings = () => {
     return async dispatch => {
