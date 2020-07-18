@@ -1,10 +1,9 @@
-import React, {Suspense, lazy, useEffect} from 'react';
-import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
+import React, { Suspense, lazy, useEffect } from 'react';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import {routes} from 'routes';
-import {connect} from 'react-redux';
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
+import { routes } from 'routes';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getUser as fetchUserAction } from 'selectors/fetchUser';
 
 import LoadingSpinner from 'components/atoms/LoadingSpinner';
@@ -60,7 +59,7 @@ const Root = () => {
         </Suspense>
       </BrowserRouter>
     );
-  }
+  };
 };
 
 export default Root;
