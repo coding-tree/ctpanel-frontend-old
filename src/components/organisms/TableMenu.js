@@ -9,9 +9,9 @@ import AddMeeting from 'components/organisms/AddMeeting';
 import EditMeeting from 'components/organisms/EditMeeting';
 import DeleteMeeting from 'components/organisms/DeleteMeeting';
 import variables from 'settings/variables';
-// import AddTopic from './AddTopic';
-// import EditTopic from './EditTopic';
-// import DeleteTopic from './DeleteTopic';
+import AddTopic from './AddTopic';
+import EditTopic from './EditTopic';
+import DeleteTopic from './DeleteTopic';
 import axios from 'axios';
 import JoinMeeting from './JoinMeeting';
 
@@ -74,16 +74,16 @@ const TopicDataBaseTableMenu = () => {
   return (
     <StyledTableActions>
       <AddModal title="Dodaj" icon="fas fa-plus" modalTitle="Dodaj nowy temat">
-        {/* <AddTopic></AddTopic> */}
+        <AddTopic></AddTopic>
       </AddModal>
       {selectedElement.length === 1 && (
         <EditModal title="Edytuj" icon="fas fa-pen" modalTitle="Edytuj temat">
-          {/* <EditTopic selectedElement={selectedElement}></EditTopic> */}
+          <EditTopic selectedElement={selectedElement}></EditTopic>
         </EditModal>
       )}
       {selectedElement.length > 0 && (
         <DeleteModal title="Usuń" icon="fas fa-minus" modalTitle="Usuń temat">
-          {/* <DeleteTopic selectedElement={selectedElement} destination="topics"></DeleteTopic> */}
+          <DeleteTopic selectedElement={selectedElement} destination="topics"></DeleteTopic>
         </DeleteModal>
       )}
     </StyledTableActions>

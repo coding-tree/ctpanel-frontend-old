@@ -1,16 +1,21 @@
 import React, {useEffect} from 'react';
 import {withRouter} from 'react-router-dom';
-import {getTopics as getTopicsAction} from 'selectors/FetchMeets';
-import {connect} from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { getTopics as getTopicsAction } from 'selectors/fetchTopics';
+
 import TableTemplate from 'components/templates/TableTemplate';
 import TableList from 'components/organisms/TableList';
 import {ToastContainer} from 'react-toastify';
 
-const TopicDatabasePage = ({topicsReducer, getTopics}) => {
-  const {pending, meetings, error} = topicsReducer;
+const TopicDatabasePage = () => {
+  const dispatch = useDispatch();
+  const getTopics = () => dispatch(getTopicsAction());
+  const {pending, meetings, error} = useSelector(state => state.topics);
+
   useEffect(() => {
     getTopics();
-  }, [getTopics]);
+  }, []);
 
   return (
     <TableTemplate title="Baza Tematów">
@@ -20,12 +25,4 @@ const TopicDatabasePage = ({topicsReducer, getTopics}) => {
   );
 };
 
-const mapStateToProps = ({topicsReducer}) => ({
-  topicsReducer,
-});
-
-const mapDispatchToProps = dispatch => ({
-  getTopics: () => dispatch(getTopicsAction()),
-});
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TopicDatabasePage));
+export default withRouter(TopicDatabasePage);

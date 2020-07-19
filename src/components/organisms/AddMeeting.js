@@ -133,12 +133,12 @@ const AddMeetingWithFormik = withFormik({
   }
 })(Formik);
 
-const AddMeeting = () => {
+const AddMeeting = (props) => {
   const dispatch = useDispatch();
   const addMeeting = (dataToSend) => dispatch(addMeetingAction(dataToSend));
 
   return (
-    <AddMeetingWithFormik addMeeting={addMeeting} />
+    <AddMeetingWithFormik addMeeting={addMeeting} {...props}/>
   );
 };
 

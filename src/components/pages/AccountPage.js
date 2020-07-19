@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import MainTemplate from 'components/templates/MainTemplate';
 import styled from 'styled-components';
-import {connect} from 'react-redux';
+import { useSelector } from 'react-redux';
+import { getSchedule as getScheduleAction } from 'selectors/fetchSchedule';
 import variables from 'settings/variables';
 import {PrimaryButton} from 'components/atoms/Button';
 import axios from 'axios';
 import Header from 'components/atoms/Header';
 
-const AccountPage = ({userReducer}) => {
-  const {pending, meetings, error} = userReducer;
+const AccountPage = () => {
+  const {pending, meetings, error} = useSelector(state => state.user);
   const [userRole, setUserRole] = useState('Gość');
   const [userCredentials, setUserCredentials] = useState(undefined);
 
@@ -87,9 +88,7 @@ const AccountPage = ({userReducer}) => {
   }
 };
 
-const mapStateToProps = ({userReducer}) => ({
-  userReducer,
-});
+export default AccountPage;
 
 const StyledWrapper = styled.div`
   margin: 0 auto;
@@ -168,5 +167,3 @@ const StyledTitle = styled.span`
   font-size: 1.6rem;
   font-weight: 700;
 `;
-
-export default connect(mapStateToProps)(AccountPage);

@@ -13,24 +13,17 @@ const TimetablePage = () => {
   const dispatch = useDispatch();
   const getSchedule = () => dispatch(getScheduleAction());
   const {pending, meetings, error} = useSelector(state => state.schedule);
-  console.log(pending, meetings, error);
   
   useEffect(() => {
-    console.log("?")
     getSchedule();
   }, []);
 
   return (
-    // meetings
-    //   ?
-    //   <TableTemplate title="Harmonogram Spotkań">
-    //     <TableList meetingsList={meetings} />
-    //     <ToastContainer></ToastContainer>
-    //   </TableTemplate>
-    //   : "ooo"
-    "dupa"
-  
+    <TableTemplate title="Harmonogram Spotkań">
+      <TableList meetingsList={meetings} />
+      <ToastContainer></ToastContainer>
+    </TableTemplate>
   );
 };
 
-export default TimetablePage;
+export default withRouter(TimetablePage);

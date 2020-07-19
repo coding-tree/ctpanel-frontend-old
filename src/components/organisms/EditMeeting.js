@@ -10,7 +10,7 @@ import {toast} from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { editMeeting as editMeetingAction } from 'selectors/fetchMeetings';
 
-const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible, selectedElement, topicNames}) => {
+const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible, selectedElement, topicNames = []}) => {
   const [editData] = selectedElement;
   const {tags, leader, usefulLinks} = editData;
   const setValue = name => tags => {
@@ -118,12 +118,12 @@ const EditMeetingWithFormik = withFormik({
   },
 })(Formik);
 
-const EditMeeting = () => {
+const EditMeeting = (props) => {
   const dispatch = useDispatch();
   const editMeeting = (dataToSend, id) => dispatch(editMeetingAction(dataToSend, id));
 
   return (
-    <EditMeetingWithFormik editMeeting={editMeeting} />
+    <EditMeetingWithFormik editMeeting={editMeeting} {...props}/>
   );
 };
 
