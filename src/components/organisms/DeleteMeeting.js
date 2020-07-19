@@ -3,11 +3,13 @@ import {DeleteButton, CancelButton} from 'components/atoms/Button';
 import axios from 'axios';
 import styled from 'styled-components';
 import {toast} from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { deleteMeetings as deleteMeetingsAction } from 'selectors/fetchMeetings';
 
-import {connect} from 'react-redux';
-import {deleteMeetings as deleteMeetingsAction} from 'selectors/FetchMeets';
+const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModalVisible, setSubmitting}) => {
+  const dispatch = useDispatch();
+  const deleteMeetings = (selectedElements, destination) => dispatch(deleteMeetingsAction(selectedElements, destination));
 
-const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModalVisible, setSubmitting, deleteMeetings}) => {
   const listItems = selectedElement.map((el, index) => {
     return <StyledListItem key={index}>{el.topic}</StyledListItem>;
   });
@@ -42,11 +44,8 @@ const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModal
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  deleteMeetings: (selectedElements, destination) => dispatch(deleteMeetingsAction(selectedElements, destination)),
-});
 
-export default connect(null, mapDispatchToProps)(DeleteMeeting);
+export default DeleteMeeting;
 
 const StyledTitle = styled.h3`
   font-family: inherit;

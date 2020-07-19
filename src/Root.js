@@ -11,20 +11,20 @@ import MainTemplate from './components/templates/MainTemplate';
 import MenuSidebar from 'components/organisms/MenuSidebar';
 import NextMeet from 'components/organisms/NextMeet';
 
-const Account = lazy(() => import('components/pages/AccountPage'));
-const History = lazy(() => import('components/pages/MeetingHistoryPage'));
-const Home = lazy(() => import('components/pages/HomePage'));
+// const Account = lazy(() => import('components/pages/AccountPage'));
+// const History = lazy(() => import('components/pages/MeetingHistoryPage'));
+// const Home = lazy(() => import('components/pages/HomePage'));
 const LoginPage = lazy(() => import('components/pages/LoginPage'));
-const Timetable = lazy(() => import('components/pages/SchedulesPage'));
-const TopicDatabase = lazy(() => import('components/pages/TopicDatabasePage'));
+// const Timetable = lazy(() => import('components/pages/SchedulesPage'));
+// const TopicDatabase = lazy(() => import('components/pages/TopicDatabasePage'));
 
 const Root = () => {
   const dispatch = useDispatch();
   const getUser = () => dispatch(fetchUserAction());
-  const {pending, meetings, error} = useSelector(state => state.userReducer);
+  const {pending, meetings, error} = useSelector(state => state.user);
 
   useEffect(() => {
-    getUser();
+  
   }, []);
 
   if (pending) {
@@ -37,11 +37,11 @@ const Root = () => {
           <NextMeet />
           <Suspense fallback={<LoadingSpinner />}>
             <Switch>
-              <Route exact path={routes.home} component={Home} />
-              <Route exact strict path={routes.timetable} component={Timetable} />
-              <Route exact strict path={routes.topicDatabase} component={TopicDatabase} />
+              {/* <Route exact path={routes.home} component={Home} /> */}
+              {/* <Route exact strict path={routes.timetable} component={Timetable} /> */}
+              {/* <Route exact strict path={routes.topicDatabase} component={TopicDatabase} />
               <Route exact strict path={routes.history} component={History} />
-              <Route exact strict path={routes.account} component={Account} />
+              <Route exact strict path={routes.account} component={Account} /> */}
               <Redirect to="/" />
             </Switch>
           </Suspense>

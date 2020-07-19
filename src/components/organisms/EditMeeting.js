@@ -7,9 +7,8 @@ import {withFormik, Form} from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import {toast} from 'react-toastify';
-
-import {connect} from 'react-redux';
-import {editMeeting as editMeetingAction} from 'selectors/FetchMeets';
+import { useDispatch } from 'react-redux';
+import { editMeeting as editMeetingAction } from 'selectors/fetchMeetings';
 
 const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible, selectedElement, topicNames}) => {
   const [editData] = selectedElement;
@@ -62,7 +61,7 @@ const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisib
   );
 };
 
-const EditMeeting = withFormik({
+const EditMeetingWithFormik = withFormik({
   mapPropsToValues: ({date, time, topic, leader, meetingHref, description, tags, usefulLinks, selectedElement}) => {
     const [editData] = selectedElement;
     return {
@@ -95,13 +94,18 @@ const EditMeeting = withFormik({
     usefulLinks: Yup.string(),
   }),
   handleSubmit: ({date, time, topic, leader, meetingHref, description, tags, usefulLinks}, {props}) => {
-    props.setSubmitting(true);
+    const {
+      setSubmitting,
+      editMeeting
+    } = props;
+    
+    setSubmitting(true);
     const [editData] = props.selectedElement;
     let dateToConvert = `${date} ${time}`;
     date = new Date(dateToConvert);
     let timestamp = date.getTime();
     date = timestamp;
-    props.editMeeting({date, topic, leader, meetingHref, description, tags, usefulLinks}, editData._id)
+    editMeeting({date, topic, leader, meetingHref, description, tags, usefulLinks}, editData._id)
     .then(() => {
       props.setIsModalVisible(false);
       props.setSubmitting(false);
@@ -114,11 +118,16 @@ const EditMeeting = withFormik({
   },
 })(Formik);
 
-const mapDispatchToProps = dispatch => ({
-  editMeeting: (dataToSend, id) => dispatch(editMeetingAction(dataToSend, id)),
-});
+const EditMeeting = () => {
+  const dispatch = useDispatch();
+  const editMeeting = (dataToSend, id) => dispatch(editMeetingAction(dataToSend, id));
 
-export default connect(null, mapDispatchToProps)(EditMeeting);
+  return (
+    <EditMeetingWithFormik editMeeting={editMeeting} />
+  );
+};
+
+export default EditMeeting;
 
 export const StyledForm = styled.form`
   font-family: inherit;
