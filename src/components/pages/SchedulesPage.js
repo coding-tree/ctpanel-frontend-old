@@ -16,6 +16,7 @@ const TimetablePage = () => {
   console.log(pending, meetings, error);
   
   useEffect(() => {
+    console.log("?")
     getSchedule();
   }, []);
 

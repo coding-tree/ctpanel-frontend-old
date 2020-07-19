@@ -15,7 +15,7 @@ import NextMeet from 'components/organisms/NextMeet';
 // const History = lazy(() => import('components/pages/MeetingHistoryPage'));
 // const Home = lazy(() => import('components/pages/HomePage'));
 const LoginPage = lazy(() => import('components/pages/LoginPage'));
-// const Timetable = lazy(() => import('components/pages/SchedulesPage'));
+const Timetable = lazy(() => import('components/pages/SchedulesPage'));
 // const TopicDatabase = lazy(() => import('components/pages/TopicDatabasePage'));
 
 const Root = () => {
@@ -24,7 +24,7 @@ const Root = () => {
   const {pending, meetings, error} = useSelector(state => state.user);
 
   useEffect(() => {
-  
+    getUser();
   }, []);
 
   if (pending) {
@@ -38,7 +38,7 @@ const Root = () => {
           <Suspense fallback={<LoadingSpinner />}>
             <Switch>
               {/* <Route exact path={routes.home} component={Home} /> */}
-              {/* <Route exact strict path={routes.timetable} component={Timetable} /> */}
+              <Route exact strict path={routes.timetable} component={Timetable} />
               {/* <Route exact strict path={routes.topicDatabase} component={TopicDatabase} />
               <Route exact strict path={routes.history} component={History} />
               <Route exact strict path={routes.account} component={Account} /> */}
