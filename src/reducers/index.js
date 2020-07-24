@@ -1,16 +1,16 @@
 import { combineReducers } from 'redux';
-import meetingHistoryReducer from './reducer_meetingHistory';
-import meetingsReducer from './reducer_meetings';
-import scheduleReducer from './reducer_schedule';
-import topicsReducer from './reducer_topics';
-import userReducer from './reducer_user';
+import meetingHistory from './meetingHistory';
+import meetings from './meetings';
+import schedule from './schedule';
+import topics from './topics';
+import user from './user';
 
 const rootReducer = combineReducers({
-  meetingHistory: meetingHistoryReducer,
-  meetings: meetingsReducer,
-  schedule: scheduleReducer,
-  topics: topicsReducer,
-  user: userReducer
+  meetingHistory,
+  meetings,
+  schedule,
+  topics,
+  user
 });
 
 export default rootReducer;
