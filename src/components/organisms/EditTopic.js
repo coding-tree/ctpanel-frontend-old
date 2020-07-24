@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import {CancelButton, PrimaryButton} from 'components/atoms/Button';
 import {toast} from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { editTopic as editTopicAction } from 'selectors/fetchTopics';
+import { editTopic } from 'selectors/fetchTopics';
 
 const Formik = ({setFieldValue, column, setIsModalVisible, selectedElement}) => {
   const [editData] = selectedElement;
@@ -57,12 +57,12 @@ const EditTopicWithFormik = withFormik({
   handleSubmit: (values, {props}) => {
     const {
       setSubmitting,
-      editTopic
+      editTopicAction
     } = props;
 
     setSubmitting(true);
     const [editData] = props.selectedElement;
-    editTopic(values, editData._id)
+    editTopicAction(values, editData._id)
     .then(() => {
       props.setIsModalVisible(false);
       props.setSubmitting(false);
@@ -77,10 +77,10 @@ const EditTopicWithFormik = withFormik({
 
 const EditTopic = (props) => {
   const dispatch = useDispatch();
-  const editTopic = (dataToSend) => dispatch(editTopicAction(dataToSend));
+  const editTopicAction = (dataToSend, id) => dispatch(editTopic(dataToSend, id));
 
   return (
-    <EditTopicWithFormik editTopic={editTopic} {...props}/>
+    <EditTopicWithFormik editTopicAction={editTopicAction} {...props}/>
   );
 };
 

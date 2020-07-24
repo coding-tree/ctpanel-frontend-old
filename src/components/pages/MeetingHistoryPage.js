@@ -4,15 +4,15 @@ import TableList from 'components/organisms/TableList';
 import {withRouter} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { getMeetingsHistory as getMeetingsHistoryAction } from 'selectors/fetchMeetingHistory';
+import { getMeetingsHistory } from 'selectors/fetchMeetingHistory';
 
-const HistoryPage = (f) => {
+const HistoryPage = () => {
   const dispatch = useDispatch();
-  const getMeetingsHistory = () => dispatch(getMeetingsHistoryAction());
+  const getMeetingsHistoryAction = () => dispatch(getMeetingsHistory());
   const {pending, meetings, error} = useSelector(state => state.meetingHistory);
 
   useEffect(() => {
-    getMeetingsHistory();
+    getMeetingsHistoryAction();
   }, []);
 
   return (

@@ -9,7 +9,7 @@ import {CancelButton, PrimaryButton} from 'components/atoms/Button';
 import {toast} from 'react-toastify';
 
 import { useDispatch } from 'react-redux';
-import { addTopic as addTopicAction } from 'selectors/fetchTopics';
+import { addTopic } from 'selectors/fetchTopics';
 
 const Formik = ({setFieldValue, column, status, isModalVisible, setIsModalVisible, isSubmitting}) => {
   const setTags = name => tags => {
@@ -58,11 +58,11 @@ const AddTopicWithFormik = withFormik({
   handleSubmit: (values, {resetForm, setStatus, props}) => {
     const {
       setSubmitting,
-      addTopic
+      addTopicAction
     } = props;
 
     setSubmitting(true);
-    addTopic(values)
+    addTopicAction(values)
     .then(() => {
       setStatus(true);
       resetForm();
@@ -80,10 +80,10 @@ const AddTopicWithFormik = withFormik({
 
 const AddTopic = (props) => {
   const dispatch = useDispatch();
-  const addTopic = (dataToSend) => dispatch(addTopicAction(dataToSend));
+  const addTopicAction = (dataToSend) => dispatch(addTopic(dataToSend));
 
   return (
-    <AddTopicWithFormik addTopic={addTopic} {...props}/>
+    <AddTopicWithFormik addTopicAction={addTopicAction} {...props}/>
   );
 };
 

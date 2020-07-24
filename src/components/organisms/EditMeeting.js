@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { editMeeting as editMeetingAction } from 'selectors/fetchMeetings';
+import { editMeeting } from 'selectors/fetchMeetings';
 
 const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible, selectedElement, topicNames = []}) => {
   const [editData] = selectedElement;
@@ -96,7 +96,7 @@ const EditMeetingWithFormik = withFormik({
   handleSubmit: ({date, time, topic, leader, meetingHref, description, tags, usefulLinks}, {props}) => {
     const {
       setSubmitting,
-      editMeeting
+      editMeetingAction
     } = props;
     
     setSubmitting(true);
@@ -105,7 +105,7 @@ const EditMeetingWithFormik = withFormik({
     date = new Date(dateToConvert);
     let timestamp = date.getTime();
     date = timestamp;
-    editMeeting({date, topic, leader, meetingHref, description, tags, usefulLinks}, editData._id)
+    editMeetingAction({date, topic, leader, meetingHref, description, tags, usefulLinks}, editData._id)
     .then(() => {
       props.setIsModalVisible(false);
       props.setSubmitting(false);
@@ -120,10 +120,10 @@ const EditMeetingWithFormik = withFormik({
 
 const EditMeeting = (props) => {
   const dispatch = useDispatch();
-  const editMeeting = (dataToSend, id) => dispatch(editMeetingAction(dataToSend, id));
+  const editMeetingAction = (dataToSend, id) => dispatch(editMeeting(dataToSend, id));
 
   return (
-    <EditMeetingWithFormik editMeeting={editMeeting} {...props}/>
+    <EditMeetingWithFormik editMeetingAction={editMeetingAction} {...props}/>
   );
 };
 

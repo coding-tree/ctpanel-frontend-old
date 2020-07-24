@@ -4,11 +4,11 @@ import axios from 'axios';
 import styled from 'styled-components';
 import {toast} from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { deleteMeetings as deleteMeetingsAction } from 'selectors/fetchMeetings';
+import { deleteMeetings } from 'selectors/fetchMeetings';
 
 const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModalVisible, setSubmitting}) => {
   const dispatch = useDispatch();
-  const deleteMeetings = (selectedElements, destination) => dispatch(deleteMeetingsAction(selectedElements, destination));
+  const deleteMeetingsAction = (selectedElements, destination) => dispatch(deleteMeetings(selectedElements, destination));
 
   const listItems = selectedElement.map((el, index) => {
     return <StyledListItem key={index}>{el.topic}</StyledListItem>;
@@ -16,7 +16,7 @@ const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModal
 
   const deleteItems = () => {
     setSubmitting(true);
-    deleteMeetings(selectedElement, destination)
+    deleteMeetingsAction(selectedElement, destination)
     .then(() => {
       setSubmitting(false);
       setIsModalVisible(false);

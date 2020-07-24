@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import MainTemplate from 'components/templates/MainTemplate';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { getSchedule as getScheduleAction } from 'selectors/fetchSchedule';
 import variables from 'settings/variables';
 import {PrimaryButton} from 'components/atoms/Button';
 import axios from 'axios';

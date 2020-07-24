@@ -3,7 +3,7 @@ import TableTemplate from 'components/templates/TableTemplate';
 import TableList from 'components/organisms/TableList';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { getSchedule as getScheduleAction } from 'selectors/fetchSchedule';
+import { getSchedule } from 'selectors/fetchSchedule';
 import {withRouter} from 'react-router-dom';
 import {ToastContainer} from 'react-toastify';
 
@@ -11,11 +11,11 @@ let daysLimit = 5;
 
 const TimetablePage = () => {
   const dispatch = useDispatch();
-  const getSchedule = () => dispatch(getScheduleAction());
+  const getScheduleAction = () => dispatch(getSchedule());
   const {pending, meetings, error} = useSelector(state => state.schedule);
   
   useEffect(() => {
-    getSchedule();
+    getScheduleAction();
   }, []);
 
   return (

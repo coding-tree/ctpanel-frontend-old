@@ -7,7 +7,7 @@ import {withFormik, Form} from 'formik';
 import * as Yup from 'yup';
 import {toast} from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { addMeeting as addMeetingAction } from 'selectors/fetchMeetings';
+import { addMeeting } from 'selectors/fetchMeetings';
 
 const Formik = ({column, status, leaders, setFieldValue, setIsModalVisible, isModalVisible, topicNames, isSubmitting}) => {
   const setValue = name => tags => {
@@ -109,7 +109,7 @@ const AddMeetingWithFormik = withFormik({
   handleSubmit: (values, {resetForm, setStatus, props}) => {
     const {
       setSubmitting,
-      addMeeting
+      addMeetingAction
     } = props;
 
     setSubmitting(true);
@@ -118,7 +118,7 @@ const AddMeetingWithFormik = withFormik({
     date = new Date(dateToConvert);
     let timestamp = date.getTime();
     date = timestamp;
-    addMeeting({date, topic, leader, meetingHref, description, tags, usefulLinks})
+    addMeetingAction({date, topic, leader, meetingHref, description, tags, usefulLinks})
     .then(() => {
       setStatus(true);
       resetForm();
@@ -135,10 +135,10 @@ const AddMeetingWithFormik = withFormik({
 
 const AddMeeting = (props) => {
   const dispatch = useDispatch();
-  const addMeeting = (dataToSend) => dispatch(addMeetingAction(dataToSend));
+  const addMeetingAction = (dataToSend) => dispatch(addMeeting(dataToSend));
 
   return (
-    <AddMeetingWithFormik addMeeting={addMeeting} {...props}/>
+    <AddMeetingWithFormik addMeetingAction={addMeetingAction} {...props}/>
   );
 };
 
