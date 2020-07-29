@@ -6,9 +6,8 @@ import styled from 'styled-components';
 import {withFormik, Form} from 'formik';
 import * as Yup from 'yup';
 import {toast} from 'react-toastify';
-
-import {connect} from 'react-redux';
-import {addMeeting as addMeetingAction} from 'selectors/FetchMeets';
+import { useDispatch } from 'react-redux';
+import { addMeeting } from 'selectors/fetchMeetings';
 
 const Formik = ({column, status, leaders, setFieldValue, setIsModalVisible, isModalVisible, topicNames, isSubmitting}) => {
   const setValue = name => tags => {
@@ -76,7 +75,7 @@ const Formik = ({column, status, leaders, setFieldValue, setIsModalVisible, isMo
   );
 };
 
-const AddMeeting = withFormik({
+const AddMeetingWithFormik = withFormik({
   mapPropsToValues: ({date, time, topic, leader, meetingHref, description, tags, usefulLinks}) => {
     return {
       // todo - convert date & time to timestamp
@@ -108,13 +107,18 @@ const AddMeeting = withFormik({
     usefulLinks: Yup.string(),
   }),
   handleSubmit: (values, {resetForm, setStatus, props}) => {
-    props.setSubmitting(true);
+    const {
+      setSubmitting,
+      addMeetingAction
+    } = props;
+
+    setSubmitting(true);
     let {date, time, topic, leader, meetingHref, description, tags, usefulLinks} = values;
     let dateToConvert = `${date} ${time}`;
     date = new Date(dateToConvert);
     let timestamp = date.getTime();
     date = timestamp;
-    props.addMeeting({date, topic, leader, meetingHref, description, tags, usefulLinks})
+    addMeetingAction({date, topic, leader, meetingHref, description, tags, usefulLinks})
     .then(() => {
       setStatus(true);
       resetForm();
@@ -126,14 +130,19 @@ const AddMeeting = withFormik({
       setStatus(false);
       toast.error('Nie udało się dodać spotkania...');
     });
-  },
+  }
 })(Formik);
 
-const mapDispatchToProps = dispatch => ({
-  addMeeting: dataToSend => dispatch(addMeetingAction(dataToSend)),
-});
+const AddMeeting = (props) => {
+  const dispatch = useDispatch();
+  const addMeetingAction = (dataToSend) => dispatch(addMeeting(dataToSend));
 
-export default connect(null, mapDispatchToProps)(AddMeeting);
+  return (
+    <AddMeetingWithFormik addMeetingAction={addMeetingAction} {...props}/>
+  );
+};
+
+export default AddMeeting;
 
 export const StyledForm = styled.form`
   font-family: inherit;
@@ -153,8 +162,8 @@ export const StyledForm = styled.form`
     resize: none;
     &::placeholder {
       color: ${variables.colorLink};
-    }
-  }
+    };
+  };
 `;
 
 const StyledButtonsContainer = styled.div`

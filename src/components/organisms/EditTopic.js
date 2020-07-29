@@ -7,9 +7,8 @@ import variables from 'settings/variables';
 import styled from 'styled-components';
 import {CancelButton, PrimaryButton} from 'components/atoms/Button';
 import {toast} from 'react-toastify';
-
-import {connect} from 'react-redux';
-import {editTopic as editTopicAction} from 'selectors/FetchMeets';
+import { useDispatch } from 'react-redux';
+import { editTopic } from 'selectors/fetchTopics';
 
 const Formik = ({setFieldValue, column, setIsModalVisible, selectedElement}) => {
   const [editData] = selectedElement;
@@ -33,7 +32,7 @@ const Formik = ({setFieldValue, column, setIsModalVisible, selectedElement}) => 
   );
 };
 
-const EditTopic = withFormik({
+const EditTopicWithFormik = withFormik({
   mapPropsToValues: ({topic, description, votes, userAdded, tags, selectedElement}) => {
     const [editData] = selectedElement;
     return {
@@ -56,9 +55,14 @@ const EditTopic = withFormik({
     description: Yup.string(),
   }),
   handleSubmit: (values, {props}) => {
-    props.setSubmitting(true);
+    const {
+      setSubmitting,
+      editTopicAction
+    } = props;
+
+    setSubmitting(true);
     const [editData] = props.selectedElement;
-    props.editTopic(values, editData._id)
+    editTopicAction(values, editData._id)
     .then(() => {
       props.setIsModalVisible(false);
       props.setSubmitting(false);
@@ -71,11 +75,16 @@ const EditTopic = withFormik({
   },
 })(Formik);
 
-const mapDispatchToProps = dispatch => ({
-  editTopic: (dataToSend, id) => dispatch(editTopicAction(dataToSend, id)),
-});
+const EditTopic = (props) => {
+  const dispatch = useDispatch();
+  const editTopicAction = (dataToSend, id) => dispatch(editTopic(dataToSend, id));
 
-export default connect(null, mapDispatchToProps)(EditTopic);
+  return (
+    <EditTopicWithFormik editTopicAction={editTopicAction} {...props}/>
+  );
+};
+
+export default EditTopic;
 
 export const StyledForm = styled.form`
   font-family: inherit;

@@ -170,7 +170,6 @@ const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}
 
 const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, index, userId}) => {
   const [myVotes, setMyVotes] = useState([]);
-  console.log(meetingData);
   useEffect(() => {
     setMyVotes(meetingData.usersVote);
   }, [meetingData]);

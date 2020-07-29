@@ -8,8 +8,8 @@ import styled from 'styled-components';
 import {CancelButton, PrimaryButton} from 'components/atoms/Button';
 import {toast} from 'react-toastify';
 
-import {connect} from 'react-redux';
-import {addTopic as addTopicAction} from 'selectors/FetchMeets';
+import { useDispatch } from 'react-redux';
+import { addTopic } from 'selectors/fetchTopics';
 
 const Formik = ({setFieldValue, column, status, isModalVisible, setIsModalVisible, isSubmitting}) => {
   const setTags = name => tags => {
@@ -34,7 +34,7 @@ const Formik = ({setFieldValue, column, status, isModalVisible, setIsModalVisibl
   );
 };
 
-const AddTopic = withFormik({
+const AddTopicWithFormik = withFormik({
   mapPropsToValues: ({topic, description, votes, userAdded, tags}) => {
     return {
       topic: topic || '',
@@ -56,8 +56,13 @@ const AddTopic = withFormik({
     votes: Yup.number('głosy muszą być liczbą'),
   }),
   handleSubmit: (values, {resetForm, setStatus, props}) => {
-    props.setSubmitting(true);
-    props.addTopic(values)
+    const {
+      setSubmitting,
+      addTopicAction
+    } = props;
+
+    setSubmitting(true);
+    addTopicAction(values)
     .then(() => {
       setStatus(true);
       resetForm();
@@ -73,11 +78,17 @@ const AddTopic = withFormik({
   },
 })(Formik);
 
-const mapDispatchToProps = dispatch => ({
-  addTopic: dataToSend => dispatch(addTopicAction(dataToSend)),
-});
+const AddTopic = (props) => {
+  const dispatch = useDispatch();
+  const addTopicAction = (dataToSend) => dispatch(addTopic(dataToSend));
 
-export default connect(null, mapDispatchToProps)(AddTopic);
+  return (
+    <AddTopicWithFormik addTopicAction={addTopicAction} {...props}/>
+  );
+};
+
+export default AddTopic;
+
 
 export const StyledForm = styled.form`
   font-family: inherit;
