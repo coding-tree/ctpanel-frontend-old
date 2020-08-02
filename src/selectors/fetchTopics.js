@@ -10,7 +10,6 @@ export const getTopics = () => {
         try {
           const response = await fetch(process.env.REACT_APP_SERVER_URL + "/topics");
           const data = await response.json();
-          console.log(data);
           dispatch(getTopicsSuccess(data));
         } catch(error){
           dispatch(getTopicsError(error));

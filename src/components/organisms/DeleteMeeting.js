@@ -5,11 +5,13 @@ import styled from 'styled-components';
 import {toast} from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { deleteMeetings } from 'selectors/fetchMeetings';
+import { getSchedule } from 'selectors/fetchSchedule';
 
 const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModalVisible, setSubmitting}) => {
   const dispatch = useDispatch();
   const deleteMeetingsAction = (selectedElements, destination) => dispatch(deleteMeetings(selectedElements, destination));
-
+  const getScheduleAction = () => dispatch(getSchedule());
+  
   const listItems = selectedElement.map((el, index) => {
     return <StyledListItem key={index}>{el.topic}</StyledListItem>;
   });
@@ -20,6 +22,7 @@ const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModal
     .then(() => {
       setSubmitting(false);
       setIsModalVisible(false);
+      getScheduleAction();
       toast.success('Pomyślnie usunięto spotkania!');
     })
     .catch(() => {

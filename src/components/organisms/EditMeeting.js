@@ -9,6 +9,7 @@ import axios from 'axios';
 import {toast} from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { editMeeting } from 'selectors/fetchMeetings';
+import { getSchedule } from 'selectors/fetchSchedule';
 
 const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible, selectedElement, topicNames = []}) => {
   const [editData] = selectedElement;
@@ -96,7 +97,8 @@ const EditMeetingWithFormik = withFormik({
   handleSubmit: ({date, time, topic, leader, meetingHref, description, tags, usefulLinks}, {props}) => {
     const {
       setSubmitting,
-      editMeetingAction
+      editMeetingAction,
+      getScheduleAction
     } = props;
     
     setSubmitting(true);
@@ -109,6 +111,7 @@ const EditMeetingWithFormik = withFormik({
     .then(() => {
       props.setIsModalVisible(false);
       props.setSubmitting(false);
+      getScheduleAction();
       toast.success('Pomyślnie edytowano spotkanie!');
     })
     .catch(err => {
@@ -121,9 +124,10 @@ const EditMeetingWithFormik = withFormik({
 const EditMeeting = (props) => {
   const dispatch = useDispatch();
   const editMeetingAction = (dataToSend, id) => dispatch(editMeeting(dataToSend, id));
+  const getScheduleAction = () => dispatch(getSchedule());
 
   return (
-    <EditMeetingWithFormik editMeetingAction={editMeetingAction} {...props}/>
+    <EditMeetingWithFormik editMeetingAction={editMeetingAction} getScheduleAction={getScheduleAction} {...props}/>
   );
 };
 

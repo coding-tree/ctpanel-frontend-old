@@ -13,7 +13,7 @@ const TimetablePage = () => {
   const dispatch = useDispatch();
   const getScheduleAction = () => dispatch(getSchedule());
   const {pending, meetings, error} = useSelector(state => state.schedule);
-  
+
   useEffect(() => {
     getScheduleAction();
   }, []);
