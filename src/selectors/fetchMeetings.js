@@ -28,6 +28,7 @@ export const addMeeting = dataToSend => {
             },
             body: JSON.stringify(dataToSend)
         });
+        dispatch(getMeetings());
         } catch(error){
             console.log(error);
         };
@@ -37,12 +38,13 @@ export const addMeeting = dataToSend => {
 export const deleteMeetings = (selectedElements, destination) => {
     return async dispatch => {
         const removeElements = (selectedElements, destination) => selectedElements.map(element => (
-        fetch(process.env.REACT_APP_SERVER_URL + "/" + destination + "/" + element._id, {
-            method: 'DELETE'
-        })
+            fetch(process.env.REACT_APP_SERVER_URL + "/" + destination + "/" + element._id, {
+                method: 'DELETE'
+            })
         ));
         try {
-        const response = await Promise.all(removeElements(selectedElements, destination));
+            const response = await Promise.all(removeElements(selectedElements, destination));
+            dispatch(getMeetings());
         } catch(error) {
         console.log(error);
         };
@@ -60,6 +62,7 @@ export const editMeeting = (dataToSend, id) => {
             },
             body: JSON.stringify(dataToSend)
             });
+            dispatch(getMeetings());
         } catch(error){
             console.log(error);
         };
