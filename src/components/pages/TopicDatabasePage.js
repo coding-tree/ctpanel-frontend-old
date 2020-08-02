@@ -12,7 +12,7 @@ const TopicDatabasePage = () => {
   const dispatch = useDispatch();
   const getTopicsAction = () => dispatch(getTopics());
   const {pending, meetings, error} = useSelector(state => state.topics);
-
+  
   useEffect(() => {
     getTopicsAction();
   }, []);
