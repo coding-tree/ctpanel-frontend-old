@@ -20,14 +20,16 @@ export const getTopics = () => {
 export const addTopic = dataToSend => {
     return async dispatch => {
         try {
-            const response = await fetch(process.env.REACT_APP_SERVER_URL + "/topics", {
+          const response = await fetch(process.env.REACT_APP_SERVER_URL + "/topics", {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(dataToSend)
-        });
+              
+          });
+          dispatch(getTopics());
         } catch(error){
             console.log(error);
         };
@@ -43,6 +45,7 @@ export const deleteTopics = (selectedElements, destination) => {
         ));
         try {
           const response = await Promise.all(removeElements(selectedElements, destination));
+          dispatch(getTopics());
         } catch(error) {
           console.log(error);
         };
@@ -60,6 +63,7 @@ export const editTopic = (dataToSend, id) => {
             },
             body: JSON.stringify(dataToSend)
           });
+          dispatch(getTopics());
         } catch(error){
           console.log(error);
         };
