@@ -25,7 +25,7 @@ const GlobalStyle = createGlobalStyle`
     color: ${variables.colorFont};
   }
 
-  div, span, nav, li, a{
+  div, span, nav, li, a{  
     display: flex;
   }
 
@@ -35,10 +35,25 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #root {
-    position: absolute;
-    left: 34rem;
-    width: calc(100% - 34rem);
-    flex-direction: column;
+    display: grid;
+    grid-template-areas: 'aside header'
+                          'aside body';
+    grid-template-columns: 34rem 1fr;
+    row-gap: 10rem;
+    grid-template-rows: max-content 1fr;
+
+    @media only screen and (max-width: ${variables.bpDesktop}) {
+      grid-template-columns: 10rem 1fr;
+    }
+
+    @media only screen and (max-width: ${variables.bpTablet}) {
+      grid-template-areas: 'aside'
+      'header'
+      'body';
+      grid-template-columns: 1fr;
+      grid-template-rows: max-content max-content 1fr;
+      row-gap: 0;
+    }
   }
 
   ul{

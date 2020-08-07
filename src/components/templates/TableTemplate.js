@@ -7,8 +7,8 @@ import variables from 'settings/variables';
 import {SelectedElementProvider} from 'components/context/SelectedElementContext';
 
 const StyledWrapper = styled.div`
+  grid-area: body;
   height: 100%;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   margin-bottom: 10rem;
@@ -18,6 +18,10 @@ const StyledTableContainer = styled.div`
   width: 80%;
   max-width: 1400px;
   flex-direction: column;
+
+  @media only screen and (max-width: ${variables.bpLargeDesktop}) {
+    width: 90%;
+  }
 `;
 
 const StyledTable = styled.div`
@@ -25,7 +29,7 @@ const StyledTable = styled.div`
   padding: 2.8rem 2.2rem;
   border-radius: 30px;
   box-shadow: 0 0 10px ${variables.boxShadowColor};
-  background: #ffffff;
+  background: ${variables.colorWhite};
 `;
 
 const TableTemplate = ({children, title}) => {

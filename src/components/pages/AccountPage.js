@@ -1,18 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import MainTemplate from 'components/templates/MainTemplate';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import variables from 'settings/variables';
 import {PrimaryButton} from 'components/atoms/Button';
 import axios from 'axios';
 import Header from 'components/atoms/Header';
 
 const AccountPage = () => {
-  const {pending, meetings, error} = useSelector(state => state.user);
+  const {pending, meetings, error} = useSelector((state) => state.user);
   const [userRole, setUserRole] = useState('Gość');
   const [userCredentials, setUserCredentials] = useState(undefined);
 
-  const parseRoleIdToBeltColor = userRolesArray => {
+  const parseRoleIdToBeltColor = (userRolesArray) => {
     if (userRolesArray.includes('628160498050793482')) return 'Czarny pas';
     if (userRolesArray.includes('627565298794496030')) return 'Brązowy pas';
     if (userRolesArray.includes('630434499418914841')) return 'Zielony pas';
@@ -32,8 +32,8 @@ const AccountPage = () => {
     const url = `${process.env.REACT_APP_SERVER_URL}/user/${meetings.nickname}`;
     axios
       .get(url)
-      .then(res => setUserCredentials(res.data))
-      .catch(err => console.log(err));
+      .then((res) => setUserCredentials(res.data))
+      .catch((err) => console.log(err));
   }, [meetings]);
 
   if (userCredentials) {
@@ -90,6 +90,7 @@ const AccountPage = () => {
 export default AccountPage;
 
 const StyledWrapper = styled.div`
+  grid-area: body;
   margin: 0 auto;
   display: flex;
   width: 80%;

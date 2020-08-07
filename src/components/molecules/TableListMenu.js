@@ -7,29 +7,32 @@ import variables from 'settings/variables';
 import Checkbox from 'components/atoms/Checkbox';
 import {SelectedElementContext} from 'components/context/SelectedElementContext';
 
-const StyledWrapper = styled.thead`
-  align-items: center;
-  height: 50px;
-  padding: 0 10px;
-  border-top: 1px solid #f3eef0;
-  border-bottom: 1px solid #f3eef0;
-  background-color: #fcfbfc;
+const StyledWrapper = styled.div`
+  display: grid;
+  border-top: 1px solid ${variables.tableBorderColor};
+  border-bottom: 1px solid ${variables.tableBorderColor};
+  background-color: ${variables.tableHeaderColor};
   color: ${variables.colorLink};
+  font-weight: bold;
 `;
 
-const StyledTableRow = styled.tr`
-  height: 50px;
+const StyledTableRow = styled.div`
+  display: grid;
+  grid-template-columns: ${variables.gridTable};
+  column-gap: 2rem;
+  grid-template-rows: 5rem;
+  align-items: center;
+  padding: 0 1rem;
 `;
 
-const StyledTableHead = styled.th`
-  text-align: left;
-  padding: 0 3rem;
-  min-width: 20px;
+const StyledTableHead = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: start;
+  gap: 1rem;
   white-space: nowrap;
-  &:first-child {
-    padding: 0 0 0 2rem;
-  }
-  text-align: ${({right}) => right && 'right'};
+  align-items: center;
+  justify-self: ${({right}) => right && 'end'};
 `;
 
 const SchedulesTableListMenu = ({handleSelection, isSelected}) => {
@@ -49,7 +52,7 @@ const SchedulesTableListMenu = ({handleSelection, isSelected}) => {
           Temat spotkania <Icon className="fas fa-sort"></Icon>
         </StyledTableHead>
         <StyledTableHead right>
-          Planowany czas trwania <Icon className="fas fa-sort"></Icon>
+          Czas trwania <Icon className="fas fa-sort"></Icon>
         </StyledTableHead>
         <StyledTableHead right>
           Prowadzący <Icon className="fas fa-sort"></Icon>

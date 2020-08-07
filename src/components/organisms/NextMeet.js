@@ -7,6 +7,7 @@ import NextMeetInfo from 'components/molecules/NextMeetInfo';
 import axios from 'axios';
 
 const StyledWrapper = styled.div`
+  grid-area: header;
   width: calc(100%);
   height: 113px;
   min-height: 113px;
@@ -14,14 +15,13 @@ const StyledWrapper = styled.div`
   justify-content: space-between;
   padding: 0 10rem;
   background-color: ${variables.colorWhite};
-  margin-bottom: 100px;
 `;
 
 const NextMeet = () => {
   const [upcoming, setUpcoming] = useState({});
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_SERVER_URL}/meetings/incoming`).then(resp => setUpcoming(resp.data));
+    axios.get(`${process.env.REACT_APP_SERVER_URL}/meetings/incoming`).then((resp) => setUpcoming(resp.data));
   }, []);
 
   return (

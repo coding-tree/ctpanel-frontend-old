@@ -18,6 +18,10 @@ const LastMeetWrapper = styled.div`
   background-color: ${variables.colorWhite};
   border-radius: 1rem;
   box-shadow: 0 0 10px ${variables.boxShadowColor};
+
+  @media only screen and (max-width: ${variables.bpLargeDesktop}) {
+    width: 90%;
+  }
   a {
     grid-column: 3/4;
     justify-self: end;

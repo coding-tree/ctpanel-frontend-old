@@ -4,8 +4,8 @@ import {getLastMeet, getLastXMeets} from 'api';
 import styled from 'styled-components';
 
 const HomeWrapper = styled.div`
+  grid-area: body;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   div {
     margin-bottom: 1.7rem;
@@ -17,11 +17,11 @@ const Home = () => {
   const [lastMeets, setLastMeets] = useState([]);
 
   useEffect(() => {
-    getLastMeet().then(data => setLastMeet(data));
+    getLastMeet().then((data) => setLastMeet(data));
   }, []);
 
   useEffect(() => {
-    getLastXMeets(3).then(data => setLastMeets(data));
+    getLastXMeets(3).then((data) => setLastMeets(data));
   }, []);
 
   const meetings = lastMeets.map((item, index) => {

@@ -2,6 +2,7 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
+import Icon from 'components/atoms/Icon';
 
 const logout = () => {
   window.location.href = `${process.env.REACT_APP_SERVER_URL}/logout`;
@@ -9,44 +10,48 @@ const logout = () => {
 
 const MenuSidebar = () => {
   const year = new Date().getFullYear();
+
   return (
     <StyledWrapper>
       <TitleWrapper>Coding Tree Panel</TitleWrapper>
+      <TitleWrapper tablet>CT</TitleWrapper>
+
       <MenuWrapper>
         <StyledLinksList>
           <StyledLinkElement>
             <StyledLink as={NavLink} exact strict to="/" activeclass="active">
-              <MenuIcon className="fas fa-home"></MenuIcon> Strona główna
+              <Icon fontSize="2rem" padding="0 1rem 0 0" className="fas fa-home"></Icon>
+              <StyledSpan>Strona główna</StyledSpan>
             </StyledLink>
           </StyledLinkElement>
           <StyledLinkElement>
             <StyledLink as={NavLink} to="/harmonogram" activeclass="active">
-              <MenuIcon className="fas fa-clock"></MenuIcon>
-              Harmonogram
+              <Icon fontSize="2rem" padding="0 1rem 0 0" className="fas fa-clock"></Icon>
+              <StyledSpan>Harmonogram</StyledSpan>
             </StyledLink>
           </StyledLinkElement>
           <StyledLinkElement>
             <StyledLink as={NavLink} to="/baza-tematow" activeclass="active">
-              <MenuIcon className="fas fa-database"></MenuIcon>
-              Baza tematów
+              <Icon fontSize="2rem" padding="0 1rem 0 0" className="fas fa-database"></Icon>
+              <StyledSpan>Baza tematów</StyledSpan>
             </StyledLink>
           </StyledLinkElement>
           <StyledLinkElement>
             <StyledLink as={NavLink} to="/historia-spotkan" activeclass="active">
-              <MenuIcon className="fas fa-calendar-alt"></MenuIcon>
-              Historia
+              <Icon fontSize="2rem" padding="0 1rem 0 0" className="fas fa-calendar-alt"></Icon>
+              <StyledSpan>Historia</StyledSpan>
             </StyledLink>
           </StyledLinkElement>
           <StyledLinkElement>
             <StyledLink as={NavLink} to="/konto" activeclass="active">
-              <MenuIcon className="fas fa-user-circle"></MenuIcon>
-              Konto
+              <Icon fontSize="2rem" padding="0 1rem 0 0" className="fas fa-user-circle"></Icon>
+              <StyledSpan>Konto</StyledSpan>
             </StyledLink>
           </StyledLinkElement>
           <StyledLinkElement logout>
             <StyledLink onClick={() => logout()}>
-              <MenuIcon className="fas fa-sign-out-alt"></MenuIcon>
-              Wyloguj
+              <Icon fontSize="2rem" padding="0 1rem 0 0" className="fas fa-sign-out-alt"></Icon>
+              <StyledSpan>Wyloguj</StyledSpan>
             </StyledLink>
           </StyledLinkElement>
         </StyledLinksList>
@@ -61,14 +66,23 @@ export default MenuSidebar;
 // Styles
 
 const StyledWrapper = styled.nav`
-  position: fixed;
+  grid-area: aside;
+  position: sticky;
   top: 0;
   left: 0;
   flex-direction: column;
-  width: 34rem;
-  max-width: 34rem;
   height: 100vh;
   background-color: ${variables.colorMain};
+  z-index: 9999;
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    height: 10rem;
+  }
 
   &::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px ${variables.modalBackground};
@@ -100,18 +114,58 @@ const TitleWrapper = styled.header`
   font-family: ${variables.logoFont};
   margin-top: 10rem;
   margin-bottom: 6rem;
+
+  @media only screen and (max-width: ${variables.bpDesktop}) {
+    display: none;
+  }
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    display: block;
+  }
+
+  ${({tablet}) =>
+    tablet &&
+    css`
+      display: none;
+      @media only screen and (max-width: ${variables.bpDesktop}) {
+        display: block;
+      }
+      @media only screen and (max-width: ${variables.bpTablet}) {
+        display: none;
+      }
+    `}
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    margin: 0;
+  }
 `;
 
 const MenuWrapper = styled.div`
   width: 100%;
   justify-content: flex-end;
   flex-grow: 1;
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    justify-content: center;
+    grid-row: 2/3;
+    grid-column: 1/-1;
+    background-color: ${variables.colorMain};
+    height: 10rem;
+  }
 `;
 
 const StyledLinksList = styled.ul`
   display: flex;
   flex-direction: column;
   width: 90%;
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    display: grid;
+    grid-auto-columns: max-content;
+    justify-content: space-between;
+    grid-auto-flow: column;
+  }
 `;
 
 const StyledLinkElement = styled.li`
@@ -120,20 +174,42 @@ const StyledLinkElement = styled.li`
   border-radius: 3rem 0 0 3rem;
   overflow: hidden;
   margin-bottom: 1.5rem;
-  &:last-of-type {
-    margin-top: auto;
-    margin-bottom: 5rem;
-  }
   &:hover a {
     color: ${variables.colorMain};
+    @media only screen and (max-width: ${variables.bpTablet}) {
+      color: ${variables.colorWhite};
+      opacity: 1;
+    }
+  }
+  i {
+    @media only screen and (max-width: ${variables.bpDesktop}) {
+      padding: 0;
+    }
+    @media only screen and (max-width: ${variables.bpTablet}) {
+      padding: 0;
+    }
+  }
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    height: auto;
+    margin-bottom: 0;
+    align-items: center;
+    justify-content: center;
   }
 
   ${({logout}) =>
     logout &&
     css`
+      margin-top: auto;
+      margin-bottom: 5rem;
       background-color: ${variables.logoutButtonColor};
       &:hover a {
         color: ${variables.logoutButtonColor};
+      }
+
+      @media only screen and (max-width: ${variables.bpTablet}) {
+        margin: 0;
+        background-color: transparent;
       }
     `}
 
@@ -148,9 +224,21 @@ const StyledLinkElement = styled.li`
     transition: transform 0.2s ease-in-out;
     transform-origin: right;
     right: 0;
+    @media only screen and (max-width: ${variables.bpTablet}) {
+      display: none;
+    }
   }
   &:hover::before {
     transform: scaleX(1);
+  }
+`;
+
+const StyledSpan = styled.span`
+  @media only screen and (max-width: ${variables.bpDesktop}) {
+    display: none;
+  }
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    display: block;
   }
 `;
 
@@ -161,18 +249,31 @@ const StyledLink = styled.a`
   font-weight: 700;
   font-size: 1.8rem;
   transition: all 0.2s ease-in-out;
-
   z-index: 10;
   cursor: pointer;
+
+  @media only screen and (max-width: ${variables.bpDesktop}) {
+    padding-left: 3.5rem;
+  }
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    width: auto;
+    border-radius: 100%;
+    opacity: 0.7;
+  }
+
   &.active {
     color: ${variables.colorMain};
     background-color: ${variables.backgroundColor};
+    @media only screen and (max-width: ${variables.bpTablet}) {
+      color: ${variables.colorWhite};
+      background-color: transparent;
+      opacity: 1;
+    }
   }
-`;
-
-const MenuIcon = styled.i`
-  font-size: 2rem;
-  padding-right: 1rem;
 `;
 
 const CopyrightWrapper = styled.div`
@@ -182,4 +283,8 @@ const CopyrightWrapper = styled.div`
   color: ${variables.colorWhite};
   font-size: 1.6rem;
   margin-bottom: 5rem;
+
+  @media only screen and (max-width: ${variables.bpDesktop}) {
+    display: none;
+  }
 `;
