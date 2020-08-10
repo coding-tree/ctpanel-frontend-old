@@ -22,10 +22,25 @@ const LastMeetWrapper = styled.div`
   @media only screen and (max-width: ${variables.bpLargeDesktop}) {
     width: 90%;
   }
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    grid-template-columns: 1fr;
+    padding: 3rem;
+    width: 96%;
+    row-gap: 5rem;
+  }
+
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    padding: 2rem;
+  }
+
   a {
     grid-column: 3/4;
     justify-self: end;
     align-self: end;
+    @media only screen and (max-width: ${variables.bpTablet}) {
+      grid-column: initial;
+    }
   }
 
   > div:first-of-type {
@@ -33,10 +48,16 @@ const LastMeetWrapper = styled.div`
   }
   > div:last-of-type {
     grid-column: 1 / span 2;
+    @media only screen and (max-width: ${variables.bpTablet}) {
+      grid-column: 1/2;
+    }
   }
 
   .lastmeet__description {
     grid-column: 1/7;
+    @media only screen and (max-width: ${variables.bpTablet}) {
+      grid-column: 1/2;
+    }
   }
 `;
 

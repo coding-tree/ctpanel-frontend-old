@@ -23,13 +23,13 @@ const SchedulesTableMenu = () => {
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_SERVER_URL}/topics`)
-      .then(response => {
+      .then((response) => {
         setTopics(response.data.results);
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }, []);
 
-  const topicNames = topics.map(topic => topic.topic);
+  const topicNames = topics.map((topic) => topic.topic);
 
   return (
     <StyledTableActions>
@@ -51,7 +51,8 @@ const SchedulesTableMenu = () => {
           </JoinModal>
         </>
       )}
-      <StyledNumberInput
+      {/* TODO: Dni wstecz */}
+      {/* <StyledNumberInput
         type="text"
         placeholder="ile dni wstecz wyświetlić?"
         onChange={e => {
@@ -61,7 +62,7 @@ const SchedulesTableMenu = () => {
             e.target.value = '';
           }
         }}
-      />
+      /> */}
       {/* TODO: Implement Search */}
       {/* <StyledInput placeholder="Wyszukaj" /> */}
     </StyledTableActions>

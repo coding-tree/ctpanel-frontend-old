@@ -27,7 +27,7 @@ const StyledSelectedRow = styled.div`
 
 const StyledRow = styled.div`
   display: grid;
-  grid-template-columns: ${variables.gridTable};
+  grid-template-columns: ${({topic}) => (topic ? variables.gridTableTopic : variables.gridTable)};
   column-gap: 2rem;
   padding: 1rem;
   align-items: center;
@@ -167,7 +167,7 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
   });
   return (
     <>
-      <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} topic isSelected={isSelected}>
+      <StyledRow topic onClick={() => toggleSelection(meetingData, isSelected)} topic isSelected={isSelected}>
         <StyledTableData>
           <Checkbox isSelected={isSelected}></Checkbox>
         </StyledTableData>
@@ -188,14 +188,12 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
         </StyledTableData>
       </StyledRow>
       <StyledSelectedRow isSelected={isSelected}>
-        <StyledTableData colSpan={6} isSelected={isSelected}>
-          <StyledDescriptionBox>
-            <StyledText bold>Opis tematu:</StyledText>
-            <StyledText>{meetingData.description}</StyledText>
-            <StyledText bold>Tagi:</StyledText>
-            <StyledText>{renderTags}</StyledText>
-          </StyledDescriptionBox>
-        </StyledTableData>
+        <StyledTableContainer>
+          <StyledText bold>Opis tematu:</StyledText>
+          <StyledText>{meetingData.description}</StyledText>
+          <StyledText bold>Tagi:</StyledText>
+          <StyledText>{renderTags}</StyledText>
+        </StyledTableContainer>
       </StyledSelectedRow>
     </>
   );
@@ -220,23 +218,21 @@ const MeetingHistoryTableElement = ({meetingData, isSelected, toggleSelection, i
         <StyledTableData right>
           <PrimaryButton small>Dodaj</PrimaryButton>
         </StyledTableData>
-        <StyledSelectedRow description isSelected={isSelected}>
-          <StyledTableData description colSpan={6} isSelected={isSelected}>
-            <StyledDescriptionBox>
-              <StyledText bold>Odnośnik do spotkania:</StyledText>
-              <StyledText>
-                <StyledLink target="_blank" rel="noreferrer noopener" href={meetingData.meetingHref}>
-                  {meetingData.meetingHref}
-                </StyledLink>
-              </StyledText>
-              <StyledText bold>Opis spotkania:</StyledText>
-              <StyledText>{meetingData.description}</StyledText>
-              <StyledText bold>Tagi:</StyledText>
-              <StyledText>{renderTags}</StyledText>
-            </StyledDescriptionBox>
-          </StyledTableData>
-        </StyledSelectedRow>
       </StyledRow>
+      <StyledSelectedRow isSelected={isSelected}>
+        <StyledTableContainer>
+          <StyledText bold>Odnośnik do spotkania:</StyledText>
+          <StyledText>
+            <StyledLink target="_blank" rel="noreferrer noopener" href={meetingData.meetingHref}>
+              {meetingData.meetingHref}
+            </StyledLink>
+          </StyledText>
+          <StyledText bold>Opis spotkania:</StyledText>
+          <StyledText>{meetingData.description}</StyledText>
+          <StyledText bold>Tagi:</StyledText>
+          <StyledText>{renderTags}</StyledText>
+        </StyledTableContainer>
+      </StyledSelectedRow>
     </>
   );
 };

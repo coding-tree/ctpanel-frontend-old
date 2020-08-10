@@ -1,5 +1,6 @@
 import React, {lazy} from 'react';
 import styled from 'styled-components';
+import variables from 'settings/variables';
 
 const Title = lazy(() => import('components/atoms/Title'));
 const Anchor = lazy(() => import('components/atoms/Anchor'));
@@ -7,6 +8,12 @@ const Text = lazy(() => import('components/atoms/Text'));
 
 const StyledWrapper = styled.div`
   flex-direction: column;
+
+  > div {
+    @media only screen and (max-width: ${variables.bpLargeMobile}) {
+      font-size: 1.4rem;
+    }
+  }
 `;
 const LinkWrapper = styled.div`
   padding: 0.5rem 0;

@@ -3,11 +3,21 @@ import styled from 'styled-components';
 
 import StyledDate from 'components/atoms/StyledDate';
 import Title from 'components/atoms/Title';
+import variables from 'settings/variables';
 
 const MeetWrapper = styled.div`
   text-transform: uppercase;
   font-weight: bold;
   font-size: 1.6rem;
+
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    display: grid;
+    row-gap: 1rem;
+
+    > div:nth-of-type(2) {
+      display: none;
+    }
+  }
 `;
 
 const NextMeetInfo = ({date, title}) => {

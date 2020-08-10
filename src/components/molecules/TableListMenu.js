@@ -18,7 +18,7 @@ const StyledWrapper = styled.div`
 
 const StyledTableRow = styled.div`
   display: grid;
-  grid-template-columns: ${variables.gridTable};
+  grid-template-columns: ${({topic}) => (topic ? variables.gridTableTopic : variables.gridTable)};
   column-gap: 2rem;
   grid-template-rows: 5rem;
   align-items: center;
@@ -64,7 +64,7 @@ const SchedulesTableListMenu = ({handleSelection, isSelected}) => {
 
 const TopicDataBaseTableListMenu = ({handleSelection, isSelected}) => (
   <StyledWrapper>
-    <StyledTableRow>
+    <StyledTableRow topic>
       <StyledTableHead>
         <Checkbox onClick={handleSelection} isSelected={isSelected}></Checkbox>
       </StyledTableHead>

@@ -7,14 +7,36 @@ import NextMeetInfo from 'components/molecules/NextMeetInfo';
 import axios from 'axios';
 
 const StyledWrapper = styled.div`
+  display: grid;
+  grid-template-columns: max-content minmax(min-content, max-content);
+  column-gap: 3rem;
   grid-area: header;
-  width: calc(100%);
-  height: 113px;
-  min-height: 113px;
-  align-items: center;
+  width: 100%;
   justify-content: space-between;
-  padding: 0 10rem;
+  padding: 5rem 10%;
   background-color: ${variables.colorWhite};
+
+  @media only screen and (max-width: ${variables.bpLargeDesktop}) {
+    padding: 5rem 5%;
+  }
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    grid-template-columns: 1fr;
+    margin-bottom: 2rem;
+    padding: 2rem 5%;
+    justify-items: center;
+    row-gap: 0.5rem;
+    div {
+      text-align: center;
+      justify-content: center;
+    }
+  }
+
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    row-gap: 3rem;
+    div {
+      font-size: 1.4rem;
+    }
+  }
 `;
 
 const NextMeet = () => {
@@ -26,7 +48,7 @@ const NextMeet = () => {
 
   return (
     <StyledWrapper>
-      <Title important uppercase>
+      <Title important uppercase nobreak>
         Najbliższe spotkanie
       </Title>
       {upcoming ? (

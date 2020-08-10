@@ -84,6 +84,11 @@ const StyledWrapper = styled.nav`
     height: 10rem;
   }
 
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    height: auto;
+    padding: 1rem 0;
+  }
+
   &::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px ${variables.modalBackground};
     box-shadow: inset 0 0 6px ${variables.modalBackground};
@@ -120,6 +125,7 @@ const TitleWrapper = styled.header`
   }
   @media only screen and (max-width: ${variables.bpTablet}) {
     display: block;
+    font-size: 5vw;
   }
 
   ${({tablet}) =>
@@ -162,9 +168,10 @@ const StyledLinksList = styled.ul`
   width: 90%;
   @media only screen and (max-width: ${variables.bpTablet}) {
     display: grid;
-    grid-auto-columns: max-content;
+    grid-auto-columns: 1fr;
     justify-content: space-between;
     grid-auto-flow: column;
+    width: 100%;
   }
 `;
 
@@ -208,8 +215,7 @@ const StyledLinkElement = styled.li`
       }
 
       @media only screen and (max-width: ${variables.bpTablet}) {
-        margin: 0;
-        background-color: transparent;
+        display: none;
       }
     `}
 
@@ -245,6 +251,8 @@ const StyledSpan = styled.span`
 const StyledLink = styled.a`
   width: 100%;
   align-items: center;
+  justify-content: flex-start;
+  text-align: center;
   padding: 0 0 0 5rem;
   font-weight: 700;
   font-size: 1.8rem;
@@ -263,6 +271,11 @@ const StyledLink = styled.a`
     width: auto;
     border-radius: 100%;
     opacity: 0.7;
+    font-size: 1.2rem;
+  }
+
+  @media only screen and (max-width: ${variables.bpMobile}) {
+    font-size: 0.8rem;
   }
 
   &.active {

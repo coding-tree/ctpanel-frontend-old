@@ -11,7 +11,11 @@ const StyledWrapper = styled.div`
   height: 100%;
   align-items: center;
   flex-direction: column;
-  margin-bottom: 10rem;
+  padding-bottom: 10rem;
+
+  @media only screen and (max-width: ${variables.bpDesktop}) {
+    padding-bottom: 5rem;
+  }
 `;
 
 const StyledTableContainer = styled.div`

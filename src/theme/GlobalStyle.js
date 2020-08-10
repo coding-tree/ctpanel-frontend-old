@@ -44,6 +44,7 @@ const GlobalStyle = createGlobalStyle`
 
     @media only screen and (max-width: ${variables.bpDesktop}) {
       grid-template-columns: 10rem 1fr;
+      row-gap: 5rem;
     }
 
     @media only screen and (max-width: ${variables.bpTablet}) {

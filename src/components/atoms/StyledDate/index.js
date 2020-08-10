@@ -4,15 +4,16 @@ import moment from 'moment';
 import 'moment/locale/pl';
 
 const StyledDate = styled.div`
-  font-size: ${props => (props.fontSize ? props.fontSize : '1.6rem')};
+  font-size: ${(props) => (props.fontSize ? props.fontSize : '1.6rem')};
   font-weight: bold;
   text-transform: ${({uppercase}) => (uppercase ? 'uppercase' : 'capitalize')};
-  ${props =>
+  ${(props) =>
     props.right &&
     css`
       position: absolute;
       right: 0;
     `}
+  white-space: nowrap;
 `;
 
 const DateAtom = ({date, format, children, fontSize, right, uppercase}) => {
