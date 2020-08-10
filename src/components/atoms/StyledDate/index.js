@@ -2,6 +2,7 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 import moment from 'moment';
 import 'moment/locale/pl';
+import variables from 'settings/variables';
 
 const StyledDate = styled.div`
   font-size: ${(props) => (props.fontSize ? props.fontSize : '1.6rem')};
@@ -13,7 +14,9 @@ const StyledDate = styled.div`
       position: absolute;
       right: 0;
     `}
-  white-space: nowrap;
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    font-size: 1.4rem;
+  }
 `;
 
 const DateAtom = ({date, format, children, fontSize, right, uppercase}) => {

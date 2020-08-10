@@ -51,20 +51,12 @@ const Root = () => {
   } else {
     return (
       <BrowserRouter>
-        <MainTemplate>
-          <MenuSidebar />
-          <NextMeet />
-          <Suspense fallback={<LoadingSpinner />}>
-            <Switch>
-              <Route exact path={routes.home} component={Home} />
-              <Route exact strict path={routes.timetable} component={Timetable} />
-              <Route exact strict path={routes.topicDatabase} component={TopicDatabase} />
-              <Route exact strict path={routes.history} component={History} />
-              <Route exact strict path={routes.account} component={Account} />
-              <Redirect to="/" />
-            </Switch>
-          </Suspense>
-        </MainTemplate>
+        <Suspense fallback={<LoadingSpinner />}>
+          <Switch>
+            <Route strict exact path="/login" component={LoginPage} />
+            <Redirect to="/login" />
+          </Switch>
+        </Suspense>
       </BrowserRouter>
     );
   }

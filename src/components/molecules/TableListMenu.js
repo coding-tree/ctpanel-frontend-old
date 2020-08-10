@@ -14,6 +14,9 @@ const StyledWrapper = styled.div`
   background-color: ${variables.tableHeaderColor};
   color: ${variables.colorLink};
   font-weight: bold;
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    font-size: 1.4rem;
+  }
 `;
 
 const StyledTableRow = styled.div`
@@ -72,7 +75,7 @@ const TopicDataBaseTableListMenu = ({handleSelection, isSelected}) => (
         ID <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
       <StyledTableHead>Temat spotkania</StyledTableHead>
-      <StyledTableHead>
+      <StyledTableHead right>
         Kategoria <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
       <StyledTableHead>

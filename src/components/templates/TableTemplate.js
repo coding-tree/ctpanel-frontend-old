@@ -26,6 +26,11 @@ const StyledTableContainer = styled.div`
   @media only screen and (max-width: ${variables.bpLargeDesktop}) {
     width: 90%;
   }
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    padding-bottom: 8rem;
+    width: 96%;
+  }
 `;
 
 const StyledTable = styled.div`

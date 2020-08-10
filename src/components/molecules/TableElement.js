@@ -22,6 +22,10 @@ const StyledSelectedRow = styled.div`
       padding: 2rem 0;
       border-bottom: 1px solid ${variables.tableBorderColor};
       background-color: ${variables.backgroundColor};
+      @media only screen and (max-width: ${variables.bpTablet}) {
+        padding: 2rem;
+        grid-template-columns: 1fr;
+      }
     `}
 `;
 
@@ -38,6 +42,14 @@ const StyledRow = styled.div`
     background-color: ${variables.tableHeaderColor};
     cursor: pointer;
   }
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    grid-template-columns: ${variables.gridTableTopicTablet};
+  }
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    font-size: 1.4rem;
+  }
 `;
 
 const StyledTableContainer = styled.div`
@@ -46,12 +58,18 @@ const StyledTableContainer = styled.div`
   grid-template-columns: max-content 1fr;
   row-gap: 1rem;
   column-gap: 3rem;
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    grid-column: 1/-1;
+  }
 `;
 
 const StyledTableData = styled.div`
   justify-self: ${({right}) => right && 'end'};
   text-align: ${({right}) => right && 'right'};
   color: ${({mainColor}) => mainColor && variables.colorLink};
+  flex-wrap: wrap;
+  display: ${({block}) => (block ? 'block' : 'flex')};
+
   ${({vote}) =>
     vote &&
     css`
@@ -66,15 +84,13 @@ const StyledTableData = styled.div`
         margin-left: 0.6rem;
       }
     `}
-`;
-
-const StyledDescriptionBox = styled.div`
-  padding: 2rem;
-  margin-left: 4rem;
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  grid-column-gap: 3rem;
-  grid-template-rows: repeat (3, max-content);
+  ${({noTablet}) =>
+    noTablet &&
+    css`
+      @media only screen and (max-width: ${variables.bpTablet}) {
+        display: none;
+      }
+    `}
 `;
 
 const StyledText = styled.span`
@@ -82,6 +98,15 @@ const StyledText = styled.span`
   word-wrap: break-word;
   font-weight: 400;
   font-weight: ${({bold}) => bold && '700'};
+
+  ${({tablet}) =>
+    tablet &&
+    css`
+      display: none;
+      @media only screen and (max-width: ${variables.bpTablet}) {
+        display: block;
+      }
+    `}
 `;
 
 const StyledLink = styled.a`
@@ -91,7 +116,9 @@ const StyledLink = styled.a`
   }
 `;
 
-const StyledTag = styled.span``;
+const StyledTag = styled.span`
+  display: inline;
+`;
 
 const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}) => {
   const renderTags = meetingData.tags.map((tag, index) => {
@@ -135,6 +162,9 @@ const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}
           <StyledText>{renderTags}</StyledText>
           <StyledText bold>Linki:</StyledText>
           <StyledText>{renderLinks}</StyledText>
+          {/* Tablet */}
+          <StyledText bold>Linki:</StyledText>
+          <StyledText>{renderLinks}</StyledText>
         </StyledTableContainer>
       </StyledSelectedRow>
     </>
@@ -162,8 +192,14 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
     if (vote < 0) return 'negative';
     return 'neutral';
   };
-  const renderTags = meetingData.tags.map((tag, index) => {
-    return <StyledTag key={index}>{tag} &nbsp;</StyledTag>;
+
+  const renderTags = meetingData.tags.map((tag, index, array) => {
+    return (
+      <React.Fragment key={index}>
+        <StyledTag>{tag}</StyledTag>
+        {index + 1 < array.length && <StyledTag>, </StyledTag>}
+      </React.Fragment>
+    );
   });
   return (
     <>
@@ -173,8 +209,10 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
         </StyledTableData>
         <StyledTableData mainColor>#{index}</StyledTableData>
         <StyledTableData>{meetingData.topic}</StyledTableData>
-        <StyledTableData>Kategoria</StyledTableData>
-        <StyledTableData>{meetingData.userAdded}</StyledTableData>
+        <StyledTableData block right noTablet>
+          {renderTags}
+        </StyledTableData>
+        <StyledTableData noTablet>{meetingData.userAdded}</StyledTableData>
         <StyledTableData right vote={formatVote(meetingData.votes)}>
           {meetingData.votes > 0 ? `+${meetingData.votes}` : meetingData.votes}
         </StyledTableData>
@@ -193,6 +231,11 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
           <StyledText>{meetingData.description}</StyledText>
           <StyledText bold>Tagi:</StyledText>
           <StyledText>{renderTags}</StyledText>
+          {/* Tablet */}
+          <StyledText tablet bold>
+            Inicjator:
+          </StyledText>
+          <StyledText tablet>{meetingData.userAdded}</StyledText>
         </StyledTableContainer>
       </StyledSelectedRow>
     </>
