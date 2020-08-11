@@ -136,16 +136,16 @@ const MeetingHistoryTableListMenu = ({handleSelection, isSelected}) => (
       <StyledTableHead>
         ID <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
-      <StyledTableHead>
+      <StyledTableHead columns={3}>
         Data <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
-      <StyledTableHead>
+      <StyledTableHead columns={5}>
         Temat spotkania <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
-      <StyledTableHead>
+      <StyledTableHead columns={3} noTablet>
         Prowadzący <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
-      <StyledTableHead right>
+      <StyledTableHead columns={3} right noMobile>
         Materiały <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
     </StyledTableRow>

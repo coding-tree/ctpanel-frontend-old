@@ -266,7 +266,7 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
         <StyledTableData>
           <Checkbox isSelected={isSelected}></Checkbox>
         </StyledTableData>
-        <StyledTableData mainColor>#{index}</StyledTableData>
+        <StyledTableData mainColor>{index}</StyledTableData>
         <StyledTableData columns={5}>{meetingData.topic}</StyledTableData>
         <StyledTableData columns={2} block right noTablet>
           {renderTags}
@@ -326,13 +326,15 @@ const MeetingHistoryTableElement = ({meetingData, isSelected, toggleSelection, i
         <StyledTableData>
           <Checkbox isSelected={isSelected}></Checkbox>
         </StyledTableData>
-        <StyledTableData mainColor>#{index}</StyledTableData>
-        <StyledTableData>
+        <StyledTableData mainColor>{index}</StyledTableData>
+        <StyledTableData columns={3}>
           <StyledDate format="DD MMMM YYYY" date={meetingData.date}></StyledDate>
         </StyledTableData>
-        <StyledTableData>{meetingData.topic}</StyledTableData>
-        <StyledTableData>{meetingData.leader}</StyledTableData>
-        <StyledTableData right>
+        <StyledTableData columns={5}>{meetingData.topic}</StyledTableData>
+        <StyledTableData columns={3} noTablet>
+          {meetingData.leader}
+        </StyledTableData>
+        <StyledTableData columns={3} right noMobile>
           <PrimaryButton small>Dodaj</PrimaryButton>
         </StyledTableData>
       </StyledRow>
@@ -344,10 +346,23 @@ const MeetingHistoryTableElement = ({meetingData, isSelected, toggleSelection, i
               {meetingData.meetingHref}
             </StyledLink>
           </StyledText>
+
+          <StyledText tablet bold>
+            Prowadzący
+          </StyledText>
+          <StyledText tablet>{meetingData.leader}</StyledText>
+
           <StyledText bold>Opis spotkania:</StyledText>
           <StyledText>{meetingData.description}</StyledText>
           <StyledText bold>Tagi:</StyledText>
           <StyledText>{renderTags}</StyledText>
+
+          <StyledText mobile bold>
+            Dodaj materiały
+          </StyledText>
+          <StyledText mobile>
+            <PrimaryButton small>Dodaj</PrimaryButton>
+          </StyledText>
         </StyledTableContainer>
       </StyledSelectedRow>
     </>

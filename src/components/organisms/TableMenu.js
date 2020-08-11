@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import {withRouter} from 'react-router';
 import {routes} from 'routes';
 
@@ -92,7 +92,7 @@ const TopicDataBaseTableMenu = () => {
 };
 
 const MeetingHistoryTableMenu = () => (
-  <StyledTableActions>
+  <StyledTableActions history>
     <StyledBox>
       <StyledIcon className="far fa-calendar"></StyledIcon>
       <StyledLabel uppercase>data</StyledLabel>
@@ -148,6 +148,14 @@ const StyledTableActions = styled.div`
       width: 100%;
     }
   }
+
+  ${({history}) =>
+    history &&
+    css`
+      @media only screen and (max-width: ${variables.bpLargeMobile}) {
+        grid-template-columns: 1fr;
+      }
+    `}
 `;
 
 const StyledBox = styled.div`

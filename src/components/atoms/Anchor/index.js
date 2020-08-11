@@ -7,6 +7,7 @@ const Anchor = styled.a`
   transition: 0.3s;
   cursor: pointer;
   font-size: ${({fontSize}) => fontSize};
+  word-break: break-all;
   &:hover {
     color: ${variables.colorMain};
     transition: 0.2s all ease-in-out;
