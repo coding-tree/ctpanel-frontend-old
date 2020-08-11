@@ -11,12 +11,17 @@ const Title = styled.div`
   padding: ${(props) => (props.padding ? props.padding : 'initial')};
   color: ${(props) => props.link && variables.colorLink};
   white-space: ${({nobreak}) => (nobreak ? 'nowrap' : 'break-spaces')};
+
   ${(props) =>
     props.left &&
     css`
       position: absolute;
       left: 0;
     `};
+
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    font-size: 2rem;
+  }
 `;
 
 export default Title;
