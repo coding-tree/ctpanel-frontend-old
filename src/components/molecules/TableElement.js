@@ -119,6 +119,14 @@ const StyledTableData = styled.div`
         display: none;
       }
     `}
+    ${({mobile}) =>
+      mobile &&
+      css`
+        display: none;
+        @media only screen and (max-width: ${variables.bpLargeMobile}) {
+          display: block;
+        }
+      `}
 `;
 
 const StyledText = styled.span`
@@ -203,8 +211,12 @@ const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}
           <StyledText bold>Opis spotkania:</StyledText>
           <StyledText>{meetingData.description}</StyledText>
 
+          <StyledText mobile bold>
+            Prowadzący:
+          </StyledText>
+          <StyledText mobile>{meetingData.leader}</StyledText>
           <StyledText tablet bold>
-            Czas spotkania:
+            Czas trwania:
           </StyledText>
           <StyledText tablet>{meetingData.duration}</StyledText>
 
@@ -250,12 +262,12 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
   });
   return (
     <>
-      <StyledRow topic onClick={() => toggleSelection(meetingData, isSelected)} topic isSelected={isSelected}>
+      <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} topic isSelected={isSelected}>
         <StyledTableData>
           <Checkbox isSelected={isSelected}></Checkbox>
         </StyledTableData>
         <StyledTableData mainColor>#{index}</StyledTableData>
-        <StyledTableData columns={16}>{meetingData.topic}</StyledTableData>
+        <StyledTableData columns={5}>{meetingData.topic}</StyledTableData>
         <StyledTableData columns={2} block right noTablet>
           {renderTags}
         </StyledTableData>
@@ -265,7 +277,7 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
         <StyledTableData right vote={formatVote(meetingData.votes)}>
           {meetingData.votes > 0 ? `+${meetingData.votes}` : meetingData.votes}
         </StyledTableData>
-        <StyledTableData columns={2} buttonsTableData right>
+        <StyledTableData noMobile columns={2} buttonsTableData right>
           <PrimaryButton inactive voted={votedClass('up')} onClick={(e) => handleVoting(e, meetingData._id, 'up')}>
             <Icon className="fas fa-plus"></Icon>
           </PrimaryButton>
@@ -278,13 +290,26 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
         <StyledTableContainer>
           <StyledText bold>Opis tematu:</StyledText>
           <StyledText>{meetingData.description}</StyledText>
-          <StyledText bold>Tagi:</StyledText>
-          <StyledText>{renderTags}</StyledText>
-          {/* Tablet */}
+
           <StyledText tablet bold>
             Inicjator:
           </StyledText>
           <StyledText tablet>{meetingData.userAdded}</StyledText>
+
+          <StyledText bold>Tagi:</StyledText>
+          <StyledText>{renderTags}</StyledText>
+
+          <StyledText mobile bold>
+            Zagłosuj
+          </StyledText>
+          <StyledTableData mobile buttonsTableData>
+            <PrimaryButton inactive voted={votedClass('up')} onClick={(e) => handleVoting(e, meetingData._id, 'up')}>
+              <Icon className="fas fa-plus"></Icon>
+            </PrimaryButton>
+            <DeleteButton inactive voted={votedClass('down')} onClick={(e) => handleVoting(e, meetingData._id, 'down')}>
+              <Icon className="fas fa-minus"></Icon>
+            </DeleteButton>
+          </StyledTableData>
         </StyledTableContainer>
       </StyledSelectedRow>
     </>

@@ -103,24 +103,24 @@ const SchedulesTableListMenu = ({handleSelection, isSelected}) => {
 
 const TopicDataBaseTableListMenu = ({handleSelection, isSelected}) => (
   <StyledWrapper>
-    <StyledTableRow topic>
+    <StyledTableRow>
       <StyledTableHead>
         <Checkbox onClick={handleSelection} isSelected={isSelected}></Checkbox>
       </StyledTableHead>
       <StyledTableHead>
         ID <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
-      <StyledTableHead columns={16}>Temat spotkania</StyledTableHead>
-      <StyledTableHead columns={2} right>
+      <StyledTableHead columns={5}>Temat spotkania</StyledTableHead>
+      <StyledTableHead noTablet columns={2} right>
         Kategoria <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
-      <StyledTableHead columns={2}>
+      <StyledTableHead noTablet columns={2}>
         Inicjator <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
       <StyledTableHead right>
         Ocena <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
-      <StyledTableHead columns={2} right>
+      <StyledTableHead noMobile columns={2} right>
         Zagłosuj <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
     </StyledTableRow>
