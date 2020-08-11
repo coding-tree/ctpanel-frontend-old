@@ -139,6 +139,15 @@ const StyledTableActions = styled.div`
   grid-column-gap: 2rem;
   align-items: center;
   padding: 0 30px 27px 13px;
+
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    > button {
+      width: 100%;
+    }
+  }
 `;
 
 const StyledBox = styled.div`

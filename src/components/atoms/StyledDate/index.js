@@ -5,7 +5,6 @@ import 'moment/locale/pl';
 import variables from 'settings/variables';
 
 const StyledDate = styled.div`
-  font-size: ${(props) => (props.fontSize ? props.fontSize : '1.6rem')};
   font-weight: bold;
   text-transform: ${({uppercase}) => (uppercase ? 'uppercase' : 'capitalize')};
   ${(props) =>
@@ -14,9 +13,6 @@ const StyledDate = styled.div`
       position: absolute;
       right: 0;
     `}
-  @media only screen and (max-width: ${variables.bpTablet}) {
-    font-size: 1.4rem;
-  }
 `;
 
 const DateAtom = ({date, format, children, fontSize, right, uppercase}) => {

@@ -24,12 +24,15 @@ const StyledTableContainer = styled.div`
   flex-direction: column;
 
   @media only screen and (max-width: ${variables.bpLargeDesktop}) {
-    width: 90%;
+    width: 95%;
   }
 
   @media only screen and (max-width: ${variables.bpTablet}) {
     padding-bottom: 8rem;
-    width: 96%;
+  }
+
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    width: 100%;
   }
 `;
 
@@ -39,6 +42,11 @@ const StyledTable = styled.div`
   border-radius: 30px;
   box-shadow: 0 0 10px ${variables.boxShadowColor};
   background: ${variables.colorWhite};
+
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    padding: 0;
+    border-radius: 0;
+  }
 `;
 
 const TableTemplate = ({children, title}) => {

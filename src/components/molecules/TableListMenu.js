@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {withRouter} from 'react-router';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import {routes} from 'routes';
 import Icon from 'components/atoms/Icon';
 import variables from 'settings/variables';
@@ -19,15 +19,6 @@ const StyledWrapper = styled.div`
   }
 `;
 
-const StyledTableRow = styled.div`
-  display: grid;
-  grid-template-columns: ${({topic}) => (topic ? variables.gridTableTopic : variables.gridTable)};
-  column-gap: 2rem;
-  grid-template-rows: 5rem;
-  align-items: center;
-  padding: 0 1rem;
-`;
-
 const StyledTableHead = styled.div`
   display: grid;
   grid-auto-flow: column;
@@ -36,6 +27,51 @@ const StyledTableHead = styled.div`
   white-space: nowrap;
   align-items: center;
   justify-self: ${({right}) => right && 'end'};
+
+  grid-column: ${({columns}) => (columns ? `span ${columns}` : 'span 1')};
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    font-size: 1.4rem;
+  }
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    font-size: 1.2rem;
+  }
+
+  ${({noTablet}) =>
+    noTablet &&
+    css`
+      @media only screen and (max-width: ${variables.bpTablet}) {
+        display: none;
+      }
+    `}
+  ${({noMobile}) =>
+    noMobile &&
+    css`
+      @media only screen and (max-width: ${variables.bpLargeMobile}) {
+        display: none;
+      }
+    `}
+`;
+
+const StyledTableRow = styled.div`
+  display: grid;
+  grid-template-columns: 2rem minmax(2rem, 3rem);
+  grid-auto-columns: minmax(1rem, 1fr);
+  grid-auto-flow: column;
+  column-gap: 2rem;
+  grid-template-rows: 5rem;
+  align-items: center;
+  padding: 0 1rem;
+
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    column-gap: 1rem;
+    grid-template-columns: 2rem minmax(1rem, 2rem);
+
+    ${StyledTableHead}:not(:first-child) ${Icon} {
+      display: none;
+    }
+  }
+
 `;
 
 const SchedulesTableListMenu = ({handleSelection, isSelected}) => {
@@ -48,16 +84,16 @@ const SchedulesTableListMenu = ({handleSelection, isSelected}) => {
         <StyledTableHead>
           ID <Icon className="fas fa-sort"></Icon>
         </StyledTableHead>
-        <StyledTableHead>
+        <StyledTableHead columns={2}>
           Data <Icon className="fas fa-sort"></Icon>
         </StyledTableHead>
-        <StyledTableHead>
+        <StyledTableHead columns={3}>
           Temat spotkania <Icon className="fas fa-sort"></Icon>
         </StyledTableHead>
-        <StyledTableHead right>
+        <StyledTableHead noTablet columns={2} right>
           Czas trwania <Icon className="fas fa-sort"></Icon>
         </StyledTableHead>
-        <StyledTableHead right>
+        <StyledTableHead noMobile columns={2} right>
           Prowadzący <Icon className="fas fa-sort"></Icon>
         </StyledTableHead>
       </StyledTableRow>
@@ -74,17 +110,17 @@ const TopicDataBaseTableListMenu = ({handleSelection, isSelected}) => (
       <StyledTableHead>
         ID <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
-      <StyledTableHead>Temat spotkania</StyledTableHead>
-      <StyledTableHead right>
+      <StyledTableHead columns={16}>Temat spotkania</StyledTableHead>
+      <StyledTableHead columns={2} right>
         Kategoria <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
-      <StyledTableHead>
+      <StyledTableHead columns={2}>
         Inicjator <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
       <StyledTableHead right>
         Ocena <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
-      <StyledTableHead right>
+      <StyledTableHead columns={2} right>
         Zagłosuj <Icon className="fas fa-sort"></Icon>
       </StyledTableHead>
     </StyledTableRow>

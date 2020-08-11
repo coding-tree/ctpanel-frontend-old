@@ -14,11 +14,18 @@ const StyledSelectedRow = styled.div`
   display: none;
   grid-column: 1/-1;
 
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    font-size: 1.4rem;
+  }
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    font-size: 1.2rem;
+  }
+
   ${({isSelected}) =>
     isSelected &&
     css`
       display: grid;
-      grid-template-columns: ${variables.gridTable};
+      grid-template-columns: minmax(1rem, 5rem) 1fr minmax(1rem, 5rem);
       padding: 2rem 0;
       border-bottom: 1px solid ${variables.tableBorderColor};
       background-color: ${variables.backgroundColor};
@@ -26,12 +33,17 @@ const StyledSelectedRow = styled.div`
         padding: 2rem;
         grid-template-columns: 1fr;
       }
+      @media only screen and (max-width: ${variables.bpLargeMobile}) {
+        grid-template-columns: 1fr;
+      }
     `}
 `;
 
 const StyledRow = styled.div`
   display: grid;
-  grid-template-columns: ${({topic}) => (topic ? variables.gridTableTopic : variables.gridTable)};
+  grid-template-columns: 2rem minmax(2rem, 3rem);
+  grid-auto-columns: minmax(1rem, 1fr);
+  grid-auto-flow: column;
   column-gap: 2rem;
   padding: 1rem;
   align-items: center;
@@ -44,22 +56,29 @@ const StyledRow = styled.div`
   }
 
   @media only screen and (max-width: ${variables.bpTablet}) {
-    grid-template-columns: ${variables.gridTableTopicTablet};
+    font-size: 1.4rem;
   }
 
-  @media only screen and (max-width: ${variables.bpTablet}) {
-    font-size: 1.4rem;
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    font-size: 1.2rem;
+    column-gap: 1rem;
+    grid-template-columns: 2rem minmax(1rem, 2rem);
   }
 `;
 
 const StyledTableContainer = styled.div`
-  grid-column: 3/-2;
+  grid-column: 2/-2;
   display: grid;
+
   grid-template-columns: max-content 1fr;
+  grid-auto-rows: max-content;
   row-gap: 1rem;
-  column-gap: 3rem;
+  column-gap: 1rem;
   @media only screen and (max-width: ${variables.bpTablet}) {
     grid-column: 1/-1;
+  }
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    grid-template-columns: 1fr;
   }
 `;
 
@@ -69,6 +88,8 @@ const StyledTableData = styled.div`
   color: ${({mainColor}) => mainColor && variables.colorLink};
   flex-wrap: wrap;
   display: ${({block}) => (block ? 'block' : 'flex')};
+
+  grid-column: ${({columns}) => (columns ? `span ${columns}` : 'span 1')};
 
   ${({vote}) =>
     vote &&
@@ -91,6 +112,13 @@ const StyledTableData = styled.div`
         display: none;
       }
     `}
+  ${({noMobile}) =>
+    noMobile &&
+    css`
+      @media only screen and (max-width: ${variables.bpLargeMobile}) {
+        display: none;
+      }
+    `}
 `;
 
 const StyledText = styled.span`
@@ -98,7 +126,11 @@ const StyledText = styled.span`
   word-wrap: break-word;
   font-weight: 400;
   font-weight: ${({bold}) => bold && '700'};
-
+  ${({link}) =>
+    link &&
+    css`
+      flex-direction: column;
+    `}
   ${({tablet}) =>
     tablet &&
     css`
@@ -107,6 +139,14 @@ const StyledText = styled.span`
         display: block;
       }
     `}
+    ${({mobile}) =>
+      mobile &&
+      css`
+        display: none;
+        @media only screen and (max-width: ${variables.bpLargeMobile}) {
+          display: block;
+        }
+      `}
 `;
 
 const StyledLink = styled.a`
@@ -130,7 +170,6 @@ const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}
         <StyledLink href={link} target="_blank" rel="nofollow noopener noreferrer">
           {link}
         </StyledLink>
-        &nbsp;
       </StyledTag>
     );
   });
@@ -140,13 +179,17 @@ const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}
         <StyledTableData>
           <Checkbox isSelected={isSelected}></Checkbox>
         </StyledTableData>
-        <StyledTableData mainColor>#{index}</StyledTableData>
-        <StyledTableData>
+        <StyledTableData mainColor>{index}</StyledTableData>
+        <StyledTableData columns={2}>
           <StyledDate format="DD MMMM YYYY" date={meetingData.date}></StyledDate>
         </StyledTableData>
-        <StyledTableData>{meetingData.topic}</StyledTableData>
-        <StyledTableData right>{meetingData.duration}</StyledTableData>
-        <StyledTableData right>{meetingData.leader}</StyledTableData>
+        <StyledTableData columns={3}>{meetingData.topic}</StyledTableData>
+        <StyledTableData noTablet columns={2} right>
+          {meetingData.duration}
+        </StyledTableData>
+        <StyledTableData noMobile columns={2} right>
+          {meetingData.leader}
+        </StyledTableData>
       </StyledRow>
       <StyledSelectedRow isSelected={isSelected}>
         <StyledTableContainer>
@@ -156,15 +199,19 @@ const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}
               {meetingData.meetingHref}
             </StyledLink>
           </StyledText>
+
           <StyledText bold>Opis spotkania:</StyledText>
           <StyledText>{meetingData.description}</StyledText>
+
+          <StyledText tablet bold>
+            Czas spotkania:
+          </StyledText>
+          <StyledText tablet>{meetingData.duration}</StyledText>
+
           <StyledText bold>Tagi:</StyledText>
           <StyledText>{renderTags}</StyledText>
           <StyledText bold>Linki:</StyledText>
-          <StyledText>{renderLinks}</StyledText>
-          {/* Tablet */}
-          <StyledText bold>Linki:</StyledText>
-          <StyledText>{renderLinks}</StyledText>
+          <StyledText link>{renderLinks}</StyledText>
         </StyledTableContainer>
       </StyledSelectedRow>
     </>
@@ -208,15 +255,17 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
           <Checkbox isSelected={isSelected}></Checkbox>
         </StyledTableData>
         <StyledTableData mainColor>#{index}</StyledTableData>
-        <StyledTableData>{meetingData.topic}</StyledTableData>
-        <StyledTableData block right noTablet>
+        <StyledTableData columns={16}>{meetingData.topic}</StyledTableData>
+        <StyledTableData columns={2} block right noTablet>
           {renderTags}
         </StyledTableData>
-        <StyledTableData noTablet>{meetingData.userAdded}</StyledTableData>
+        <StyledTableData columns={2} noTablet>
+          {meetingData.userAdded}
+        </StyledTableData>
         <StyledTableData right vote={formatVote(meetingData.votes)}>
           {meetingData.votes > 0 ? `+${meetingData.votes}` : meetingData.votes}
         </StyledTableData>
-        <StyledTableData buttonsTableData right>
+        <StyledTableData columns={2} buttonsTableData right>
           <PrimaryButton inactive voted={votedClass('up')} onClick={(e) => handleVoting(e, meetingData._id, 'up')}>
             <Icon className="fas fa-plus"></Icon>
           </PrimaryButton>
