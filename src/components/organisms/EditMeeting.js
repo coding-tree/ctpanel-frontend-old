@@ -13,7 +13,7 @@ import {getSchedule} from 'selectors/fetchSchedule';
 
 const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible, selectedElement, topicNames = []}) => {
   const [editData] = selectedElement;
-  const {tags, leader, usefulLinks} = editData;
+  const {tags, leader, usefulLinks, topic} = editData;
   const setValue = (name) => (tags) => {
     setFieldValue(name, tags);
   };
@@ -27,6 +27,7 @@ const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisib
         label="Wybierz temat"
         placeholder="Wybierz temat z istniejących"
         options={topicNames}
+        leader={topic}
         handleSelectChange={setValue('topic')}
       ></Select>
       <Textarea columns={2} name="topic" label="Temat spotkania" placeholder="Wprowadź temat spotkania"></Textarea>
