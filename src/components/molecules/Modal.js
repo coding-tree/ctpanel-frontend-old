@@ -112,7 +112,7 @@ const StyledModalContainer = styled.div`
   visibility: hidden;
   overflow-y: auto;
   transition: 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
-
+  z-index: 999;
   ${({isModalVisible}) =>
     isModalVisible &&
     css`
@@ -122,6 +122,10 @@ const StyledModalContainer = styled.div`
   top: 0;
   left: 0;
   bottom: 0;
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    justify-content: initial;
+  }
 `;
 
 const StyledBox = styled.div`
@@ -141,6 +145,13 @@ const StyledBox = styled.div`
       opacity: 1;
       transform: scale(1);
     `}
+
+    @media only screen and (max-width: ${variables.bpTablet}) {
+      width: 100%;
+      margin: 0;
+      border-radius: 0;
+      
+    }
 `;
 
 const StyledHeader = styled.div`
@@ -153,4 +164,12 @@ const StyledHeader = styled.div`
   padding: 2.5rem;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  ${Title} {
+    @media only screen and (max-width: ${variables.bpTablet}) {
+      font-size: 1.4rem;
+    }
+    @media only screen and (max-width: ${variables.bpLargeMobile}) {
+      font-size: 1.2rem;
+    }
+  }
 `;

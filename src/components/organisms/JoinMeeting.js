@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Anchor from 'components/atoms/Anchor';
 import {PrimaryButton} from 'components/atoms/Button';
+import variables from 'settings/variables';
 
 const JoinMeeting = ({setIsModalVisible, isModalVisible, href}) => {
   return (
@@ -25,5 +26,18 @@ const StyledWrapper = styled.div`
   grid-row-gap: 2rem;
   ${Anchor}:last-child {
     justify-self: end;
+
+    @media only screen and (max-width: ${variables.bpLargeMobile}) {
+      justify-self: stretch;
+      > button {
+        width: 100%;
+      }
+    }
+  }
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    font-size: 1.4rem;
+  }
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    font-size: 1.2rem;
   }
 `;

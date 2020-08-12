@@ -7,12 +7,12 @@ import variables from 'settings/variables';
 import styled from 'styled-components';
 import {CancelButton, PrimaryButton} from 'components/atoms/Button';
 import {toast} from 'react-toastify';
-import { useDispatch } from 'react-redux';
-import { editTopic } from 'selectors/fetchTopics';
+import {useDispatch} from 'react-redux';
+import {editTopic} from 'selectors/fetchTopics';
 
 const Formik = ({setFieldValue, column, setIsModalVisible, selectedElement}) => {
   const [editData] = selectedElement;
-  const setTags = name => tags => {
+  const setTags = (name) => (tags) => {
     setFieldValue(name, tags);
   };
   return (
@@ -45,33 +45,26 @@ const EditTopicWithFormik = withFormik({
     };
   },
   validationSchema: Yup.object().shape({
-    topic: Yup.string()
-      .min(3, 'Temat musi mieć minimum 3 znaki')
-      .required('Wprowadź temat'),
-    userAdded: Yup.string()
-      .min(3, 'To pole musi mieć minimum 3 znaki')
-      .required('Wprowadź informacje o użytkowniku'),
+    topic: Yup.string().min(3, 'Temat musi mieć minimum 3 znaki').required('Wprowadź temat'),
+    userAdded: Yup.string().min(3, 'To pole musi mieć minimum 3 znaki').required('Wprowadź informacje o użytkowniku'),
     votes: Yup.number('głosy muszą być liczbą'),
     description: Yup.string(),
   }),
   handleSubmit: (values, {props}) => {
-    const {
-      setSubmitting,
-      editTopicAction
-    } = props;
+    const {setSubmitting, editTopicAction} = props;
 
     setSubmitting(true);
     const [editData] = props.selectedElement;
     editTopicAction(values, editData._id)
-    .then(() => {
-      props.setIsModalVisible(false);
-      props.setSubmitting(false);
-      toast.success('Pomyślnie edytowano temat!');
-    })
-    .catch(() => {
-      props.setSubmitting(false);
-      toast.error('Nie udało się edytować tematu...');
-    });
+      .then(() => {
+        props.setIsModalVisible(false);
+        props.setSubmitting(false);
+        toast.success('Pomyślnie edytowano temat!');
+      })
+      .catch(() => {
+        props.setSubmitting(false);
+        toast.error('Nie udało się edytować tematu...');
+      });
   },
 })(Formik);
 
@@ -79,9 +72,7 @@ const EditTopic = (props) => {
   const dispatch = useDispatch();
   const editTopicAction = (dataToSend, id) => dispatch(editTopic(dataToSend, id));
 
-  return (
-    <EditTopicWithFormik editTopicAction={editTopicAction} {...props}/>
-  );
+  return <EditTopicWithFormik editTopicAction={editTopicAction} {...props} />;
 };
 
 export default EditTopic;
@@ -92,20 +83,6 @@ export const StyledForm = styled.form`
   display: grid;
   grid-template-columns: ${({column}) => (column ? `repeat(${column}, 1fr)` : 'repeat(1, 1fr)')};
   grid-column-gap: 2rem;
-
-  textarea {
-    font-family: inherit;
-    font-size: 1.6rem;
-    border-radius: 4px;
-    border: 1px solid ${variables.borderColor};
-    padding: 12px;
-    color: ${variables.colorFont};
-    height: 12rem;
-    resize: none;
-    &::placeholder {
-      color: ${variables.colorLink};
-    }
-  }
 `;
 
 const StyledButtonsContainer = styled.div`

@@ -73,7 +73,7 @@ const StyledWrapper = styled.nav`
   flex-direction: column;
   height: 100vh;
   background-color: ${variables.colorMain};
-  z-index: 9999;
+  z-index: 99;
 
   @media only screen and (max-width: ${variables.bpTablet}) {
     position: relative;

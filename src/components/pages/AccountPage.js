@@ -23,6 +23,8 @@ const AccountPage = () => {
     else return 'Gość';
   };
 
+  console.log(meetings.nickname);
+
   useEffect(() => {
     const userRoles = meetings._json['https://codingtree.pl/oauth2/roles'];
     setUserRole(parseRoleIdToBeltColor(userRoles));

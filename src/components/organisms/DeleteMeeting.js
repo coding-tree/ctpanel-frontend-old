@@ -3,15 +3,16 @@ import {DeleteButton, CancelButton} from 'components/atoms/Button';
 import axios from 'axios';
 import styled from 'styled-components';
 import {toast} from 'react-toastify';
-import { useDispatch } from 'react-redux';
-import { deleteMeetings } from 'selectors/fetchMeetings';
-import { getSchedule } from 'selectors/fetchSchedule';
+import {useDispatch} from 'react-redux';
+import {deleteMeetings} from 'selectors/fetchMeetings';
+import {getSchedule} from 'selectors/fetchSchedule';
+import variables from 'settings/variables';
 
 const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModalVisible, setSubmitting}) => {
   const dispatch = useDispatch();
   const deleteMeetingsAction = (selectedElements, destination) => dispatch(deleteMeetings(selectedElements, destination));
   const getScheduleAction = () => dispatch(getSchedule());
-  
+
   const listItems = selectedElement.map((el, index) => {
     return <StyledListItem key={index}>{el.topic}</StyledListItem>;
   });
@@ -19,20 +20,20 @@ const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModal
   const deleteItems = () => {
     setSubmitting(true);
     deleteMeetingsAction(selectedElement, destination)
-    .then(() => {
-      setSubmitting(false);
-      setIsModalVisible(false);
-      getScheduleAction();
-      toast.success('Pomyślnie usunięto spotkania!');
-    })
-    .catch(() => {
-      setSubmitting(false);
-      toast.error('Nie udało się usunąć spotkań!');
-    });
-  }
+      .then(() => {
+        setSubmitting(false);
+        setIsModalVisible(false);
+        getScheduleAction();
+        toast.success('Pomyślnie usunięto spotkania!');
+      })
+      .catch(() => {
+        setSubmitting(false);
+        toast.error('Nie udało się usunąć spotkań!');
+      });
+  };
 
   return (
-    <StyledForm onSubmit={e => e.preventDefault()}>
+    <StyledForm onSubmit={(e) => e.preventDefault()}>
       <StyledTitle>Czy na pewno chcesz usunąć {listItems.length} następujące rekordy?</StyledTitle>
       <StyledList>{listItems}</StyledList>
       <StyledButtonsContainer>
@@ -47,7 +48,6 @@ const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModal
   );
 };
 
-
 export default DeleteMeeting;
 
 const StyledTitle = styled.h3`
@@ -56,6 +56,12 @@ const StyledTitle = styled.h3`
   font-weight: 700;
   display: flex;
   align-items: center;
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    font-size: 1.4rem;
+  }
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    font-size: 1.2rem;
+  }
 `;
 
 const StyledButtonsContainer = styled.div`
@@ -63,6 +69,13 @@ const StyledButtonsContainer = styled.div`
   margin-top: 3rem;
   button:last-child {
     margin-left: 1rem;
+  }
+
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    > button {
+      width: 100%;
+    }
+    justify-content: space-between;
   }
 `;
 
@@ -79,4 +92,11 @@ const StyledList = styled.ul`
 const StyledListItem = styled.li`
   font-size: 1.6rem;
   display: list-item;
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    font-size: 1.4rem;
+  }
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    font-size: 1.2rem;
+  }
 `;
