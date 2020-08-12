@@ -39,6 +39,7 @@ const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisib
         leader={leader}
         handleSelectChange={setValue('leader')}
       ></Select>
+      <Input columns={2} name="leader" label="Lub wybierz spoza listy" placeholder="Wprowadź prowadzącego"></Input>
       <Input columns={2} name="meetingHref" label="Odnośnik do spotkania" placeholder="Wprowadź adres do spotkania"></Input>
       <Textarea columns={2} name="description" label="Opis spotkania" placeholder="Wpisz opis spotkania"></Textarea>
       <Tags columns={2} activeTags={tags} name="tags" label="Kategorie" placeholder="Wpisz kategorie spotkania" onTagsChange={setValue('tags')}></Tags>

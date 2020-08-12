@@ -38,7 +38,7 @@ const StyledContainer = styled.div`
   align-content: center;
   grid-row-gap: 3rem;
   background-color: ${variables.colorFont};
-
+  z-index: 99999;
   ${Title} {
     text-shadow: 0 3px 6px ${variables.modalBackground};
   }
