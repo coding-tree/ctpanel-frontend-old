@@ -23,6 +23,7 @@ export default (state = _initialState, action) => {
     case GET_USER_ERROR:
       return {
         ...state,
+        pending: false,
         error: true,
       };
     case GET_USER_UNAUTHORIZED:
