@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 import meetingHistory from './meetingHistory';
 import meetings from './meetings';
 import schedule from './schedule';
@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   meetings,
   schedule,
   topics,
-  user
+  user,
 });
 
 export default rootReducer;

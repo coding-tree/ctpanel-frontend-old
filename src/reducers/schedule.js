@@ -1,35 +1,31 @@
-import {
-  GET_SCHEDULE_REQUEST,
-  GET_SCHEDULE_RECEIVED,
-  GET_SCHEDULE_ERROR
-} from 'actions/schedule';
+import {GET_SCHEDULE_REQUEST, GET_SCHEDULE_RECEIVED, GET_SCHEDULE_ERROR} from 'actions/schedule';
 
 const _initialState = {
   pending: false,
   meetings: [],
-  error: null
+  error: null,
 };
 
 export default (state = _initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case GET_SCHEDULE_REQUEST:
       return {
         ...state,
         pending: true,
-        error: false
+        error: false,
       };
     case GET_SCHEDULE_RECEIVED:
       return {
-          pending: false,
-          meetings: action.meetings,
-          error: null
+        pending: false,
+        meetings: action.meetings,
+        error: null,
       };
     case GET_SCHEDULE_ERROR:
       return {
         ...state,
-        error: true
+        error: true,
       };
-    default: 
-        return state;
-    };
+    default:
+      return state;
+  }
 };

@@ -20,6 +20,7 @@ const TopicDatabase = lazy(() => import('components/pages/TopicDatabasePage'));
 
 const Root = () => {
   const dispatch = useDispatch();
+  
   const getUser = () => dispatch(fetchUserAction());
   const {pending, meetings, error} = useSelector((state) => state.user);
 
