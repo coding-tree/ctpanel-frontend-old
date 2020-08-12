@@ -1,4 +1,4 @@
-import {GET_USER_REQUEST, GET_USER_RECEIVED, GET_USER_ERROR} from 'actions/user';
+import {GET_USER_REQUEST, GET_USER_RECEIVED, GET_USER_ERROR, GET_USER_UNAUTHORIZED} from 'actions/user';
 
 const _initialState = {
   pending: true,
@@ -23,7 +23,14 @@ export default (state = _initialState, action) => {
     case GET_USER_ERROR:
       return {
         ...state,
+        pending: false,
         error: true,
+      };
+    case GET_USER_UNAUTHORIZED:
+      return {
+        ...state,
+        pending: false,
+        error: false,
       };
     default:
       return state;
