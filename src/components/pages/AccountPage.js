@@ -6,6 +6,7 @@ import variables from 'settings/variables';
 import {PrimaryButton} from 'components/atoms/Button';
 import axios from 'axios';
 import Header from 'components/atoms/Header';
+import LogoutButton from 'components/molecules/LogoutButton';
 
 const AccountPage = () => {
   const {pending, meetings, error} = useSelector((state) => state.user);
@@ -49,37 +50,39 @@ const AccountPage = () => {
               <StyledNickName>{userCredentials.userNickName}</StyledNickName>
               <StyledBeltName>{userRole}</StyledBeltName>
             </StyledUser>
-            <StyledEditSection>
-              <StyledUserDataContainer>
-                <StyledUserDataTitleContainer>
-                  <StyledUserDataTitle>
-                    <StyledTitle>Imię i nazwisko:</StyledTitle>
-                    <StyledUserDataDescription>
-                      {userCredentials.userFirstName} {userCredentials.userSecondName}
-                    </StyledUserDataDescription>
+
+            <StyledUserDataContainer>
+              <StyledUserDataTitleContainer>
+                <StyledUserDataTitle>
+                  <StyledTitle>Imię i nazwisko:</StyledTitle>
+                  <StyledUserDataDescription>
+                    {userCredentials.userFirstName} {userCredentials.userSecondName}
+                  </StyledUserDataDescription>
+                </StyledUserDataTitle>
+                <StyledUserDataTitle>
+                  <StyledTitle>Wiek:</StyledTitle>
+                  <StyledUserDataDescription>{userCredentials.userAge} lat</StyledUserDataDescription>
+                </StyledUserDataTitle>
+                <StyledUserDataTitle>
+                  <StyledTitle>Technologie:</StyledTitle>
+                  <StyledUserDataDescription>{userCredentials.userTechnologies.join(', ')}</StyledUserDataDescription>
+                </StyledUserDataTitle>
+                <StyledUserDataTitle>
+                  <StyledTitle>Opis:</StyledTitle>
+                  <StyledUserDataDescription>{userCredentials.userDescription}</StyledUserDataDescription>
+                </StyledUserDataTitle>
+                {Object.entries(userCredentials.userSocials).map((el, index) => (
+                  <StyledUserDataTitle key={index}>
+                    <StyledTitle>{el[0]}</StyledTitle>
+                    <StyledUserDataDescription>{el[1]}</StyledUserDataDescription>
                   </StyledUserDataTitle>
-                  <StyledUserDataTitle>
-                    <StyledTitle>Wiek:</StyledTitle>
-                    <StyledUserDataDescription>{userCredentials.userAge} lat</StyledUserDataDescription>
-                  </StyledUserDataTitle>
-                  <StyledUserDataTitle>
-                    <StyledTitle>Technologie:</StyledTitle>
-                    <StyledUserDataDescription>{userCredentials.userTechnologies.join(', ')}</StyledUserDataDescription>
-                  </StyledUserDataTitle>
-                  <StyledUserDataTitle>
-                    <StyledTitle>Opis:</StyledTitle>
-                    <StyledUserDataDescription>{userCredentials.userDescription}</StyledUserDataDescription>
-                  </StyledUserDataTitle>
-                  {Object.entries(userCredentials.userSocials).map((el, index) => (
-                    <StyledUserDataTitle key={index}>
-                      <StyledTitle>{el[0]}</StyledTitle>
-                      <StyledUserDataDescription>{el[1]}</StyledUserDataDescription>
-                    </StyledUserDataTitle>
-                  ))}
-                </StyledUserDataTitleContainer>
-              </StyledUserDataContainer>
-            </StyledEditSection>
-            <PrimaryButton>Edytuj</PrimaryButton>
+                ))}
+                <StyledButtonContainer>
+                  <PrimaryButton>Edytuj</PrimaryButton>
+                  <LogoutButton account>Wyloguj</LogoutButton>
+                </StyledButtonContainer>
+              </StyledUserDataTitleContainer>
+            </StyledUserDataContainer>
           </StyledContainer>
         </StyledWrapper>
       </MainTemplate>
@@ -98,22 +101,42 @@ const StyledWrapper = styled.div`
   width: 80%;
   max-width: 1400px;
   flex-direction: column;
+  @media only screen and (max-width: ${variables.bpLargeDesktop}) {
+    width: 95%;
+  }
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    padding-bottom: 8rem;
+  }
+
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    width: 100%;
+    padding-bottom: 15rem;
+  }
 `;
 
 const StyledContainer = styled.div`
   box-shadow: 0 0 10px ${variables.boxShadowColor};
-  padding: 2.8rem 2.2rem;
+  padding: 5rem;
   border-radius: 3rem;
   background-color: ${variables.colorWhite};
-  button {
-    margin-left: auto;
-    margin-top: auto;
+
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 10rem;
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    gap: 3rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    padding: 3rem;
+    border-radius: 0;
   }
 `;
 
 const StyledUser = styled.div`
-  width: 30%;
-  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -123,39 +146,45 @@ const StyledAvatar = styled.img`
   width: 12rem;
   height: 12rem;
   border-radius: 50%;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 `;
 
 const StyledNickName = styled.h3`
   font-size: 3.2rem;
+  @media only screen and (max-width: ${variables.bpMobile}) {
+    font-size: 2rem;
+  }
 `;
 
 const StyledBeltName = styled.span`
   font-size: 2rem;
+  @media only screen and (max-width: ${variables.bpMobile}) {
+    font-size: 1.4rem;
+  }
 `;
 
-const StyledEditSection = styled.div`
-  padding: 2rem;
-  width: 70%;
-  display: flex;
-  flex-direction: row;
-`;
-
-const StyledUserDataContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
+const StyledUserDataContainer = styled.div``;
 
 const StyledUserDataTitleContainer = styled.div`
-  display: flex;
-  width: auto;
-  flex-direction: column;
+  display: grid;
+  gap: 2rem;
+  width: 100%;
 `;
 
 const StyledUserDataTitle = styled.h3`
+  display: grid;
+  grid-template-columns: 0.6fr 1fr;
+  gap: 1rem;
   font-size: 1.6rem;
-  display: flex;
-  margin-bottom: 1rem;
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+  @media only screen and (max-width: ${variables.bpMobile}) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 `;
 
 const StyledUserDataDescription = styled.span`
@@ -164,8 +193,21 @@ const StyledUserDataDescription = styled.span`
 `;
 
 const StyledTitle = styled.span`
-  width: 20rem;
-  font-family: inherit;
   font-size: 1.6rem;
   font-weight: 700;
+`;
+
+const StyledButtonContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    > button {
+      width: 100%;
+    }
+  }
+  @media only screen and (max-width: ${variables.bpMobile}) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
 `;

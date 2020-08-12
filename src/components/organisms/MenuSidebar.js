@@ -3,10 +3,7 @@ import {NavLink} from 'react-router-dom';
 import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
 import Icon from 'components/atoms/Icon';
-
-const logout = () => {
-  window.location.href = `${process.env.REACT_APP_SERVER_URL}/logout`;
-};
+import LogoutButton from 'components/molecules/LogoutButton';
 
 const MenuSidebar = () => {
   const year = new Date().getFullYear();
@@ -49,10 +46,7 @@ const MenuSidebar = () => {
             </StyledLink>
           </StyledLinkElement>
           <StyledLinkElement logout>
-            <StyledLink onClick={() => logout()}>
-              <Icon fontSize="2rem" padding="0 1rem 0 0" className="fas fa-sign-out-alt"></Icon>
-              <StyledSpan>Wyloguj</StyledSpan>
-            </StyledLink>
+            <LogoutButton>Wyloguj</LogoutButton>
           </StyledLinkElement>
         </StyledLinksList>
       </MenuWrapper>
@@ -269,7 +263,6 @@ const StyledLink = styled.a`
     flex-direction: column;
     padding: 1rem;
     width: auto;
-    border-radius: 100%;
     opacity: 0.7;
     font-size: 1.2rem;
   }
