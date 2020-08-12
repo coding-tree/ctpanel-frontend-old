@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import {withRouter} from 'react-router';
 import {routes} from 'routes';
 
@@ -23,13 +23,13 @@ const SchedulesTableMenu = () => {
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_SERVER_URL}/topics`)
-      .then(response => {
+      .then((response) => {
         setTopics(response.data.results);
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }, []);
 
-  const topicNames = topics.map(topic => topic.topic);
+  const topicNames = topics.map((topic) => topic.topic);
 
   return (
     <StyledTableActions>
@@ -51,7 +51,8 @@ const SchedulesTableMenu = () => {
           </JoinModal>
         </>
       )}
-      <StyledNumberInput
+      {/* TODO: Dni wstecz */}
+      {/* <StyledNumberInput
         type="text"
         placeholder="ile dni wstecz wyświetlić?"
         onChange={e => {
@@ -61,7 +62,7 @@ const SchedulesTableMenu = () => {
             e.target.value = '';
           }
         }}
-      />
+      /> */}
       {/* TODO: Implement Search */}
       {/* <StyledInput placeholder="Wyszukaj" /> */}
     </StyledTableActions>
@@ -91,7 +92,7 @@ const TopicDataBaseTableMenu = () => {
 };
 
 const MeetingHistoryTableMenu = () => (
-  <StyledTableActions>
+  <StyledTableActions history>
     <StyledBox>
       <StyledIcon className="far fa-calendar"></StyledIcon>
       <StyledLabel uppercase>data</StyledLabel>
@@ -138,6 +139,23 @@ const StyledTableActions = styled.div`
   grid-column-gap: 2rem;
   align-items: center;
   padding: 0 30px 27px 13px;
+
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    > button {
+      width: 100%;
+    }
+  }
+
+  ${({history}) =>
+    history &&
+    css`
+      @media only screen and (max-width: ${variables.bpLargeMobile}) {
+        grid-template-columns: 1fr;
+      }
+    `}
 `;
 
 const StyledBox = styled.div`

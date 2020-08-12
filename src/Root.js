@@ -1,10 +1,10 @@
-import React, { Suspense, lazy, useEffect } from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {Suspense, lazy, useEffect} from 'react';
+import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-
-import { routes } from 'routes';
-import { getUser as fetchUserAction } from 'selectors/fetchUser';
+import {routes} from 'routes';
+import {useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
+import {getUser as fetchUserAction} from 'selectors/fetchUser';
 
 import LoadingSpinner from 'components/atoms/LoadingSpinner';
 import MainTemplate from './components/templates/MainTemplate';
@@ -20,10 +20,9 @@ const TopicDatabase = lazy(() => import('components/pages/TopicDatabasePage'));
 
 const Root = () => {
   const dispatch = useDispatch();
-  
+
   const getUser = () => dispatch(fetchUserAction());
-  
-  const {pending, meetings, error} = useSelector(state => state.user);
+  const {pending, meetings, error} = useSelector((state) => state.user);
 
   useEffect(() => {
     getUser();
@@ -42,8 +41,8 @@ const Root = () => {
               <Route exact path={routes.home} component={Home} />
               <Route exact strict path={routes.timetable} component={Timetable} />
               <Route exact strict path={routes.topicDatabase} component={TopicDatabase} />
-                <Route exact strict path={routes.history} component={History} />
-                <Route exact strict path={routes.account} component={Account} />
+              <Route exact strict path={routes.history} component={History} />
+              <Route exact strict path={routes.account} component={Account} />
               <Redirect to="/" />
             </Switch>
           </Suspense>
@@ -61,7 +60,7 @@ const Root = () => {
         </Suspense>
       </BrowserRouter>
     );
-  };
+  }
 };
 
 export default Root;

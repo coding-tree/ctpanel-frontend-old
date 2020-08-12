@@ -9,13 +9,13 @@ const CustomSelect = ({name, inputStatus, options, handleSelectChange, placehold
   const [isSelectVisible, toggleSelectVisibility] = useState(false);
   const [selectVisible, setSelectVisible] = useState('');
 
-  const handleOptionClick = value => {
+  const handleOptionClick = (value) => {
     handleSelectChange(value);
     toggleSelectVisibility(false);
     return setSelectValue(value);
   };
 
-  const handleSelectClose = e => {
+  const handleSelectClose = (e) => {
     if (!node.current.contains(e.target)) {
       setSelectVisible(Math.random());
     }
@@ -40,7 +40,7 @@ const CustomSelect = ({name, inputStatus, options, handleSelectChange, placehold
     inputStatus && setSelectValue('');
   }, [inputStatus]);
 
-  const isSelected = value => selectValue === value;
+  const isSelected = (value) => selectValue === value;
   const node = useRef();
   return (
     <div ref={node}>
@@ -52,7 +52,7 @@ const CustomSelect = ({name, inputStatus, options, handleSelectChange, placehold
           ))}
         </Field>
 
-        <StyledSelect selected={selectValue !== ''} onClick={() => toggleSelectVisibility(prev => !prev)}>
+        <StyledSelect selected={selectValue !== ''} onClick={() => toggleSelectVisibility((prev) => !prev)}>
           {selectValue || <StyledPlaceholder>{placeholder}</StyledPlaceholder>}
           <Icon absolute right="1.2rem" className="fas fa-sort"></Icon>
         </StyledSelect>
@@ -73,6 +73,13 @@ export default CustomSelect;
 
 const StyledPlaceholder = styled.span`
   color: ${variables.colorLink};
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    font-size: 1.4rem;
+  }
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    font-size: 1.2rem;
+  }
 `;
 
 const StyledSelectContainer = styled.div`
@@ -101,6 +108,12 @@ const StyledSelect = styled.div`
     css`
       background-color: ${variables.backgroundColor};
     `}
+    @media only screen and (max-width: ${variables.bpTablet}) {
+    font-size: 1.4rem;
+  }
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    font-size: 1.2rem;
+  }
 `;
 
 const StyledOptionContainer = styled.div`
@@ -143,4 +156,11 @@ const StyledOption = styled.div`
       color: ${variables.colorWhite} !important;
       font-weight: bold;
     `}
+
+    @media only screen and (max-width: ${variables.bpTablet}) {
+      font-size: 1.4rem;
+  }
+    @media only screen and (max-width: ${variables.bpLargeMobile}) {
+      font-size: 1.2rem;
+  }
 `;

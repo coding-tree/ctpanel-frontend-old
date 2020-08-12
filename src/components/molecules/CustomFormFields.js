@@ -66,7 +66,7 @@ export const Tags = ({name, label, onTagsChange, columns, rows, placeholder, act
     shouldReset && setTags([]);
   }, [shouldReset]);
 
-  const handleTags = e => {
+  const handleTags = (e) => {
     const result = e.target.value.match(onlyLetters);
 
     // Block space
@@ -74,36 +74,36 @@ export const Tags = ({name, label, onTagsChange, columns, rows, placeholder, act
 
     // Add tag on space
     if (e.target.value.match(onlyLetters) && result && e.keyCode === 32) {
-      setTags(prev => [...prev, ...result]);
+      setTags((prev) => [...prev, ...result]);
       e.target.value = '';
     }
 
     // backspace
     if (e.keyCode === 8 && e.target.value === '' && tags.length > 0) {
       e.target.value = tags.pop().toString();
-      setTags(prev => [...prev]);
+      setTags((prev) => [...prev]);
     }
   };
 
-  const handleBlur = e => {
+  const handleBlur = (e) => {
     if (e.target.value.match(onlyLetters)) {
-      setTags(prev => [...prev, e.target.value]);
+      setTags((prev) => [...prev, e.target.value]);
       e.target.value = '';
     }
   };
-  const deleteTag = index => {
-    setTags(prev => {
+  const deleteTag = (index) => {
+    setTags((prev) => {
       return prev.filter((el, i) => i !== index);
     });
   };
 
-  const focusInput = e => {
+  const focusInput = (e) => {
     e.currentTarget.children[1].focus();
   };
 
   return (
     <CustomFormFieldWrapper columns={columns} rows={rows} name={name} label={label}>
-      <StyledTagsContainer onClick={e => focusInput(e)}>
+      <StyledTagsContainer onClick={(e) => focusInput(e)}>
         <Wrapper>
           {tags &&
             tags.map((el, index) => (
@@ -112,7 +112,7 @@ export const Tags = ({name, label, onTagsChange, columns, rows, placeholder, act
               </StyledTag>
             ))}
         </Wrapper>
-        <StyledTagInput placeholder={placeholder} onBlur={e => handleBlur(e)} onKeyUp={e => handleTags(e)}></StyledTagInput>
+        <StyledTagInput placeholder={placeholder} onBlur={(e) => handleBlur(e)} onKeyUp={(e) => handleTags(e)}></StyledTagInput>
       </StyledTagsContainer>
       <StyledInput as={Field} invisible="true" name={name} id={name}></StyledInput>
     </CustomFormFieldWrapper>
@@ -123,6 +123,32 @@ const StyledWrapper = styled.span`
   flex-direction: column;
   grid-column: ${({columns}) => (columns ? `span ${columns}` : 'span 1')};
   margin-bottom: 2.2rem;
+
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    grid-column: span 1;
+  }
+
+  textarea {
+    font-family: inherit;
+    font-size: 1.6rem;
+    border-radius: 4px;
+    border: 1px solid ${variables.borderColor};
+    padding: 12px;
+    color: ${variables.colorFont};
+    height: 12rem;
+    resize: none;
+    &::placeholder {
+      color: ${variables.colorLink};
+    }
+
+    @media only screen and (max-width: ${variables.bpTablet}) {
+      font-size: 1.4rem;
+    }
+
+    @media only screen and (max-width: ${variables.bpLargeMobile}) {
+      font-size: 1.2rem;
+    }
+  }
 `;
 const Wrapper = styled.span`
   flex-wrap: wrap;
@@ -160,6 +186,12 @@ const StyledTag = styled.span`
       color: ${variables.colorMain};
       background-color: ${variables.colorWhite};
     }
+    @media only screen and (max-width: ${variables.bpTablet}) {
+      font-size: 1.4rem;
+    }
+    @media only screen and (max-width: ${variables.bpLargeMobile}) {
+      font-size: 1.2rem;
+    }
   }
 `;
 const StyledTagInput = styled.input`
@@ -172,6 +204,13 @@ const StyledTagInput = styled.input`
   color: ${variables.colorFont};
   &::placeholder {
     color: ${variables.colorLink};
+  }
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    font-size: 1.4rem;
+  }
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    font-size: 1.2rem;
   }
 `;
 
@@ -189,6 +228,13 @@ const StyledInput = styled.input`
   &::placeholder {
     color: ${variables.colorLink};
   }
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    font-size: 1.4rem;
+  }
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    font-size: 1.2rem;
+  }
 `;
 
 const StyledLabel = styled.label`
@@ -196,6 +242,12 @@ const StyledLabel = styled.label`
   font-size: 1.6rem;
   margin-bottom: 5px;
   color: ${variables.colorFont};
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    font-size: 1.4rem;
+  }
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    font-size: 1.2rem;
+  }
 `;
 
 const StyledError = styled.div`
@@ -208,4 +260,10 @@ const StyledError = styled.div`
   margin-top: 2.2rem;
   min-height: 3.6rem;
   align-self: stretch;
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    font-size: 1.4rem;
+  }
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    font-size: 1.2rem;
+  }
 `;

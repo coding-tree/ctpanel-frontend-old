@@ -10,50 +10,87 @@ import {SelectedElementContext} from 'components/context/SelectedElementContext'
 import Icon from 'components/atoms/Icon';
 import axios from 'axios';
 
-const StyledRow = styled.tr`
-  align-items: center;
-  height: 50px;
-  padding: 0 10px;
-  border-bottom: 1px solid ${variables.tableBorderColor};
-  background-color: ${({isSelected}) => isSelected && variables.backgroundColor};
-  transition: 0.2s ease-in-out;
-  &:hover {
-    background-color: ${variables.tableHeaderColor};
-    cursor: pointer;
-    /* color: ${variables.colorWhite}; */
+const StyledSelectedRow = styled.div`
+  display: none;
+  grid-column: 1/-1;
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    font-size: 1.4rem;
   }
-  ${({description}) =>
-    description &&
-    css`
-      display: none;
-      background-color: ${variables.colorWhite};
-      color: ${variables.colorBlack} !important;
-      &:hover {
-        background: none;
-      }
-    `}
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    font-size: 1.2rem;
+  }
+
   ${({isSelected}) =>
     isSelected &&
     css`
-      display: table-row;
+      display: grid;
+      grid-template-columns: minmax(1rem, 5rem) 1fr minmax(1rem, 5rem);
+      padding: 2rem 0;
+      border-bottom: 1px solid ${variables.tableBorderColor};
+      background-color: ${variables.backgroundColor};
+      @media only screen and (max-width: ${variables.bpTablet}) {
+        padding: 2rem;
+        grid-template-columns: 1fr;
+      }
+      @media only screen and (max-width: ${variables.bpLargeMobile}) {
+        grid-template-columns: 1fr;
+      }
     `}
 `;
 
-const StyledTableData = styled.td`
-  border: 1px solid;
-  padding: 1rem 3rem;
-  border: none;
-  white-space: nowrap;
- 
-  &:first-child {
-    padding: 0 0 0 2rem;
-  }
-  &:nth-child(4n) {
-    white-space: initial;
+const StyledRow = styled.div`
+  display: grid;
+  grid-template-columns: 2rem minmax(2rem, 3rem);
+  grid-auto-columns: minmax(1rem, 1fr);
+  grid-auto-flow: column;
+  column-gap: 2rem;
+  padding: 1rem;
+  align-items: center;
+  border-bottom: 1px solid ${variables.tableBorderColor};
+  transition: 0.2s ease-in-out;
+  font-weight: bold;
+  &:hover {
+    background-color: ${variables.tableHeaderColor};
+    cursor: pointer;
   }
 
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    font-size: 1.4rem;
+  }
+
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    font-size: 1.2rem;
+    column-gap: 1rem;
+    grid-template-columns: 2rem minmax(1rem, 2rem);
+  }
+`;
+
+const StyledTableContainer = styled.div`
+  grid-column: 2/-2;
+  display: grid;
+
+  grid-template-columns: max-content 1fr;
+  grid-auto-rows: max-content;
+  row-gap: 1rem;
+  column-gap: 1rem;
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    grid-column: 1/-1;
+  }
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const StyledTableData = styled.div`
+  justify-self: ${({right}) => right && 'end'};
   text-align: ${({right}) => right && 'right'};
   color: ${({mainColor}) => mainColor && variables.colorLink};
+  flex-wrap: wrap;
+  display: ${({block}) => (block ? 'block' : 'flex')};
+
+  grid-column: ${({columns}) => (columns ? `span ${columns}` : 'span 1')};
+
   ${({vote}) =>
     vote &&
     css`
@@ -61,7 +98,6 @@ const StyledTableData = styled.td`
       color: ${vote === 'negative' && variables.colorError};
       color: ${vote === 'neutral' && variables.colorCancel};
     `};
-
   ${({buttonsTableData}) =>
     buttonsTableData &&
     css`
@@ -69,44 +105,56 @@ const StyledTableData = styled.td`
         margin-left: 0.6rem;
       }
     `}
-  ${({description}) =>
-    description &&
+  ${({noTablet}) =>
+    noTablet &&
     css`
-      word-wrap: break-word;
-      word-break: break-all;
-      white-space: normal;
-      display: none;
-      cursor: default;
+      @media only screen and (max-width: ${variables.bpTablet}) {
+        display: none;
+      }
     `}
-      ${({isSelected}) =>
-        isSelected === true &&
-        css`
-          display: table-cell;
-        `}
-`;
-
-const StyledDescriptionBox = styled.div`
-  padding: 2rem;
-  margin-left: 4rem;
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  grid-column-gap: 3rem;
-  grid-template-rows: repeat (3, max-content);
+  ${({noMobile}) =>
+    noMobile &&
+    css`
+      @media only screen and (max-width: ${variables.bpLargeMobile}) {
+        display: none;
+      }
+    `}
+    ${({mobile}) =>
+      mobile &&
+      css`
+        display: none;
+        @media only screen and (max-width: ${variables.bpLargeMobile}) {
+          display: block;
+        }
+      `}
 `;
 
 const StyledText = styled.span`
   line-height: 1.7;
   word-wrap: break-word;
-  font-weight: 100 !important;
-  margin-bottom: 2.5rem;
-  &:last-of-type {
-    margin-bottom: 0;
-  }
-  ${({bold}) =>
-    bold &&
+  font-weight: 400;
+  font-weight: ${({bold}) => bold && '700'};
+  ${({link}) =>
+    link &&
     css`
-      font-weight: 700 !important;
+      flex-direction: column;
     `}
+  ${({tablet}) =>
+    tablet &&
+    css`
+      display: none;
+      @media only screen and (max-width: ${variables.bpTablet}) {
+        display: block;
+      }
+    `}
+    ${({mobile}) =>
+      mobile &&
+      css`
+        display: none;
+        @media only screen and (max-width: ${variables.bpLargeMobile}) {
+          display: block;
+        }
+      `}
 `;
 
 const StyledLink = styled.a`
@@ -116,7 +164,9 @@ const StyledLink = styled.a`
   }
 `;
 
-const StyledTag = styled.span``;
+const StyledTag = styled.span`
+  display: inline;
+`;
 
 const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}) => {
   const renderTags = meetingData.tags.map((tag, index) => {
@@ -128,7 +178,6 @@ const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}
         <StyledLink href={link} target="_blank" rel="nofollow noopener noreferrer">
           {link}
         </StyledLink>
-        &nbsp;
       </StyledTag>
     );
   });
@@ -138,32 +187,45 @@ const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}
         <StyledTableData>
           <Checkbox isSelected={isSelected}></Checkbox>
         </StyledTableData>
-        <StyledTableData mainColor>#{index}</StyledTableData>
-        <StyledTableData>
+        <StyledTableData mainColor>{index}</StyledTableData>
+        <StyledTableData columns={2}>
           <StyledDate format="DD MMMM YYYY" date={meetingData.date}></StyledDate>
         </StyledTableData>
-        <StyledTableData>{meetingData.topic}</StyledTableData>
-        <StyledTableData right>{meetingData.duration}</StyledTableData>
-        <StyledTableData right>{meetingData.leader}</StyledTableData>
-      </StyledRow>
-      <StyledRow description isSelected={isSelected}>
-        <StyledTableData description colSpan={6} isSelected={isSelected}>
-          <StyledDescriptionBox>
-            <StyledText bold>Odnośnik do spotkania:</StyledText>
-            <StyledText>
-              <StyledLink target="_blank" rel="noreferrer noopener" href={meetingData.meetingHref}>
-                {meetingData.meetingHref}
-              </StyledLink>
-            </StyledText>
-            <StyledText bold>Opis spotkania:</StyledText>
-            <StyledText>{meetingData.description}</StyledText>
-            <StyledText bold>Tagi:</StyledText>
-            <StyledText>{renderTags}</StyledText>
-            <StyledText bold>Linki:</StyledText>
-            <StyledText>{renderLinks}</StyledText>
-          </StyledDescriptionBox>
+        <StyledTableData columns={3}>{meetingData.topic}</StyledTableData>
+        <StyledTableData noTablet columns={2} right>
+          {meetingData.duration}
+        </StyledTableData>
+        <StyledTableData noMobile columns={2} right>
+          {meetingData.leader}
         </StyledTableData>
       </StyledRow>
+      <StyledSelectedRow isSelected={isSelected}>
+        <StyledTableContainer>
+          <StyledText bold>Odnośnik do spotkania:</StyledText>
+          <StyledText>
+            <StyledLink target="_blank" rel="noreferrer noopener" href={meetingData.meetingHref}>
+              {meetingData.meetingHref}
+            </StyledLink>
+          </StyledText>
+
+          <StyledText bold>Opis spotkania:</StyledText>
+          <StyledText>{meetingData.description}</StyledText>
+
+          <StyledText mobile bold>
+            Prowadzący:
+          </StyledText>
+          <StyledText mobile>{meetingData.leader}</StyledText>
+          <StyledText tablet bold>
+            Czas trwania:
+          </StyledText>
+          <StyledText tablet>{meetingData.duration}</StyledText>
+
+          <StyledText bold>Tagi:</StyledText>
+          <StyledText>{renderTags}</StyledText>
+          <StyledText bold>Linki:</StyledText>
+          <StyledText link>{renderLinks}</StyledText>
+        </StyledTableContainer>
+      </StyledSelectedRow>
     </>
   );
 };
@@ -174,23 +236,29 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
     setMyVotes(meetingData.usersVote);
   }, [meetingData]);
 
-  const votedClass = voteType => {
-    const currentVote = myVotes.find(el => el.id === userId);
+  const votedClass = (voteType) => {
+    const currentVote = myVotes.find((el) => el.id === userId);
     return currentVote && voteType === currentVote.vote;
   };
 
   const handleVoting = (e, id, voteType) => {
     e.stopPropagation();
-    axios.put(`${process.env.REACT_APP_SERVER_URL}/topics/vote/${id}?vote=${voteType}`).catch(err => console.log(err));
+    axios.put(`${process.env.REACT_APP_SERVER_URL}/topics/vote/${id}?vote=${voteType}`).catch((err) => console.log(err));
   };
 
-  const formatVote = vote => {
+  const formatVote = (vote) => {
     if (vote > 0) return 'positive';
     if (vote < 0) return 'negative';
     return 'neutral';
   };
-  const renderTags = meetingData.tags.map((tag, index) => {
-    return <StyledTag key={index}>{tag} &nbsp;</StyledTag>;
+
+  const renderTags = meetingData.tags.map((tag, index, array) => {
+    return (
+      <React.Fragment key={index}>
+        <StyledTag>{tag}</StyledTag>
+        {index + 1 < array.length && <StyledTag>, </StyledTag>}
+      </React.Fragment>
+    );
   });
   return (
     <>
@@ -198,32 +266,52 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
         <StyledTableData>
           <Checkbox isSelected={isSelected}></Checkbox>
         </StyledTableData>
-        <StyledTableData mainColor>#{index}</StyledTableData>
-        <StyledTableData>{meetingData.topic}</StyledTableData>
-        <StyledTableData>Kategoria</StyledTableData>
-        <StyledTableData>{meetingData.userAdded}</StyledTableData>
+        <StyledTableData mainColor>{index}</StyledTableData>
+        <StyledTableData columns={5}>{meetingData.topic}</StyledTableData>
+        <StyledTableData columns={2} block right noTablet>
+          {renderTags}
+        </StyledTableData>
+        <StyledTableData columns={2} noTablet>
+          {meetingData.userAdded}
+        </StyledTableData>
         <StyledTableData right vote={formatVote(meetingData.votes)}>
           {meetingData.votes > 0 ? `+${meetingData.votes}` : meetingData.votes}
         </StyledTableData>
-        <StyledTableData buttonsTableData right>
-          <PrimaryButton inactive voted={votedClass('up')} onClick={e => handleVoting(e, meetingData._id, 'up')}>
+        <StyledTableData noMobile columns={2} buttonsTableData right>
+          <PrimaryButton inactive voted={votedClass('up')} onClick={(e) => handleVoting(e, meetingData._id, 'up')}>
             <Icon className="fas fa-plus"></Icon>
           </PrimaryButton>
-          <DeleteButton inactive voted={votedClass('down')} onClick={e => handleVoting(e, meetingData._id, 'down')}>
+          <DeleteButton inactive voted={votedClass('down')} onClick={(e) => handleVoting(e, meetingData._id, 'down')}>
             <Icon className="fas fa-minus"></Icon>
           </DeleteButton>
         </StyledTableData>
       </StyledRow>
-      <StyledRow description isSelected={isSelected}>
-        <StyledTableData description colSpan={6} isSelected={isSelected}>
-          <StyledDescriptionBox>
-            <StyledText bold>Opis tematu:</StyledText>
-            <StyledText>{meetingData.description}</StyledText>
-            <StyledText bold>Tagi:</StyledText>
-            <StyledText>{renderTags}</StyledText>
-          </StyledDescriptionBox>
-        </StyledTableData>
-      </StyledRow>
+      <StyledSelectedRow isSelected={isSelected}>
+        <StyledTableContainer>
+          <StyledText bold>Opis tematu:</StyledText>
+          <StyledText>{meetingData.description}</StyledText>
+
+          <StyledText tablet bold>
+            Inicjator:
+          </StyledText>
+          <StyledText tablet>{meetingData.userAdded}</StyledText>
+
+          <StyledText bold>Tagi:</StyledText>
+          <StyledText>{renderTags}</StyledText>
+
+          <StyledText mobile bold>
+            Zagłosuj
+          </StyledText>
+          <StyledTableData mobile buttonsTableData>
+            <PrimaryButton inactive voted={votedClass('up')} onClick={(e) => handleVoting(e, meetingData._id, 'up')}>
+              <Icon className="fas fa-plus"></Icon>
+            </PrimaryButton>
+            <DeleteButton inactive voted={votedClass('down')} onClick={(e) => handleVoting(e, meetingData._id, 'down')}>
+              <Icon className="fas fa-minus"></Icon>
+            </DeleteButton>
+          </StyledTableData>
+        </StyledTableContainer>
+      </StyledSelectedRow>
     </>
   );
 };
@@ -238,32 +326,45 @@ const MeetingHistoryTableElement = ({meetingData, isSelected, toggleSelection, i
         <StyledTableData>
           <Checkbox isSelected={isSelected}></Checkbox>
         </StyledTableData>
-        <StyledTableData mainColor>#{index}</StyledTableData>
-        <StyledTableData>
+        <StyledTableData mainColor>{index}</StyledTableData>
+        <StyledTableData columns={3}>
           <StyledDate format="DD MMMM YYYY" date={meetingData.date}></StyledDate>
         </StyledTableData>
-        <StyledTableData>{meetingData.topic}</StyledTableData>
-        <StyledTableData>{meetingData.leader}</StyledTableData>
-        <StyledTableData right>
+        <StyledTableData columns={5}>{meetingData.topic}</StyledTableData>
+        <StyledTableData columns={3} noTablet>
+          {meetingData.leader}
+        </StyledTableData>
+        <StyledTableData columns={3} right noMobile>
           <PrimaryButton small>Dodaj</PrimaryButton>
         </StyledTableData>
       </StyledRow>
-      <StyledRow description isSelected={isSelected}>
-        <StyledTableData description colSpan={6} isSelected={isSelected}>
-          <StyledDescriptionBox>
-            <StyledText bold>Odnośnik do spotkania:</StyledText>
-            <StyledText>
-              <StyledLink target="_blank" rel="noreferrer noopener" href={meetingData.meetingHref}>
-                {meetingData.meetingHref}
-              </StyledLink>
-            </StyledText>
-            <StyledText bold>Opis spotkania:</StyledText>
-            <StyledText>{meetingData.description}</StyledText>
-            <StyledText bold>Tagi:</StyledText>
-            <StyledText>{renderTags}</StyledText>
-          </StyledDescriptionBox>
-        </StyledTableData>
-      </StyledRow>
+      <StyledSelectedRow isSelected={isSelected}>
+        <StyledTableContainer>
+          <StyledText bold>Odnośnik do spotkania:</StyledText>
+          <StyledText>
+            <StyledLink target="_blank" rel="noreferrer noopener" href={meetingData.meetingHref}>
+              {meetingData.meetingHref}
+            </StyledLink>
+          </StyledText>
+
+          <StyledText tablet bold>
+            Prowadzący
+          </StyledText>
+          <StyledText tablet>{meetingData.leader}</StyledText>
+
+          <StyledText bold>Opis spotkania:</StyledText>
+          <StyledText>{meetingData.description}</StyledText>
+          <StyledText bold>Tagi:</StyledText>
+          <StyledText>{renderTags}</StyledText>
+
+          <StyledText mobile bold>
+            Dodaj materiały
+          </StyledText>
+          <StyledText mobile>
+            <PrimaryButton small>Dodaj</PrimaryButton>
+          </StyledText>
+        </StyledTableContainer>
+      </StyledSelectedRow>
     </>
   );
 };
@@ -274,9 +375,9 @@ const TableElement = ({location, meetingData, index, userId}) => {
   const isSelected = selectedElement && selectedElement.includes(meetingData);
 
   const handleSelection = (singleElem, selectedElem) => {
-    return toggleSelection(prev => {
+    return toggleSelection((prev) => {
       if (selectedElem) {
-        return prev.filter(elem => elem._id !== singleElem._id);
+        return prev.filter((elem) => elem._id !== singleElem._id);
       }
       return [...prev, singleElem];
     });

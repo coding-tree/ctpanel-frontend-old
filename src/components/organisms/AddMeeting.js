@@ -6,12 +6,12 @@ import styled from 'styled-components';
 import {withFormik, Form} from 'formik';
 import * as Yup from 'yup';
 import {toast} from 'react-toastify';
-import { useDispatch } from 'react-redux';
-import { addMeeting } from 'selectors/fetchMeetings';
-import { getSchedule } from 'selectors/fetchSchedule';
+import {useDispatch} from 'react-redux';
+import {addMeeting} from 'selectors/fetchMeetings';
+import {getSchedule} from 'selectors/fetchSchedule';
 
 const Formik = ({column, status, leaders, setFieldValue, setIsModalVisible, isModalVisible, topicNames, isSubmitting}) => {
-  const setValue = name => tags => {
+  const setValue = (name) => (tags) => {
     setFieldValue(name, tags);
   };
 
@@ -92,15 +92,8 @@ const AddMeetingWithFormik = withFormik({
   },
   validationSchema: Yup.object().shape({
     date: Yup.date('Musisz podać datę').required('Data jest wymagana'),
-    time: Yup.string()
-      .min(5)
-      .max(5)
-      .min(0, 'Aż tak dawno temu nie było spotkania')
-      .required('Czas jest wymagany'),
-    topic: Yup.string()
-      .min(5, 'Wpisz chociaż te 5 znaków')
-      .max(256, 'Zbyt długi temat, rozbij go na kilka spotkań')
-      .required('Temat jest wymagany'),
+    time: Yup.string().min(5).max(5).min(0, 'Aż tak dawno temu nie było spotkania').required('Czas jest wymagany'),
+    topic: Yup.string().min(5, 'Wpisz chociaż te 5 znaków').max(256, 'Zbyt długi temat, rozbij go na kilka spotkań').required('Temat jest wymagany'),
     leader: Yup.string().required('Wprowadź prowadzącego'),
     meetingHref: Yup.string().required('Musisz podać link'),
     description: Yup.string().required('Opis jest wymagany'),
@@ -108,11 +101,7 @@ const AddMeetingWithFormik = withFormik({
     usefulLinks: Yup.string(),
   }),
   handleSubmit: (values, {resetForm, setStatus, props}) => {
-    const {
-      setSubmitting,
-      addMeetingAction,
-      getScheduleAction
-    } = props;
+    const {setSubmitting, addMeetingAction, getScheduleAction} = props;
 
     setSubmitting(true);
     let {date, time, topic, leader, meetingHref, description, tags, usefulLinks} = values;
@@ -121,19 +110,19 @@ const AddMeetingWithFormik = withFormik({
     let timestamp = date.getTime();
     date = timestamp;
     addMeetingAction({date, topic, leader, meetingHref, description, tags, usefulLinks})
-    .then(() => {
-      setStatus(true);
-      resetForm();
-      props.setIsModalVisible(false);
-      props.setSubmitting(false);
-      getScheduleAction();
-      toast.success('Dodano nowe spotkanie!');
-    })
-    .catch(() => {
-      setStatus(false);
-      toast.error('Nie udało się dodać spotkania...');
-    });
-  }
+      .then(() => {
+        setStatus(true);
+        resetForm();
+        props.setIsModalVisible(false);
+        props.setSubmitting(false);
+        getScheduleAction();
+        toast.success('Dodano nowe spotkanie!');
+      })
+      .catch(() => {
+        setStatus(false);
+        toast.error('Nie udało się dodać spotkania...');
+      });
+  },
 })(Formik);
 
 const AddMeeting = (props) => {
@@ -141,9 +130,7 @@ const AddMeeting = (props) => {
   const addMeetingAction = (dataToSend) => dispatch(addMeeting(dataToSend));
   const getScheduleAction = () => dispatch(getSchedule());
 
-  return (
-    <AddMeetingWithFormik addMeetingAction={addMeetingAction} getScheduleAction={getScheduleAction} {...props}/>
-  );
+  return <AddMeetingWithFormik addMeetingAction={addMeetingAction} getScheduleAction={getScheduleAction} {...props} />;
 };
 
 export default AddMeeting;
@@ -155,19 +142,12 @@ export const StyledForm = styled.form`
   grid-template-columns: ${({column}) => (column ? `repeat(${column}, 1fr)` : 'repeat(1, 1fr)')};
   grid-column-gap: 2rem;
 
-  textarea {
-    font-family: inherit;
-    font-size: 1.6rem;
-    border-radius: 4px;
-    border: 1px solid ${variables.borderColor};
-    padding: 12px;
-    color: ${variables.colorFont};
-    height: 12rem;
-    resize: none;
-    &::placeholder {
-      color: ${variables.colorLink};
-    };
-  };
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    grid-template-columns: 1fr;
+  }
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    font-size: 1.2rem;
+  }
 `;
 
 const StyledButtonsContainer = styled.div`
@@ -176,4 +156,12 @@ const StyledButtonsContainer = styled.div`
   display: grid;
   grid-column-gap: 1rem;
   grid-template-columns: ${({buttons}) => (buttons ? `repeat(${buttons}, 1fr)` : 'repeat(2, 1fr)')};
+
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    grid-column: span 1;
+    justify-self: stretch;
+    > button {
+      width: 100%;
+    }
+  }
 `;

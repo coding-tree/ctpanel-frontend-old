@@ -19,6 +19,7 @@ const LoginStyle = createGlobalStyle`
   body {
     width: 100%;
     height: 100vh;
+    height: -webkit-fill-available;
     font-size: 1.6rem;
     font-family: ${variables.mainFont};
     background-color: ${variables.backgroundColor};
@@ -34,6 +35,7 @@ const LoginStyle = createGlobalStyle`
     width: 100%;
     flex-direction: column;
     height: 100vh;
+    height: -webkit-fill-available;
   }
 
   ul{

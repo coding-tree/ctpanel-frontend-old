@@ -4,8 +4,9 @@ import axios from 'axios';
 import styled from 'styled-components';
 import {toast} from 'react-toastify';
 
-import { useDispatch } from 'react-redux';
-import { deleteTopics } from 'selectors/fetchTopics';
+import {useDispatch} from 'react-redux';
+import {deleteTopics} from 'selectors/fetchTopics';
+import variables from 'settings/variables';
 
 const DeleteTopic = ({selectedElement, destination, isModalVisible, setIsModalVisible, setSubmitting}) => {
   const dispatch = useDispatch();
@@ -18,19 +19,19 @@ const DeleteTopic = ({selectedElement, destination, isModalVisible, setIsModalVi
   const deleteItems = () => {
     setSubmitting(true);
     deleteTopicsAction(selectedElement, destination)
-    .then(() => {
-      setIsModalVisible(false);
-      setSubmitting(false);
-      toast.success('Pomyślnie usunięto tematy!');
-    })
-    .catch(() => {
-      setSubmitting(false);
-      toast.error('Nie udało się usunąć tematów...');
-    });
+      .then(() => {
+        setIsModalVisible(false);
+        setSubmitting(false);
+        toast.success('Pomyślnie usunięto tematy!');
+      })
+      .catch(() => {
+        setSubmitting(false);
+        toast.error('Nie udało się usunąć tematów...');
+      });
   };
 
   return (
-    <StyledForm onSubmit={e => e.preventDefault()}>
+    <StyledForm onSubmit={(e) => e.preventDefault()}>
       <StyledTitle>Czy na pewno chcesz usunąć {listItems.length} następujące rekordy?</StyledTitle>
       <StyledList>{listItems}</StyledList>
       <StyledButtonsContainer>
@@ -53,6 +54,12 @@ const StyledTitle = styled.h3`
   font-weight: 700;
   display: flex;
   align-items: center;
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    font-size: 1.4rem;
+  }
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    font-size: 1.2rem;
+  }
 `;
 
 const StyledButtonsContainer = styled.div`
@@ -60,6 +67,13 @@ const StyledButtonsContainer = styled.div`
   margin-top: 3rem;
   button:last-child {
     margin-left: 1rem;
+  }
+
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    justify-content: space-between;
+    > button {
+      width: 100%;
+    }
   }
 `;
 
@@ -76,4 +90,10 @@ const StyledList = styled.ul`
 const StyledListItem = styled.li`
   font-size: 1.6rem;
   display: list-item;
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    font-size: 1.4rem;
+  }
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    font-size: 1.2rem;
+  }
 `;

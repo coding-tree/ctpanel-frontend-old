@@ -1,27 +1,35 @@
 import React, {useState, useEffect} from 'react';
 import LastMeet from 'components/organisms/LastMeet';
-import {getLastMeet, getLastXMeets} from 'api';
+import {getLastXMeets} from 'api';
 import styled from 'styled-components';
+import variables from 'settings/variables';
 
 const HomeWrapper = styled.div`
-  flex-direction: column;
-  justify-content: center;
+  grid-area: body;
   align-items: center;
-  div {
-    margin-bottom: 1.7rem;
+  justify-items: center;
+  display: grid;
+  row-gap: 3rem;
+  padding-bottom: 10rem;
+
+  @media only screen and (max-width: ${variables.bpLargeDesktop}) {
+    padding-bottom: 5rem;
+  }
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    padding-bottom: 13rem;
+  }
+
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    padding-bottom: 12rem;
+    row-gap: 1rem;
   }
 `;
 
 const Home = () => {
-  const [lastMeet, setLastMeet] = useState({});
   const [lastMeets, setLastMeets] = useState([]);
 
   useEffect(() => {
-    getLastMeet().then(data => setLastMeet(data));
-  }, []);
-
-  useEffect(() => {
-    getLastXMeets(3).then(data => setLastMeets(data));
+    getLastXMeets(3).then((data) => setLastMeets(data));
   }, []);
 
   const meetings = lastMeets.map((item, index) => {

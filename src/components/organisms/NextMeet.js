@@ -7,26 +7,48 @@ import NextMeetInfo from 'components/molecules/NextMeetInfo';
 import axios from 'axios';
 
 const StyledWrapper = styled.div`
-  width: calc(100%);
-  height: 113px;
-  min-height: 113px;
-  align-items: center;
+  display: grid;
+  grid-template-columns: max-content minmax(min-content, max-content);
+  column-gap: 3rem;
+  grid-area: header;
+  width: 100%;
   justify-content: space-between;
-  padding: 0 10rem;
+  padding: 5rem 10%;
   background-color: ${variables.colorWhite};
-  margin-bottom: 100px;
+
+  @media only screen and (max-width: ${variables.bpLargeDesktop}) {
+    padding: 5rem 5%;
+  }
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    grid-template-columns: 1fr;
+    margin-bottom: 2rem;
+    padding: 2rem 5%;
+    justify-items: center;
+    row-gap: 0.5rem;
+    div {
+      text-align: center;
+      justify-content: center;
+    }
+  }
+
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    row-gap: 3rem;
+    div {
+      font-size: 1.4rem;
+    }
+  }
 `;
 
 const NextMeet = () => {
   const [upcoming, setUpcoming] = useState({});
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_SERVER_URL}/meetings/incoming`).then(resp => setUpcoming(resp.data));
+    axios.get(`${process.env.REACT_APP_SERVER_URL}/meetings/incoming`).then((resp) => setUpcoming(resp.data));
   }, []);
 
   return (
     <StyledWrapper>
-      <Title important uppercase>
+      <Title important uppercase nobreak>
         Najbliższe spotkanie
       </Title>
       {upcoming ? (

@@ -5,9 +5,11 @@ import Title from 'components/atoms/Title';
 import SocialIcons from 'components/organisms/SocialIcons';
 import Text from 'components/atoms/Text';
 import {PrimaryButton} from 'components/atoms/Button';
+import variables from 'settings/variables';
 
 const StyledBackground = styled.div`
   height: 100vh;
+  height: -webkit-fill-available;
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -17,6 +19,7 @@ const StyledBackground = styled.div`
     left: 0;
     width: 100%;
     height: 100vh;
+    height: -webkit-fill-available;
     content: '';
     background-image: url('background_pattern.png');
     background-repeat: repeat;
@@ -27,9 +30,14 @@ const StyledBackground = styled.div`
 const StyledWrapper = styled.div`
   flex-direction: column;
   max-width: 800px;
+  padding: 0 2rem;
 `;
 
-const StyledImage = styled.img``;
+const StyledImage = styled.img`
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    max-height: 10rem;
+  }
+`;
 
 const StyledContainer = styled.div`
   flex-direction: column;

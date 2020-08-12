@@ -8,11 +8,11 @@ import styled from 'styled-components';
 import {CancelButton, PrimaryButton} from 'components/atoms/Button';
 import {toast} from 'react-toastify';
 
-import { useDispatch } from 'react-redux';
-import { addTopic } from 'selectors/fetchTopics';
+import {useDispatch} from 'react-redux';
+import {addTopic} from 'selectors/fetchTopics';
 
 const Formik = ({setFieldValue, column, status, isModalVisible, setIsModalVisible, isSubmitting}) => {
-  const setTags = name => tags => {
+  const setTags = (name) => (tags) => {
     setFieldValue(name, tags);
   };
   return (
@@ -46,35 +46,28 @@ const AddTopicWithFormik = withFormik({
     };
   },
   validationSchema: Yup.object().shape({
-    topic: Yup.string()
-      .min(3, 'Temat musi mieć minimum 3 znaki')
-      .required('Wprowadź temat'),
+    topic: Yup.string().min(3, 'Temat musi mieć minimum 3 znaki').required('Wprowadź temat'),
     description: Yup.string(),
-    userAdded: Yup.string()
-      .min(3, 'To pole musi mieć minimum 3 znaki')
-      .required('Wprowadź informacje o użytkowniku'),
+    userAdded: Yup.string().min(3, 'To pole musi mieć minimum 3 znaki').required('Wprowadź informacje o użytkowniku'),
     votes: Yup.number('głosy muszą być liczbą'),
   }),
   handleSubmit: (values, {resetForm, setStatus, props}) => {
-    const {
-      setSubmitting,
-      addTopicAction
-    } = props;
+    const {setSubmitting, addTopicAction} = props;
 
     setSubmitting(true);
     addTopicAction(values)
-    .then(() => {
-      setStatus(true);
-      resetForm();
-      props.setIsModalVisible(false);
-      props.setSubmitting(false);
-      toast.success('Dodano nowy temat!');
-    })
-    .catch(() => {
-      setStatus(false);
-      props.setSubmitting(false);
-      toast.error('Nie udało się dodać tematu...');
-    });
+      .then(() => {
+        setStatus(true);
+        resetForm();
+        props.setIsModalVisible(false);
+        props.setSubmitting(false);
+        toast.success('Dodano nowy temat!');
+      })
+      .catch(() => {
+        setStatus(false);
+        props.setSubmitting(false);
+        toast.error('Nie udało się dodać tematu...');
+      });
   },
 })(Formik);
 
@@ -82,13 +75,10 @@ const AddTopic = (props) => {
   const dispatch = useDispatch();
   const addTopicAction = (dataToSend) => dispatch(addTopic(dataToSend));
 
-  return (
-    <AddTopicWithFormik addTopicAction={addTopicAction} {...props}/>
-  );
+  return <AddTopicWithFormik addTopicAction={addTopicAction} {...props} />;
 };
 
 export default AddTopic;
-
 
 export const StyledForm = styled.form`
   font-family: inherit;
@@ -96,20 +86,6 @@ export const StyledForm = styled.form`
   display: grid;
   grid-template-columns: ${({column}) => (column ? `repeat(${column}, 1fr)` : 'repeat(1, 1fr)')};
   grid-column-gap: 2rem;
-
-  textarea {
-    font-family: inherit;
-    font-size: 1.6rem;
-    border-radius: 4px;
-    border: 1px solid ${variables.borderColor};
-    padding: 12px;
-    color: ${variables.colorFont};
-    height: 12rem;
-    resize: none;
-    &::placeholder {
-      color: ${variables.colorLink};
-    }
-  }
 `;
 
 const StyledButtonsContainer = styled.div`
@@ -118,4 +94,12 @@ const StyledButtonsContainer = styled.div`
   display: grid;
   grid-column-gap: 1rem;
   grid-template-columns: ${({buttons}) => (buttons ? `repeat(${buttons}, 1fr)` : 'repeat(2, 1fr)')};
+
+  @media only screen and (max-width: ${variables.bpLargeMobile}) {
+    justify-self: stretch;
+
+    > button {
+      width: 100%;
+    }
+  }
 `;

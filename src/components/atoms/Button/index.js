@@ -19,11 +19,19 @@ const Button = styled.button`
   font-size: 1.6rem;
   padding: 0 1.2rem;
 
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    font-size: 1.2rem;
+  }
+
   ${({large}) =>
     large &&
     css`
       min-width: 144px;
       padding: 0 3rem;
+      @media only screen and (max-width: ${variables.bpTablet}) {
+        min-width: auto;
+        padding: 0 1rem;
+      }
     `}
   ${({small}) =>
     small &&

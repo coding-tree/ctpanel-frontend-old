@@ -42,10 +42,11 @@ export const AddModal = ({children, modalTitle, title, icon}) => {
 
 export const JoinModal = ({children, modalTitle, title, icon}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+
   return (
     <>
       <PrimaryButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
-        {title} <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className={icon}></Icon>
+        {title} {icon && <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className={icon}></Icon>}
       </PrimaryButton>
       <Modal title={modalTitle} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}>
         {React.cloneElement(children, {isModalVisible, setIsModalVisible})}
@@ -76,7 +77,7 @@ const Modal = ({children, title, isModalVisible, setIsModalVisible}) => {
     document.body.style.overflowY = isModalVisible ? 'hidden' : 'auto';
   }, [isModalVisible]);
 
-  const closeModal = e => {
+  const closeModal = (e) => {
     const current = e.currentTarget;
     if (current === e.target) {
       setIsModalVisible(false);
@@ -84,7 +85,7 @@ const Modal = ({children, title, isModalVisible, setIsModalVisible}) => {
   };
 
   return (
-    <StyledModalContainer onClick={e => closeModal(e)} isModalVisible={isModalVisible}>
+    <StyledModalContainer onClick={(e) => closeModal(e)} isModalVisible={isModalVisible}>
       <StyledBox isModalVisible={isModalVisible}>
         <StyledHeader>
           <Title white fontSize="2rem">
@@ -111,7 +112,7 @@ const StyledModalContainer = styled.div`
   visibility: hidden;
   overflow-y: auto;
   transition: 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
-
+  z-index: 999;
   ${({isModalVisible}) =>
     isModalVisible &&
     css`
@@ -121,6 +122,10 @@ const StyledModalContainer = styled.div`
   top: 0;
   left: 0;
   bottom: 0;
+
+  @media only screen and (max-width: ${variables.bpTablet}) {
+    justify-content: initial;
+  }
 `;
 
 const StyledBox = styled.div`
@@ -140,6 +145,13 @@ const StyledBox = styled.div`
       opacity: 1;
       transform: scale(1);
     `}
+
+    @media only screen and (max-width: ${variables.bpTablet}) {
+      width: 100%;
+      margin: 0;
+      border-radius: 0;
+      
+    }
 `;
 
 const StyledHeader = styled.div`
@@ -152,4 +164,12 @@ const StyledHeader = styled.div`
   padding: 2.5rem;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  ${Title} {
+    @media only screen and (max-width: ${variables.bpTablet}) {
+      font-size: 1.4rem;
+    }
+    @media only screen and (max-width: ${variables.bpLargeMobile}) {
+      font-size: 1.2rem;
+    }
+  }
 `;
