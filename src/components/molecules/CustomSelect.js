@@ -36,10 +36,6 @@ const CustomSelect = ({name, inputStatus, options, handleSelectChange, placehold
     shouldReset && setSelectValue('');
   }, [shouldReset]);
 
-  useEffect(() => {
-    inputStatus && setSelectValue('');
-  }, [inputStatus]);
-
   const isSelected = (value) => selectValue === value;
   const node = useRef();
   return (
