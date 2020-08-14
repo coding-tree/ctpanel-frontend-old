@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Input, Textarea, Select, Tags} from 'components/molecules/CustomFormFields';
 import {CancelButton, PrimaryButton} from 'components/atoms/Button';
 import variables from 'settings/variables';
@@ -10,6 +10,7 @@ import {toast} from 'react-toastify';
 import {useDispatch} from 'react-redux';
 import {editMeeting} from 'selectors/fetchMeetings';
 import {getSchedule} from 'selectors/fetchSchedule';
+import {SelectedElementContext} from 'components/context/SelectedElementContext';
 
 const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible, selectedElement, topicNames = []}) => {
   const [editData] = selectedElement;
@@ -90,23 +91,25 @@ const EditMeetingWithFormik = withFormik({
     usefulLinks: Yup.string(),
   }),
   handleSubmit: ({date, time, topic, leader, meetingHref, description, tags, usefulLinks}, {props}) => {
-    const {setSubmitting, editMeetingAction, getScheduleAction} = props;
+    const {setSubmitting, editMeetingAction, getScheduleAction, toggleSelection, setIsModalVisible, selectedElement} = props;
 
     setSubmitting(true);
-    const [editData] = props.selectedElement;
+    const [editData] = selectedElement;
     let dateToConvert = `${date} ${time}`;
     date = new Date(dateToConvert);
     let timestamp = date.getTime();
     date = timestamp;
+
     editMeetingAction({date, topic, leader, meetingHref, description, tags, usefulLinks}, editData._id)
       .then(() => {
-        props.setIsModalVisible(false);
-        props.setSubmitting(false);
+        setIsModalVisible(false);
+        setSubmitting(false);
         getScheduleAction();
+        toggleSelection([]);
         toast.success('Pomyślnie edytowano spotkanie!');
       })
       .catch((err) => {
-        props.setSubmitting(false);
+        setSubmitting(false);
         toast.error('Coś poszło nie tak... Spróbuj jeszcze raz');
       });
   },

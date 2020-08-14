@@ -14,7 +14,7 @@ import axios from 'axios';
 import JoinMeeting from './JoinMeeting';
 
 export const SchedulesTableMenu = () => {
-  const [selectedElement] = useContext(SelectedElementContext);
+  const [selectedElement, toggleSelection] = useContext(SelectedElementContext);
   const leaders = ['Damian Ospara', 'Józef Rzadkosz', 'Jakub Wojtoń', 'Kazimierz Bagrowski'];
   const [topics, setTopics] = useState([]);
 
@@ -36,39 +36,32 @@ export const SchedulesTableMenu = () => {
       </AddModal>
       {selectedElement.length > 0 && (
         <DeleteModal title="Usuń" icon="fas fa-minus" modalTitle="Usuń spotkanie">
-          <DeleteMeeting selectedElement={selectedElement} destination="meetings"></DeleteMeeting>
+          <DeleteMeeting selectedElement={selectedElement} toggleSelection={toggleSelection} destination="meetings"></DeleteMeeting>
         </DeleteModal>
       )}
       {selectedElement.length === 1 && (
         <>
           <EditModal title="Edytuj" icon="fas fa-pen" modalTitle="Edytuj spotkanie">
-            <EditMeeting column={2} leaders={leaders} topicNames={topicNames} selectedElement={selectedElement} destination="meetings"></EditMeeting>
+            <EditMeeting
+              column={2}
+              leaders={leaders}
+              topicNames={topicNames}
+              toggleSelection={toggleSelection}
+              selectedElement={selectedElement}
+              destination="meetings"
+            ></EditMeeting>
           </EditModal>
           <JoinModal title="Dołącz" modalTitle="Dołącz do spotkania">
             <JoinMeeting href={selectedElement[0].meetingHref}></JoinMeeting>
           </JoinModal>
         </>
       )}
-      {/* TODO: Dni wstecz */}
-      {/* <StyledNumberInput
-        type="text"
-        placeholder="ile dni wstecz wyświetlić?"
-        onChange={e => {
-          if (e.target.value > 0) {
-            console.log(e.target.value);
-          } else {
-            e.target.value = '';
-          }
-        }}
-      /> */}
-      {/* TODO: Implement Search */}
-      {/* <StyledInput placeholder="Wyszukaj" /> */}
     </StyledTableActions>
   );
 };
 
 export const TopicDataBaseTableMenu = () => {
-  const [selectedElement] = useContext(SelectedElementContext);
+  const [selectedElement, toggleSelection] = useContext(SelectedElementContext);
 
   return (
     <StyledTableActions>
@@ -77,12 +70,12 @@ export const TopicDataBaseTableMenu = () => {
       </AddModal>
       {selectedElement.length === 1 && (
         <EditModal title="Edytuj" icon="fas fa-pen" modalTitle="Edytuj temat">
-          <EditTopic selectedElement={selectedElement}></EditTopic>
+          <EditTopic selectedElement={selectedElement} toggleSelection={toggleSelection}></EditTopic>
         </EditModal>
       )}
       {selectedElement.length > 0 && (
         <DeleteModal title="Usuń" icon="fas fa-minus" modalTitle="Usuń temat">
-          <DeleteTopic selectedElement={selectedElement} destination="topics"></DeleteTopic>
+          <DeleteTopic selectedElement={selectedElement} toggleSelection={toggleSelection} destination="topics"></DeleteTopic>
         </DeleteModal>
       )}
     </StyledTableActions>

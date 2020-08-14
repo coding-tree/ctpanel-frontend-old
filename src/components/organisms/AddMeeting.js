@@ -84,12 +84,12 @@ const AddMeetingWithFormik = withFormik({
     topic: Yup.string().min(5, 'Wpisz chociaż te 5 znaków').max(256, 'Zbyt długi temat, rozbij go na kilka spotkań').required('Temat jest wymagany'),
     leader: Yup.string().required('Wprowadź prowadzącego'),
     meetingHref: Yup.string().required('Musisz podać link'),
-    description: Yup.string().required('Opis jest wymagany'),
+    description: Yup.string().max(1024, 'Opis nie może być dłuższy niż 1024 znaki').required('Opis jest wymagany'),
     tags: Yup.string().required('Podaj chociaż jeden tag'),
     usefulLinks: Yup.string(),
   }),
   handleSubmit: (values, {resetForm, setStatus, props}) => {
-    const {setSubmitting, addMeetingAction, getScheduleAction} = props;
+    const {setSubmitting, addMeetingAction, getScheduleAction, setIsModalVisible} = props;
 
     setSubmitting(true);
     let {date, time, topic, leader, meetingHref, description, tags, usefulLinks} = values;
@@ -101,8 +101,8 @@ const AddMeetingWithFormik = withFormik({
       .then(() => {
         setStatus(true);
         resetForm();
-        props.setIsModalVisible(false);
-        props.setSubmitting(false);
+        setIsModalVisible(false);
+        setSubmitting(false);
         getScheduleAction();
         toast.success('Dodano nowe spotkanie!');
       })

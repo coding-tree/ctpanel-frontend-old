@@ -1,6 +1,5 @@
 import React from 'react';
 import {DeleteButton, CancelButton} from 'components/atoms/Button';
-import axios from 'axios';
 import styled from 'styled-components';
 import {toast} from 'react-toastify';
 import {useDispatch} from 'react-redux';
@@ -8,7 +7,7 @@ import {deleteMeetings} from 'selectors/fetchMeetings';
 import {getSchedule} from 'selectors/fetchSchedule';
 import variables from 'settings/variables';
 
-const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModalVisible, setSubmitting}) => {
+const DeleteMeeting = ({selectedElement, toggleSelection, destination, isModalVisible, setIsModalVisible, setSubmitting}) => {
   const dispatch = useDispatch();
   const deleteMeetingsAction = (selectedElements, destination) => dispatch(deleteMeetings(selectedElements, destination));
   const getScheduleAction = () => dispatch(getSchedule());
@@ -24,6 +23,7 @@ const DeleteMeeting = ({selectedElement, destination, isModalVisible, setIsModal
         setSubmitting(false);
         setIsModalVisible(false);
         getScheduleAction();
+        toggleSelection([]);
         toast.success('Pomyślnie usunięto spotkania!');
       })
       .catch(() => {
