@@ -43,9 +43,9 @@ const Button = styled.button`
 `;
 
 export const PrimaryButton = styled(Button)`
-  border: 2px solid ${variables.colorMain};
+  border: 2px solid ${variables.colorButtonPrimary};
   color: ${variables.colorWhite};
-  background-color: ${variables.colorMain};
+  background-color: ${variables.colorButtonPrimary};
   ${({inactive}) =>
     inactive &&
     css`
@@ -57,11 +57,32 @@ export const PrimaryButton = styled(Button)`
   ${({voted}) =>
     voted &&
     css`
-      border-color: ${variables.colorMain};
+      border-color: ${variables.colorButtonPrimary};
       color: ${variables.colorWhite};
-      background-color: ${variables.colorMain};
+      background-color: ${variables.colorButtonPrimary};
       opacity: 1;
     `}
+  &:hover {
+    border-color: ${variables.colorButtonPrimary};
+    color: ${variables.colorButtonPrimary};
+    background-color: ${variables.colorWhite};
+    opacity: 1;
+  }
+`;
+
+export const MainButton = styled(Button)`
+  border: 2px solid ${variables.colorMain};
+  color: ${variables.colorWhite};
+  background-color: ${variables.colorMain};
+  ${({inactive}) =>
+    inactive &&
+    css`
+      border-color: ${variables.colorCancel};
+      color: ${variables.colorWhite};
+      background-color: ${variables.colorCancel};
+      opacity: 0.3;
+    `}
+
   &:hover {
     border-color: ${variables.colorMain};
     color: ${variables.colorMain};

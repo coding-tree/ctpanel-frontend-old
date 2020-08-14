@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {PrimaryButton, EditButton, DeleteButton} from 'components/atoms/Button';
+import {PrimaryButton, EditButton, DeleteButton, MainButton} from 'components/atoms/Button';
 import Icon from 'components/atoms/Icon';
 import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
@@ -45,9 +45,9 @@ export const JoinModal = ({children, modalTitle, title, icon}) => {
 
   return (
     <>
-      <PrimaryButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
+      <MainButton large uppercase onClick={() => setIsModalVisible(!isModalVisible)}>
         {title} {icon && <Icon fontSize="1.4rem" padding="0 0 0 .5rem" className={icon}></Icon>}
-      </PrimaryButton>
+      </MainButton>
       <Modal title={modalTitle} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}>
         {React.cloneElement(children, {isModalVisible, setIsModalVisible})}
       </Modal>

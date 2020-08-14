@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Anchor from 'components/atoms/Anchor';
-import {PrimaryButton} from 'components/atoms/Button';
+import {MainButton} from 'components/atoms/Button';
 import variables from 'settings/variables';
 
 const JoinMeeting = ({setIsModalVisible, isModalVisible, href}) => {
@@ -12,7 +12,7 @@ const JoinMeeting = ({setIsModalVisible, isModalVisible, href}) => {
         {href}
       </Anchor>
       <Anchor href={href} target="_blank">
-        <PrimaryButton>Dołącz do spotkania</PrimaryButton>
+        <MainButton>Dołącz do spotkania</MainButton>
       </Anchor>
     </StyledWrapper>
   );

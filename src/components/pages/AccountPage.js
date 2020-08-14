@@ -3,7 +3,7 @@ import MainTemplate from 'components/templates/MainTemplate';
 import styled from 'styled-components';
 import {useSelector} from 'react-redux';
 import variables from 'settings/variables';
-import {PrimaryButton} from 'components/atoms/Button';
+import {MainButton} from 'components/atoms/Button';
 import axios from 'axios';
 import Header from 'components/atoms/Header';
 import LogoutButton from 'components/molecules/LogoutButton';
@@ -23,8 +23,6 @@ const AccountPage = () => {
     if (userRolesArray.includes('627055978067525632')) return 'Członek CT';
     else return 'Gość';
   };
-
-  console.log(meetings.nickname);
 
   useEffect(() => {
     const userRoles = meetings._json['https://codingtree.pl/oauth2/roles'];
@@ -78,7 +76,7 @@ const AccountPage = () => {
                   </StyledUserDataTitle>
                 ))}
                 <StyledButtonContainer>
-                  <PrimaryButton>Edytuj</PrimaryButton>
+                  <MainButton>Edytuj</MainButton>
                   <LogoutButton account>Wyloguj</LogoutButton>
                 </StyledButtonContainer>
               </StyledUserDataTitleContainer>
