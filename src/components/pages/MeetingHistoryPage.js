@@ -6,6 +6,7 @@ import {withRouter} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {useDispatch} from 'react-redux';
 import {getMeetingsHistory} from 'selectors/fetchMeetingHistory';
+import {MeetingHistoryTableElement} from 'components/molecules/TableElement';
 
 const HistoryPage = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,9 @@ const HistoryPage = () => {
   return (
     <TableTemplate title="Historia Spotkań">
       <MeetingHistoryTableMenu />
-      <TableList meetingsList={meetings} />
+      <TableList meetingsList={meetings}>
+        <MeetingHistoryTableElement />
+      </TableList>
     </TableTemplate>
   );
 };

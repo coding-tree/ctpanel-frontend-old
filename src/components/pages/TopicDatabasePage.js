@@ -8,6 +8,7 @@ import TableTemplate from 'components/templates/TableTemplate';
 import TableList from 'components/organisms/TableList';
 import {ToastContainer} from 'react-toastify';
 import {TopicDataBaseTableMenu} from 'components/organisms/TableMenu';
+import {TopicDataBaseTableElement} from 'components/molecules/TableElement';
 
 const TopicDatabasePage = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,9 @@ const TopicDatabasePage = () => {
   return (
     <TableTemplate title="Baza Tematów">
       <TopicDataBaseTableMenu />
-      <TableList meetingsList={meetings.results} />
+      <TableList meetingsList={meetings.results}>
+        <TopicDataBaseTableElement />
+      </TableList>
       <ToastContainer></ToastContainer>
     </TableTemplate>
   );

@@ -1,7 +1,5 @@
 import React, {useContext, useState, useEffect} from 'react';
-import {withRouter} from 'react-router';
 import styled, {css} from 'styled-components';
-import {routes} from 'routes';
 import Checkbox from 'components/atoms/Checkbox';
 import variables from 'settings/variables';
 import StyledDate from 'components/atoms/StyledDate';
@@ -169,7 +167,7 @@ const StyledTag = styled.span`
   display: inline;
 `;
 
-const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}) => {
+export const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}) => {
   const renderTags = meetingData.tags.map((tag, index) => {
     return <StyledTag key={index}>{tag} &nbsp;</StyledTag>;
   });
@@ -231,7 +229,7 @@ const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}
   );
 };
 
-const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, index}) => {
+export const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, index}) => {
   const {meetings} = useSelector(state => state.user);
   const userId = meetings.id;
 
@@ -320,7 +318,7 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
   );
 };
 
-const MeetingHistoryTableElement = ({meetingData, isSelected, toggleSelection, index}) => {
+export const MeetingHistoryTableElement = ({meetingData, isSelected, toggleSelection, index}) => {
   const renderTags = meetingData.tags.map((tag, index) => {
     return <StyledTag key={index}>{tag} &nbsp;</StyledTag>;
   });
@@ -373,7 +371,7 @@ const MeetingHistoryTableElement = ({meetingData, isSelected, toggleSelection, i
   );
 };
 
-const TableElement = ({location, meetingData, index}) => {
+const TableElement = ({meetingData, index, children}) => {
   const [selectedElement, toggleSelection] = useContext(SelectedElementContext);
 
   const isSelected = selectedElement && selectedElement.includes(meetingData);
@@ -387,16 +385,20 @@ const TableElement = ({location, meetingData, index}) => {
     });
   };
 
-  switch (location.pathname) {
-    case routes.timetable:
-      return <SchedulesTableElement isSelected={isSelected} toggleSelection={handleSelection} index={index} meetingData={meetingData} />;
-    case routes.topicDatabase:
-      return <TopicDataBaseTableElement isSelected={isSelected} toggleSelection={handleSelection} index={index} meetingData={meetingData} />;
-    case routes.history:
-      return <MeetingHistoryTableElement isSelected={isSelected} toggleSelection={handleSelection} index={index} meetingData={meetingData} />;
-    default:
-      return console.log('something went wrong');
-  }
+  const childrenWithProps = React.Children.map(children, child => {
+    const props = {
+      isSelected: isSelected,
+      toggleSelection: handleSelection,
+      index: index,
+      meetingData: meetingData,
+    };
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child, props);
+    }
+    return child;
+  });
+
+  return <>{childrenWithProps}</>;
 };
 
-export default withRouter(TableElement);
+export default TableElement;

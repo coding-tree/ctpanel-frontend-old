@@ -7,8 +7,7 @@ import {getSchedule} from 'selectors/fetchSchedule';
 import {withRouter} from 'react-router-dom';
 import {ToastContainer} from 'react-toastify';
 import {SchedulesTableMenu} from 'components/organisms/TableMenu';
-
-let daysLimit = 5;
+import {SchedulesTableElement} from 'components/molecules/TableElement';
 
 const TimetablePage = () => {
   const dispatch = useDispatch();
@@ -22,7 +21,9 @@ const TimetablePage = () => {
   return (
     <TableTemplate title="Harmonogram Spotkań">
       <SchedulesTableMenu />
-      <TableList meetingsList={meetings} />
+      <TableList meetingsList={meetings}>
+        <SchedulesTableElement />
+      </TableList>
       <ToastContainer></ToastContainer>
     </TableTemplate>
   );

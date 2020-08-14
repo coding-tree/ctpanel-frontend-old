@@ -13,12 +13,17 @@ const StyledTableBody = styled.div`
   grid-auto-rows: minmax(0, max-content);
 `;
 
-const TableList = ({meetingsList}) => {
+const TableList = ({meetingsList, children}) => {
   return (
     <StyledTableWrapper>
       <TableListMenu meetingsList={meetingsList} />
       <StyledTableBody>
-        {meetingsList && meetingsList.map((meetingData, index) => <TableElement meetingData={meetingData} index={index + 1} key={index} />)}
+        {meetingsList &&
+          meetingsList.map((meetingData, index) => (
+            <TableElement meetingData={meetingData} index={index + 1} key={index}>
+              {children}
+            </TableElement>
+          ))}
       </StyledTableBody>
     </StyledTableWrapper>
   );
