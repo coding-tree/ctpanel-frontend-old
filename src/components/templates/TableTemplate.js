@@ -2,7 +2,6 @@ import React from 'react';
 import {withRouter} from 'react-router';
 import styled from 'styled-components';
 import Header from 'components/atoms/Header';
-import TableMenu from 'components/organisms/TableMenu';
 import variables from 'settings/variables';
 import {SelectedElementProvider} from 'components/context/SelectedElementContext';
 
@@ -56,7 +55,6 @@ const TableTemplate = ({children, title}) => {
         <Header tableTitle>{title}</Header>
         <SelectedElementProvider>
           <StyledTable>
-            <TableMenu />
             {children}
           </StyledTable>
         </SelectedElementProvider>

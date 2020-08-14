@@ -1,7 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
 import styled, {css} from 'styled-components';
-import {withRouter} from 'react-router';
-import {routes} from 'routes';
 
 import {SelectedElementContext} from 'components/context/SelectedElementContext';
 import {AddModal, DeleteModal, EditModal, JoinModal} from 'components/molecules/Modal';
@@ -15,7 +13,7 @@ import DeleteTopic from './DeleteTopic';
 import axios from 'axios';
 import JoinMeeting from './JoinMeeting';
 
-const SchedulesTableMenu = () => {
+export const SchedulesTableMenu = () => {
   const [selectedElement] = useContext(SelectedElementContext);
   const leaders = ['Damian Ospara', 'Józef Rzadkosz', 'Jakub Wojtoń', 'Kazimierz Bagrowski'];
   const [topics, setTopics] = useState([]);
@@ -69,7 +67,7 @@ const SchedulesTableMenu = () => {
   );
 };
 
-const TopicDataBaseTableMenu = () => {
+export const TopicDataBaseTableMenu = () => {
   const [selectedElement] = useContext(SelectedElementContext);
 
   return (
@@ -91,7 +89,7 @@ const TopicDataBaseTableMenu = () => {
   );
 };
 
-const MeetingHistoryTableMenu = () => (
+export const MeetingHistoryTableMenu = () => (
   <StyledTableActions history>
     <StyledBox>
       <StyledIcon className="far fa-calendar"></StyledIcon>
@@ -115,21 +113,6 @@ const MeetingHistoryTableMenu = () => (
     {/* <StyledInput placeholder="Wyszukaj" /> */}
   </StyledTableActions>
 );
-
-const TableMenu = ({location}) => {
-  switch (location.pathname) {
-    case routes.timetable:
-      return <SchedulesTableMenu />;
-    case routes.topicDatabase:
-      return <TopicDataBaseTableMenu />;
-    case routes.history:
-      return <MeetingHistoryTableMenu />;
-    default:
-      return console.log('something went wrong');
-  }
-};
-
-export default withRouter(TableMenu);
 
 // Styles
 
