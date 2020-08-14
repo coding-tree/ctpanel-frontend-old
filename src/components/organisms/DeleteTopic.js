@@ -8,7 +8,7 @@ import {useDispatch} from 'react-redux';
 import {deleteTopics} from 'selectors/fetchTopics';
 import variables from 'settings/variables';
 
-const DeleteTopic = ({selectedElement, destination, isModalVisible, setIsModalVisible, setSubmitting}) => {
+const DeleteTopic = ({selectedElement, toggleSelection, destination, isModalVisible, setIsModalVisible, setSubmitting}) => {
   const dispatch = useDispatch();
   const deleteTopicsAction = (dataToSend, destination) => dispatch(deleteTopics(dataToSend, destination));
 
@@ -22,6 +22,7 @@ const DeleteTopic = ({selectedElement, destination, isModalVisible, setIsModalVi
       .then(() => {
         setIsModalVisible(false);
         setSubmitting(false);
+        toggleSelection([]);
         toast.success('Pomyślnie usunięto tematy!');
       })
       .catch(() => {

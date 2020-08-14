@@ -1,9 +1,7 @@
 import React from 'react';
 import {withFormik, Form} from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
 import {Input, Tags} from 'components/molecules/CustomFormFields';
-import variables from 'settings/variables';
 import styled from 'styled-components';
 import {CancelButton, PrimaryButton} from 'components/atoms/Button';
 import {toast} from 'react-toastify';
@@ -51,18 +49,19 @@ const EditTopicWithFormik = withFormik({
     description: Yup.string(),
   }),
   handleSubmit: (values, {props}) => {
-    const {setSubmitting, editTopicAction} = props;
-
+    const {setSubmitting, editTopicAction, setIsModalVisible, selectedElement, toggleSelection} = props;
+    const [editData] = selectedElement;
     setSubmitting(true);
-    const [editData] = props.selectedElement;
+
     editTopicAction(values, editData._id)
       .then(() => {
-        props.setIsModalVisible(false);
-        props.setSubmitting(false);
+        setIsModalVisible(false);
+        setSubmitting(false);
+        toggleSelection([]);
         toast.success('Pomyślnie edytowano temat!');
       })
       .catch(() => {
-        props.setSubmitting(false);
+        setSubmitting(false);
         toast.error('Nie udało się edytować tematu...');
       });
   },
