@@ -4,16 +4,19 @@ import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
 import Icon from 'components/atoms/Icon';
 import LogoutButton from 'components/molecules/LogoutButton';
+import Background from 'components/atoms/Background';
 
 const MenuSidebar = () => {
   const year = new Date().getFullYear();
 
   return (
     <StyledWrapper>
+      <Background />
       <TitleWrapper>Coding Tree Panel</TitleWrapper>
       <TitleWrapper tablet>CT</TitleWrapper>
 
       <MenuWrapper>
+        <Background />
         <StyledLinksList>
           <StyledLinkElement>
             <StyledLink as={NavLink} exact strict to="/" activeclass="active">
@@ -144,6 +147,10 @@ const MenuWrapper = styled.div`
   justify-content: flex-end;
   flex-grow: 1;
 
+  ${Background} {
+    display: none;
+  }
+
   @media only screen and (max-width: ${variables.bpTablet}) {
     position: fixed;
     right: 0;
@@ -153,6 +160,10 @@ const MenuWrapper = styled.div`
     grid-column: 1/-1;
     background-color: ${variables.colorMain};
     height: 10rem;
+
+    ${Background} {
+      display: initial;
+    }
   }
 `;
 
