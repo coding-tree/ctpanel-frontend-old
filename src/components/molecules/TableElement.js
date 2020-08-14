@@ -9,6 +9,7 @@ import {PrimaryButton, DeleteButton} from 'components/atoms/Button';
 import {SelectedElementContext} from 'components/context/SelectedElementContext';
 import Icon from 'components/atoms/Icon';
 import axios from 'axios';
+import {useSelector} from 'react-redux';
 
 const StyledSelectedRow = styled.div`
   display: none;
@@ -230,23 +231,26 @@ const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}
   );
 };
 
-const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, index, userId}) => {
+const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, index}) => {
+  const {meetings} = useSelector(state => state.user);
+  const userId = meetings.id;
+
   const [myVotes, setMyVotes] = useState([]);
   useEffect(() => {
     setMyVotes(meetingData.usersVote);
   }, [meetingData]);
 
-  const votedClass = (voteType) => {
-    const currentVote = myVotes.find((el) => el.id === userId);
+  const votedClass = voteType => {
+    const currentVote = myVotes.find(el => el.id === userId);
     return currentVote && voteType === currentVote.vote;
   };
 
   const handleVoting = (e, id, voteType) => {
     e.stopPropagation();
-    axios.put(`${process.env.REACT_APP_SERVER_URL}/topics/vote/${id}?vote=${voteType}`).catch((err) => console.log(err));
+    axios.put(`${process.env.REACT_APP_SERVER_URL}/topics/vote/${id}?vote=${voteType}`).catch(err => console.log(err));
   };
 
-  const formatVote = (vote) => {
+  const formatVote = vote => {
     if (vote > 0) return 'positive';
     if (vote < 0) return 'negative';
     return 'neutral';
@@ -278,10 +282,10 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
           {meetingData.votes > 0 ? `+${meetingData.votes}` : meetingData.votes}
         </StyledTableData>
         <StyledTableData noMobile columns={2} buttonsTableData right>
-          <PrimaryButton inactive voted={votedClass('up')} onClick={(e) => handleVoting(e, meetingData._id, 'up')}>
+          <PrimaryButton inactive voted={votedClass('up')} onClick={e => handleVoting(e, meetingData._id, 'up')}>
             <Icon className="fas fa-plus"></Icon>
           </PrimaryButton>
-          <DeleteButton inactive voted={votedClass('down')} onClick={(e) => handleVoting(e, meetingData._id, 'down')}>
+          <DeleteButton inactive voted={votedClass('down')} onClick={e => handleVoting(e, meetingData._id, 'down')}>
             <Icon className="fas fa-minus"></Icon>
           </DeleteButton>
         </StyledTableData>
@@ -303,10 +307,10 @@ const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, in
             Zagłosuj
           </StyledText>
           <StyledTableData mobile buttonsTableData>
-            <PrimaryButton inactive voted={votedClass('up')} onClick={(e) => handleVoting(e, meetingData._id, 'up')}>
+            <PrimaryButton inactive voted={votedClass('up')} onClick={e => handleVoting(e, meetingData._id, 'up')}>
               <Icon className="fas fa-plus"></Icon>
             </PrimaryButton>
-            <DeleteButton inactive voted={votedClass('down')} onClick={(e) => handleVoting(e, meetingData._id, 'down')}>
+            <DeleteButton inactive voted={votedClass('down')} onClick={e => handleVoting(e, meetingData._id, 'down')}>
               <Icon className="fas fa-minus"></Icon>
             </DeleteButton>
           </StyledTableData>
@@ -369,15 +373,15 @@ const MeetingHistoryTableElement = ({meetingData, isSelected, toggleSelection, i
   );
 };
 
-const TableElement = ({location, meetingData, index, userId}) => {
+const TableElement = ({location, meetingData, index}) => {
   const [selectedElement, toggleSelection] = useContext(SelectedElementContext);
 
   const isSelected = selectedElement && selectedElement.includes(meetingData);
 
   const handleSelection = (singleElem, selectedElem) => {
-    return toggleSelection((prev) => {
+    return toggleSelection(prev => {
       if (selectedElem) {
-        return prev.filter((elem) => elem._id !== singleElem._id);
+        return prev.filter(elem => elem._id !== singleElem._id);
       }
       return [...prev, singleElem];
     });
@@ -387,7 +391,7 @@ const TableElement = ({location, meetingData, index, userId}) => {
     case routes.timetable:
       return <SchedulesTableElement isSelected={isSelected} toggleSelection={handleSelection} index={index} meetingData={meetingData} />;
     case routes.topicDatabase:
-      return <TopicDataBaseTableElement userId={userId} isSelected={isSelected} toggleSelection={handleSelection} index={index} meetingData={meetingData} />;
+      return <TopicDataBaseTableElement isSelected={isSelected} toggleSelection={handleSelection} index={index} meetingData={meetingData} />;
     case routes.history:
       return <MeetingHistoryTableElement isSelected={isSelected} toggleSelection={handleSelection} index={index} meetingData={meetingData} />;
     default:
