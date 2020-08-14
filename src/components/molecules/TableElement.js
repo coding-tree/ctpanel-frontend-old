@@ -167,7 +167,7 @@ const StyledTag = styled.span`
   display: inline;
 `;
 
-export const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection}) => {
+export const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection, isElementVisible, handleVisibility}) => {
   const renderTags = meetingData.tags.map((tag, index) => {
     return <StyledTag key={index}>{tag} &nbsp;</StyledTag>;
   });
@@ -180,11 +180,12 @@ export const SchedulesTableElement = ({meetingData, index, isSelected, toggleSel
       </StyledTag>
     );
   });
+
   return (
     <>
-      <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
+      <StyledRow onClick={handleVisibility} isSelected={isSelected}>
         <StyledTableData>
-          <Checkbox isSelected={isSelected}></Checkbox>
+          <Checkbox onClick={(e) => toggleSelection(e, meetingData, isSelected)} isSelected={isSelected}></Checkbox>
         </StyledTableData>
         <StyledTableData mainColor>{index}</StyledTableData>
         <StyledTableData columns={2}>
@@ -198,7 +199,7 @@ export const SchedulesTableElement = ({meetingData, index, isSelected, toggleSel
           {meetingData.leader}
         </StyledTableData>
       </StyledRow>
-      <StyledSelectedRow isSelected={isSelected}>
+      <StyledSelectedRow isSelected={isElementVisible}>
         <StyledTableContainer>
           <StyledText bold>Odnośnik do spotkania:</StyledText>
           <StyledText>
@@ -229,8 +230,8 @@ export const SchedulesTableElement = ({meetingData, index, isSelected, toggleSel
   );
 };
 
-export const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, index}) => {
-  const {meetings} = useSelector(state => state.user);
+export const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelected, index, isElementVisible, handleVisibility}) => {
+  const {meetings} = useSelector((state) => state.user);
   const userId = meetings.id;
 
   const [myVotes, setMyVotes] = useState([]);
@@ -238,17 +239,17 @@ export const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelec
     setMyVotes(meetingData.usersVote);
   }, [meetingData]);
 
-  const votedClass = voteType => {
-    const currentVote = myVotes.find(el => el.id === userId);
+  const votedClass = (voteType) => {
+    const currentVote = myVotes.find((el) => el.id === userId);
     return currentVote && voteType === currentVote.vote;
   };
 
   const handleVoting = (e, id, voteType) => {
     e.stopPropagation();
-    axios.put(`${process.env.REACT_APP_SERVER_URL}/topics/vote/${id}?vote=${voteType}`).catch(err => console.log(err));
+    axios.put(`${process.env.REACT_APP_SERVER_URL}/topics/vote/${id}?vote=${voteType}`).catch((err) => console.log(err));
   };
 
-  const formatVote = vote => {
+  const formatVote = (vote) => {
     if (vote > 0) return 'positive';
     if (vote < 0) return 'negative';
     return 'neutral';
@@ -262,11 +263,12 @@ export const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelec
       </React.Fragment>
     );
   });
+
   return (
     <>
-      <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} topic isSelected={isSelected}>
+      <StyledRow onClick={handleVisibility} topic>
         <StyledTableData>
-          <Checkbox isSelected={isSelected}></Checkbox>
+          <Checkbox onClick={(e) => toggleSelection(e, meetingData, isSelected)} isSelected={isSelected}></Checkbox>
         </StyledTableData>
         <StyledTableData mainColor>{index}</StyledTableData>
         <StyledTableData columns={5}>{meetingData.topic}</StyledTableData>
@@ -280,15 +282,15 @@ export const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelec
           {meetingData.votes > 0 ? `+${meetingData.votes}` : meetingData.votes}
         </StyledTableData>
         <StyledTableData noMobile columns={2} buttonsTableData right>
-          <PrimaryButton inactive voted={votedClass('up')} onClick={e => handleVoting(e, meetingData._id, 'up')}>
+          <PrimaryButton inactive voted={votedClass('up')} onClick={(e) => handleVoting(e, meetingData._id, 'up')}>
             <Icon className="fas fa-plus"></Icon>
           </PrimaryButton>
-          <DeleteButton inactive voted={votedClass('down')} onClick={e => handleVoting(e, meetingData._id, 'down')}>
+          <DeleteButton inactive voted={votedClass('down')} onClick={(e) => handleVoting(e, meetingData._id, 'down')}>
             <Icon className="fas fa-minus"></Icon>
           </DeleteButton>
         </StyledTableData>
       </StyledRow>
-      <StyledSelectedRow isSelected={isSelected}>
+      <StyledSelectedRow isSelected={isElementVisible}>
         <StyledTableContainer>
           <StyledText bold>Opis tematu:</StyledText>
           <StyledText>{meetingData.description}</StyledText>
@@ -305,10 +307,10 @@ export const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelec
             Zagłosuj
           </StyledText>
           <StyledTableData mobile buttonsTableData>
-            <PrimaryButton inactive voted={votedClass('up')} onClick={e => handleVoting(e, meetingData._id, 'up')}>
+            <PrimaryButton inactive voted={votedClass('up')} onClick={(e) => handleVoting(e, meetingData._id, 'up')}>
               <Icon className="fas fa-plus"></Icon>
             </PrimaryButton>
-            <DeleteButton inactive voted={votedClass('down')} onClick={e => handleVoting(e, meetingData._id, 'down')}>
+            <DeleteButton inactive voted={votedClass('down')} onClick={(e) => handleVoting(e, meetingData._id, 'down')}>
               <Icon className="fas fa-minus"></Icon>
             </DeleteButton>
           </StyledTableData>
@@ -318,15 +320,16 @@ export const TopicDataBaseTableElement = ({meetingData, toggleSelection, isSelec
   );
 };
 
-export const MeetingHistoryTableElement = ({meetingData, isSelected, toggleSelection, index}) => {
+export const MeetingHistoryTableElement = ({meetingData, isSelected, toggleSelection, index, isElementVisible, handleVisibility}) => {
   const renderTags = meetingData.tags.map((tag, index) => {
     return <StyledTag key={index}>{tag} &nbsp;</StyledTag>;
   });
+
   return (
     <>
-      <StyledRow onClick={() => toggleSelection(meetingData, isSelected)} isSelected={isSelected}>
+      <StyledRow onClick={handleVisibility} isSelected={isSelected}>
         <StyledTableData>
-          <Checkbox isSelected={isSelected}></Checkbox>
+          <Checkbox onClick={(e) => toggleSelection(e, meetingData, isSelected)} isSelected={isSelected}></Checkbox>
         </StyledTableData>
         <StyledTableData mainColor>{index}</StyledTableData>
         <StyledTableData columns={3}>
@@ -340,7 +343,7 @@ export const MeetingHistoryTableElement = ({meetingData, isSelected, toggleSelec
           <PrimaryButton small>Dodaj</PrimaryButton>
         </StyledTableData>
       </StyledRow>
-      <StyledSelectedRow isSelected={isSelected}>
+      <StyledSelectedRow isSelected={isElementVisible}>
         <StyledTableContainer>
           <StyledText bold>Odnośnik do spotkania:</StyledText>
           <StyledText>
@@ -372,25 +375,32 @@ export const MeetingHistoryTableElement = ({meetingData, isSelected, toggleSelec
 };
 
 const TableElement = ({meetingData, index, children}) => {
+  const [isElementVisible, toggleVisibility] = useState(false);
   const [selectedElement, toggleSelection] = useContext(SelectedElementContext);
-
   const isSelected = selectedElement && selectedElement.includes(meetingData);
 
-  const handleSelection = (singleElem, selectedElem) => {
-    return toggleSelection(prev => {
+  const handleVisibility = (e) => {
+    toggleVisibility((prev) => !prev);
+  };
+
+  const handleSelection = (e, singleElem, selectedElem) => {
+    e.stopPropagation();
+    return toggleSelection((prev) => {
       if (selectedElem) {
-        return prev.filter(elem => elem._id !== singleElem._id);
+        return prev.filter((elem) => elem._id !== singleElem._id);
       }
       return [...prev, singleElem];
     });
   };
 
-  const childrenWithProps = React.Children.map(children, child => {
+  const childrenWithProps = React.Children.map(children, (child) => {
     const props = {
       isSelected: isSelected,
       toggleSelection: handleSelection,
       index: index,
       meetingData: meetingData,
+      handleVisibility,
+      isElementVisible,
     };
     if (React.isValidElement(child)) {
       return React.cloneElement(child, props);
