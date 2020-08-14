@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import LoginTemplate from 'components/templates/LoginTemplate';
 import Title from 'components/atoms/Title';
 import SocialIcons from 'components/organisms/SocialIcons';
 import Text from 'components/atoms/Text';
 import {PrimaryButton} from 'components/atoms/Button';
 import variables from 'settings/variables';
+
+import LoginStyle from 'theme/LoginStyle';
 
 const StyledBackground = styled.div`
   height: 100vh;
@@ -50,7 +51,8 @@ const LoginPage = () => {
   };
 
   return (
-    <LoginTemplate>
+    <>
+      <LoginStyle />
       <StyledBackground>
         <StyledWrapper>
           <StyledImage src="logo_login.svg"></StyledImage>
@@ -75,7 +77,7 @@ const LoginPage = () => {
           </StyledContainer>
         </StyledWrapper>
       </StyledBackground>
-    </LoginTemplate>
+    </>
   );
 };
 
