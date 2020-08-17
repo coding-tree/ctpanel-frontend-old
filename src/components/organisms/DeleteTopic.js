@@ -1,6 +1,5 @@
 import React from 'react';
 import {DeleteButton, CancelButton} from 'components/atoms/Button';
-import axios from 'axios';
 import styled from 'styled-components';
 import {toast} from 'react-toastify';
 
@@ -19,14 +18,21 @@ const DeleteTopic = ({selectedElement, toggleSelection, destination, isModalVisi
   const deleteItems = () => {
     setSubmitting(true);
     deleteTopicsAction(selectedElement, destination)
-      .then(() => {
-        setIsModalVisible(false);
+      .then((resp) => {
+        if (resp && resp.status >= 400) {
+          setSubmitting(false);
+          toggleSelection([]);
+          toast.error(resp.data);
+        } else {
+          setIsModalVisible(false);
+          setSubmitting(false);
+          toggleSelection([]);
+          toast.success('Pomyślnie usunięto tematy!');
+        }
+      })
+      .catch((err) => {
         setSubmitting(false);
         toggleSelection([]);
-        toast.success('Pomyślnie usunięto tematy!');
-      })
-      .catch(() => {
-        setSubmitting(false);
         toast.error('Nie udało się usunąć tematów...');
       });
   };

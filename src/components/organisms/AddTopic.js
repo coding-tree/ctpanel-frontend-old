@@ -46,10 +46,14 @@ const AddTopicWithFormik = withFormik({
     };
   },
   validationSchema: Yup.object().shape({
-    topic: Yup.string().min(3, 'Temat musi mieć minimum 3 znaki').required('Wprowadź temat'),
+    topic: Yup.string().min(5, 'Temat musi mieć minimum 5 znaków').max(256, 'Temat nie może być dłuższy niż 256 znaków').required('Wprowadź temat'),
     description: Yup.string(),
-    userAdded: Yup.string().min(3, 'To pole musi mieć minimum 3 znaki').required('Wprowadź informacje o użytkowniku'),
+    userAdded: Yup.string()
+      .min(6, 'To pole musi mieć minimum 6 znaków')
+      .max(40, 'To pole musi mieć minimum 40 znaków')
+      .required('Wprowadź informacje o użytkowniku'),
     votes: Yup.number('głosy muszą być liczbą'),
+    tags: Yup.string().required('Podaj chociaż jeden tag'),
   }),
   handleSubmit: (values, {resetForm, setStatus, props}) => {
     const {setSubmitting, addTopicAction} = props;
