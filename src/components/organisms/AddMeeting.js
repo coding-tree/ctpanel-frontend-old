@@ -69,7 +69,7 @@ const AddMeetingWithFormik = withFormik({
     return {
       // todo - convert date & time to timestamp
       date: date || new Date().toISOString().slice(0, 10),
-      time: time || '21:33',
+      time: time || '21:30',
       topic: topic || '',
       leader: leader || '',
       meetingHref: meetingHref || '',
@@ -80,13 +80,13 @@ const AddMeetingWithFormik = withFormik({
   },
   validationSchema: Yup.object().shape({
     date: Yup.date('Musisz podać datę').required('Data jest wymagana'),
-    time: Yup.string().min(5).max(5).min(0, 'Aż tak dawno temu nie było spotkania').required('Czas jest wymagany'),
     topic: Yup.string().min(5, 'Wpisz chociaż te 5 znaków').max(256, 'Zbyt długi temat, rozbij go na kilka spotkań').required('Temat jest wymagany'),
     leader: Yup.string().required('Wprowadź prowadzącego'),
+    time: Yup.string().max(10).min(0, 'Aż tak dawno temu nie było spotkania').required('Czas jest wymagany'),
+    usefulLinks: Yup.string(),
     meetingHref: Yup.string().required('Musisz podać link'),
     description: Yup.string().max(1024, 'Opis nie może być dłuższy niż 1024 znaki').required('Opis jest wymagany'),
     tags: Yup.string().required('Podaj chociaż jeden tag'),
-    usefulLinks: Yup.string(),
   }),
   handleSubmit: (values, {resetForm, setStatus, props}) => {
     const {setSubmitting, addMeetingAction, getScheduleAction, setIsModalVisible} = props;
@@ -97,6 +97,7 @@ const AddMeetingWithFormik = withFormik({
     date = new Date(dateToConvert);
     let timestamp = date.getTime();
     date = timestamp;
+
     addMeetingAction({date, topic, leader, meetingHref, description, tags, usefulLinks})
       .then(() => {
         setStatus(true);

@@ -1,16 +1,14 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Input, Textarea, Select, Tags} from 'components/molecules/CustomFormFields';
 import {CancelButton, PrimaryButton} from 'components/atoms/Button';
 import variables from 'settings/variables';
 import styled from 'styled-components';
 import {withFormik, Form} from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
 import {toast} from 'react-toastify';
 import {useDispatch} from 'react-redux';
 import {editMeeting} from 'selectors/fetchMeetings';
 import {getSchedule} from 'selectors/fetchSchedule';
-import {SelectedElementContext} from 'components/context/SelectedElementContext';
 
 const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisible, selectedElement, topicNames = []}) => {
   const [editData] = selectedElement;
@@ -66,12 +64,11 @@ const Formik = ({column, leaders, setFieldValue, setIsModalVisible, isModalVisib
 };
 
 const EditMeetingWithFormik = withFormik({
-  mapPropsToValues: ({date, time, topic, leader, meetingHref, description, tags, usefulLinks, selectedElement}) => {
+  mapPropsToValues: ({date, topic, leader, meetingHref, description, tags, usefulLinks, selectedElement}) => {
     const [editData] = selectedElement;
     return {
-      // todo - convert date & time to timestamp
       date: new Date(editData.date).toISOString().slice(0, 10) || date || new Date().toISOString().slice(0, 10),
-      time: editData.time || time || '21:33',
+      time: new Date(editData.date).toLocaleTimeString() || '21:30',
       topic: editData.topic || topic || '',
       leader: editData.leader || leader || '',
       meetingHref: editData.meetingHref || meetingHref || '',
@@ -82,11 +79,11 @@ const EditMeetingWithFormik = withFormik({
   },
   validationSchema: Yup.object().shape({
     date: Yup.date('Musisz podać datę').required('Data jest wymagana'),
-    time: Yup.string().min(5).max(5).min(0, 'Aż tak dawno temu nie było spotkania').required('Czas jest wymagany'),
+    time: Yup.string().max(10).min(0, 'Aż tak dawno temu nie było spotkania').required('Czas jest wymagany'),
     topic: Yup.string().min(5, 'Wpisz chociaż te 5 znaków').max(256, 'Zbyt długi temat, rozbij go na kilka spotkań').required('Temat jest wymagany'),
     leader: Yup.string().required('Wprowadź prowadzącego'),
     meetingHref: Yup.string().required('Musisz podać link'),
-    description: Yup.string().required('Opis jest wymagany'),
+    description: Yup.string().required('Opis jest wymagany').max(1024, 'Opis nie może być dłuższy niż 1024 znaki'),
     tags: Yup.string().required('Podaj chociaż jeden tag'),
     usefulLinks: Yup.string(),
   }),

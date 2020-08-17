@@ -43,10 +43,14 @@ const EditTopicWithFormik = withFormik({
     };
   },
   validationSchema: Yup.object().shape({
-    topic: Yup.string().min(3, 'Temat musi mieć minimum 3 znaki').required('Wprowadź temat'),
-    userAdded: Yup.string().min(3, 'To pole musi mieć minimum 3 znaki').required('Wprowadź informacje o użytkowniku'),
-    votes: Yup.number('głosy muszą być liczbą'),
+    topic: Yup.string().min(5, 'Temat musi mieć minimum 5 znaków').max(256, 'Temat nie może być dłuższy niż 256 znaków').required('Wprowadź temat'),
     description: Yup.string(),
+    userAdded: Yup.string()
+      .min(6, 'To pole musi mieć minimum 6 znaków')
+      .max(40, 'To pole musi mieć minimum 40 znaków')
+      .required('Wprowadź informacje o użytkowniku'),
+    votes: Yup.number('głosy muszą być liczbą'),
+    tags: Yup.string().required('Podaj chociaż jeden tag'),
   }),
   handleSubmit: (values, {props}) => {
     const {setSubmitting, editTopicAction, setIsModalVisible, selectedElement, toggleSelection} = props;
@@ -54,14 +58,19 @@ const EditTopicWithFormik = withFormik({
     setSubmitting(true);
 
     editTopicAction(values, editData._id)
-      .then(() => {
-        setIsModalVisible(false);
+      .then((resp) => {
+        if (resp && resp.status >= 400) {
+          toast.error(resp.data);
+        } else {
+          setIsModalVisible(false);
+          toast.success('Pomyślnie edytowano temat!');
+        }
         setSubmitting(false);
         toggleSelection([]);
-        toast.success('Pomyślnie edytowano temat!');
       })
       .catch(() => {
         setSubmitting(false);
+        toggleSelection([]);
         toast.error('Nie udało się edytować tematu...');
       });
   },
