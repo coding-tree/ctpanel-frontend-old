@@ -1,4 +1,7 @@
-import {getTopicsPending, getTopicsSuccess, getTopicsError} from 'actions/topics';
+import {
+  getTopicsPending, getTopicsSuccess, getTopicsError,
+  setSuccessfullyRemovedMeetings, removeTopicsError
+} from 'actions/topics';
 import axios from 'axios';
 
 export const getTopics = () => {
@@ -34,16 +37,33 @@ export const addTopic = (dataToSend) => {
 
 export const deleteTopics = (selectedElements, destination) => {
   return async (dispatch) => {
-    const removeElements = (selectedElements, destination) => {
-      return selectedElements.map((element) => axios.delete(process.env.REACT_APP_SERVER_URL + '/' + destination + '/' + element._id));
+    const removeElement = async (element) => {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/${destination}/${element._id}`, {
+          method: 'DELETE',
+          body: JSON.stringify(element)
+        });
+        if(response.ok) return ({success: true, meetingTopic: element.topic});
+        else return ({success: false, errorText: await response.text()});
     };
 
     try {
-      await Promise.all(removeElements(selectedElements, destination));
+      const response = await Promise.all(selectedElements.map(element => removeElement(element)));
+      const { successfullyMeetings, failedMeetings } = response.reduce((acc, element) => {
+        if(element.success) acc.successfullyMeetings.push(element.meetingTopic);
+        else acc.failedMeetings.push(element.errorText);
+        return acc;
+      }, {successfullyMeetings: [], failedMeetings: []});
+
+      dispatch(setSuccessfullyRemovedMeetings(successfullyMeetings));
+      dispatch(removeTopicsError(failedMeetings));
+
+      return { successfullyMeetings, failedMeetings }
+    } catch(err){
+      console.log(err);
+      console.log(err.response);
+    } finally{
       dispatch(getTopics());
-    } catch (err) {
-      return err.response;
-    }
+    };
   };
 };
 

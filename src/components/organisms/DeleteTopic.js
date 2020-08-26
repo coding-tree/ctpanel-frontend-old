@@ -4,12 +4,16 @@ import styled from 'styled-components';
 import {toast} from 'react-toastify';
 
 import {useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {getTopics} from 'selectors/fetchTopics';
 import {deleteTopics} from 'selectors/fetchTopics';
 import variables from 'settings/variables';
 
 const DeleteTopic = ({selectedElement, toggleSelection, destination, isModalVisible, setIsModalVisible, setSubmitting}) => {
   const dispatch = useDispatch();
   const deleteTopicsAction = (dataToSend, destination) => dispatch(deleteTopics(dataToSend, destination));
+  const topicsState = useSelector(state => state.topics);
+
 
   const listItems = selectedElement.map((el, index) => {
     return <StyledListItem key={index}>{el.topic}</StyledListItem>;
@@ -18,23 +22,29 @@ const DeleteTopic = ({selectedElement, toggleSelection, destination, isModalVisi
   const deleteItems = () => {
     setSubmitting(true);
     deleteTopicsAction(selectedElement, destination)
-      .then((resp) => {
-        if (resp && resp.status >= 400) {
-          setSubmitting(false);
-          toggleSelection([]);
-          toast.error(resp.data);
-        } else {
-          setIsModalVisible(false);
-          setSubmitting(false);
-          toggleSelection([]);
-          toast.success('Pomyślnie usunięto tematy!');
-        }
-      })
-      .catch((err) => {
+      .then(({ successfullyMeetings, failedMeetings }) => {
         setSubmitting(false);
         toggleSelection([]);
-        toast.error('Nie udało się usunąć tematów...');
-      });
+        
+        if(successfullyMeetings.length > 0){
+          toast.success(`
+            Pomyślnie usunięto następujące tematy:
+            ${successfullyMeetings.toString()}
+          `);
+        };
+        if(failedMeetings.length > 0){
+          toast.error(`
+            Nie udało się usunąć następujących tematów:
+            ${failedMeetings.toString()}
+          `);
+        };
+      })
+      // .catch((err) => {
+      //   console.log(err.response);
+      //   setSubmitting(false);
+      //   toggleSelection([]);
+      //   toast.error('Nie udało się usunąć tematów...');
+      // });
   };
 
   return (
