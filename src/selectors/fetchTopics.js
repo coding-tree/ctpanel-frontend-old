@@ -1,6 +1,6 @@
 import {
   getTopicsPending, getTopicsSuccess, getTopicsError,
-  setSuccessfullyRemovedMeetings, removeTopicsError
+  setSuccessfullyRemovedTopics, setUnsuccessfullyRemovedTopics
 } from 'actions/topics';
 import axios from 'axios';
 
@@ -42,27 +42,25 @@ export const deleteTopics = (selectedElements, destination) => {
           method: 'DELETE',
           body: JSON.stringify(element)
         });
-        if(response.ok) return ({success: true, meetingTopic: element.topic});
+        if(response.ok) return ({success: true, topic: element.topic});
         else return ({success: false, errorText: await response.text()});
     };
 
     try {
       const response = await Promise.all(selectedElements.map(element => removeElement(element)));
-      const { successfullyMeetings, failedMeetings } = response.reduce((acc, element) => {
-        if(element.success) acc.successfullyMeetings.push(element.meetingTopic);
-        else acc.failedMeetings.push(element.errorText);
+      const { successfullyRemovedTopics, unsuccessfullyRemovedTopics } = response.reduce((acc, element) => {
+        if(element.success) acc.successfullyRemovedTopics.push(element.topic);
+        else acc.unsuccessfullyRemovedTopics.push(element.errorText);
         return acc;
-      }, {successfullyMeetings: [], failedMeetings: []});
+      }, {successfullyRemovedTopics: [], unsuccessfullyRemovedTopics: []});
 
-      dispatch(setSuccessfullyRemovedMeetings(successfullyMeetings));
-      dispatch(removeTopicsError(failedMeetings));
+      dispatch(setSuccessfullyRemovedTopics(successfullyRemovedTopics));
+      dispatch(setUnsuccessfullyRemovedTopics(unsuccessfullyRemovedTopics));
 
-      return { successfullyMeetings, failedMeetings }
+      return { successfullyRemovedTopics, unsuccessfullyRemovedTopics }
     } catch(err){
       console.log(err);
       console.log(err.response);
-    } finally{
-      dispatch(getTopics());
     };
   };
 };

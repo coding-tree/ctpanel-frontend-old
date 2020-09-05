@@ -1,19 +1,17 @@
 import React from 'react';
-import {DeleteButton, CancelButton} from 'components/atoms/Button';
+import { DeleteButton, CancelButton } from 'components/atoms/Button';
 import styled from 'styled-components';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 
-import {useDispatch} from 'react-redux';
-import {useSelector} from 'react-redux';
-import {getTopics} from 'selectors/fetchTopics';
-import {deleteTopics} from 'selectors/fetchTopics';
+import { useDispatch } from 'react-redux';
+import { getTopics } from 'selectors/fetchTopics';
+import { deleteTopics } from 'selectors/fetchTopics';
 import variables from 'settings/variables';
 
 const DeleteTopic = ({selectedElement, toggleSelection, destination, isModalVisible, setIsModalVisible, setSubmitting}) => {
   const dispatch = useDispatch();
+  const getTopicsAction = () => dispatch(getTopics());
   const deleteTopicsAction = (dataToSend, destination) => dispatch(deleteTopics(dataToSend, destination));
-  const topicsState = useSelector(state => state.topics);
-
 
   const listItems = selectedElement.map((el, index) => {
     return <StyledListItem key={index}>{el.topic}</StyledListItem>;
@@ -22,29 +20,23 @@ const DeleteTopic = ({selectedElement, toggleSelection, destination, isModalVisi
   const deleteItems = () => {
     setSubmitting(true);
     deleteTopicsAction(selectedElement, destination)
-      .then(({ successfullyMeetings, failedMeetings }) => {
+      .then(({ successfullyRemovedTopics, unsuccessfullyRemovedTopics }) => {
         setSubmitting(false);
         toggleSelection([]);
-        
-        if(successfullyMeetings.length > 0){
+        if(successfullyRemovedTopics.length > 0){
           toast.success(`
             Pomyślnie usunięto następujące tematy:
-            ${successfullyMeetings.toString()}
+            ${successfullyRemovedTopics.toString()}
           `);
         };
-        if(failedMeetings.length > 0){
+        if(unsuccessfullyRemovedTopics.length > 0){
           toast.error(`
             Nie udało się usunąć następujących tematów:
-            ${failedMeetings.toString()}
+            ${unsuccessfullyRemovedTopics.toString()}
           `);
         };
       })
-      // .catch((err) => {
-      //   console.log(err.response);
-      //   setSubmitting(false);
-      //   toggleSelection([]);
-      //   toast.error('Nie udało się usunąć tematów...');
-      // });
+      .finally(() => getTopicsAction());
   };
 
   return (
@@ -71,27 +63,30 @@ const StyledTitle = styled.h3`
   font-weight: 700;
   display: flex;
   align-items: center;
+
   @media only screen and (max-width: ${variables.bpTablet}) {
     font-size: 1.4rem;
-  }
+  };
+
   @media only screen and (max-width: ${variables.bpLargeMobile}) {
     font-size: 1.2rem;
-  }
+  };
 `;
 
 const StyledButtonsContainer = styled.div`
   justify-content: flex-end;
   margin-top: 3rem;
+
   button:last-child {
     margin-left: 1rem;
-  }
+  };
 
   @media only screen and (max-width: ${variables.bpLargeMobile}) {
     justify-content: space-between;
     > button {
       width: 100%;
-    }
-  }
+    };
+  };
 `;
 
 const StyledForm = styled.form`
@@ -107,10 +102,12 @@ const StyledList = styled.ul`
 const StyledListItem = styled.li`
   font-size: 1.6rem;
   display: list-item;
+
   @media only screen and (max-width: ${variables.bpTablet}) {
     font-size: 1.4rem;
-  }
+  };
+
   @media only screen and (max-width: ${variables.bpLargeMobile}) {
     font-size: 1.2rem;
-  }
+  };
 `;

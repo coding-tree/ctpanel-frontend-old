@@ -1,14 +1,14 @@
 import { 
   GET_TOPICS_REQUEST, GET_TOPICS_RECEIVED, GET_TOPICS_ERROR,
-  SET_SUCCESSFULLY_REMOVED_MEETINGS, CLEAR_SUCCESSFULLY_REMOVED_MEETINGS, REMOVE_TOPICS_ERROR
+  DELETE_TOPICS_SET_REMOVED_TOPICS, DELETE_TOPICS_SET_NOT_REMOVED_TOPICS
 } from 'actions/topics';
 
 const _initialState = {
   pending: false,
   meetings: [],
   error: null,
-  lastRemovedMeetings: [],
-  removedErrors: null,
+  lastSuccessfullyRemovedTopics: [],
+  lastUnsuccessfullyRemovedTopics: null,
 };
 
 export default (state = _initialState, action) => {
@@ -31,23 +31,17 @@ export default (state = _initialState, action) => {
         ...state,
         error: true,
       };
-    case SET_SUCCESSFULLY_REMOVED_MEETINGS:
+    case DELETE_TOPICS_SET_REMOVED_TOPICS:
       return {
         ...state,
-        lastRemovedMeetings: action.successfullyMeetings,
+        lastSuccessfullyRemovedTopics: action.successfullyRemovedTopics,
       };
-    case CLEAR_SUCCESSFULLY_REMOVED_MEETINGS:
+    case DELETE_TOPICS_SET_NOT_REMOVED_TOPICS:
       return {
         ...state,
-        lastRemovedMeetings: null,
-      };
-    case REMOVE_TOPICS_ERROR:
-      console.log(action.failedMeetings)
-      return {
-        ...state,
-        removedErrors: action.failedMeetings,
+        lastUnsuccessfullyRemovedTopics: action.unsuccessfullyRemovedTopics,
       };
     default:
       return state;
-  }
+  };
 };
