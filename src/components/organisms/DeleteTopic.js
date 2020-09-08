@@ -1,14 +1,16 @@
 import React from 'react';
-import {DeleteButton, CancelButton} from 'components/atoms/Button';
+import { DeleteButton, CancelButton } from 'components/atoms/Button';
 import styled from 'styled-components';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 
-import {useDispatch} from 'react-redux';
-import {deleteTopics} from 'selectors/fetchTopics';
+import { useDispatch } from 'react-redux';
+import { getTopics } from 'selectors/fetchTopics';
+import { deleteTopics } from 'selectors/fetchTopics';
 import variables from 'settings/variables';
 
 const DeleteTopic = ({selectedElement, toggleSelection, destination, isModalVisible, setIsModalVisible, setSubmitting}) => {
   const dispatch = useDispatch();
+  const getTopicsAction = () => dispatch(getTopics());
   const deleteTopicsAction = (dataToSend, destination) => dispatch(deleteTopics(dataToSend, destination));
 
   const listItems = selectedElement.map((el, index) => {
@@ -18,23 +20,23 @@ const DeleteTopic = ({selectedElement, toggleSelection, destination, isModalVisi
   const deleteItems = () => {
     setSubmitting(true);
     deleteTopicsAction(selectedElement, destination)
-      .then((resp) => {
-        if (resp && resp.status >= 400) {
-          setSubmitting(false);
-          toggleSelection([]);
-          toast.error(resp.data);
-        } else {
-          setIsModalVisible(false);
-          setSubmitting(false);
-          toggleSelection([]);
-          toast.success('Pomyślnie usunięto tematy!');
-        }
-      })
-      .catch((err) => {
+      .then(({ successfullyRemovedTopics, unsuccessfullyRemovedTopics }) => {
         setSubmitting(false);
         toggleSelection([]);
-        toast.error('Nie udało się usunąć tematów...');
-      });
+        if(successfullyRemovedTopics.length > 0){
+          toast.success(`
+            Pomyślnie usunięto następujące tematy:
+            ${successfullyRemovedTopics.toString()}
+          `);
+        };
+        if(unsuccessfullyRemovedTopics.length > 0){
+          toast.error(`
+            Nie udało się usunąć następujących tematów:
+            ${unsuccessfullyRemovedTopics.toString()}
+          `);
+        };
+      })
+      .finally(() => getTopicsAction());
   };
 
   return (
@@ -61,27 +63,30 @@ const StyledTitle = styled.h3`
   font-weight: 700;
   display: flex;
   align-items: center;
+
   @media only screen and (max-width: ${variables.bpTablet}) {
     font-size: 1.4rem;
-  }
+  };
+
   @media only screen and (max-width: ${variables.bpLargeMobile}) {
     font-size: 1.2rem;
-  }
+  };
 `;
 
 const StyledButtonsContainer = styled.div`
   justify-content: flex-end;
   margin-top: 3rem;
+
   button:last-child {
     margin-left: 1rem;
-  }
+  };
 
   @media only screen and (max-width: ${variables.bpLargeMobile}) {
     justify-content: space-between;
     > button {
       width: 100%;
-    }
-  }
+    };
+  };
 `;
 
 const StyledForm = styled.form`
@@ -97,10 +102,12 @@ const StyledList = styled.ul`
 const StyledListItem = styled.li`
   font-size: 1.6rem;
   display: list-item;
+
   @media only screen and (max-width: ${variables.bpTablet}) {
     font-size: 1.4rem;
-  }
+  };
+
   @media only screen and (max-width: ${variables.bpLargeMobile}) {
     font-size: 1.2rem;
-  }
+  };
 `;

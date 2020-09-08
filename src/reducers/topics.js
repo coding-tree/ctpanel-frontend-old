@@ -1,9 +1,14 @@
-import {GET_TOPICS_REQUEST, GET_TOPICS_RECEIVED, GET_TOPICS_ERROR} from 'actions/topics';
+import { 
+  GET_TOPICS_REQUEST, GET_TOPICS_RECEIVED, GET_TOPICS_ERROR,
+  DELETE_TOPICS_SET_REMOVED_TOPICS, DELETE_TOPICS_SET_NOT_REMOVED_TOPICS
+} from 'actions/topics';
 
 const _initialState = {
   pending: false,
   meetings: [],
   error: null,
+  lastSuccessfullyRemovedTopics: [],
+  lastUnsuccessfullyRemovedTopics: null,
 };
 
 export default (state = _initialState, action) => {
@@ -16,6 +21,7 @@ export default (state = _initialState, action) => {
       };
     case GET_TOPICS_RECEIVED:
       return {
+        ...state,
         pending: false,
         meetings: action.meetings,
         error: null,
@@ -25,7 +31,17 @@ export default (state = _initialState, action) => {
         ...state,
         error: true,
       };
+    case DELETE_TOPICS_SET_REMOVED_TOPICS:
+      return {
+        ...state,
+        lastSuccessfullyRemovedTopics: action.successfullyRemovedTopics,
+      };
+    case DELETE_TOPICS_SET_NOT_REMOVED_TOPICS:
+      return {
+        ...state,
+        lastUnsuccessfullyRemovedTopics: action.unsuccessfullyRemovedTopics,
+      };
     default:
       return state;
-  }
+  };
 };
