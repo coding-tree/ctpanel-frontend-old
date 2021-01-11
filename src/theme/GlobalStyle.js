@@ -25,10 +25,6 @@ const GlobalStyle = createGlobalStyle`
     color: ${variables.colorFont};
   }
 
-  div, span, nav, li, a{  
-    display: flex;
-  }
-
   ::selection {
     background-color: ${variables.colorMain};
     color:${variables.colorWhite};

@@ -53,11 +53,7 @@ const TableTemplate = ({children, title}) => {
     <StyledWrapper>
       <StyledTableContainer>
         <Header tableTitle>{title}</Header>
-        <SelectedElementProvider>
-          <StyledTable>
-            {children}
-          </StyledTable>
-        </SelectedElementProvider>
+        <StyledTable>{children}</StyledTable>
       </StyledTableContainer>
     </StyledWrapper>
   );
