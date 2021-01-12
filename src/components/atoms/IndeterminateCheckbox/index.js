@@ -16,7 +16,7 @@ const IndeterminateCheckbox = forwardRef(({indeterminate, toggleRowSelected, che
   return (
     <div className="checkbox" onClick={handleClick}>
       <input type="checkbox" ref={resolvedRef} {...rest} hidden />
-      <Checkbox />
+      <Checkbox isSelected={checked} />
     </div>
   );
 });
