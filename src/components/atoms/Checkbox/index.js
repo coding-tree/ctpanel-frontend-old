@@ -1,9 +1,10 @@
 import React from 'react';
-import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
+import styled, {css} from 'styled-components';
 import Icon from '../Icon';
 
 const StyledWrapper = styled.div`
+  display: flex;
   height: 20px;
   width: 20px;
   background: ${variables.checkboxColor};

@@ -1,8 +1,7 @@
-import React from 'react';
-import styled, {css} from 'styled-components';
 import moment from 'moment';
 import 'moment/locale/pl';
-import variables from 'settings/variables';
+import React from 'react';
+import styled, {css} from 'styled-components';
 
 const StyledDate = styled.div`
   font-weight: bold;

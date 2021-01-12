@@ -1,10 +1,10 @@
-import React from 'react';
-import {NavLink} from 'react-router-dom';
-import styled, {css} from 'styled-components';
-import variables from 'settings/variables';
+import Background from 'components/atoms/Background';
 import Icon from 'components/atoms/Icon';
 import LogoutButton from 'components/molecules/LogoutButton';
-import Background from 'components/atoms/Background';
+import React from 'react';
+import {NavLink} from 'react-router-dom';
+import variables from 'settings/variables';
+import styled, {css} from 'styled-components';
 
 const MenuSidebar = () => {
   const year = new Date().getFullYear();
@@ -63,6 +63,7 @@ export default MenuSidebar;
 // Styles
 
 const StyledWrapper = styled.nav`
+  display: flex;
   grid-area: aside;
   position: sticky;
   top: 0;
@@ -107,7 +108,6 @@ const StyledWrapper = styled.nav`
 `;
 
 const TitleWrapper = styled.header`
-  width: 100%;
   text-align: center;
   text-transform: uppercase;
   color: ${variables.colorWhite};
@@ -143,6 +143,7 @@ const TitleWrapper = styled.header`
 `;
 
 const MenuWrapper = styled.div`
+  display: flex;
   width: 100%;
   justify-content: flex-end;
   flex-grow: 1;
@@ -152,6 +153,7 @@ const MenuWrapper = styled.div`
   }
 
   @media only screen and (max-width: ${variables.bpTablet}) {
+    display: flex;
     position: fixed;
     right: 0;
     bottom: 0;
@@ -203,6 +205,7 @@ const StyledLinkElement = styled.li`
   }
 
   @media only screen and (max-width: ${variables.bpTablet}) {
+    display: flex;
     height: auto;
     margin-bottom: 0;
     align-items: center;
@@ -254,10 +257,12 @@ const StyledSpan = styled.span`
 `;
 
 const StyledLink = styled.a`
-  width: 100%;
+  display: flex;
+  position: relative;
+  height: 100%;
+  flex-grow: 1;
   align-items: center;
   justify-content: flex-start;
-  text-align: center;
   padding: 0 0 0 5rem;
   font-weight: 700;
   font-size: 1.8rem;
@@ -294,7 +299,7 @@ const StyledLink = styled.a`
 `;
 
 const CopyrightWrapper = styled.div`
-  width: 100%;
+  display: flex;
   bottom: 5rem;
   justify-content: center;
   color: ${variables.colorWhite};

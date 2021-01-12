@@ -1,11 +1,11 @@
+import Checkbox from 'components/atoms/Checkbox';
+import Icon from 'components/atoms/Icon';
+import {SelectedElementContext} from 'components/context/SelectedElementContext';
 import React, {useContext} from 'react';
 import {withRouter} from 'react-router';
-import styled, {css} from 'styled-components';
 import {routes} from 'routes';
-import Icon from 'components/atoms/Icon';
 import variables from 'settings/variables';
-import Checkbox from 'components/atoms/Checkbox';
-import {SelectedElementContext} from 'components/context/SelectedElementContext';
+import styled, {css} from 'styled-components';
 
 const StyledWrapper = styled.div`
   display: grid;

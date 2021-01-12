@@ -1,9 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-
 import StyledDate from 'components/atoms/StyledDate';
 import Title from 'components/atoms/Title';
+import React from 'react';
 import variables from 'settings/variables';
+import styled from 'styled-components';
 
 const HeaderWrapper = styled.div`
   display: grid;

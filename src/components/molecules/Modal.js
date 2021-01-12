@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {PrimaryButton, EditButton, DeleteButton, MainButton} from 'components/atoms/Button';
+import {DeleteButton, EditButton, MainButton, PrimaryButton} from 'components/atoms/Button';
 import Icon from 'components/atoms/Icon';
-import styled, {css} from 'styled-components';
-import variables from 'settings/variables';
-import Title from 'components/atoms/Title';
 import Loader from 'components/atoms/Loader';
+import Title from 'components/atoms/Title';
+import React, {useEffect, useState} from 'react';
+import variables from 'settings/variables';
+import styled, {css} from 'styled-components';
 
 export const DeleteModal = ({children, modalTitle, title, icon}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -129,6 +129,7 @@ const StyledModalContainer = styled.div`
 `;
 
 const StyledBox = styled.div`
+  display: flex;
   background-color: ${variables.colorWhite};
   flex-direction: column;
   width: 64rem;
@@ -155,6 +156,7 @@ const StyledBox = styled.div`
 `;
 
 const StyledHeader = styled.div`
+  display: flex;
   width: 100%;
   align-items: center;
   justify-content: space-between;

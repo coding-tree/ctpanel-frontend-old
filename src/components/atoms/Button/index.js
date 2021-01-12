@@ -1,7 +1,8 @@
-import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
+import styled, {css} from 'styled-components';
 
 const Button = styled.button`
+  display: flex;
   font-family: inherit;
   justify-content: center;
   align-items: center;

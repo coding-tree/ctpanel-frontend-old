@@ -1,6 +1,6 @@
-import React from 'react';
 import Anchor from 'components/atoms/Anchor';
 import Icon from 'components/atoms/Icon';
+import React from 'react';
 
 const SocialIcon = ({className}) => {
   return (

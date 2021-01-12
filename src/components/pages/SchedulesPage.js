@@ -1,11 +1,10 @@
-import React, {useEffect} from 'react';
-import {useSelector} from 'react-redux';
-import {useDispatch} from 'react-redux';
-import {getSchedule} from 'selectors/fetchSchedule';
-import {withRouter} from 'react-router-dom';
+import IndeterminateCheckbox from 'components/atoms/IndeterminateCheckbox';
 import Table from 'components/organisms/Table';
 import TableTemplate from 'components/templates/TableTemplate';
-import IndeterminateCheckbox from 'components/atoms/IndeterminateCheckbox';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {withRouter} from 'react-router-dom';
+import {getSchedule} from 'selectors/fetchSchedule';
 
 const TimetablePage = () => {
   const dispatch = useDispatch();

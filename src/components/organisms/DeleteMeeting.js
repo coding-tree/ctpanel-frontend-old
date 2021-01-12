@@ -1,11 +1,11 @@
+import {CancelButton, DeleteButton} from 'components/atoms/Button';
 import React from 'react';
-import {DeleteButton, CancelButton} from 'components/atoms/Button';
-import styled from 'styled-components';
-import {toast} from 'react-toastify';
 import {useDispatch} from 'react-redux';
+import {toast} from 'react-toastify';
 import {deleteMeetings} from 'selectors/fetchMeetings';
 import {getSchedule} from 'selectors/fetchSchedule';
 import variables from 'settings/variables';
+import styled from 'styled-components';
 
 const DeleteMeeting = ({selectedElement, toggleSelection, destination, isModalVisible, setIsModalVisible, setSubmitting}) => {
   const dispatch = useDispatch();
@@ -54,8 +54,6 @@ const StyledTitle = styled.h3`
   font-family: inherit;
   font-size: 1.6rem;
   font-weight: 700;
-  display: flex;
-  align-items: center;
   @media only screen and (max-width: ${variables.bpTablet}) {
     font-size: 1.4rem;
   }
@@ -65,6 +63,7 @@ const StyledTitle = styled.h3`
 `;
 
 const StyledButtonsContainer = styled.div`
+  display: flex;
   justify-content: flex-end;
   margin-top: 3rem;
   button:last-child {
@@ -91,7 +90,6 @@ const StyledList = styled.ul`
 
 const StyledListItem = styled.li`
   font-size: 1.6rem;
-  display: list-item;
 
   @media only screen and (max-width: ${variables.bpTablet}) {
     font-size: 1.4rem;

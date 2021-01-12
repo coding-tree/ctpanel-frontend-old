@@ -1,7 +1,7 @@
-import React, {lazy} from 'react';
-import styled from 'styled-components';
-import variables from 'settings/variables';
 import LastMeetHeader from 'components/molecules/LastMeetHeader';
+import React, {lazy} from 'react';
+import variables from 'settings/variables';
+import styled from 'styled-components';
 
 const Text = lazy(() => import('components/atoms/Text'));
 const DownloadButton = lazy(() => import('components/molecules/DownloadButton'));

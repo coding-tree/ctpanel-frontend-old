@@ -1,12 +1,13 @@
 import React, {lazy} from 'react';
-import styled from 'styled-components';
 import variables from 'settings/variables';
+import styled from 'styled-components';
 
 const Title = lazy(() => import('components/atoms/Title'));
 const Anchor = lazy(() => import('components/atoms/Anchor'));
 const Text = lazy(() => import('components/atoms/Text'));
 
 const StyledWrapper = styled.div`
+  display: flex;
   flex-direction: column;
 
   > div {

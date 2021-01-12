@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
 import Anchor from 'components/atoms/Anchor';
 import {MainButton} from 'components/atoms/Button';
+import React from 'react';
 import variables from 'settings/variables';
+import styled from 'styled-components';
 
 const JoinMeeting = ({setIsModalVisible, isModalVisible, href}) => {
   return (

@@ -1,12 +1,10 @@
+import {CancelButton, DeleteButton} from 'components/atoms/Button';
 import React from 'react';
-import { DeleteButton, CancelButton } from 'components/atoms/Button';
-import styled from 'styled-components';
-import { toast } from 'react-toastify';
-
-import { useDispatch } from 'react-redux';
-import { getTopics } from 'selectors/fetchTopics';
-import { deleteTopics } from 'selectors/fetchTopics';
+import {useDispatch} from 'react-redux';
+import {toast} from 'react-toastify';
+import {deleteTopics, getTopics} from 'selectors/fetchTopics';
 import variables from 'settings/variables';
+import styled from 'styled-components';
 
 const DeleteTopic = ({selectedElement, toggleSelection, destination, isModalVisible, setIsModalVisible, setSubmitting}) => {
   const dispatch = useDispatch();
@@ -20,21 +18,21 @@ const DeleteTopic = ({selectedElement, toggleSelection, destination, isModalVisi
   const deleteItems = () => {
     setSubmitting(true);
     deleteTopicsAction(selectedElement, destination)
-      .then(({ successfullyRemovedTopics, unsuccessfullyRemovedTopics }) => {
+      .then(({successfullyRemovedTopics, unsuccessfullyRemovedTopics}) => {
         setSubmitting(false);
         toggleSelection([]);
-        if(successfullyRemovedTopics.length > 0){
+        if (successfullyRemovedTopics.length > 0) {
           toast.success(`
             Pomyślnie usunięto następujące tematy:
             ${successfullyRemovedTopics.toString()}
           `);
-        };
-        if(unsuccessfullyRemovedTopics.length > 0){
+        }
+        if (unsuccessfullyRemovedTopics.length > 0) {
           toast.error(`
             Nie udało się usunąć następujących tematów:
             ${unsuccessfullyRemovedTopics.toString()}
           `);
-        };
+        }
       })
       .finally(() => getTopicsAction());
   };
@@ -66,27 +64,28 @@ const StyledTitle = styled.h3`
 
   @media only screen and (max-width: ${variables.bpTablet}) {
     font-size: 1.4rem;
-  };
+  }
 
   @media only screen and (max-width: ${variables.bpLargeMobile}) {
     font-size: 1.2rem;
-  };
+  }
 `;
 
 const StyledButtonsContainer = styled.div`
+  display: flex;
   justify-content: flex-end;
   margin-top: 3rem;
 
   button:last-child {
     margin-left: 1rem;
-  };
+  }
 
   @media only screen and (max-width: ${variables.bpLargeMobile}) {
     justify-content: space-between;
     > button {
       width: 100%;
-    };
-  };
+    }
+  }
 `;
 
 const StyledForm = styled.form`
@@ -101,13 +100,12 @@ const StyledList = styled.ul`
 
 const StyledListItem = styled.li`
   font-size: 1.6rem;
-  display: list-item;
 
   @media only screen and (max-width: ${variables.bpTablet}) {
     font-size: 1.4rem;
-  };
+  }
 
   @media only screen and (max-width: ${variables.bpLargeMobile}) {
     font-size: 1.2rem;
-  };
+  }
 `;

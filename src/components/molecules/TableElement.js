@@ -1,13 +1,13 @@
-import React, {useContext, useState, useEffect} from 'react';
-import styled, {css} from 'styled-components';
-import Checkbox from 'components/atoms/Checkbox';
-import variables from 'settings/variables';
-import StyledDate from 'components/atoms/StyledDate';
-import {PrimaryButton, DeleteButton} from 'components/atoms/Button';
-import {SelectedElementContext} from 'components/context/SelectedElementContext';
-import Icon from 'components/atoms/Icon';
 import axios from 'axios';
+import {DeleteButton, PrimaryButton} from 'components/atoms/Button';
+import Checkbox from 'components/atoms/Checkbox';
+import Icon from 'components/atoms/Icon';
+import StyledDate from 'components/atoms/StyledDate';
+import {SelectedElementContext} from 'components/context/SelectedElementContext';
+import React, {useContext, useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
+import variables from 'settings/variables';
+import styled, {css} from 'styled-components';
 
 const StyledSelectedRow = styled.div`
   display: none;
@@ -87,7 +87,6 @@ const StyledTableData = styled.div`
   color: ${({mainColor}) => mainColor && variables.colorLink};
   flex-wrap: wrap;
   display: ${({block}) => (block ? 'block' : 'flex')};
-
   grid-column: ${({columns}) => (columns ? `span ${columns}` : 'span 1')};
 
   ${({vote}) =>
@@ -163,9 +162,7 @@ const StyledLink = styled.a`
   }
 `;
 
-const StyledTag = styled.span`
-  display: inline;
-`;
+const StyledTag = styled.span``;
 
 export const SchedulesTableElement = ({meetingData, index, isSelected, toggleSelection, isElementVisible, handleVisibility}) => {
   const renderTags = meetingData.tags.map((tag, index) => {

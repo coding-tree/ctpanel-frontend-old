@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import LastMeet from 'components/organisms/LastMeet';
 import {getLastXMeets} from 'api';
-import styled from 'styled-components';
+import LastMeet from 'components/organisms/LastMeet';
+import React, {useEffect, useState} from 'react';
 import variables from 'settings/variables';
+import styled from 'styled-components';
 
 const HomeWrapper = styled.div`
   grid-area: body;

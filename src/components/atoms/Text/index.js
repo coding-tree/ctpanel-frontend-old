@@ -1,5 +1,5 @@
-import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
+import styled, {css} from 'styled-components';
 
 const Text = styled.div`
   line-height: 1.7;
@@ -17,7 +17,6 @@ const Text = styled.div`
   ${(props) =>
     props.columnView &&
     css`
-      display: block;
       columns: 3;
       column-gap: 4rem;
     `}

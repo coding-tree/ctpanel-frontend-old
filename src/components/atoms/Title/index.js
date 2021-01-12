@@ -1,9 +1,8 @@
-import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
+import styled, {css} from 'styled-components';
 
 const Title = styled.div`
   font-size: ${(props) => (props.fontSize ? props.fontSize : '2rem')};
-
   color: ${(props) => (props.important ? variables.colorMain : variables.colorHeader)};
   color: ${({white}) => white && variables.colorWhite};
   text-transform: ${(props) => (props.uppercase ? 'uppercase' : 'initial')};

@@ -1,8 +1,8 @@
-import React, {useRef, useState, useEffect} from 'react';
-import variables from 'settings/variables';
-import styled, {css} from 'styled-components';
 import Icon from 'components/atoms/Icon';
 import {Field} from 'formik';
+import React, {useEffect, useRef, useState} from 'react';
+import variables from 'settings/variables';
+import styled, {css} from 'styled-components';
 
 const CustomSelect = ({name, inputStatus, options, handleSelectChange, placeholder, leader, shouldReset}) => {
   const [selectValue, setSelectValue] = useState(leader || '');
@@ -79,6 +79,7 @@ const StyledPlaceholder = styled.span`
 `;
 
 const StyledSelectContainer = styled.div`
+  display: flex;
   flex-direction: column;
   position: relative;
   justify-content: center;
@@ -90,6 +91,7 @@ const StyledSelectContainer = styled.div`
 `;
 
 const StyledSelect = styled.div`
+  display: flex;  
   position: relative;
   width: 100%;
   height: 3.6rem;
@@ -133,6 +135,7 @@ const StyledOptionContainer = styled.div`
 `;
 
 const StyledOption = styled.div`
+  display: flex;
   height: 3.6rem;
   align-items: center;
   cursor: pointer;

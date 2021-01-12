@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import MainTemplate from 'components/templates/MainTemplate';
-import styled from 'styled-components';
-import {useSelector} from 'react-redux';
-import variables from 'settings/variables';
-import {MainButton} from 'components/atoms/Button';
 import axios from 'axios';
+import {MainButton} from 'components/atoms/Button';
 import Header from 'components/atoms/Header';
 import LogoutButton from 'components/molecules/LogoutButton';
+import MainTemplate from 'components/templates/MainTemplate';
+import React, {useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
+import variables from 'settings/variables';
+import styled from 'styled-components';
 
 const AccountPage = () => {
   const {pending, meetings, error} = useSelector((state) => state.user);

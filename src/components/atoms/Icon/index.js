@@ -1,5 +1,5 @@
-import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
+import styled, {css} from 'styled-components';
 
 const Icon = styled.i`
   font-size: ${({fontSize}) => (fontSize ? fontSize : '1.4rem')};
@@ -10,7 +10,7 @@ const Icon = styled.i`
     absolute &&
     css`
       position: absolute;
-      top: ${top => top || 'initial'};
+      top: ${(top) => top || 'initial'};
       bottom: ${bottom} || 'initial';
       right: ${right} || 'initial';
       left: ${left} || 'initial';

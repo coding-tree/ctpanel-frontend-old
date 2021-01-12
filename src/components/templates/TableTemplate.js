@@ -1,9 +1,8 @@
+import Header from 'components/atoms/Header';
 import React from 'react';
 import {withRouter} from 'react-router';
-import styled from 'styled-components';
-import Header from 'components/atoms/Header';
 import variables from 'settings/variables';
-import {SelectedElementProvider} from 'components/context/SelectedElementContext';
+import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
   grid-area: body;

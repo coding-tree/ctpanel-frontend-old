@@ -1,17 +1,16 @@
-import React, {useEffect} from 'react';
-import TableTemplate from 'components/templates/TableTemplate';
-import {MeetingHistoryTableMenu} from 'components/organisms/TableMenu';
-import TableList from 'components/organisms/TableList';
-import {withRouter} from 'react-router-dom';
-import {useSelector} from 'react-redux';
-import {useDispatch} from 'react-redux';
-import {getMeetingsHistory} from 'selectors/fetchMeetingHistory';
 import {MeetingHistoryTableElement} from 'components/molecules/TableElement';
+import TableList from 'components/organisms/TableList';
+import {MeetingHistoryTableMenu} from 'components/organisms/TableMenu';
+import TableTemplate from 'components/templates/TableTemplate';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {withRouter} from 'react-router-dom';
+import {getMeetingsHistory} from 'selectors/fetchMeetingHistory';
 
 const HistoryPage = () => {
   const dispatch = useDispatch();
   const getMeetingsHistoryAction = () => dispatch(getMeetingsHistory());
-  const {pending, meetings, error} = useSelector(state => state.meetingHistory);
+  const {pending, meetings, error} = useSelector((state) => state.meetingHistory);
 
   useEffect(() => {
     getMeetingsHistoryAction();

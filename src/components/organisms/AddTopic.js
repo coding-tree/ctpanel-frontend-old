@@ -1,15 +1,13 @@
-import React from 'react';
-import {withFormik, Form} from 'formik';
-import * as Yup from 'yup';
-import axios from 'axios';
+import {CancelButton, PrimaryButton} from 'components/atoms/Button';
 import {Input, Tags} from 'components/molecules/CustomFormFields';
+import {Form, withFormik} from 'formik';
+import React from 'react';
+import {useDispatch} from 'react-redux';
+import {toast} from 'react-toastify';
+import {addTopic} from 'selectors/fetchTopics';
 import variables from 'settings/variables';
 import styled from 'styled-components';
-import {CancelButton, PrimaryButton} from 'components/atoms/Button';
-import {toast} from 'react-toastify';
-
-import {useDispatch} from 'react-redux';
-import {addTopic} from 'selectors/fetchTopics';
+import * as Yup from 'yup';
 
 const Formik = ({setFieldValue, column, status, isModalVisible, setIsModalVisible, isSubmitting}) => {
   const setTags = (name) => (tags) => {

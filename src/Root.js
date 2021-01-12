@@ -1,15 +1,13 @@
-import React, {Suspense, lazy, useEffect} from 'react';
-import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css';
-import {routes} from 'routes';
-import {useSelector} from 'react-redux';
-import {useDispatch} from 'react-redux';
-import {getUser as fetchUserAction} from 'selectors/fetchUser';
-
 import LoadingSpinner from 'components/atoms/LoadingSpinner';
-import MainTemplate from './components/templates/MainTemplate';
 import MenuSidebar from 'components/organisms/MenuSidebar';
 import NextMeet from 'components/organisms/NextMeet';
+import React, {lazy, Suspense, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
+import {routes} from 'routes';
+import {getUser as fetchUserAction} from 'selectors/fetchUser';
+import MainTemplate from './components/templates/MainTemplate';
 
 const Account = lazy(() => import('components/pages/AccountPage'));
 const History = lazy(() => import('components/pages/MeetingHistoryPage'));

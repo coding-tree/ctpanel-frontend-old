@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import styled from 'styled-components';
-import variables from 'settings/variables';
-
+import axios from 'axios';
 import Title from 'components/atoms/Title';
 import NextMeetInfo from 'components/molecules/NextMeetInfo';
-import axios from 'axios';
+import React, {useEffect, useState} from 'react';
+import variables from 'settings/variables';
+import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
   display: grid;

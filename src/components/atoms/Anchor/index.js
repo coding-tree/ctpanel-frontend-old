@@ -1,5 +1,5 @@
-import styled, {css} from 'styled-components';
 import variables from 'settings/variables';
+import styled, {css} from 'styled-components';
 
 const Anchor = styled.a`
   color: ${variables.colorLink};
@@ -27,7 +27,6 @@ const Anchor = styled.a`
   ${(props) =>
     props.buttonLink &&
     css`
-      align-items: center;
       padding: 0.9rem 3.3rem;
       color: ${variables.colorWhite};
     `}

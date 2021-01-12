@@ -1,11 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
+import {PrimaryButton} from 'components/atoms/Button';
+import Text from 'components/atoms/Text';
 import Title from 'components/atoms/Title';
 import SocialIcons from 'components/organisms/SocialIcons';
-import Text from 'components/atoms/Text';
-import {PrimaryButton} from 'components/atoms/Button';
+import React from 'react';
 import variables from 'settings/variables';
-
+import styled from 'styled-components';
 import LoginStyle from 'theme/LoginStyle';
 
 const StyledBackground = styled.div`

@@ -1,7 +1,7 @@
-import React from 'react';
-import styled, {css} from 'styled-components';
-import variables from 'settings/variables';
 import Icon from 'components/atoms/Icon';
+import React from 'react';
+import variables from 'settings/variables';
+import styled, {css} from 'styled-components';
 
 const logout = () => {
   window.location.href = `${process.env.REACT_APP_SERVER_URL}/logout`;
@@ -17,8 +17,10 @@ const LogoutButton = ({children, account}) => {
 };
 
 const StyledLink = styled.a`
+  display: flex;
   align-items: center;
-  justify-content: flex-start;
+  height: 100%;
+  position: relative;
   text-align: center;
   padding: 0 0 0 5rem;
   font-weight: 700;

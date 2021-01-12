@@ -1,12 +1,12 @@
-import React from 'react';
-import {withFormik, Form} from 'formik';
-import * as Yup from 'yup';
-import {Input, Tags} from 'components/molecules/CustomFormFields';
-import styled from 'styled-components';
 import {CancelButton, PrimaryButton} from 'components/atoms/Button';
-import {toast} from 'react-toastify';
+import {Input, Tags} from 'components/molecules/CustomFormFields';
+import {Form, withFormik} from 'formik';
+import React from 'react';
 import {useDispatch} from 'react-redux';
+import {toast} from 'react-toastify';
 import {editTopic} from 'selectors/fetchTopics';
+import styled from 'styled-components';
+import * as Yup from 'yup';
 
 const Formik = ({setFieldValue, column, setIsModalVisible, selectedElement}) => {
   const [editData] = selectedElement;

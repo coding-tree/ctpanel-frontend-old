@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
-import {Input, Textarea, Select, Tags} from 'components/molecules/CustomFormFields';
 import {CancelButton, PrimaryButton} from 'components/atoms/Button';
-import variables from 'settings/variables';
-import styled from 'styled-components';
-import {withFormik, Form} from 'formik';
-import * as Yup from 'yup';
-import {toast} from 'react-toastify';
+import {Input, Select, Tags, Textarea} from 'components/molecules/CustomFormFields';
+import {Form, withFormik} from 'formik';
+import React from 'react';
 import {useDispatch} from 'react-redux';
+import {toast} from 'react-toastify';
 import {addMeeting} from 'selectors/fetchMeetings';
 import {getSchedule} from 'selectors/fetchSchedule';
+import variables from 'settings/variables';
+import styled from 'styled-components';
+import * as Yup from 'yup';
 
 const Formik = ({column, status, leaders, setFieldValue, setIsModalVisible, isModalVisible, topicNames, isSubmitting}) => {
   const setValue = (name) => (tags) => {

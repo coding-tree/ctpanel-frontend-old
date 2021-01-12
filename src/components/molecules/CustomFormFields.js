@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import variables from 'settings/variables';
-import {Field, ErrorMessage} from 'formik';
-import styled from 'styled-components';
-import CustomSelect from './CustomSelect';
 import Icon from 'components/atoms/Icon';
+import CustomSelect from 'components/molecules/CustomSelect';
+import {ErrorMessage, Field} from 'formik';
+import React, {useEffect, useState} from 'react';
+import variables from 'settings/variables';
+import styled from 'styled-components';
 
 const CustomFormFieldWrapper = ({children, name, label, columns, rows}) => {
   return (
@@ -112,6 +112,7 @@ export const Tags = ({name, label, onTagsChange, columns, rows, placeholder, act
 };
 
 const StyledWrapper = styled.span`
+  display: flex;
   flex-direction: column;
   grid-column: ${({columns}) => (columns ? `span ${columns}` : 'span 1')};
   margin-bottom: 2.2rem;
@@ -143,9 +144,11 @@ const StyledWrapper = styled.span`
   }
 `;
 const Wrapper = styled.span`
+  display: flex;
   flex-wrap: wrap;
 `;
 const StyledTagsContainer = styled.div`
+  display: flex;
   position: relative;
   flex-wrap: wrap;
   align-items: top;
@@ -155,6 +158,7 @@ const StyledTagsContainer = styled.div`
   border: 1px solid ${variables.borderColor};
 `;
 const StyledTag = styled.span`
+  display: flex;
   align-items: center;
   color: ${variables.colorWhite};
   background-color: ${variables.colorMain};
@@ -187,6 +191,7 @@ const StyledTag = styled.span`
   }
 `;
 const StyledTagInput = styled.input`
+  display: flex;
   font-size: 1.6rem;
   width: -webkit-fill-available;
   font-family: inherit;
@@ -243,6 +248,7 @@ const StyledLabel = styled.label`
 `;
 
 const StyledError = styled.div`
+  display: flex;
   align-items: center;
   padding: 5px 15px;
   border-radius: 4px;

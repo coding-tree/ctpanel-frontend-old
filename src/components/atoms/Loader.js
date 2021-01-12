@@ -1,6 +1,6 @@
 import React from 'react';
-import styled, {keyframes} from 'styled-components';
 import variables from 'settings/variables';
+import styled, {keyframes} from 'styled-components';
 import Title from './Title';
 
 const Loader = ({isLoading, title}) => {
@@ -36,7 +36,7 @@ const StyledContainer = styled.div`
   display: grid;
   justify-items: center;
   align-content: center;
-  grid-row-gap: 3rem;
+  row-gap: 3rem;
   background-color: ${variables.colorFont};
   z-index: 99999;
   ${Title} {
@@ -50,7 +50,6 @@ const StyledWrapper = styled.div`
   display: inline-block;
   overflow: hidden;
   background: transparent;
-
   z-index: 999999;
 `;
 

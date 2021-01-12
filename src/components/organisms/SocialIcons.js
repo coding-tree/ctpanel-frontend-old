@@ -1,5 +1,5 @@
-import React from 'react';
 import SocialIcon from 'components/molecules/SocialIcon';
+import React from 'react';
 import styled from 'styled-components';
 
 const StyledSocialIcons = styled.div`

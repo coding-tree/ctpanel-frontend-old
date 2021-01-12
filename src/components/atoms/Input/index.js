@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import variables from 'settings/variables';
+import styled from 'styled-components';
 
 const StyledInput = styled.input`
   width: 360px;
@@ -10,9 +10,6 @@ const StyledInput = styled.input`
   font-family: ${variables.mainFont};
   font-size: 1.4rem;
   border: 1px solid ${variables.colorLink};
-  &::placeholder {
-    display: flex;
-  }
 `;
 
 const Input = () => {

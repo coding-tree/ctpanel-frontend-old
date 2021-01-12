@@ -1,6 +1,6 @@
-import {createGlobalStyle} from 'styled-components';
-import variables from 'settings/variables';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import variables from 'settings/variables';
+import {createGlobalStyle} from 'styled-components';
 
 const LoginStyle = createGlobalStyle`
   
