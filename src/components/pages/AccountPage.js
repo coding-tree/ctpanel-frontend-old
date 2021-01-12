@@ -93,9 +93,9 @@ const AccountPage = () => {
 export default AccountPage;
 
 const StyledWrapper = styled.div`
+  display: flex;
   grid-area: body;
   margin: 0 auto;
-  display: flex;
   width: 80%;
   max-width: 1400px;
   flex-direction: column;
@@ -135,6 +135,7 @@ const StyledContainer = styled.div`
 `;
 
 const StyledUser = styled.div`
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;

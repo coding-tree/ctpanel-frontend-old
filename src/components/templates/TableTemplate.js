@@ -5,6 +5,7 @@ import variables from 'settings/variables';
 import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
+  display: flex;
   grid-area: body;
   height: 100%;
   align-items: center;
@@ -17,6 +18,7 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledTableContainer = styled.div`
+  display: flex;
   width: 80%;
   max-width: 1400px;
   flex-direction: column;
@@ -35,6 +37,7 @@ const StyledTableContainer = styled.div`
 `;
 
 const StyledTable = styled.div`
+  display: flex;
   flex-direction: column;
   padding: 2.8rem 2.2rem;
   border-radius: 30px;

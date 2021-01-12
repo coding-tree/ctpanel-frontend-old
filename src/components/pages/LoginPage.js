@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import LoginStyle from 'theme/LoginStyle';
 
 const StyledBackground = styled.div`
+  display: flex;
   height: 100vh;
   height: -webkit-fill-available;
   width: 100%;
@@ -28,6 +29,7 @@ const StyledBackground = styled.div`
   }
 `;
 const StyledWrapper = styled.div`
+  display: flex;
   flex-direction: column;
   max-width: 800px;
   padding: 0 2rem;
@@ -40,6 +42,7 @@ const StyledImage = styled.img`
 `;
 
 const StyledContainer = styled.div`
+  display: flex;
   flex-direction: column;
   align-items: center;
 `;

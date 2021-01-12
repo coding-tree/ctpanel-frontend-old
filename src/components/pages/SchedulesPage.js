@@ -14,7 +14,6 @@ const TimetablePage = () => {
   useEffect(() => {
     getScheduleAction();
   }, []);
-  console.log(meetings);
 
   const columns = React.useMemo(
     () => [
