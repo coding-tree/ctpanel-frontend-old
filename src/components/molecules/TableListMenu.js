@@ -1,7 +1,6 @@
 import Checkbox from 'components/atoms/Checkbox';
 import Icon from 'components/atoms/Icon';
-import {SelectedElementContext} from 'components/context/SelectedElementContext';
-import React, {useContext} from 'react';
+import React from 'react';
 import {withRouter} from 'react-router';
 import {routes} from 'routes';
 import variables from 'settings/variables';
@@ -74,12 +73,12 @@ const StyledTableRow = styled.div`
 
 `;
 
-const SchedulesTableListMenu = ({handleSelection, isSelected}) => {
+const SchedulesTableListMenu = () => {
   return (
     <StyledWrapper>
       <StyledTableRow>
         <StyledTableHead>
-          <Checkbox onClick={handleSelection} isSelected={isSelected}></Checkbox>
+          <Checkbox></Checkbox>
         </StyledTableHead>
         <StyledTableHead>
           ID <Icon className="fas fa-sort"></Icon>
@@ -101,11 +100,11 @@ const SchedulesTableListMenu = ({handleSelection, isSelected}) => {
   );
 };
 
-const TopicDataBaseTableListMenu = ({handleSelection, isSelected}) => (
+const TopicDataBaseTableListMenu = () => (
   <StyledWrapper>
     <StyledTableRow>
       <StyledTableHead>
-        <Checkbox onClick={handleSelection} isSelected={isSelected}></Checkbox>
+        <Checkbox></Checkbox>
       </StyledTableHead>
       <StyledTableHead>
         ID <Icon className="fas fa-sort"></Icon>
@@ -127,11 +126,11 @@ const TopicDataBaseTableListMenu = ({handleSelection, isSelected}) => (
   </StyledWrapper>
 );
 
-const MeetingHistoryTableListMenu = ({handleSelection, isSelected}) => (
+const MeetingHistoryTableListMenu = () => (
   <StyledWrapper>
     <StyledTableRow>
       <StyledTableHead>
-        <Checkbox onClick={handleSelection} isSelected={isSelected}></Checkbox>
+        <Checkbox></Checkbox>
       </StyledTableHead>
       <StyledTableHead>
         ID <Icon className="fas fa-sort"></Icon>
@@ -153,25 +152,13 @@ const MeetingHistoryTableListMenu = ({handleSelection, isSelected}) => (
 );
 
 const TableListMenu = ({location, meetingsList}) => {
-  const [selectedElement, setSelectedElement] = useContext(SelectedElementContext);
-
-  const isSelected = meetingsList && selectedElement && meetingsList.length === selectedElement.length;
-
-  const markAll = () => {
-    if (selectedElement.length === 0) {
-      setSelectedElement(meetingsList);
-    } else {
-      setSelectedElement([]);
-    }
-  };
-
   switch (location.pathname) {
     case routes.timetable:
-      return <SchedulesTableListMenu handleSelection={markAll} isSelected={isSelected} meetingsList={meetingsList} />;
+      return <SchedulesTableListMenu meetingsList={meetingsList} />;
     case routes.topicDatabase:
-      return <TopicDataBaseTableListMenu handleSelection={markAll} isSelected={isSelected} meetingsList={meetingsList} />;
+      return <TopicDataBaseTableListMenu meetingsList={meetingsList} />;
     case routes.history:
-      return <MeetingHistoryTableListMenu handleSelection={markAll} isSelected={isSelected} meetingsList={meetingsList} />;
+      return <MeetingHistoryTableListMenu meetingsList={meetingsList} />;
     default:
       return console.log('something went wrong');
   }

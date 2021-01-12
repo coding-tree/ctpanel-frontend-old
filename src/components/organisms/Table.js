@@ -26,7 +26,7 @@ const Table = ({columns, data}) => {
     props,
     {
       style: {
-        justifyContent: justifyContent === 'right' ? 'flex-end' : 'flex-start',
+        justifyContent: justifyContent === 'right' ? 'flex-end' : justifyContent === 'center' ? 'center' : 'flex-start',
         alignItems: alignItems === 'center' ? 'center' : 'stretch',
         display: 'flex',
       },

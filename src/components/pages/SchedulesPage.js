@@ -19,13 +19,12 @@ const TimetablePage = () => {
     () => [
       {
         id: 'selection',
-        width: 30,
-        align: 'right',
-        Header: () => null,
+        width: 25,
+        Header: ({getToggleAllRowsSelectedProps, toggleAllRowsSelected}) => (
+          <IndeterminateCheckbox toggleRowSelected={toggleAllRowsSelected} {...getToggleAllRowsSelectedProps()} />
+        ),
         Cell: ({row}) => <IndeterminateCheckbox toggleRowSelected={row.toggleRowSelected} {...row.getToggleRowSelectedProps()} />,
-        width: 30,
-        alignItems: 'stretch',
-        justifyContent: 'right',
+        justifyContent: 'center',
         rowClassNames: 'no-padding',
         disableSortBy: true,
         disableFilters: true,
@@ -37,7 +36,7 @@ const TimetablePage = () => {
         Header: 'Data',
         accessor: (r) => new Date(r['date']),
         Cell: (r) => {
-          return r.value.toLocaleString('pl');
+          return r.value.toLocaleString('pl', {hour12: true});
         },
         width: 150,
       },

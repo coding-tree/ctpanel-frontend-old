@@ -1,4 +1,6 @@
 import React from 'react';
+import styled from 'styled-components';
+import variables from 'settings/variables';
 
 const TableHead = ({column, getStyles}) => {
   const {align, hideHeader, isSorted, isSortedDesc, disableSortBy} = column;
@@ -10,8 +12,8 @@ const TableHead = ({column, getStyles}) => {
   const headerProps = (props, {column}) => getStyles(props, column.justifyContent, column.alignItems);
 
   return (
-    <div {...column.getHeaderProps(column.getSortByToggleProps(headerProps))}>
-      <div>
+    <StyledTableHead {...column.getHeaderProps(column.getSortByToggleProps(headerProps))}>
+      <StyledTableCell>
         {!hideHeader ? (
           <>
             {column.render('Header')}
@@ -28,9 +30,24 @@ const TableHead = ({column, getStyles}) => {
             ) : null}
           </>
         ) : null}
-      </div>
-    </div>
+      </StyledTableCell>
+    </StyledTableHead>
   );
 };
 
 export default TableHead;
+
+const StyledTableHead = styled.div`
+  background-color: ${variables.tableHeaderColor};
+  min-height: 50px;
+  border-top: 1px solid ${variables.tableBorderColor};
+  border-bottom: 1px solid ${variables.tableBorderColor};
+`;
+const StyledTableCell = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: bold;
+  color: ${variables.colorLink};
+`;

@@ -3,8 +3,7 @@ import {DeleteButton, PrimaryButton} from 'components/atoms/Button';
 import Checkbox from 'components/atoms/Checkbox';
 import Icon from 'components/atoms/Icon';
 import StyledDate from 'components/atoms/StyledDate';
-import {SelectedElementContext} from 'components/context/SelectedElementContext';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 import variables from 'settings/variables';
 import styled, {css} from 'styled-components';
@@ -373,27 +372,13 @@ export const MeetingHistoryTableElement = ({meetingData, isSelected, toggleSelec
 
 const TableElement = ({meetingData, index, children}) => {
   const [isElementVisible, toggleVisibility] = useState(false);
-  const [selectedElement, toggleSelection] = useContext(SelectedElementContext);
-  const isSelected = selectedElement && selectedElement.includes(meetingData);
 
   const handleVisibility = (e) => {
     toggleVisibility((prev) => !prev);
   };
 
-  const handleSelection = (e, singleElem, selectedElem) => {
-    e.stopPropagation();
-    return toggleSelection((prev) => {
-      if (selectedElem) {
-        return prev.filter((elem) => elem._id !== singleElem._id);
-      }
-      return [...prev, singleElem];
-    });
-  };
-
   const childrenWithProps = React.Children.map(children, (child) => {
     const props = {
-      isSelected: isSelected,
-      toggleSelection: handleSelection,
       index: index,
       meetingData: meetingData,
       handleVisibility,

@@ -1,4 +1,6 @@
 import React from 'react';
+import styled from 'styled-components';
+import variables from 'settings/variables';
 
 const TableRow = ({row, getStyles}) => {
   const formatSubRows = (depth) => {
@@ -8,10 +10,10 @@ const TableRow = ({row, getStyles}) => {
   const cellProps = (props, {cell}) => getStyles(props, cell.column.justifyContent, cell.column.alignItems);
 
   return (
-    <div {...row.getToggleRowExpandedProps()} {...row.getRowProps()}>
+    <StyledTableRow {...row.getToggleRowExpandedProps()} {...row.getRowProps()}>
       {row.cells.map((cell) => {
         return (
-          <div className={cell.column.rowClassNames ? cell.column.rowClassNames : ''} {...cell.getCellProps(cellProps)}>
+          <StyledTableCell className={cell.column.rowClassNames ? cell.column.rowClassNames : ''} {...cell.getCellProps(cellProps)}>
             {cell.isGrouped ? (
               <>
                 <span {...row.getToggleRowExpandedProps()}>{row.isExpanded ? '👇' : '👉'}</span>
@@ -22,11 +24,20 @@ const TableRow = ({row, getStyles}) => {
             ) : cell.isPlaceholder ? null : (
               <>{cell.render('Cell')}</>
             )}
-          </div>
+          </StyledTableCell>
         );
       })}
-    </div>
+    </StyledTableRow>
   );
 };
 
 export default TableRow;
+
+const StyledTableRow = styled.div`
+  min-height: 50px;
+  padding: 1rem 0;
+  border-bottom: 1px solid ${variables.borderColor};
+`;
+const StyledTableCell = styled.div`
+  font-weight: bold;
+`;

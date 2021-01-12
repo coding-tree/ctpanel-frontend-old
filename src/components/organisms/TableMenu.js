@@ -1,10 +1,9 @@
 import axios from 'axios';
-import {SelectedElementContext} from 'components/context/SelectedElementContext';
 import {AddModal, DeleteModal, EditModal, JoinModal} from 'components/molecules/Modal';
 import AddMeeting from 'components/organisms/AddMeeting';
 import DeleteMeeting from 'components/organisms/DeleteMeeting';
 import EditMeeting from 'components/organisms/EditMeeting';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import variables from 'settings/variables';
 import styled, {css} from 'styled-components';
 import AddTopic from './AddTopic';
@@ -13,7 +12,6 @@ import EditTopic from './EditTopic';
 import JoinMeeting from './JoinMeeting';
 
 export const SchedulesTableMenu = () => {
-  const [selectedElement, toggleSelection] = useContext(SelectedElementContext);
   const leaders = ['Damian Ospara', 'Józef Rzadkosz', 'Jakub Wojtoń', 'Kazimierz Bagrowski'];
   const [topics, setTopics] = useState([]);
 
@@ -33,50 +31,36 @@ export const SchedulesTableMenu = () => {
       <AddModal title="Dodaj" icon="fas fa-plus" modalTitle="Zaplanuj nowe spotkanie">
         <AddMeeting column={2} leaders={leaders} topicNames={topicNames} destination="meetings"></AddMeeting>
       </AddModal>
-      {selectedElement.length > 0 && (
-        <DeleteModal title="Usuń" icon="fas fa-minus" modalTitle="Usuń spotkanie">
-          <DeleteMeeting selectedElement={selectedElement} toggleSelection={toggleSelection} destination="meetings"></DeleteMeeting>
-        </DeleteModal>
+      <DeleteModal title="Usuń" icon="fas fa-minus" modalTitle="Usuń spotkanie">
+        <DeleteMeeting destination="meetings"></DeleteMeeting>
+      </DeleteModal>
       )}
-      {selectedElement.length === 1 && (
-        <>
-          <EditModal title="Edytuj" icon="fas fa-pen" modalTitle="Edytuj spotkanie">
-            <EditMeeting
-              column={2}
-              leaders={leaders}
-              topicNames={topicNames}
-              toggleSelection={toggleSelection}
-              selectedElement={selectedElement}
-              destination="meetings"
-            ></EditMeeting>
-          </EditModal>
-          <JoinModal title="Dołącz" modalTitle="Dołącz do spotkania">
-            <JoinMeeting href={selectedElement[0].meetingHref}></JoinMeeting>
-          </JoinModal>
-        </>
-      )}
+      <>
+        <EditModal title="Edytuj" icon="fas fa-pen" modalTitle="Edytuj spotkanie">
+          <EditMeeting column={2} leaders={leaders} topicNames={topicNames} destination="meetings"></EditMeeting>
+        </EditModal>
+        <JoinModal title="Dołącz" modalTitle="Dołącz do spotkania">
+          <JoinMeeting></JoinMeeting>
+        </JoinModal>
+      </>
     </StyledTableActions>
   );
 };
 
 export const TopicDataBaseTableMenu = () => {
-  const [selectedElement, toggleSelection] = useContext(SelectedElementContext);
-
   return (
     <StyledTableActions>
       <AddModal title="Dodaj" icon="fas fa-plus" modalTitle="Dodaj nowy temat">
         <AddTopic></AddTopic>
       </AddModal>
-      {selectedElement.length === 1 && (
-        <EditModal title="Edytuj" icon="fas fa-pen" modalTitle="Edytuj temat">
-          <EditTopic selectedElement={selectedElement} toggleSelection={toggleSelection}></EditTopic>
-        </EditModal>
-      )}
-      {selectedElement.length > 0 && (
-        <DeleteModal title="Usuń" icon="fas fa-minus" modalTitle="Usuń temat">
-          <DeleteTopic selectedElement={selectedElement} toggleSelection={toggleSelection} destination="topics"></DeleteTopic>
-        </DeleteModal>
-      )}
+
+      <EditModal title="Edytuj" icon="fas fa-pen" modalTitle="Edytuj temat">
+        <EditTopic></EditTopic>
+      </EditModal>
+
+      <DeleteModal title="Usuń" icon="fas fa-minus" modalTitle="Usuń temat">
+        <DeleteTopic destination="topics"></DeleteTopic>
+      </DeleteModal>
     </StyledTableActions>
   );
 };
